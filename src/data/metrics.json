@@ -1,0 +1,1047 @@
+{
+  "aave": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "evidenceEntries": 4,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by DAO",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "fixed-supply",
+          "name": "Fixed supply",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-fees",
+          "name": "Protocol Fees",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "external-fees",
+          "name": "External fees",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "flywheel",
+          "name": "Flywheel",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-revenue",
+      "name": "Protocol Revenue Ownership",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "evidenceEntries": 2,
+      "positive": 1,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee destination",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "revenue-protection",
+          "name": "Revenue protection",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aero": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "evidenceEntries": 4,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by DAO",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "fixed-supply",
+          "name": "Fixed supply",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-fees",
+          "name": "Protocol Fees",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "external-fees",
+          "name": "External fees",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "flywheel",
+          "name": "Flywheel",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-revenue",
+      "name": "Protocol Revenue Ownership",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "evidenceEntries": 2,
+      "positive": 1,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee destination",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "revenue-protection",
+          "name": "Revenue protection",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "crv": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "evidenceEntries": 4,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by DAO",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "fixed-supply",
+          "name": "Fixed supply",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-fees",
+          "name": "Protocol Fees",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "external-fees",
+          "name": "External fees",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "flywheel",
+          "name": "Flywheel",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-revenue",
+      "name": "Protocol Revenue Ownership",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "evidenceEntries": 2,
+      "positive": 1,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee destination",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "revenue-protection",
+          "name": "Revenue protection",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "lido": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "evidenceEntries": 4,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by DAO",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "fixed-supply",
+          "name": "Fixed supply",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-fees",
+          "name": "Protocol Fees",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "external-fees",
+          "name": "External fees",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "flywheel",
+          "name": "Flywheel",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-revenue",
+      "name": "Protocol Revenue Ownership",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "evidenceEntries": 2,
+      "positive": 1,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee destination",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "revenue-protection",
+          "name": "Revenue protection",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "uni": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "evidenceEntries": 4,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by DAO",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "fixed-supply",
+          "name": "Fixed supply",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 1,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-fees",
+          "name": "Protocol Fees",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "external-fees",
+          "name": "External fees",
+          "status": "at_risk",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "flywheel",
+          "name": "Flywheel",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-revenue",
+      "name": "Protocol Revenue Ownership",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "evidenceEntries": 2,
+      "positive": 1,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee destination",
+          "status": "positive",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        },
+        {
+          "id": "revenue-protection",
+          "name": "Revenue protection",
+          "status": "neutral",
+          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
+              "comment": "Optional comment"
+            },
+            {
+              "id": "ev2",
+              "title": "Aero.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
