@@ -9,6 +9,7 @@
   "version": 1,
   "framework": "react-cra",
   "chosenAddOns": [
+    "biome",
     "eslint",
     "nitro",
     "start"
