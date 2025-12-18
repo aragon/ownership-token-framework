@@ -1,5 +1,11 @@
 "use client"
 
+import {
+  IconCircleArrowDownFilled,
+  IconCircleArrowUpFilled,
+  IconCircleDotFilled,
+  IconFilter,
+} from "@tabler/icons-react"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -14,33 +20,14 @@ import {
 } from "@tanstack/react-table"
 import {
   ArrowRightIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsLeftIcon,
-  ChevronsRightIcon,
   ChevronsUpDownIcon,
-  CircleArrowDownIcon,
-  CircleArrowUpIcon,
-  CircleIcon,
-  FilterIcon,
   MessageSquareIcon,
-  PlusIcon,
-  SearchIcon,
   SettingsIcon,
 } from "lucide-react"
 import * as React from "react"
 import { useState } from "react"
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -146,7 +133,7 @@ const columns: ColumnDef<Token>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-1.5">
         <span>{row.original.positive}</span>
-        <CircleArrowUpIcon className="size-4 text-green-500" />
+        <IconCircleArrowUpFilled className="size-4 text-green-500" />
       </div>
     ),
   },
@@ -165,7 +152,7 @@ const columns: ColumnDef<Token>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-1.5">
         <span>{row.original.neutral}</span>
-        <CircleIcon className="size-4 text-gray-400" />
+        <IconCircleDotFilled className="size-4 text-gray-400" />
       </div>
     ),
   },
@@ -184,7 +171,7 @@ const columns: ColumnDef<Token>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-1.5">
         <span>{row.original.atRisk}</span>
-        <CircleArrowDownIcon className="size-4 text-red-500" />
+        <IconCircleArrowDownFilled className="size-4 text-red-500" />
       </div>
     ),
   },
@@ -209,7 +196,9 @@ const columns: ColumnDef<Token>[] = [
     cell: ({ row }) => (
       <Button
         className="size-8"
-        render={<Link to="/tokens/$tokenId" params={{ tokenId: row.original.id }} />}
+        render={
+          <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
+        }
         size="icon"
         variant="ghost"
       >
@@ -288,7 +277,7 @@ function FilterBar({
   return (
     <div className="flex items-center justify-between gap-4">
       <div className="relative">
-        <FilterIcon className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <IconFilter className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           className="w-64 pl-8"
           onChange={(e) => onFilterChange(e.target.value)}
@@ -395,7 +384,10 @@ function TokenDataTable({ data }: { data: Token[] }) {
                   data-state={row.getIsSelected() && "selected"}
                   key={row.id}
                   onClick={() =>
-                    navigate({ to: "/tokens/$tokenId", params: { tokenId: row.original.id } })
+                    navigate({
+                      to: "/tokens/$tokenId",
+                      params: { tokenId: row.original.id },
+                    })
                   }
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -422,7 +414,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
         </Table>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Rows per page</span>
@@ -490,7 +482,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
