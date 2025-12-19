@@ -1,4 +1,4 @@
-# Token Ownership Analytics
+# Ownership Token Index
 
 A TanStack Start application with React, TypeScript, Tailwind CSS, and shadcn/ui.
 

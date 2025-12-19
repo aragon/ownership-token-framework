@@ -3,86 +3,52 @@
     {
       "id": "token",
       "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
-      "evidenceEntries": 4,
-      "positive": 2,
+      "description": "AAVE token has fixed supply (no mint function) behind an upgradeable proxy controlled by governance. Unlike most governance tokens, AAVE has absolutely no minting mechanism.",
+      "evidenceEntries": 6,
+      "positive": 5,
       "neutral": 1,
-      "atRisk": 1,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "mint-controlled",
-          "name": "Mint controlled by DAO",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "immutable-token",
-          "name": "Immutable token",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
           "id": "fixed-supply",
-          "name": "Fixed supply",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "Fixed Supply - AAVE Token",
+          "status": "positive",
+          "description": "No mint() function exists anywhere in the AAVE token codebase. Total supply is set at initialization and cannot be increased. This is the gold standard for token economics.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "BaseAaveToken.sol:22",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "uint256 internal _totalSupply; - No mint() function exists"
             }
           ]
         },
         {
-          "id": "deterministic-supply",
-          "name": "Deterministic supply",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "no-minter-role",
+          "name": "No Minter Role - AAVE Token",
+          "status": "positive",
+          "description": "Unlike most governance tokens, AAVE has absolutely no minting mechanism. No MINTER_ROLE, no mint function, no inflation pathway.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
+              "title": "aave-token-v3/src",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "grep search returns zero results for mint or MINTER"
+            }
+          ]
+        },
+        {
+          "id": "proxy-upgradeability",
+          "name": "Proxy Upgradeability - AAVE Token",
+          "status": "neutral",
+          "description": "Token is behind InitializableAdminUpgradeabilityProxy. Upgrade rights should be held by governance timelock. Not immutable but governance-controlled.",
+          "evidences": [
             {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "id": "ev1",
+              "title": "AaveTokenV3.sol:7-11",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "contract AaveTokenV3 is BaseAaveTokenV2, BaseDelegation"
             }
           ]
         }
@@ -91,67 +57,52 @@
     {
       "id": "value-accrual",
       "name": "Value Accrual Mechanism",
-      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "description": "AAVE token does not receive direct protocol revenue at the token level. Value accrual occurs through staking mechanisms (Safety Module via ERC-4626 vaults) and governance rights. GHO generates revenue through interest and GSM fees flowing to treasury.",
       "evidenceEntries": 3,
       "positive": 2,
-      "neutral": 0,
-      "atRisk": 1,
+      "neutral": 1,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "protocol-fees",
-          "name": "Protocol Fees",
+          "id": "staking-yield",
+          "name": "Staking Yield - ATokenVault",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "ERC-4626 vault allows yield generation on deposited assets. Standard composable vault pattern for staking.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "ATokenVault.sol:29",
+              "url": "https://github.com/aave/gho-core",
+              "comment": "contract ATokenVault is ERC4626Upgradeable, OwnableUpgradeable"
             }
           ]
         },
         {
-          "id": "external-fees",
-          "name": "External fees",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "fee-distribution-gsm",
+          "name": "Fee Distribution - GSM",
+          "status": "positive",
+          "description": "GSM swap fees are programmatically distributed to GHO treasury. Cannot be redirected without governance action.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Gsm.sol:280-287",
+              "url": "https://github.com/aave/aave-v3-core",
+              "comment": "function distributeFeesToTreasury() - IERC20(GHO_TOKEN).transfer(_ghoTreasury, accruedFees)"
             }
           ]
         },
         {
-          "id": "flywheel",
-          "name": "Flywheel",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "vault-fee-control",
+          "name": "Vault Fee Control",
+          "status": "neutral",
+          "description": "Vault owner can set fees on yield (up to 100% per _setFee constraint). Owner should be governance-controlled.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "ATokenVault.sol:414-417",
+              "url": "https://github.com/aave/Aave-Vault/blob/main/src/ATokenVault.sol#L414",
+              "comment": "function setFee(uint256 newFee) public override onlyOwner"
             }
           ]
         }
@@ -160,48 +111,160 @@
     {
       "id": "protocol-revenue",
       "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
-      "evidenceEntries": 2,
-      "positive": 1,
+      "description": "Protocol fees flow to a governance-controlled Collector (treasury) contract. Revenue sources include reserve factor, flashloan premiums, and liquidation protocol fees. All flows are programmatic and enforced at protocol level.",
+      "evidenceEntries": 4,
+      "positive": 3,
       "neutral": 1,
       "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "fee-destination",
-          "name": "Fee destination",
+          "id": "fee-destination-reserve",
+          "name": "Fee Destination - Reserve Factor",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Reserve factor percentage of interest accrues to treasury. Programmatic, cannot be bypassed.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "ReserveLogic.sol:181-206",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "function _accrueToTreasury - reserve.accruedToTreasury += amountToMint"
             }
           ]
         },
         {
-          "id": "revenue-protection",
-          "name": "Revenue protection",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "fee-destination-flashloan",
+          "name": "Fee Destination - Flashloan Premiums",
+          "status": "positive",
+          "description": "Flashloan fees accrue directly to reserve treasury. Hardcoded destination.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
+              "title": "FlashLoanLogic.sol:226-229",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "reserve.accruedToTreasury += params.totalPremium.rayDiv(...)"
+            }
+          ]
+        },
+        {
+          "id": "fee-destination-liquidation",
+          "name": "Fee Destination - Liquidation Fees",
+          "status": "positive",
+          "description": "Protocol liquidation fees transfer directly to treasury address. Immutable per AToken deployment.",
+          "evidences": [
             {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "id": "ev1",
+              "title": "LiquidationLogic.sol:369-375",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "vars.collateralAToken.transferOnLiquidation to RESERVE_TREASURY_ADDRESS()"
+            }
+          ]
+        },
+        {
+          "id": "treasury-immutability",
+          "name": "Treasury Address Immutability",
+          "status": "neutral",
+          "description": "Treasury destination is immutable per AToken deployment. However, the treasury contract itself is upgradeable and FUNDS_ADMIN_ROLE can redirect funds from treasury.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "AToken.sol:33",
+              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/tokenization/AToken.sol#L33",
+              "comment": "address public immutable TREASURY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "treasury-ownership",
+      "name": "Treasury Ownership",
+      "description": "The Collector contract is the protocol treasury. It is governance-controlled via FUNDS_ADMIN_ROLE with no backdoors for fund extraction.",
+      "evidenceEntries": 2,
+      "positive": 2,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "treasury-access-control",
+          "name": "Treasury Access Control",
+          "status": "positive",
+          "description": "Only FUNDS_ADMIN_ROLE can transfer, approve, or create payment streams. Should be governance timelock (requires verification).",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Collector.sol:24,33",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "contract Collector - bytes32 public constant FUNDS_ADMIN_ROLE = 'FUNDS_ADMIN'"
+            }
+          ]
+        },
+        {
+          "id": "revenue-splitter-immutability",
+          "name": "Revenue Splitter Immutability",
+          "status": "positive",
+          "description": "When used, revenue split recipients and percentages are immutable. Cannot be changed after deployment.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "RevenueSplitter.sol:16-34",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "address payable public immutable RECIPIENT_A/B; uint16 immutable SPLIT_PERCENTAGE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-ownership",
+      "name": "Protocol Ownership",
+      "description": "Aave V3 uses a sophisticated multi-role ACL system with granular permissions. Emergency powers are limited to pause/freeze operations. Contracts are upgradeable but admin is governance-controlled.",
+      "evidenceEntries": 3,
+      "positive": 3,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "multi-role-acl",
+          "name": "Multi-Role Access Control",
+          "status": "positive",
+          "description": "Granular role separation prevents single point of control. Different roles for pool admin, emergency, risk, asset listing. AAVE holders indirectly control these addresses via governance.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "ACLManager.sol:14-20",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "POOL_ADMIN_ROLE, EMERGENCY_ADMIN_ROLE, RISK_ADMIN_ROLE, etc."
+            }
+          ]
+        },
+        {
+          "id": "emergency-powers",
+          "name": "Emergency Powers - Pause Only",
+          "status": "positive",
+          "description": "Emergency admin can only pause/freeze operations. Cannot withdraw funds, upgrade contracts, or change fee destinations. Grace period capped at 4 hours.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "PoolConfigurator.sol:470-478",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "function setPoolPause(bool paused, uint40 gracePeriod) onlyEmergencyOrPoolAdmin"
+            }
+          ]
+        },
+        {
+          "id": "protocol-upgradeability",
+          "name": "Protocol Upgradeability",
+          "status": "positive",
+          "description": "Core contracts are behind upgradeable proxies. Admin is immutable (set to PoolAddressesProvider) but owner can upgrade implementations. Requires governance verification.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "BaseImmutableAdminUpgradeabilityProxy.sol:16-25",
+              "url": "https://github.com/aave/aave-token-v3",
+              "comment": "contract BaseImmutableAdminUpgradeabilityProxy - address internal immutable _admin"
             }
           ]
         }
@@ -212,65 +275,47 @@
     {
       "id": "token",
       "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to an immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
       "evidenceEntries": 4,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 1,
+      "positive": 4,
+      "neutral": 0,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
           "id": "mint-controlled",
           "name": "Mint controlled by DAO",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Minter role is given to governance-controlled contracts. Token minting requires DAO approval.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Minter contract",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol#L143"
             }
           ]
         },
         {
           "id": "immutable-token",
-          "name": "Immutable token",
+          "name": "Immutable Token",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Token contract is not upgradeable. No proxy pattern.",
           "evidences": [
             {
               "id": "ev1",
               "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol"
             }
           ]
         },
         {
           "id": "fixed-supply",
-          "name": "Fixed supply",
-          "status": "neutral",
+          "name": "Fixed Supply",
+          "status": "positive",
           "description": "Rebasing mechanism protects veAERO holders from direct dilution",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
               "title": "Aero.sol",
               "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
             }
@@ -278,20 +323,14 @@
         },
         {
           "id": "deterministic-supply",
-          "name": "Deterministic supply",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "Deterministic Supply",
+          "status": "positive",
+          "description": "Minter is immutable and controls the emission schedule",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Minter.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol"
             }
           ]
         }
@@ -302,46 +341,34 @@
       "name": "Value Accrual Mechanism",
       "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
       "evidenceEntries": 3,
-      "positive": 2,
+      "positive": 3,
       "neutral": 0,
-      "atRisk": 1,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
           "id": "protocol-fees",
           "name": "Protocol Fees",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "veAERO gets 100% of fees",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Fee distribution",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/FeesVotingReward.sol"
             }
           ]
         },
         {
           "id": "external-fees",
-          "name": "External fees",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "External fees (Bribes)",
+          "status": "positive",
+          "description": "External incentives flow to veAERO holders",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Bribe contracts",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/BribeVotingReward.sol"
             }
           ]
         },
@@ -349,18 +376,12 @@
           "id": "flywheel",
           "name": "Flywheel",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Locked tokens reduce effective circulation. Not full burn but indirect value accrual via reduced supply and the veAERO lock rate.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "VotingEscrow.sol",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/VotingEscrow.sol#L816"
             }
           ]
         }
@@ -369,7 +390,7 @@
     {
       "id": "protocol-revenue",
       "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager who cannot change WHERE the fee can go but they can potentially zero the fee.",
       "evidenceEntries": 2,
       "positive": 1,
       "neutral": 1,
@@ -380,18 +401,13 @@
           "id": "fee-destination",
           "name": "Fee destination",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Fee path: Pool → PoolFees → Gauge → FeesVotingReward → Voters",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Pool.sol:377-378",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/FeesVotingReward.sol",
+              "comment": "fees calculated as amountIn * getFee() / 10000"
             }
           ]
         },
@@ -399,227 +415,50 @@
           "id": "revenue-protection",
           "name": "Revenue protection",
           "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Fee destinations cannot be changed but the team address can set the fee to zero. However, fee cap to team is hardcoded immutable at 5%.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "crv": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
-      "evidenceEntries": 4,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 1,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "mint-controlled",
-          "name": "Mint controlled by DAO",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "immutable-token",
-          "name": "Immutable token",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "fixed-supply",
-          "name": "Fixed supply",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "deterministic-supply",
-          "name": "Deterministic supply",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Fee manager permissions",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/factories/PoolFactory.sol#L92"
             }
           ]
         }
       ]
     },
     {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
-      "evidenceEntries": 3,
+      "id": "protocol-ownership",
+      "name": "Protocol Ownership",
+      "description": "Aerodrome contracts are immutable. Most fee conditions are light-touch permissions which do not affect token holder revenue streams. The fee to zero is the main exception. There are no emergency powers to access funds.",
+      "evidenceEntries": 2,
       "positive": 2,
       "neutral": 0,
-      "atRisk": 1,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "protocol-fees",
-          "name": "Protocol Fees",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "external-fees",
-          "name": "External fees",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "flywheel",
-          "name": "Flywheel",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-revenue",
-      "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
-      "evidenceEntries": 2,
-      "positive": 1,
-      "neutral": 1,
       "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "fee-destination",
-          "name": "Fee destination",
+          "id": "protocol-immutability",
+          "name": "Protocol Immutability",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Contracts are non-upgradeable",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Core contracts",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol"
             }
           ]
         },
         {
-          "id": "revenue-protection",
-          "name": "Revenue protection",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "onchain-governance",
+          "name": "Onchain Governance",
+          "status": "positive",
+          "description": "ProtocolGovernor (15-min delay, 1-week voting, 4% quorum) and EpochGovernor for emission adjustments. NO FUND EXTRACTION: No sweep functions or backdoors to steal funds",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Governance contracts",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol#L143"
             }
           ]
         }
@@ -630,7 +469,7 @@
     {
       "id": "token",
       "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
+      "description": "LDO token contract is immutable but has a controller (TokenManager) with mint/burn capabilities. Supply is unbounded but minting requires governance approval.",
       "evidenceEntries": 4,
       "positive": 2,
       "neutral": 1,
@@ -638,78 +477,58 @@
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "mint-controlled",
-          "name": "Mint controlled by DAO",
+          "id": "token-immutability",
+          "name": "Token Contract Immutability",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "The LDO token contract itself is not upgradeable. No proxy pattern deployed.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "MiniMeToken",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol",
+              "comment": "Deployed without proxy pattern"
             }
           ]
         },
         {
-          "id": "immutable-token",
-          "name": "Immutable token",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "fixed-supply",
-          "name": "Fixed supply",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "deterministic-supply",
-          "name": "Deterministic supply",
+          "id": "unbounded-supply",
+          "name": "Unbounded Supply - Mint Function",
           "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "Controller can mint unlimited tokens to any address. Controller is TokenManager. MINT_ROLE on TokenManager is given to Voting contract (LDO token holders decide). Minting path: Voting → TokenManager → Token.generateTokens(). No cap on supply.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
+              "title": "MiniMeToken.sol",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
+              "comment": "function generateTokens(address _owner, uint _amount) onlyController returns (bool)"
+            }
+          ]
+        },
+        {
+          "id": "burn-function",
+          "name": "Burn Function",
+          "status": "neutral",
+          "description": "Controller can burn tokens from any address. Currently BURN_ROLE is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Agent to call setPermission on ACL.",
+          "evidences": [
             {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "id": "ev1",
+              "title": "MiniMeToken.sol",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
+              "comment": "function destroyTokens(address _owner, uint _amount) onlyController"
+            }
+          ]
+        },
+        {
+          "id": "tokenmanager-upgradeability",
+          "name": "TokenManager Upgradeability",
+          "status": "positive",
+          "description": "TokenManager is upgradeable via Aragon proxy pattern. Full upgrade path requires governance flow: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent → Kernel.setApp(). LDO holders control upgrades.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "TokenManager",
+              "url": "https://github.com/aragon/aragonOS/blob/next/contracts/apps/AppProxyUpgradeable.sol",
+              "comment": "Deployed via Aragon AppProxyUpgradeable"
             }
           ]
         }
@@ -718,67 +537,37 @@
     {
       "id": "value-accrual",
       "name": "Value Accrual Mechanism",
-      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
-      "evidenceEntries": 3,
+      "description": "LDO token itself does not directly accrue protocol fees. Value accrual is through governance rights over protocol treasury and fee parameters.",
+      "evidenceEntries": 2,
       "positive": 2,
       "neutral": 0,
-      "atRisk": 1,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "protocol-fees",
-          "name": "Protocol Fees",
+          "id": "governance-rights",
+          "name": "Governance Rights",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "LDO holders have governance power over protocol decisions, fee allocations, and treasury management. Indirect value accrual through protocol growth and governance.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Voting contract",
+              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
+              "comment": "Voting contract controls Agent which controls treasury and protocol parameters"
             }
           ]
         },
         {
-          "id": "external-fees",
-          "name": "External fees",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "flywheel",
-          "name": "Flywheel",
+          "id": "dual-governance",
+          "name": "Dual Governance Protection",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "stETH holders can veto LDO governance decisions via Escrow mechanism. Prevents hostile LDO majority from harming stETH holder interests. Aligns token holder interests.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "DualGovernance",
+              "url": "https://github.com/lidofinance/dual-governance/blob/0d31f5b3dbe0a553887604a2d5755d14033b8e3d/contracts/DualGovernance.sol#L165"
             }
           ]
         }
@@ -787,7 +576,86 @@
     {
       "id": "protocol-revenue",
       "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
+      "description": "Fees are set per staking module (currently 10% of staking rewards split between treasury and module). Fee changes require full governance flow.",
+      "evidenceEntries": 3,
+      "positive": 2,
+      "neutral": 1,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "fee-destination",
+          "name": "Fee Destination",
+          "status": "positive",
+          "description": "Fees set per staking module. Currently 7 modules, each with treasuryFee + stakingModuleFee = 1000 (10%).",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "StakingRouter.sol",
+              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+              "comment": "function addStakingModule with _stakingModuleFee and _treasuryFee parameters"
+            }
+          ]
+        },
+        {
+          "id": "fee-change-protection",
+          "name": "Fee Change Protection",
+          "status": "positive",
+          "description": "To change fees, full governance flow required: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent → StakingRouter. LDO holders majority must approve, stETH holders can veto.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "STAKING_MODULE_MANAGE_ROLE",
+              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+              "comment": "Given to Agent contract"
+            }
+          ]
+        },
+        {
+          "id": "treasury-fee-flexibility",
+          "name": "Treasury Fee Flexibility",
+          "status": "neutral",
+          "description": "Fees are not immutable. Governance can change fee percentages and distribution. However, changes require LDO majority and survive stETH veto period.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "updateStakingModule",
+              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+              "comment": "function can modify fees"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "treasury-ownership",
+      "name": "Treasury Ownership",
+      "description": "Treasury controlled by Agent contract, which is controlled by governance flow.",
+      "evidenceEntries": 1,
+      "positive": 1,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "treasury-access-control",
+          "name": "Treasury Access Control",
+          "status": "positive",
+          "description": "Agent's EXECUTE_ROLE permission manager is Agent itself. EXECUTE_ROLE given to Executor contract. Full governance flow required for treasury actions: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent. LDO holders control treasury via governance.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Agent contract",
+              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-ownership",
+      "name": "Protocol Ownership",
+      "description": "Protocol upgrades and parameter changes require multi-step governance flow with Dual Governance veto protection.",
       "evidenceEntries": 2,
       "positive": 1,
       "neutral": 1,
@@ -795,40 +663,28 @@
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "fee-destination",
-          "name": "Fee destination",
+          "id": "governance-flow",
+          "name": "Governance Flow",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "All significant protocol changes require: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "DualGovernance",
+              "url": "https://github.com/lidofinance/dual-governance/blob/0d31f5b3dbe0a553887604a2d5755d14033b8e3d/contracts/DualGovernance.sol#L165"
             }
           ]
         },
         {
-          "id": "revenue-protection",
-          "name": "Revenue protection",
+          "id": "validator-exit-risk",
+          "name": "Validator Exit Risk",
           "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "During congestion, validator exits can be delayed weeks/months. In this window, hostile LDO majority could theoretically force contract upgrades. Dual Governance veto mechanism mitigates but doesn't fully eliminate this risk.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Ethereum validator-exit queue",
+              "url": "#"
             }
           ]
         }
@@ -839,86 +695,76 @@
     {
       "id": "token",
       "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to a immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
-      "evidenceEntries": 4,
-      "positive": 2,
-      "neutral": 1,
+      "description": "UNI has a fixed initial supply of 1 billion tokens with algorithmic inflation capped at 2% per year. The token contract is immutable with no proxy patterns. Minting is controlled by a single minter address which should be verified as the governance Timelock.",
+      "evidenceEntries": 5,
+      "positive": 4,
+      "neutral": 0,
       "atRisk": 1,
       "aboutLink": "#",
       "criteria": [
         {
+          "id": "immutable-token",
+          "name": "Immutable Token",
+          "status": "positive",
+          "description": "Plain contract with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Uni.sol",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
+            }
+          ]
+        },
+        {
           "id": "mint-controlled",
           "name": "Mint controlled by DAO",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "status": "at_risk",
+          "description": "Minter role exists; must verify on-chain that minter = Timelock (0x1a9C8182C09F50C8318d769245beA52c32BE35BC)",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Uni.sol mint function",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L99-L103",
+              "comment": "Requires verification that minter is governance Timelock"
             }
           ]
         },
         {
-          "id": "immutable-token",
-          "name": "Immutable token",
+          "id": "inflation-cap",
+          "name": "Inflation Cap",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "uint8 public constant mintCap = 2; - hardcoded 2% maximum of total supply per mint",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Uni.sol",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L29"
             }
           ]
         },
         {
-          "id": "fixed-supply",
-          "name": "Fixed supply",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "mint-interval",
+          "name": "Mint Interval",
+          "status": "positive",
+          "description": "uint32 public constant minimumTimeBetweenMints = 1 days * 365; - minimum 365 days between mints",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Uni.sol",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L26"
             }
           ]
         },
         {
           "id": "deterministic-supply",
-          "name": "Deterministic supply",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "Deterministic Supply",
+          "status": "positive",
+          "description": "Initial supply 1B tokens at constructor; inflation schedule is algorithmic with hardcoded constraints",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Uni.sol constructor",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L17"
             }
           ]
         }
@@ -927,67 +773,50 @@
     {
       "id": "value-accrual",
       "name": "Value Accrual Mechanism",
-      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
+      "description": "UNI is primarily a governance token. There is no programmatic value accrual at the token contract level (no staking, no fee distribution, no buyback). Value accrual comes through governance influence over the fee switch.",
       "evidenceEntries": 3,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 1,
+      "positive": 1,
+      "neutral": 2,
+      "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
           "id": "protocol-fees",
-          "name": "Protocol Fees",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "Protocol Fees to Holders",
+          "status": "neutral",
+          "description": "No receive(), stake(), or distribute() functions in Uni.sol. Fee routing is controlled by governance votes, not programmatic distribution",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Uni.sol",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
+              "comment": "No direct code reference at token level"
             }
           ]
         },
         {
-          "id": "external-fees",
-          "name": "External fees",
-          "status": "at_risk",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "governance-rights",
+          "name": "Governance Rights",
+          "status": "positive",
+          "description": "UNI holders vote on fee switch activation and fee routing. Quorum: 4% (40M UNI), Proposal threshold: 1% (10M UNI)",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "GovernorAlpha/Bravo",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
             }
           ]
         },
         {
-          "id": "flywheel",
-          "name": "Flywheel",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "id": "fee-switch",
+          "name": "Fee Switch Activation",
+          "status": "neutral",
+          "description": "Fee switch can ONLY be activated via UNI governance vote, not by Uniswap Labs. Potential future cash flow via governance decisions. Recent governance proposals (2025-2025) have addressed activating protocol fees.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
-            {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Governance proposals",
+              "url": "#"
             }
           ]
         }
@@ -996,48 +825,304 @@
     {
       "id": "protocol-revenue",
       "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager (who) cannot change WHERE the fee can go but they can potentially zero the fee manager",
-      "evidenceEntries": 2,
-      "positive": 1,
-      "neutral": 1,
+      "description": "Protocol fees flow through governance-controlled mechanisms. All versions (V2, V3, V4) have admin functions, but the admin IS the governance Timelock. No separate admin can bypass governance for fee changes.",
+      "evidenceEntries": 4,
+      "positive": 4,
+      "neutral": 0,
       "atRisk": 0,
       "aboutLink": "#",
       "criteria": [
         {
-          "id": "fee-destination",
-          "name": "Fee destination",
+          "id": "v2-fee-destination",
+          "name": "V2 Fee Destination",
           "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "description": "feeToSetter controls feeTo address. feeToSetter = Timelock (governance-controlled)",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
-            },
+              "title": "UniswapV2Factory.sol",
+              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L40-L48"
+            }
+          ]
+        },
+        {
+          "id": "v3-fee-destination",
+          "name": "V3 Fee Destination",
+          "status": "positive",
+          "description": "setFeeProtocol() is onlyFactoryOwner. Factory owner = Timelock. Fee range: 10-25% of LP fees",
+          "evidences": [
             {
-              "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "id": "ev1",
+              "title": "UniswapV3Pool.sol",
+              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L837-L844"
+            }
+          ]
+        },
+        {
+          "id": "v4-fee-destination",
+          "name": "V4 Fee Destination",
+          "status": "positive",
+          "description": "setProtocolFeeController() is onlyOwner. Owner expected to be Timelock",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "UniswapV4PoolManager.sol",
+              "url": "https://github.com/Uniswap/v4-core/blob/main/src/ProtocolFees.sol#L29-L32"
             }
           ]
         },
         {
           "id": "revenue-protection",
-          "name": "Revenue protection",
-          "status": "neutral",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
+          "name": "Revenue Protection",
+          "status": "positive",
+          "description": "Governance flow: Forum RFC → Snapshot → On-chain proposal → Timelock execution. NO separate admin can bypass governance for fee changes. Fee destinations require on-chain UNI holder vote.",
           "evidences": [
             {
               "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28",
-              "comment": "Optional comment"
+              "title": "Governance process",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protocol-ownership",
+      "name": "Protocol Ownership",
+      "description": "Uniswap protocol contracts are immutable across all versions. Core pool/pair contracts cannot be upgraded. Governance controls parameter changes but not contract logic.",
+      "evidenceEntries": 6,
+      "positive": 6,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "v2-immutability",
+          "name": "V2 Pool Immutability",
+          "status": "positive",
+          "description": "Pairs deployed via CREATE2, deterministic addresses, no upgrade mechanism",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "UniswapV2Pair.sol",
+              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31"
+            }
+          ]
+        },
+        {
+          "id": "v3-immutability",
+          "name": "V3 Pool Immutability",
+          "status": "positive",
+          "description": "NoDelegateCall protection prevents proxy-based attacks",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "UniswapV3Pool.sol",
+              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30"
+            }
+          ]
+        },
+        {
+          "id": "v4-singleton",
+          "name": "V4 Singleton Design",
+          "status": "positive",
+          "description": "Pool state stored in singleton mapping, no individual pool upgrade mechanism",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "PoolManager.sol",
+              "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93"
+            }
+          ]
+        },
+        {
+          "id": "onchain-governance",
+          "name": "On-chain Governance",
+          "status": "positive",
+          "description": "GovernorAlpha: 4% quorum, 1% proposal threshold, ~7 days voting. Timelock: 2-day minimum delay, 30-day maximum, 14-day grace period. All fee changes require on-chain proposal and execution through Timelock.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "GovernorAlpha/Timelock",
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
+            }
+          ]
+        },
+        {
+          "id": "no-emergency-powers",
+          "name": "No Emergency Powers",
+          "status": "positive",
+          "description": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Core contracts review",
+              "url": "#"
+            }
+          ]
+        },
+        {
+          "id": "no-fund-extraction",
+          "name": "No Fund Extraction",
+          "status": "positive",
+          "description": "No emergency withdrawal or sweep functions in core contracts. Protocol fees can only be collected to governance-approved destinations.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Core contracts review",
+              "url": "#"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "crv": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "CRV is a non-upgradeable ERC20 token with an immutable supply logic. Minting follows a deterministic, epoch-based emission schedule enforced by an immutable Minter contract. The token is not deployed behind a proxy and core parameters cannot be arbitrarily changed.",
+      "evidenceEntries": 4,
+      "positive": 4,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by protocol logic",
+          "status": "positive",
+          "description": "Minting is restricted to an immutable Minter contract, which can only mint CRV through registered gauges based on user's LP shares or/and locked veCRV",
+          "evidences": [
+            {
+              "id": "ev0",
+              "title": "ERC20CRV.vy – only minter can call mint",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333"
+            },
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – minter set once",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L233"
             },
             {
               "id": "ev2",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
+              "title": "Minter.vy – gauge validation",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "The CRV token contract is not upgradeable and does not sit behind a proxy. Core token logic is immutable.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – no proxy pattern",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "positive",
+          "description": "CRV does not have a hard capped supply, but emissions follow a deterministic yearly epoch schedule with a fixed decay factor of 2^(1/4). Minting rate strictly decreases and cannot be increased.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Initial supply and emission parameters",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L62"
+            },
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – yearly epoch logic",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L117"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "CRV accrues value primarily through veCRV. Users lock CRV to obtain veCRV, which boosts gauge emissions, controls protocol parameters, and receives protocol revenues including swap fees and crvUSD interest flows.",
+      "evidenceEntries": 4,
+      "positive": 4,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-emissions",
+          "name": "Protocol emissions",
+          "status": "positive",
+          "description": "Liquidity providers earn CRV emissions via gauges, with rewards calculated and minted through the Minter contract.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "LiquidityGaugeV5.vy – LP deposit & reward tracking",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L451"
+            },
+            {
+              "id": "ev2",
+              "title": "LPs' rewards are checked by their provided liquidity",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
+            }
+          ]
+        },
+        {
+          "id": "boost-mechanism",
+          "name": "veCRV boost",
+          "status": "positive",
+          "description": "veCRV holders can boost gauge rewards up to 2.5x by voting for gauges, incentivizing long-term locking.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "GaugeController.vy – vote logic",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy#L485"
+            },
+            {
+              "id": "ev2",
+              "title": "LiquidityGaugeV5.vy – boost of 2.5x",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L206"
+            }
+          ]
+        },
+        {
+          "id": "protocol-fees",
+          "name": "Protocol fees",
+          "status": "positive",
+          "description": "Admin fees from swaps are routed through FeeCollector and ultimately distributed to veCRV holders.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "StableSwap pool – withdraw_admin_fees",
+              "url": "https://github.com/curvefi/curve-contract/blob/master/contracts/pools/3pool/StableSwap3Pool.vy#L821"
+            },
+            {
+              "id": "ev2",
+              "title": "FeeCollector – receives admin fees",
+              "url": "https://etherscan.io/address/0xa2bcd1a4efbd04b63cd03f5aff2561106ebcce00#code"
+            },
+            {
+              "id": "ev3",
+              "title": "FeeDistributor.vy – veCRV claims",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy#L233"
+            }
+          ]
+        },
+        {
+          "id": "external-revenue",
+          "name": "External revenue dependency",
+          "status": "at_risk",
+          "description": "Value accrual partially depends on external systems such as crvUSD controllers and burner contracts, which can change allocation weights via governance.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "FeeSplitter.vy – receivers",
+              "url": "https://github.com/curvefi/fee-splitter/blob/master/contracts/FeeSplitter.vy#L158"
             }
           ]
         }
