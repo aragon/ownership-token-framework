@@ -976,5 +976,157 @@
         }
       ]
     }
+  ],
+  "crv": [
+    {
+      "id": "token",
+      "name": "Token",
+      "description": "CRV is a non-upgradeable ERC20 token with an immutable supply logic. Minting follows a deterministic, epoch-based emission schedule enforced by an immutable Minter contract. The token is not deployed behind a proxy and core parameters cannot be arbitrarily changed.",
+      "evidenceEntries": 4,
+      "positive": 4,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "criteria": [
+        {
+          "id": "mint-controlled",
+          "name": "Mint controlled by protocol logic",
+          "status": "positive",
+          "description": "Minting is restricted to an immutable Minter contract, which can only mint CRV through registered gauges based on user's LP shares or/and locked veCRV",
+          "evidences": [
+            {
+              "id": "ev0",
+              "title": "ERC20CRV.vy – only minter can call mint",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333"
+            },
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – minter set once",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L233"
+            },
+            {
+              "id": "ev2",
+              "title": "Minter.vy – gauge validation",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
+            }
+          ]
+        },
+        {
+          "id": "immutable-token",
+          "name": "Immutable token",
+          "status": "positive",
+          "description": "The CRV token contract is not upgradeable and does not sit behind a proxy. Core token logic is immutable.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – no proxy pattern",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy"
+            }
+          ]
+        },
+        {
+          "id": "deterministic-supply",
+          "name": "Deterministic supply",
+          "status": "positive",
+          "description": "CRV does not have a hard capped supply, but emissions follow a deterministic yearly epoch schedule with a fixed decay factor of 2^(1/4). Minting rate strictly decreases and cannot be increased.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "Initial supply and emission parameters",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L62"
+            },
+            {
+              "id": "ev1",
+              "title": "ERC20CRV.vy – yearly epoch logic",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L117"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "value-accrual",
+      "name": "Value Accrual Mechanism",
+      "description": "CRV accrues value primarily through veCRV. Users lock CRV to obtain veCRV, which boosts gauge emissions, controls protocol parameters, and receives protocol revenues including swap fees and crvUSD interest flows.",
+      "evidenceEntries": 4,
+      "positive": 4,
+      "neutral": 0,
+      "atRisk": 0,
+      "aboutLink": "#",
+      "criteria": [
+        {
+          "id": "protocol-emissions",
+          "name": "Protocol emissions",
+          "status": "positive",
+          "description": "Liquidity providers earn CRV emissions via gauges, with rewards calculated and minted through the Minter contract.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "LiquidityGaugeV5.vy – LP deposit & reward tracking",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L451"
+            },
+            {
+              "id": "ev2",
+              "title": "LPs' rewards are checked by their provided liquidity",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
+            }
+          ]
+        },
+        {
+          "id": "boost-mechanism",
+          "name": "veCRV boost",
+          "status": "positive",
+          "description": "veCRV holders can boost gauge rewards up to 2.5x by voting for gauges, incentivizing long-term locking.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "GaugeController.vy – vote logic",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy#L485"
+            },
+            {
+              "id": "ev2",
+              "title": "LiquidityGaugeV5.vy – boost of 2.5x",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L206"
+            }
+          ]
+        },
+        {
+          "id": "protocol-fees",
+          "name": "Protocol fees",
+          "status": "positive",
+          "description": "Admin fees from swaps are routed through FeeCollector and ultimately distributed to veCRV holders.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "StableSwap pool – withdraw_admin_fees",
+              "url": "https://github.com/curvefi/curve-contract/blob/master/contracts/pools/3pool/StableSwap3Pool.vy#L821"
+            },
+            {
+              "id": "ev2",
+              "title": "FeeCollector – receives admin fees",
+              "url": "https://etherscan.io/address/0xa2bcd1a4efbd04b63cd03f5aff2561106ebcce00#code"
+            },
+            {
+              "id": "ev3",
+              "title": "FeeDistributor.vy – veCRV claims",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy#L233"
+            }
+          ]
+        },
+        {
+          "id": "external-revenue",
+          "name": "External revenue dependency",
+          "status": "at_risk",
+          "description": "Value accrual partially depends on external systems such as crvUSD controllers and burner contracts, which can change allocation weights via governance.",
+          "evidences": [
+            {
+              "id": "ev1",
+              "title": "FeeSplitter.vy – receivers",
+              "url": "https://github.com/curvefi/fee-splitter/blob/master/contracts/FeeSplitter.vy#L158"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
