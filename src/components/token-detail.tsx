@@ -1,12 +1,5 @@
-import {
-  IconBubble,
-  IconChartBubble,
-  IconCircleArrowDownFilled,
-  IconCircleArrowUpFilled,
-  IconCircleDotFilled,
-} from "@tabler/icons-react"
+import { IconBubble } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
-import { MessageSquareIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -17,7 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import metricsData from "@/data/metrics.json"
 import tokensData from "@/data/tokens.json"
 import AnalyticsContent from "./analytics-content"

@@ -811,7 +811,7 @@
           "id": "fee-switch",
           "name": "Fee Switch Activation",
           "status": "neutral",
-          "description": "Fee switch can ONLY be activated via UNI governance vote, not by Uniswap Labs. Potential future cash flow via governance decisions. Recent governance proposals (2024-2025) have addressed activating protocol fees.",
+          "description": "Fee switch can ONLY be activated via UNI governance vote, not by Uniswap Labs. Potential future cash flow via governance decisions. Recent governance proposals (2025-2025) have addressed activating protocol fees.",
           "evidences": [
             {
               "id": "ev1",

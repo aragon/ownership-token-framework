@@ -1,12 +1,6 @@
 "use client"
 
-import {
-  IconBubble,
-  IconCircleArrowDownFilled,
-  IconCircleArrowUpFilled,
-  IconCircleDotFilled,
-  IconFilter,
-} from "@tabler/icons-react"
+import { IconBubble } from "@tabler/icons-react"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -19,19 +13,10 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowRightIcon, ChevronsUpDownIcon, SettingsIcon } from "lucide-react"
-import * as React from "react"
+import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -41,7 +26,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import tokensData from "@/data/tokens.json"
-import { cn } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -114,63 +98,63 @@ const columns: ColumnDef<Token>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "positive",
-    header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        Positive
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1.5">
-        <span>{row.original.positive}</span>
-        <IconCircleArrowUpFilled className="size-4 text-green-500" />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "neutral",
-    header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        Neutral
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1.5">
-        <span>{row.original.neutral}</span>
-        <IconCircleDotFilled className="size-4 text-gray-400" />
-      </div>
-    ),
-  },
-  {
-    accessorKey: "atRisk",
-    header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        At risk
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1.5">
-        <span>{row.original.atRisk}</span>
-        <IconCircleArrowDownFilled className="size-4 text-red-500" />
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "positive",
+  //   header: ({ column }) => (
+  //     <Button
+  //       className="h-auto p-0 font-medium hover:bg-transparent"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       variant="ghost"
+  //     >
+  //       Positive
+  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
+  //     </Button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center gap-1.5">
+  //       <span>{row.original.positive}</span>
+  //       <IconCircleArrowUpFilled className="size-4 text-green-500" />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "neutral",
+  //   header: ({ column }) => (
+  //     <Button
+  //       className="h-auto p-0 font-medium hover:bg-transparent"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       variant="ghost"
+  //     >
+  //       Neutral
+  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
+  //     </Button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center gap-1.5">
+  //       <span>{row.original.neutral}</span>
+  //       <IconCircleDotFilled className="size-4 text-gray-400" />
+  //     </div>
+  //   ),
+  // },
+  // {
+  //   accessorKey: "atRisk",
+  //   header: ({ column }) => (
+  //     <Button
+  //       className="h-auto p-0 font-medium hover:bg-transparent"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       variant="ghost"
+  //     >
+  //       At risk
+  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
+  //     </Button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center gap-1.5">
+  //       <span>{row.original.atRisk}</span>
+  //       <IconCircleArrowDownFilled className="size-4 text-red-500" />
+  //     </div>
+  //   ),
+  // },
   {
     accessorKey: "lastUpdated",
     header: ({ column }) => (

@@ -1,7 +1,6 @@
 import {
   IconBubble,
-  IconCircleArrowDownFilled,
-  IconCircleArrowUpFilled,
+  IconCircleCheckFilled,
   IconCircleDotFilled,
 } from "@tabler/icons-react"
 import { ArrowUpRightIcon } from "lucide-react"
@@ -51,41 +50,6 @@ export default function MetricCard({ metric }: { metric: Metric }) {
             <span className="text-muted-foreground">evidence entries</span>
             <IconBubble className="size-4 text-muted-foreground" />
           </Badge>
-          <Badge
-            className="bg-green-50 text-green-700 hover:bg-green-100 border-green-200 rounded-sm"
-            variant="outline"
-          >
-            <span className="font-medium">{metric.positive}</span> Positive
-            <IconCircleArrowUpFilled className="text-green-500" />
-          </Badge>
-          {match(metric)
-            .when(
-              (m) => m.neutral > 0,
-              (m) => (
-                <Badge
-                  className="bg-gray-50 text-gray-700 hover:bg-gray-100 border-gray-200 rounded-sm"
-                  variant="outline"
-                >
-                  <span className="font-medium">{m.neutral}</span> Neutral
-                  <IconCircleDotFilled className="text-gray-500" />
-                </Badge>
-              )
-            )
-            .otherwise(() => null)}
-          {match(metric)
-            .when(
-              (m) => m.atRisk > 0,
-              (m) => (
-                <Badge
-                  className="bg-red-50 text-red-700 hover:bg-red-100 border-red-200 rounded-sm"
-                  variant="outline"
-                >
-                  <span className="font-medium">{m.atRisk}</span> At risk
-                  <IconCircleArrowDownFilled className="text-red-500" />
-                </Badge>
-              )
-            )
-            .otherwise(() => null)}
         </div>
       </div>
 
@@ -93,39 +57,17 @@ export default function MetricCard({ metric }: { metric: Metric }) {
       <Accordion className="border-t" multiple>
         {metric.criteria.map((criteria) => (
           <AccordionItem key={criteria.id} value={criteria.id}>
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline gap-x-1 items-center">
               <div className="flex items-center justify-between w-full">
                 <span className="text-sm">{criteria.name}</span>
-                {match(criteria)
-                  .with({ status: "positive" }, () => (
-                    <Badge
-                      className="rounded-sm mr-2 bg-green-50 text-green-700 hover:bg-green-100 border-green-200"
-                      variant="outline"
-                    >
-                      Positive
-                      <IconCircleArrowUpFilled className="text-green-500" />
-                    </Badge>
-                  ))
-                  .with({ status: "neutral" }, () => (
-                    <Badge
-                      className="rounded-sm mr-2 bg-gray-50 text-gray-700 hover:bg-gray-100 border-gray-200"
-                      variant="outline"
-                    >
-                      Neutral
-                      <IconCircleDotFilled className="text-gray-500" />
-                    </Badge>
-                  ))
-                  .with({ status: "at_risk" }, () => (
-                    <Badge
-                      className="rounded-sm mr-2 bg-red-50 text-red-700 hover:bg-red-100 border-red-200"
-                      variant="outline"
-                    >
-                      At risk
-                      <IconCircleArrowDownFilled className="text-red-500" />
-                    </Badge>
-                  ))
-                  .exhaustive()}
               </div>
+              {match(criteria.status)
+                .with("positive", () => (
+                  <IconCircleCheckFilled className="size-5 text-green-500" />
+                ))
+                .otherwise(() => (
+                  <IconCircleDotFilled className="size-5 text-gray-500" />
+                ))}
             </AccordionTrigger>
             <AccordionContent className="px-4 pb-4">
               {criteria.description && (
