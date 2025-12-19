@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router"
-import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
 export function SiteHeader() {
@@ -21,33 +21,19 @@ export function SiteHeader() {
               <AvatarImage className="size-8 rounded-lg" src="/aragon.jpg" />
               <AvatarFallback>AG</AvatarFallback>
             </Avatar>
-            <span className="font-semibold">
-              Token Ownership <span className="font-normal">Analytics</span>
-            </span>
+            <span className="font-semibold">Ownership Token Index</span>
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden items-center gap-1 md:flex">
-            <Button render={<Link to="/" />} size="sm" variant="ghost">
-              Tokens
-            </Button>
-            <Button size="sm" variant="ghost">
-              Framework
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={<Button size="sm" variant="ghost" />}
-              >
-                More
-                <ChevronDownIcon className="ml-1 size-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Documentation</DropdownMenuItem>
-                <DropdownMenuItem>API</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </nav>
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuLink render={<Link to="/" />}>
+                  Tokens
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
       </div>
     </header>

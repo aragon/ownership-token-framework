@@ -1,4 +1,6 @@
 import {
+  IconBubble,
+  IconChartBubble,
   IconCircleArrowDownFilled,
   IconCircleArrowUpFilled,
   IconCircleDotFilled,
@@ -126,34 +128,9 @@ function TokenHero({ token }: { token: TokenInfo }) {
           <Badge className="rounded-sm" variant="outline">
             <span className="font-medium">{token.evidenceEntries}</span>
             <span className="text-muted-foreground">evidence entries</span>
-            <MessageSquareIcon className="size-4 text-muted-foreground" />
+            <IconBubble className="size-4 text-muted-foreground" />
           </Badge>{" "}
-          analysed, leading to{" "}
-          <Badge
-            className="bg-green-50 text-green-700 hover:bg-green-100 border-green-200 rounded-sm"
-            variant="outline"
-          >
-            <span className="font-medium">{token.positive}</span> Positive
-            <IconCircleArrowUpFilled />
-          </Badge>
-          <span className="text-muted-foreground">,</span>{" "}
-          <Badge
-            className="bg-gray-50 text-gray-700 hover:bg-gray-100 border-gray-200 rounded-sm"
-            variant="outline"
-          >
-            <span className="font-medium">{token.neutral}</span>
-            Neutral
-            <IconCircleDotFilled />
-          </Badge>{" "}
-          and{" "}
-          <Badge
-            className="bg-red-50 text-red-700 hover:bg-red-100 border-red-200 rounded-sm"
-            variant="outline"
-          >
-            <span className="font-medium">{token.atRisk}</span>
-            At risk
-            <IconCircleArrowDownFilled />
-          </Badge>
+          analysed.
         </div>
 
         <div className="flex items-center gap-2">
@@ -218,7 +195,8 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
           <div className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-[1fr_300px]">
             {/* Left column - Tabs and metrics */}
             <div>
-              <Tabs defaultValue="analytics">
+              <AnalyticsContent metrics={metrics} />
+              {/* <Tabs defaultValue="analytics">
                 <TabsList>
                   <TabsTrigger value="analytics">Analytics</TabsTrigger>
                   <TabsTrigger value="version-log">Version log</TabsTrigger>
@@ -235,12 +213,14 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
                     </span>
                   </div>
                 </TabsContent>
-              </Tabs>
+              </Tabs> */}
             </div>
 
             {/* Right column - Info sidebar */}
-            <div className="lg:mt-12">
-              <InfoSidebar token={token} />
+            <div>
+              <div className="sticky top-6">
+                <InfoSidebar token={token} />
+              </div>
             </div>
           </div>
         </div>

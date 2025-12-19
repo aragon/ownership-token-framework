@@ -1,12 +1,10 @@
 import {
+  IconBubble,
   IconCircleArrowDownFilled,
   IconCircleArrowUpFilled,
   IconCircleDotFilled,
 } from "@tabler/icons-react"
-import {
-  ArrowUpRightIcon,
-  MessageSquareIcon,
-} from "lucide-react"
+import { ArrowUpRightIcon } from "lucide-react"
 import { match } from "ts-pattern"
 import {
   Accordion,
@@ -21,6 +19,8 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemGroup,
+  ItemTitle,
 } from "@/components/ui/item"
 import type { Metric } from "./token-detail"
 
@@ -49,7 +49,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
           <Badge className="rounded-sm" variant="outline">
             <span className="font-medium">{metric.evidenceEntries}</span>
             <span className="text-muted-foreground">evidence entries</span>
-            <MessageSquareIcon className="size-4 text-muted-foreground" />
+            <IconBubble className="size-4 text-muted-foreground" />
           </Badge>
           <Badge
             className="bg-green-50 text-green-700 hover:bg-green-100 border-green-200 rounded-sm"
@@ -134,25 +134,24 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                 </p>
               )}
               {criteria.evidences && criteria.evidences.length > 0 && (
-                <div className="space-y-2">
+                <ItemGroup className="gap-y-4">
                   {criteria.evidences.map((evidence) => (
-                    <Item key={evidence.id} variant="outline">
-                      <ItemContent>
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold">
-                            {evidence.title}
-                          </span>
-                          <span className="text-muted-foreground text-sm truncate">
+                    <Item key={evidence.id} variant="muted">
+                      <ItemContent className="truncate">
+                        <ItemTitle>
+                          {evidence.title}{" "}
+                          <span className="text-muted-foreground">
                             {evidence.url.replace("https://", "")}
                           </span>
-                        </div>
+                        </ItemTitle>
                         {evidence.comment && (
-                          <ItemDescription>{evidence.comment}</ItemDescription>
+                          <ItemDescription className="mt-1">
+                            {evidence.comment}
+                          </ItemDescription>
                         )}
                       </ItemContent>
                       <ItemActions>
                         <Button
-                          className="gap-1.5"
                           render={
                             <a
                               className="no-underline!"
@@ -170,7 +169,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                       </ItemActions>
                     </Item>
                   ))}
-                </div>
+                </ItemGroup>
               )}
               <button
                 className="mt-3 inline-block text-sm text-blue-600 hover:underline"

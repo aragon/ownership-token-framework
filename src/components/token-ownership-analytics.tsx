@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  IconBubble,
   IconCircleArrowDownFilled,
   IconCircleArrowUpFilled,
   IconCircleDotFilled,
@@ -18,12 +19,7 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import {
-  ArrowRightIcon,
-  ChevronsUpDownIcon,
-  MessageSquareIcon,
-  SettingsIcon,
-} from "lucide-react"
+import { ArrowRightIcon, ChevronsUpDownIcon, SettingsIcon } from "lucide-react"
 import * as React from "react"
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -114,7 +110,7 @@ const columns: ColumnDef<Token>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-1.5">
         <span>{row.original.evidenceEntries}</span>
-        <MessageSquareIcon className="size-4 text-muted-foreground" />
+        <IconBubble className="size-4 text-muted-foreground" />
       </div>
     ),
   },
@@ -213,7 +209,7 @@ function HeroSection() {
   return (
     <section>
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Token ownership analytics
+        Ownership Token Index
       </h1>
       <p className="mt-4 max-w-3xl text-muted-foreground">
         A standardized, open-source disclosure framework for token investors
@@ -226,114 +222,17 @@ function HeroSection() {
   )
 }
 
-// Stats Cards
-function StatsCards() {
-  return (
-    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <div className="rounded-lg border bg-card p-4">
-        <p className="text-sm text-muted-foreground">Total tokens analysed</p>
-        <p className="mt-1 text-3xl font-semibold tabular-nums">1,420</p>
-      </div>
-      <div className="rounded-lg border bg-card p-4">
-        <p className="text-sm text-muted-foreground">Total framework metrics</p>
-        <p className="mt-1 text-3xl font-semibold tabular-nums">24</p>
-        <a
-          className="mt-2 inline-flex items-center text-sm text-blue-600 hover:underline"
-          href="#"
-        >
-          Learn more
-          <ArrowRightIcon className="ml-1 size-3" />
-        </a>
-      </div>
-      <div className="rounded-lg border bg-card p-4">
-        <p className="text-sm text-muted-foreground">
-          Total framework criterias
-        </p>
-        <p className="mt-1 text-3xl font-semibold tabular-nums">56</p>
-        <a
-          className="mt-2 inline-flex items-center text-sm text-blue-600 hover:underline"
-          href="#"
-        >
-          Learn more
-          <ArrowRightIcon className="ml-1 size-3" />
-        </a>
-      </div>
-    </div>
-  )
-}
-
-// Filter Bar
-function FilterBar({
-  filterValue,
-  onFilterChange,
-  network,
-  onNetworkChange,
-}: {
-  filterValue: string
-  onFilterChange: (value: string) => void
-  network: string
-  onNetworkChange: (value: string) => void
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4">
-      <div className="relative">
-        <IconFilter className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          className="w-64 pl-8"
-          onChange={(e) => onFilterChange(e.target.value)}
-          placeholder="Filter by tokens"
-          value={filterValue}
-        />
-      </div>
-      <Select
-        onValueChange={(value) => onNetworkChange(value ?? "")}
-        value={network}
-      >
-        <SelectTrigger className="w-40">
-          <SettingsIcon className="mr-2 size-4" />
-          <SelectValue>{(value) => value || "All networks"}</SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="All networks">All networks</SelectItem>
-          <SelectItem value="ethereum">Ethereum</SelectItem>
-          <SelectItem value="base">Base</SelectItem>
-          <SelectItem value="arbitrum">Arbitrum</SelectItem>
-          <SelectItem value="optimism">Optimism</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
-  )
-}
-
-// Token Data Table
 function TokenDataTable({ data }: { data: Token[] }) {
   const navigate = useNavigate()
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [filterValue, setFilterValue] = useState("")
-  const [network, setNetwork] = useState("All networks")
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   })
 
-  const filteredData = React.useMemo(() => {
-    let filtered = data
-    if (filterValue) {
-      filtered = filtered.filter(
-        (token) =>
-          token.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-          token.address.toLowerCase().includes(filterValue.toLowerCase())
-      )
-    }
-    if (network !== "All networks") {
-      filtered = filtered.filter((token) => token.network === network)
-    }
-    return filtered
-  }, [data, filterValue, network])
-
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     state: {
       sorting,
@@ -351,13 +250,6 @@ function TokenDataTable({ data }: { data: Token[] }) {
 
   return (
     <div className="space-y-4">
-      <FilterBar
-        filterValue={filterValue}
-        network={network}
-        onFilterChange={setFilterValue}
-        onNetworkChange={setNetwork}
-      />
-
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
@@ -495,7 +387,6 @@ export default function TokenOwnershipAnalytics() {
       <div className="bg-background">
         <div className="mx-auto max-w-7xl px-4 py-6 lg:px-6 lg:py-8">
           <HeroSection />
-          <StatsCards />
         </div>
       </div>
 

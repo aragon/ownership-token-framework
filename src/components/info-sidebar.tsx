@@ -1,4 +1,11 @@
-import { IconCheck, IconCopy } from "@tabler/icons-react"
+import {
+  IconBrandTwitter,
+  IconCheck,
+  IconCopy,
+  IconCurrencyEthereum,
+  IconExternalLink,
+  IconLink,
+} from "@tabler/icons-react"
 import { ExternalLinkIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { copyToClipboard } from "@/lib/utils"
@@ -46,14 +53,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <svg
-                  className="size-3.5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Explorer</title>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                </svg>
+                <IconCurrencyEthereum />
                 Explorer
               </a>
             }
@@ -74,7 +74,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <ExternalLinkIcon className="size-3.5" />
+                <IconLink className="size-3.5" />
                 Website
               </a>
             }
@@ -92,14 +92,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <svg
-                  className="size-3.5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Twitter</title>
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
+                <IconBrandTwitter />
                 Twitter
               </a>
             }
