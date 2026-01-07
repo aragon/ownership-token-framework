@@ -47,6 +47,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
         {token.links.scan && (
           <Button
             className="gap-1.5"
+            nativeButton={false}
             render={
               <a
                 href={token.links.scan}

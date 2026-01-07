@@ -114,23 +114,16 @@ function TokenHero({ token }: { token: TokenInfo }) {
       </p>
 
       {/* Stats row */}
-      <div className="mt-6 flex flex-wrap items-baseline justify-between gap-4 text-sm">
-        <div className="flex-wrap text-muted-foreground">
-          <span className="font-semibold">{token.name}</span> has{" "}
-          <Badge className="rounded-sm" variant="outline">
-            <span className="font-medium">{token.evidenceEntries}</span>
-            <span className="text-muted-foreground">evidence entries</span>
-            <IconBubble className="size-4 text-muted-foreground" />
-          </Badge>{" "}
-          analysed.
-        </div>
-
-        <div className="flex items-center gap-2">
+      <div className="mt-6 flex flex-wrap items-baseline text-sm">
+        <div className="flex items-center gap-1">
           <span className="text-muted-foreground">
             Last updated: {token.lastUpdated} by
           </span>
           <Avatar className="size-5">
-            <AvatarImage src={token.updatedBy.avatar} />
+            <AvatarImage
+              className="rounded-full"
+              src={token.updatedBy.avatar}
+            />
             <AvatarFallback className="text-xs">
               {token.updatedBy.name.slice(0, 2)}
             </AvatarFallback>
@@ -162,7 +155,7 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
             The token with ID "{tokenId}" could not be found.
           </p>
           <Link
-            className="mt-4 inline-block text-blue-600 hover:underline"
+            className="mt-4 inline-block text-chart-4 hover:underline"
             to="/"
           >
             ← Back to tokens

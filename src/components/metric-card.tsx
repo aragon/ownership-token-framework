@@ -1,9 +1,6 @@
-import {
-  IconBubble,
-  IconCircleCheckFilled,
-  IconCircleDotFilled,
-} from "@tabler/icons-react"
+import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
 import { ArrowUpRightIcon } from "lucide-react"
+import ReactMarkdown from "react-markdown"
 import { match } from "ts-pattern"
 import {
   Accordion,
@@ -11,7 +8,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Item,
@@ -25,14 +21,14 @@ import type { Metric } from "./token-detail"
 
 export default function MetricCard({ metric }: { metric: Metric }) {
   return (
-    <div className="rounded-lg border bg-card">
+    <div className="rounded-lg border bg-card gap-y-4 flex flex-col">
       {/* Header */}
-      <div className="p-4">
+      <div className="p-4 pb-0">
         <div className="flex items-center gap-3">
           <h3 className="font-semibold">{metric.name}</h3>
           {metric.aboutLink && (
             <a
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm text-chart-4 underline decoration-dotted"
               href={metric.aboutLink}
             >
               About this metric
@@ -42,22 +38,17 @@ export default function MetricCard({ metric }: { metric: Metric }) {
         <p className="mt-1 text-sm text-muted-foreground">
           {metric.description}
         </p>
-
-        {/* Stats */}
-        <div className="mt-3 flex items-center gap-4 text-sm">
-          <Badge className="rounded-sm" variant="outline">
-            <span className="font-medium">{metric.evidenceEntries}</span>
-            <span className="text-muted-foreground">evidence entries</span>
-            <IconBubble className="size-4 text-muted-foreground" />
-          </Badge>
-        </div>
       </div>
 
       {/* Criteria list */}
-      <Accordion className="border-t" multiple>
+      <Accordion className="border rounded-md w-auto m-6 mt-0" multiple>
         {metric.criteria.map((criteria) => (
-          <AccordionItem key={criteria.id} value={criteria.id}>
-            <AccordionTrigger className="px-4 py-3 hover:no-underline gap-x-1 items-center">
+          <AccordionItem
+            className="mx-6 p-0"
+            key={criteria.id}
+            value={criteria.id}
+          >
+            <AccordionTrigger className="py-3 hover:no-underline gap-x-1 items-center">
               <div className="flex items-center justify-between w-full">
                 <span className="text-sm">{criteria.name}</span>
               </div>
@@ -69,11 +60,29 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                   <IconCircleDotFilled className="size-5 text-gray-500" />
                 ))}
             </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4">
+            <AccordionContent className="pb-4">
               {criteria.description && (
-                <p className="mb-3 text-sm text-muted-foreground">
+                <ReactMarkdown
+                  components={{
+                    p: ({ children }) => (
+                      <p className="mb-3 text-sm text-muted-foreground">
+                        {children}
+                      </p>
+                    ),
+                    a: ({ href, children }) => (
+                      <a
+                        className="text-chart-4 underline decoration-dotted"
+                        href={href}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {children}
+                      </a>
+                    ),
+                  }}
+                >
                   {criteria.description}
-                </p>
+                </ReactMarkdown>
               )}
               {criteria.evidences && criteria.evidences.length > 0 && (
                 <ItemGroup className="gap-y-4">
@@ -82,9 +91,9 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                       <ItemContent className="truncate">
                         <ItemTitle>
                           {evidence.title}{" "}
-                          <span className="text-muted-foreground">
+                          <p className="text-muted-foreground truncate">
                             {evidence.url.replace("https://", "")}
-                          </span>
+                          </p>
                         </ItemTitle>
                         {evidence.comment && (
                           <ItemDescription className="mt-1">
@@ -114,7 +123,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                 </ItemGroup>
               )}
               <button
-                className="mt-3 inline-block text-sm text-blue-600 hover:underline"
+                className="mt-3 inline-block text-sm text-chart-4 underline decoration-dotted"
                 onClick={() => console.log("About criteria clicked")}
                 type="button"
               >
