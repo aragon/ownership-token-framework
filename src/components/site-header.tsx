@@ -32,6 +32,19 @@ export function SiteHeader() {
                   Tokens
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  render={
+                    <a
+                      href="https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    />
+                  }
+                >
+                  Framework
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>

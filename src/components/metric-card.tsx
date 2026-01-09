@@ -1,4 +1,9 @@
-import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
+import {
+  IconAlertCircleFilled,
+  IconCircleCheckFilled,
+  IconCircleDotFilled,
+  IconCircleXFilled,
+} from "@tabler/icons-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { match, P } from "ts-pattern"
@@ -16,7 +21,7 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/item"
-import { type Metric, mapStatus } from "./token-detail"
+import { type CriteriaStatus, type Metric, mapStatus } from "./token-detail"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 interface MarkdownComponentProps {
@@ -33,56 +38,18 @@ const markdownComponents = {
   ),
 }
 
-const StatusHoverCard = ({ status }: { status: string }) => {
+const StatusIcon = ({ status }: { status: CriteriaStatus }) => {
   const config = match(status)
     .with("positive", () => ({
-      label: "Verified",
-      colorClass: "text-green-800",
       Icon: IconCircleCheckFilled,
       iconColor: "text-green-500",
     }))
     .otherwise(() => ({
-      label: "Unverified",
-      colorClass: "text-gray-800",
       Icon: IconCircleDotFilled,
       iconColor: "text-gray-500",
     }))
 
-  return (
-    <HoverCard>
-      <HoverCardTrigger
-        render={
-          <Button
-            className={`font-normal ${config.colorClass}`}
-            nativeButton={false}
-            render={<div />}
-            variant="outline"
-          />
-        }
-      >
-        {config.label}
-        <config.Icon className={`size-5 ${config.iconColor}`} />
-      </HoverCardTrigger>
-      <HoverCardContent className="w-80 p-4">
-        <div className="flex gap-x-1">
-          <h3 className={config.colorClass}>{config.label}</h3>
-          <config.Icon className={`size-5 ${config.iconColor}`} />
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {match(status)
-            .with(
-              "positive",
-              () =>
-                "Verified indicates that the development team has conducted comprehensive research on the criteria and substantiated their findings with solid evidence. This process ensures that the information is reliable and meets established standards, providing confidence in its validity."
-            )
-            .otherwise(
-              () =>
-                "Unverified indicates that the development team has not yet conducted comprehensive research on the criteria. Further investigation is needed to substantiate the findings and ensure the information meets established standards."
-            )}
-        </p>
-      </HoverCardContent>
-    </HoverCard>
-  )
+  return <config.Icon className={`size-5 ${config.iconColor}`} />
 }
 
 export default function MetricCard({ metric }: { metric: Metric }) {
@@ -123,8 +90,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
               <div className="flex items-center justify-between w-full">
                 <span className="text-sm">{criteria.name}</span>
               </div>
-              {/* Removed until further notice */}
-              {/* <StatusHoverCard status={mapStatus(criteria.status)} /> */}
+              <StatusIcon status={mapStatus(criteria.status)} />
             </AccordionTrigger>
             <AccordionContent className="pb-4">
               <div className="flex flex-col gap-4">

@@ -26,9 +26,9 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
   return (
     <aside className="rounded-lg border bg-card p-4">
       <h3 className="font-semibold">Info</h3>
-      <p className="mt-2 text-sm text-muted-foreground">
+      {/* <p className="mt-2 text-sm text-muted-foreground">
         {token.infoDescription}
-      </p>
+      </p> */}
 
       <div className="mt-4 flex flex-wrap gap-2">
         <Button

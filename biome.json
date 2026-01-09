@@ -44,6 +44,9 @@
         "useNumberNamespace": "error",
         "useSelfClosingElements": "error",
         "useSingleVarDeclarator": "error"
+      },
+      "a11y": {
+        "useAnchorContent": "error"
       }
     }
   },
