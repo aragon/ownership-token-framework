@@ -1,9 +1,4 @@
-import {
-  IconAlertCircleFilled,
-  IconCircleCheckFilled,
-  IconCircleDotFilled,
-  IconCircleXFilled,
-} from "@tabler/icons-react"
+import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { match, P } from "ts-pattern"

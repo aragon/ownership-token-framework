@@ -3,10 +3,8 @@ import {
   IconCheck,
   IconCopy,
   IconCurrencyEthereum,
-  IconExternalLink,
   IconLink,
 } from "@tabler/icons-react"
-import { ExternalLinkIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { copyToClipboard } from "@/lib/utils"
 import type { TokenInfo } from "./token-detail"
