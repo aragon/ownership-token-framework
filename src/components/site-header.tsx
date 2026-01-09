@@ -1,12 +1,9 @@
-import { IconExternalLink } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 
@@ -43,7 +40,7 @@ export function SiteHeader() {
                     />
                   }
                 >
-                  Framework <IconExternalLink className="size-4" />
+                  Framework
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
