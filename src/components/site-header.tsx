@@ -1,5 +1,5 @@
+import { IconExternalLink } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -36,13 +36,14 @@ export function SiteHeader() {
                 <NavigationMenuLink
                   render={
                     <a
+                      className="flex-row items-center gap-2"
                       href="https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md"
                       rel="noopener noreferrer"
                       target="_blank"
                     />
                   }
                 >
-                  Framework
+                  Framework <IconExternalLink className="size-4" />
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
