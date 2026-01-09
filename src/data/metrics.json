@@ -435,7 +435,12 @@
           "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
           "status": "✅",
           "notes": "50% of all trading fees are distributed to veCRV holders through crvUSD rewards, while the remaining 50% goes to the respective liquidity providers of the pools.\n\nOnly veCRV holders can change this behaviour, hence Curve has no separate treasury. All revenue to the people.",
-          "evidence": []
+          "evidence": [
+            {
+              "name": "Earning-fees",
+              "url": "https://resources.curve.finance/vecrv/overview#earning-fees"
+            }
+          ]
         },
         {
           "id": "val-accrual__mechanism",
