@@ -79,25 +79,25 @@ const columns: ColumnDef<Token>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "evidenceEntries",
-    header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        Evidence entries
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <div className="flex items-center gap-1.5">
-        <span>{row.original.evidenceEntries}</span>
-        <IconBubble className="size-4 text-muted-foreground" />
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "evidenceEntries",
+  //   header: ({ column }) => (
+  //     <Button
+  //       className="h-auto p-0 font-medium hover:bg-transparent"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       variant="ghost"
+  //     >
+  //       Evidence entries
+  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
+  //     </Button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div className="flex items-center gap-1.5">
+  //       <span>{row.original.evidenceEntries}</span>
+  //       <IconBubble className="size-4 text-muted-foreground" />
+  //     </div>
+  //   ),
+  // },
   // {
   //   accessorKey: "positive",
   //   header: ({ column }) => (
@@ -173,17 +173,20 @@ const columns: ColumnDef<Token>[] = [
   },
   {
     id: "actions",
+
     cell: ({ row }) => (
-      <Button
-        className="size-8"
-        render={
-          <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
-        }
-        size="icon"
-        variant="ghost"
-      >
-        <ArrowRightIcon className="size-4" />
-      </Button>
+      <div className="flex justify-end">
+        <Button
+          className="size-8"
+          render={
+            <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
+          }
+          size="icon"
+          variant="ghost"
+        >
+          <ArrowRightIcon className="size-4" />
+        </Button>
+      </div>
     ),
   },
 ]
