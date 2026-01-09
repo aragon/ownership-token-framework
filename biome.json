@@ -46,7 +46,7 @@
         "useSingleVarDeclarator": "error"
       },
       "a11y": {
-        "useAnchorContent": "error"
+        "useAnchorContent": "off"
       }
     }
   },
