@@ -727,7 +727,7 @@
           "name": "Role Accountability",
           "status": "positive",
           "description": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.",
-          "evidences": "**Voting:**\nVoting contract is controlled by LDO holders.\n\n**Agent:**\nEXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\n**TokenManager:**\nMINT_ROLE is given to Voting contract.\nBURN_ROLE is given to no one as of now, but its permission manager is Voting contract.\n\n**StakingRouter:**\nSTAKING_MODULE_MANAGE_ROLE is given to Agent contract.\n\nSince Agent is only callable by Governance 1, all operations are controlled by LDO holders."
+          "body": "**Voting:**\nVoting contract is controlled by LDO holders.\n\n**Agent:**\nEXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\n**TokenManager:**\nMINT_ROLE is given to Voting contract.\nBURN_ROLE is given to no one as of now, but its permission manager is Voting contract.\n\n**StakingRouter:**\nSTAKING_MODULE_MANAGE_ROLE is given to Agent contract.\n\nSince Agent is only callable by Governance 1, all operations are controlled by LDO holders."
         }
       ]
     },

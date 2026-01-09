@@ -29,7 +29,9 @@ interface Criteria {
   id: string
   name: string
   status: CriteriaStatus
+  body?: string
   description?: string
+  about?: string
   evidences?: Evidence[]
 }
 
@@ -37,6 +39,7 @@ export interface Metric {
   id: string
   name: string
   description: string
+  about?: string
   evidenceEntries: number
   positive: number
   neutral: number
