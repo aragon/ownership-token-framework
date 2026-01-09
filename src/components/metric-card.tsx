@@ -18,6 +18,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import type { Metric } from "./token-detail"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 export default function MetricCard({ metric }: { metric: Metric }) {
   return (
@@ -54,10 +55,66 @@ export default function MetricCard({ metric }: { metric: Metric }) {
               </div>
               {match(criteria.status)
                 .with("positive", () => (
-                  <IconCircleCheckFilled className="size-5 text-green-500" />
+                  <HoverCard>
+                    <HoverCardTrigger
+                      render={
+                        <Button
+                          className="font-normal text-green-800"
+                          nativeButton={false}
+                          render={<div />}
+                          variant="outline"
+                        />
+                      }
+                    >
+                      Verified
+                      <IconCircleCheckFilled className="size-5 text-green-500" />
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-80 p-4">
+                      <div className="flex gap-x-1">
+                        <h3 className="text-green-800">Verified</h3>
+                        <IconCircleCheckFilled className="size-5 text-green-500" />
+                      </div>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Verified indicates that the development team has
+                        conducted comprehensive research on the criteria and
+                        substantiated their findings with solid evidence. This
+                        process ensures that the information is reliable and
+                        meets established standards, providing confidence in its
+                        validity.
+                      </p>
+                    </HoverCardContent>
+                  </HoverCard>
                 ))
                 .otherwise(() => (
-                  <IconCircleDotFilled className="size-5 text-gray-500" />
+                  <HoverCard>
+                    <HoverCardTrigger
+                      render={
+                        <Button
+                          className="font-normal text-gray-800"
+                          nativeButton={false}
+                          render={<div />}
+                          variant="outline"
+                        />
+                      }
+                    >
+                      Unverified
+                      <IconCircleDotFilled className="size-5 text-gray-500" />
+                    </HoverCardTrigger>
+                    <HoverCardContent className="w-80 p-4">
+                      <div className="flex gap-x-1">
+                        <h3 className="text-gray-800">Unverified</h3>
+                        <IconCircleDotFilled className="size-5 text-gray-500" />
+                      </div>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Verified indicates that the development team has
+                        conducted comprehensive research on the criteria and
+                        substantiated their findings with solid evidence. This
+                        process ensures that the information is reliable and
+                        meets established standards, providing confidence in its
+                        validity.
+                      </p>
+                    </HoverCardContent>
+                  </HoverCard>
                 ))}
             </AccordionTrigger>
             <AccordionContent className="pb-4">

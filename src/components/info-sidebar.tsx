@@ -68,6 +68,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
         {token.links.website && (
           <Button
             className="gap-1.5"
+            nativeButton={false}
             render={
               <a
                 aria-label="Visit website"
