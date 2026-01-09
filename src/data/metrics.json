@@ -502,7 +502,7 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "gov-fdn__workflow",
           "name": "On-chain Workflow Control",
@@ -555,7 +555,7 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
-      "Criteria": [
+      "criteria": [
         {
           "id": "token-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
@@ -613,7 +613,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "prot-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
@@ -649,7 +649,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active & Owned",
@@ -707,7 +707,7 @@
       "id": "ip-dist",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "ip-dist__brand",
           "name": "IP Ownership (Brand)",
@@ -746,7 +746,7 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "gov-fdn__workflow",
           "name": "On-chain Workflow Control",
@@ -799,7 +799,7 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
-      "Criteria": [
+      "criteria": [
         {
           "id": "token-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
@@ -857,7 +857,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "prot-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
@@ -893,7 +893,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active & Owned",
@@ -951,7 +951,7 @@
       "id": "ip-dist",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "Criteria": [
+      "criteria": [
         {
           "id": "ip-dist__brand",
           "name": "IP Ownership (Brand)",
