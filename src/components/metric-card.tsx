@@ -2,7 +2,6 @@ import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
 import { ArrowUpRightIcon } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { match, P } from "ts-pattern"
-import checklistData from "@/data/checklist.json"
 import {
   Accordion,
   AccordionContent,
@@ -17,7 +16,7 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/item"
-import type { Metric } from "./token-detail"
+import { type Metric, mapStatus } from "./token-detail"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 interface MarkdownComponentProps {
@@ -32,25 +31,6 @@ const markdownComponents = {
       {children}
     </a>
   ),
-}
-
-const markdownComponentsInline = {
-  p: ({ children }: MarkdownComponentProps) => <p>{children}</p>,
-  a: ({ href, children }: MarkdownComponentProps) => (
-    <a href={href} rel="noopener noreferrer" target="_blank">
-      {children}
-    </a>
-  ),
-}
-
-// Helper to find matching checklist data
-const getChecklistMetric = (metricId: string) => {
-  return checklistData.find(item => item.id === metricId)
-}
-
-const getChecklistCriteria = (metricId: string, criteriaName: string) => {
-  const metric = getChecklistMetric(metricId)
-  return metric?.criteria.find(c => c.name.toLowerCase().includes(criteriaName.toLowerCase()))
 }
 
 const StatusHoverCard = ({ status }: { status: string }) => {
@@ -112,45 +92,23 @@ export default function MetricCard({ metric }: { metric: Metric }) {
       <div className="p-4 pb-0">
         <div className="flex items-center gap-3">
           <h3 className="font-semibold">{metric.name}</h3>
-          {match(getChecklistMetric(metric.id))
-            .with(P.not(P.nullish), (checklistMetric) => (
-              <HoverCard>
-                <HoverCardTrigger
-                  render={
-                    <Button
-                      className="text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal"
-                      nativeButton={false}
-                      render={<div />}
-                      variant="ghost"
-                    />
-                  }
-                >
-                  About this metric
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80 p-4">
-                  <div className="space-y-2">
-                    <h4 className="font-semibold">{checklistMetric.name}</h4>
-                    <p className="text-sm text-muted-foreground">{checklistMetric.about}</p>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-            ))
-            .otherwise(() => 
-              match(metric.aboutLink)
-                .with(P.string, (link) => (
-                  <a
-                    className="text-sm text-chart-4 underline decoration-dotted"
-                    href={link}
-                  >
-                    About this metric
-                  </a>
-                ))
-                .otherwise(() => null)
-            )}
+          <HoverCard>
+            <HoverCardTrigger
+              render={
+                <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal" />
+              }
+            >
+              About this metric
+            </HoverCardTrigger>
+            <HoverCardContent align="start" className="w-80 p-4">
+              <div className="space-y-2">
+                <h4 className="font-semibold">{metric.name}</h4>
+                <p className="text-sm text-muted-foreground">{metric.about}</p>
+              </div>
+            </HoverCardContent>
+          </HoverCard>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {metric.description}
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{metric.about}</p>
       </div>
 
       {/* Criteria list */}
@@ -165,47 +123,31 @@ export default function MetricCard({ metric }: { metric: Metric }) {
               <div className="flex items-center justify-between w-full">
                 <span className="text-sm">{criteria.name}</span>
               </div>
-              <StatusHoverCard status={criteria.status} />
+              {/* Removed until further notice */}
+              {/* <StatusHoverCard status={mapStatus(criteria.status)} /> */}
             </AccordionTrigger>
             <AccordionContent className="pb-4">
               <div className="flex flex-col gap-4">
-                {match(criteria.description)
-                  .with(P.string, (description) => (
+                {match(criteria.notes)
+                  .with(P.string, (notes) => (
                     <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
                       <ReactMarkdown components={markdownComponents}>
-                        {description}
+                        {notes}
                       </ReactMarkdown>
                     </div>
                   ))
                   .otherwise(() => null)}
-                {match(criteria.body)
-                  .with(P.string, (body) => (
-                    <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                      <ReactMarkdown components={markdownComponents}>
-                        {body}
-                      </ReactMarkdown>
-                    </div>
-                  ))
-                  .otherwise(() => null)}
-                {match(criteria.evidences)
+                {match(criteria.evidence)
                   .with(P.union(P.nullish, []), () => null)
-                  .otherwise((evidences) => (
+                  .otherwise((evidenceList) => (
                     <ItemGroup className="gap-y-4">
-                      {evidences.map((evidence) => (
-                        <Item key={evidence.id} variant="muted">
+                      {evidenceList.map((evidence, index) => (
+                        <Item
+                          key={`${criteria.id}-ev-${index}`}
+                          variant="muted"
+                        >
                           <ItemContent>
-                            <ItemTitle>{evidence.title}</ItemTitle>
-                            {match(evidence.comment)
-                              .with(P.string, (comment) => (
-                                <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                                  <ReactMarkdown
-                                    components={markdownComponentsInline}
-                                  >
-                                    {comment}
-                                  </ReactMarkdown>
-                                </div>
-                              ))
-                              .otherwise(() => null)}
+                            <ItemTitle>{evidence.name}</ItemTitle>
                           </ItemContent>
                           <ItemActions>
                             <Button
@@ -228,38 +170,23 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                       ))}
                     </ItemGroup>
                   ))}
-                {match(getChecklistCriteria(metric.id, criteria.name))
-                  .with(P.not(P.nullish), (checklistCriteria) => (
-                    <HoverCard>
-                      <HoverCardTrigger
-                        render={
-                          <Button
-                            className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal"
-                            nativeButton={false}
-                            render={<div />}
-                            variant="ghost"
-                          />
-                        }
-                      >
-                        About this criteria
-                      </HoverCardTrigger>
-                      <HoverCardContent className="w-80 p-4">
-                        <div className="space-y-2">
-                          <h4 className="font-semibold">{checklistCriteria.name}</h4>
-                          <p className="text-sm text-muted-foreground">{checklistCriteria.about}</p>
-                        </div>
-                      </HoverCardContent>
-                    </HoverCard>
-                  ))
-                  .otherwise(() => (
-                    <button
-                      className="inline-block text-sm text-chart-4 underline decoration-dotted"
-                      onClick={() => console.log("About criteria clicked")}
-                      type="button"
-                    >
-                      About this criteria
-                    </button>
-                  ))}
+                <HoverCard>
+                  <HoverCardTrigger
+                    render={
+                      <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal" />
+                    }
+                  >
+                    About this criteria
+                  </HoverCardTrigger>
+                  <HoverCardContent align="start" className="w-80 p-4">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold">{criteria.name}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {criteria.about}
+                      </p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
               </div>
             </AccordionContent>
           </AccordionItem>

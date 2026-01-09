@@ -1,1809 +1,271 @@
 {
-  "aave": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "AAVE token has fixed supply (no mint function) behind an upgradeable proxy controlled by governance. Unlike most governance tokens, AAVE has absolutely no minting mechanism.",
-      "evidenceEntries": 6,
-      "positive": 5,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "fixed-supply",
-          "name": "Fixed Supply - AAVE Token",
-          "status": "positive",
-          "description": "No mint() function exists anywhere in the AAVE token codebase. Total supply is set at initialization and cannot be increased. This is the gold standard for token economics.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "BaseAaveToken.sol:22",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "uint256 internal _totalSupply; - No mint() function exists"
-            }
-          ]
-        },
-        {
-          "id": "no-minter-role",
-          "name": "No Minter Role - AAVE Token",
-          "status": "positive",
-          "description": "Unlike most governance tokens, AAVE has absolutely no minting mechanism. No MINTER_ROLE, no mint function, no inflation pathway.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "aave-token-v3/src",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "grep search returns zero results for mint or MINTER"
-            }
-          ]
-        },
-        {
-          "id": "proxy-upgradeability",
-          "name": "Proxy Upgradeability - AAVE Token",
-          "status": "neutral",
-          "description": "Token is behind InitializableAdminUpgradeabilityProxy. Upgrade rights should be held by governance timelock. Not immutable but governance-controlled.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "AaveTokenV3.sol:7-11",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "contract AaveTokenV3 is BaseAaveTokenV2, BaseDelegation"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "AAVE token does not receive direct protocol revenue at the token level. Value accrual occurs through staking mechanisms (Safety Module via ERC-4626 vaults) and governance rights. GHO generates revenue through interest and GSM fees flowing to treasury.",
-      "evidenceEntries": 3,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "staking-yield",
-          "name": "Staking Yield - ATokenVault",
-          "status": "positive",
-          "description": "ERC-4626 vault allows yield generation on deposited assets. Standard composable vault pattern for staking.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "ATokenVault.sol:29",
-              "url": "https://github.com/aave/gho-core",
-              "comment": "contract ATokenVault is ERC4626Upgradeable, OwnableUpgradeable"
-            }
-          ]
-        },
-        {
-          "id": "fee-distribution-gsm",
-          "name": "Fee Distribution - GSM",
-          "status": "positive",
-          "description": "GSM swap fees are programmatically distributed to GHO treasury. Cannot be redirected without governance action.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Gsm.sol:280-287",
-              "url": "https://github.com/aave/aave-v3-core",
-              "comment": "function distributeFeesToTreasury() - IERC20(GHO_TOKEN).transfer(_ghoTreasury, accruedFees)"
-            }
-          ]
-        },
-        {
-          "id": "vault-fee-control",
-          "name": "Vault Fee Control",
-          "status": "neutral",
-          "description": "Vault owner can set fees on yield (up to 100% per _setFee constraint). Owner should be governance-controlled.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "ATokenVault.sol:414-417",
-              "url": "https://github.com/aave/Aave-Vault/blob/main/src/ATokenVault.sol#L414",
-              "comment": "function setFee(uint256 newFee) public override onlyOwner"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-revenue",
-      "name": "Protocol Revenue Ownership",
-      "description": "Protocol fees flow to a governance-controlled Collector (treasury) contract. Revenue sources include reserve factor, flashloan premiums, and liquidation protocol fees. All flows are programmatic and enforced at protocol level.",
-      "evidenceEntries": 4,
-      "positive": 3,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "fee-destination-reserve",
-          "name": "Fee Destination - Reserve Factor",
-          "status": "positive",
-          "description": "Reserve factor percentage of interest accrues to treasury. Programmatic, cannot be bypassed.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "ReserveLogic.sol:181-206",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "function _accrueToTreasury - reserve.accruedToTreasury += amountToMint"
-            }
-          ]
-        },
-        {
-          "id": "fee-destination-flashloan",
-          "name": "Fee Destination - Flashloan Premiums",
-          "status": "positive",
-          "description": "Flashloan fees accrue directly to reserve treasury. Hardcoded destination.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "FlashLoanLogic.sol:226-229",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "reserve.accruedToTreasury += params.totalPremium.rayDiv(...)"
-            }
-          ]
-        },
-        {
-          "id": "fee-destination-liquidation",
-          "name": "Fee Destination - Liquidation Fees",
-          "status": "positive",
-          "description": "Protocol liquidation fees transfer directly to treasury address. Immutable per AToken deployment.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "LiquidationLogic.sol:369-375",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "vars.collateralAToken.transferOnLiquidation to RESERVE_TREASURY_ADDRESS()"
-            }
-          ]
-        },
-        {
-          "id": "treasury-immutability",
-          "name": "Treasury Address Immutability",
-          "status": "neutral",
-          "description": "Treasury destination is immutable per AToken deployment. However, the treasury contract itself is upgradeable and FUNDS_ADMIN_ROLE can redirect funds from treasury.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "AToken.sol:33",
-              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/tokenization/AToken.sol#L33",
-              "comment": "address public immutable TREASURY"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "treasury-ownership",
-      "name": "Treasury Ownership",
-      "description": "The Collector contract is the protocol treasury. It is governance-controlled via FUNDS_ADMIN_ROLE with no backdoors for fund extraction.",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "treasury-access-control",
-          "name": "Treasury Access Control",
-          "status": "positive",
-          "description": "Only FUNDS_ADMIN_ROLE can transfer, approve, or create payment streams. Should be governance timelock (requires verification).",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Collector.sol:24,33",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "contract Collector - bytes32 public constant FUNDS_ADMIN_ROLE = 'FUNDS_ADMIN'"
-            }
-          ]
-        },
-        {
-          "id": "revenue-splitter-immutability",
-          "name": "Revenue Splitter Immutability",
-          "status": "positive",
-          "description": "When used, revenue split recipients and percentages are immutable. Cannot be changed after deployment.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "RevenueSplitter.sol:16-34",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "address payable public immutable RECIPIENT_A/B; uint16 immutable SPLIT_PERCENTAGE"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-ownership",
-      "name": "Protocol Ownership",
-      "description": "Aave V3 uses a sophisticated multi-role ACL system with granular permissions. Emergency powers are limited to pause/freeze operations. Contracts are upgradeable but admin is governance-controlled.",
-      "evidenceEntries": 3,
-      "positive": 3,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "multi-role-acl",
-          "name": "Multi-Role Access Control",
-          "status": "positive",
-          "description": "Granular role separation prevents single point of control. Different roles for pool admin, emergency, risk, asset listing. AAVE holders indirectly control these addresses via governance.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "ACLManager.sol:14-20",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "POOL_ADMIN_ROLE, EMERGENCY_ADMIN_ROLE, RISK_ADMIN_ROLE, etc."
-            }
-          ]
-        },
-        {
-          "id": "emergency-powers",
-          "name": "Emergency Powers - Pause Only",
-          "status": "positive",
-          "description": "Emergency admin can only pause/freeze operations. Cannot withdraw funds, upgrade contracts, or change fee destinations. Grace period capped at 4 hours.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "PoolConfigurator.sol:470-478",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "function setPoolPause(bool paused, uint40 gracePeriod) onlyEmergencyOrPoolAdmin"
-            }
-          ]
-        },
-        {
-          "id": "protocol-upgradeability",
-          "name": "Protocol Upgradeability",
-          "status": "positive",
-          "description": "Core contracts are behind upgradeable proxies. Admin is immutable (set to PoolAddressesProvider) but owner can upgrade implementations. Requires governance verification.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "BaseImmutableAdminUpgradeabilityProxy.sol:16-25",
-              "url": "https://github.com/aave/aave-token-v3",
-              "comment": "contract BaseImmutableAdminUpgradeabilityProxy - address internal immutable _admin"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "aero": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "For aero, we have unbounded supply, but the contract is immutable, the minter role is given to an immutable minter contract that mints tokens on a predefined schedule that can only be changed by the DAO in small fixed increments.",
-      "evidenceEntries": 4,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "mint-controlled",
-          "name": "Mint controlled by DAO",
-          "status": "positive",
-          "description": "Minter role is given to governance-controlled contracts. Token minting requires DAO approval.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Minter contract",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol#L143"
-            }
-          ]
-        },
-        {
-          "id": "immutable-token",
-          "name": "Immutable Token",
-          "status": "positive",
-          "description": "Token contract is not upgradeable. No proxy pattern.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol"
-            }
-          ]
-        },
-        {
-          "id": "fixed-supply",
-          "name": "Fixed Supply",
-          "status": "positive",
-          "description": "Rebasing mechanism protects veAERO holders from direct dilution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Aero.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol#L28"
-            }
-          ]
-        },
-        {
-          "id": "deterministic-supply",
-          "name": "Deterministic Supply",
-          "status": "positive",
-          "description": "Minter is immutable and controls the emission schedule",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Minter.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "Stake AERO to veAERO, which grants LP fees. veAERO holders can also receive bribes. LP fees come from the pools, which are run by the DAO.",
-      "evidenceEntries": 3,
-      "positive": 3,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "protocol-fees",
-          "name": "Protocol Fees",
-          "status": "positive",
-          "description": "veAERO gets 100% of fees",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Fee distribution",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/FeesVotingReward.sol"
-            }
-          ]
-        },
-        {
-          "id": "external-fees",
-          "name": "External fees (Bribes)",
-          "status": "positive",
-          "description": "External incentives flow to veAERO holders",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Bribe contracts",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/BribeVotingReward.sol"
-            }
-          ]
-        },
-        {
-          "id": "flywheel",
-          "name": "Flywheel",
-          "status": "positive",
-          "description": "Locked tokens reduce effective circulation. Not full burn but indirect value accrual via reduced supply and the veAERO lock rate.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "VotingEscrow.sol",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/VotingEscrow.sol#L816"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-revenue",
-      "name": "Protocol Revenue Ownership",
-      "description": "Fees flow directly to Voters, they do not hit an intermediate treasury. The Fees can be updated by the fee manager who cannot change WHERE the fee can go but they can potentially zero the fee.",
-      "evidenceEntries": 2,
-      "positive": 1,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "fee-destination",
-          "name": "Fee destination",
-          "status": "positive",
-          "description": "Fee path: Pool → PoolFees → Gauge → FeesVotingReward → Voters",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Pool.sol:377-378",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/rewards/FeesVotingReward.sol",
-              "comment": "fees calculated as amountIn * getFee() / 10000"
-            }
-          ]
-        },
-        {
-          "id": "revenue-protection",
-          "name": "Revenue protection",
-          "status": "neutral",
-          "description": "Fee destinations cannot be changed but the team address can set the fee to zero. However, fee cap to team is hardcoded immutable at 5%.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Fee manager permissions",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/factories/PoolFactory.sol#L92"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-ownership",
-      "name": "Protocol Ownership",
-      "description": "Aerodrome contracts are immutable. Most fee conditions are light-touch permissions which do not affect token holder revenue streams. The fee to zero is the main exception. There are no emergency powers to access funds.",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "protocol-immutability",
-          "name": "Protocol Immutability",
-          "status": "positive",
-          "description": "Contracts are non-upgradeable",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Core contracts",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol"
-            }
-          ]
-        },
-        {
-          "id": "onchain-governance",
-          "name": "Onchain Governance",
-          "status": "positive",
-          "description": "ProtocolGovernor (15-min delay, 1-week voting, 4% quorum) and EpochGovernor for emission adjustments. NO FUND EXTRACTION: No sweep functions or backdoors to steal funds",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance contracts",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Minter.sol#L143"
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "lido": [
     {
-      "id": "token",
-      "name": "Token",
-      "description": "LDO token contract is immutable but has a controller (TokenManager) with mint/burn capabilities. Supply is unbounded but minting requires governance approval.",
-      "evidenceEntries": 4,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 1,
-      "aboutLink": "#",
+      "id": "gov-fdn",
+      "name": "Governance Foundation",
+      "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
       "criteria": [
         {
-          "id": "token-immutability",
-          "name": "Token Contract Immutability",
-          "status": "positive",
-          "description": "The LDO token contract itself is not upgradeable. No proxy pattern deployed.",
-          "evidences": [
+          "id": "gov-fdn__workflow",
+          "name": "On-chain Workflow Control",
+          "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
+          "status": "✅",
+          "notes": "Governance 1: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.\n\nGovernance 2: Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This primarily is used for treasury operations and management of certain staking modules. | Governance 1 flow: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock → Executor → Agent → Protocol Contracts\n\n**Governance 2 (Easy Track):** Whitelisted proposers (node ops, committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "MiniMeToken",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol",
-              "comment": "Deployed without proxy pattern"
+              "name": "DualGovernance",
+              "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code"
+            },
+            {
+              "name": "EmergencyProtectedTimeLock",
+              "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code"
+            },
+            {
+              "name": "Executor",
+              "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code"
+            },
+            {
+              "name": "Agent",
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+            },
+            {
+              "name": "Easy Track Interface",
+              "url": "https://easytrack.lido.fi/"
+            },
+            {
+              "name": "Easy Track Guide",
+              "url": "https://docs.lido.fi/guides/easy-track-guide"
             }
           ]
         },
         {
-          "id": "unbounded-supply",
-          "name": "Unbounded Supply - Mint Function",
-          "status": "at_risk",
-          "description": "Controller can mint unlimited tokens to any address. Controller is TokenManager. MINT_ROLE on TokenManager is given to Voting contract (LDO token holders decide). Minting path: Voting → TokenManager → Token.generateTokens(). No cap on supply.",
-          "evidences": [
+          "id": "gov-fdn__access-control",
+          "name": "Access Control managed by Holders",
+          "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?",
+          "status": "✅",
+          "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.\n\nVoting: Voting contract is controlled by LDO holders.\n\nAgent: EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\nTokenManager: MINT_ROLE is given to Voting contract. BURN_ROLE is given to no one as of now, but its permission manager is Voting contract.\n\nStakingRouter: STAKING_MODULE_MANAGE_ROLE is given to Agent contract. Since Agent is only callable by Governance 1, all operations are controlled by LDO holders.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "MiniMeToken.sol",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
-              "comment": "function generateTokens(address _owner, uint _amount) onlyController returns (bool)"
+              "name": "Agent",
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
             }
           ]
         },
         {
-          "id": "burn-function",
-          "name": "Burn Function",
-          "status": "neutral",
-          "description": "Controller can burn tokens from any address. Currently BURN_ROLE is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Agent to call setPermission on ACL.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "MiniMeToken.sol",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
-              "comment": "function destroyTokens(address _owner, uint _amount) onlyController"
-            }
-          ]
-        },
-        {
-          "id": "tokenmanager-upgradeability",
-          "name": "TokenManager Upgradeability",
-          "status": "positive",
-          "description": "TokenManager is upgradeable via Aragon proxy pattern. Full upgrade path requires governance flow: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent → Kernel.setApp(). LDO holders control upgrades.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "TokenManager",
-              "url": "https://github.com/aragon/aragonOS/blob/next/contracts/apps/AppProxyUpgradeable.sol",
-              "comment": "Deployed via Aragon AppProxyUpgradeable"
-            }
-          ]
+          "id": "gov-fdn__concentration",
+          "name": "Governance Concentration",
+          "about": "does any one group control a majority share of the voting supply?",
+          "status": "TBD",
+          "notes": "Aragon has not checked the distribution of LDO holders outside of the core team is >50%",
+          "evidence": []
         }
       ]
     },
     {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "LDO token itself does not directly accrue protocol fees. Value accrual is through governance rights over protocol treasury and fee parameters.",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
+      "id": "token-ctrl",
+      "name": "Metric 1: Token Control (On-chain)",
+      "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
       "criteria": [
         {
-          "id": "governance-rights",
-          "name": "Governance Rights",
-          "status": "positive",
-          "description": "LDO holders have governance power over protocol decisions, fee allocations, and treasury management. Indirect value accrual through protocol growth and governance.",
-          "evidences": [
+          "id": "token-ctrl__upgrade",
+          "name": "Upgrade Sovereignty",
+          "about": "Do holders control the upgrade logic via governance, or is the contract immutable?",
+          "status": "✅",
+          "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token’s doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token’s behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by APP_MANAGER_ROLE, which is assigned to the Agent contract.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "Voting contract",
-              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
-              "comment": "Voting contract controls Agent which controls treasury and protocol parameters"
-            }
-          ]
-        },
-        {
-          "id": "dual-governance",
-          "name": "Dual Governance Protection",
-          "status": "positive",
-          "description": "stETH holders can veto LDO governance decisions via Escrow mechanism. Prevents hostile LDO majority from harming stETH holder interests. Aligns token holder interests.",
-          "evidences": [
+              "name": "LDO Token",
+              "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code"
+            },
             {
-              "id": "ev1",
-              "title": "DualGovernance",
-              "url": "https://github.com/lidofinance/dual-governance/blob/0d31f5b3dbe0a553887604a2d5755d14033b8e3d/contracts/DualGovernance.sol#L165"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-revenue",
-      "name": "Protocol Revenue Ownership",
-      "description": "Fees are set per staking module (currently 10% of staking rewards split between treasury and module). Fee changes require full governance flow.",
-      "evidenceEntries": 3,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "fee-destination",
-          "name": "Fee Destination",
-          "status": "positive",
-          "description": "Fees set per staking module. Currently 7 modules, each with treasuryFee + stakingModuleFee = 1000 (10%).",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "StakingRouter.sol",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
-              "comment": "function addStakingModule with _stakingModuleFee and _treasuryFee parameters"
-            }
-          ]
-        },
-        {
-          "id": "fee-change-protection",
-          "name": "Fee Change Protection",
-          "status": "positive",
-          "description": "To change fees, full governance flow required: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent → StakingRouter. LDO holders majority must approve, stETH holders can veto.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "STAKING_MODULE_MANAGE_ROLE",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
-              "comment": "Given to Agent contract"
-            }
-          ]
-        },
-        {
-          "id": "treasury-fee-flexibility",
-          "name": "Treasury Fee Flexibility",
-          "status": "neutral",
-          "description": "Fees are not immutable. Governance can change fee percentages and distribution. However, changes require LDO majority and survive stETH veto period.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "updateStakingModule",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
-              "comment": "function can modify fees"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "treasury-ownership",
-      "name": "Treasury Ownership",
-      "description": "Treasury controlled by Agent contract, which is controlled by governance flow.",
-      "evidenceEntries": 1,
-      "positive": 1,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "treasury-access-control",
-          "name": "Treasury Access Control",
-          "status": "positive",
-          "description": "Agent's EXECUTE_ROLE permission manager is Agent itself. EXECUTE_ROLE given to Executor contract. Full governance flow required for treasury actions: Voting → DualGovernance → EmergencyProtectedTimeLock → Executor → Agent. LDO holders control treasury via governance.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Agent contract",
+              "name": "TokenManager (Aragon App V1 proxy)",
               "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-ownership",
-      "name": "Protocol Ownership",
-      "description": "Protocol upgrades and parameter changes require multi-step governance flow with Dual Governance veto protection.",
-      "evidenceEntries": 2,
-      "positive": 1,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "governance-flow",
-          "name": "Governance Flow",
-          "status": "positive",
-          "description": "All significant protocol changes require: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "DualGovernance",
-              "url": "https://github.com/lidofinance/dual-governance/blob/0d31f5b3dbe0a553887604a2d5755d14033b8e3d/contracts/DualGovernance.sol#L165"
-            }
-          ]
-        },
-        {
-          "id": "validator-exit-risk",
-          "name": "Validator Exit Risk",
-          "status": "neutral",
-          "description": "During congestion, validator exits can be delayed weeks/months. In this window, hostile LDO majority could theoretically force contract upgrades. Dual Governance veto mechanism mitigates but doesn't fully eliminate this risk.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Ethereum validator-exit queue",
-              "url": "#"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "lido2": [
-    {
-      "id": "governance",
-      "name": "Governance",
-      "description": "Governance control mechanisms for Lido protocol",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "workflow-control",
-          "name": "Workflow Control",
-          "status": "positive",
-          "description": "",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance 1",
-              "url": "",
-              "comment": "Voting (LDO holders) → [DualGovernance (stETH veto window)](https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code) → [EmergencyProtectedTimeLock (time delay)](https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code) → [Executor](https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code) → [Agent](https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto."
             },
             {
-              "id": "ev2",
-              "title": "Governance 2",
-              "url": "https://easytrack.lido.fi/",
-              "comment": "Lido Easy Track is an optimistic governance system for routine, low-risk LDO DAO operations.\n\nKey Workflow Mechanics:\n1. Whitelisted proposers (node ops, committees) create \"motions\" for predefined actions like staking limit increases or grants top-ups.\n2. Motions pass automatically unless ≥0.5% LDO objects within 72 hours.\n3. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote.\n4. Max 20 active motions; emergency dev multisig pause available.\n\n[Easy Track Interface](https://easytrack.lido.fi/) | [Easy Track Guide](https://docs.lido.fi/guides/easy-track-guide)"
+              "name": "Kernel",
+              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc"
             }
           ]
         },
         {
-          "id": "role-accountability",
-          "name": "Role Accountability",
-          "status": "positive",
-          "description": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.",
-          "body": "**Voting:**\nVoting contract is controlled by LDO holders.\n\n**Agent:**\nEXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\n**TokenManager:**\nMINT_ROLE is given to Voting contract.\nBURN_ROLE is given to no one as of now, but its permission manager is Voting contract.\n\n**StakingRouter:**\nSTAKING_MODULE_MANAGE_ROLE is given to Agent contract.\n\nSince Agent is only callable by Governance 1, all operations are controlled by LDO holders."
-        }
-      ]
-    },
-    {
-      "id": "token-control",
-      "name": "Token Control",
-      "description": "Token supply and upgrade mechanisms",
-      "evidenceEntries": 4,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 1,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "upgrade-sovereignty",
-          "name": "Upgrade Sovereignty",
-          "status": "positive",
-          "description": "The LDO token contract is immutable with no proxy pattern. However, it has a `controller` address (TokenManager) that can call privileged functions(`generateTokens`, `destroyTokens`, `enableTransfers`, `claimTokens`). Additionally, the token's doTransfer function includes a hook that calls the controller contract, which is upgradeable. Since TokenManager is upgradeable via Aragon proxy, the token's behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "LDO Token",
-              "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
-              "comment": "Token contract deployed without proxy pattern"
-            },
-            {
-              "id": "ev2",
-              "title": "TokenManager",
-              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
-              "comment": "TokenManager is an Aragon App V1 proxy linked to a [Kernel contract](https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc). Upgrading TokenManager requires calling setApp(tokenManager, ...) on the Kernel, which is protected by `APP_MANAGER_ROLE`. This role is assigned to the Agent contract, ensuring all TokenManager upgrades flow through Governance 1"
-            }
-          ]
-        },
-        {
-          "id": "supply-sovereignty",
+          "id": "token-ctrl__supply",
           "name": "Supply Sovereignty",
-          "status": "positive",
-          "description": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract. This enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
-          "evidences": [
+          "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles).",
+          "status": "✅",
+          "notes": "The LDO token’s controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\nThis enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "MiniMeToken.sol",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
-              "comment": "function generateTokens(address _owner, uint _amount) onlyController returns (bool)"
+              "name": "MiniMeToken.generateTokens",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385"
             }
           ]
         },
         {
-          "id": "censorship-immunity",
+          "id": "token-ctrl__censorship",
           "name": "Censorship Immunity",
-          "status": "positive",
-          "description": "Controller can burn tokens from any address and enable/disable transfers. Currently, `BURN_ROLE` on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1 to call `setPermission` on [ACL](https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb).",
-          "evidences": [
+          "about": "Are there no \"Guardian\" or \"Admin\" roles capable of freezing, blacklisting, or seizing tokens?",
+          "status": "✅",
+          "notes": "Controller can burn tokens from any address and enable/disable transfers. Currently, BURN_ROLE on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1 to call setPermission on ACL.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "MiniMeToken.sol",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
-              "comment": "Burning Tokens: function destroyTokens(address _owner, uint _amount) onlyController"
+              "name": "MiniMeToken.destroyTokens",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401"
             },
             {
-              "id": "ev2",
-              "title": "MiniMeToken.sol",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419",
-              "comment": "Enable/Disable Transfers: function enableTransfers(bool _transfersEnabled) onlyController"
+              "name": "MiniMeToken.enableTransfers",
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419"
+            },
+            {
+              "name": "Aragon ACL",
+              "url": "https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
             }
           ]
         }
       ]
     },
     {
-      "id": "protocol-control",
-      "name": "Protocol Control",
-      "description": "Protocol immutability and access controls",
-      "evidenceEntries": 1,
-      "positive": 0,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
+      "id": "prot-ctrl",
+      "name": "Metric 2: Protocol Control (On-chain)",
+      "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
       "criteria": [
         {
-          "id": "upgrade-sovereignty",
+          "id": "prot-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
-          "status": "positive",
-          "description": "The protocol contracts can be upgraded by the Agent contract(hence, by LDO holders)",
-          "evidences": [
+          "about": "Do holders control the implementation logic of the specific \"Engine\" or product?",
+          "status": "✅",
+          "notes": "The protocol contracts can be upgraded by the Agent contract (hence, by LDO holders).\n\nStakingRouter: proxy_getAdmin is set to Agent.\n\nAgent: Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, …) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself). Hence, upgrade is controlled by LDO holders.\n\nDualGovernance, Executor, EmergencyProtectedTimeLock: NOT upgradeable.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "StakingRouter",
-              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
-              "comment": "proxy_getAdmin is set to Agent"
+              "name": "StakingRouter",
+              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code"
             },
             {
-              "id": "ev2",
-              "title": "Agent",
-              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c#code",
-              "comment": "Uses Aragon v1 Proxy and upgrading requires calling `setApp(Agent, ...)` on the Kernel which requires APP_MANAGER_ROLE(currently given to Agent itself). Hence, upgrade is controlled by LDO holders"
+              "name": "Agent",
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
             },
             {
-              "id": "ev3",
-              "title": "DualGovernance, Executor, EmergencyProtectedTimeLock",
-              "url": "#",
-              "comment": "These contracts are NOT upgradeable"
+              "name": "Kernel",
+              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc"
             }
           ]
         },
         {
-          "id": "gated-access-control",
-          "name": "Gated Access Control",
-          "status": "neutral",
-          "description": "",
-          "evidences": [
+          "id": "prot-ctrl__privileged",
+          "name": "Privileged Access controlled by holders",
+          "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
+          "status": "⚠️",
+          "notes": "Users funds that have been deposited into Lido’s buffered ETH can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "StakingRouter",
-              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641",
-              "comment": "Users funds that have been deposited into Lido's buffered ETH can only be deposited into a staking module by [DepositSecurityModule](https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code) which is controlled by Guardians"
+              "name": "DepositSecurityModule",
+              "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code"
+            },
+            {
+              "name": "Lido.sol deposit logic",
+              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641"
             }
           ]
         }
       ]
     },
     {
-      "id": "value-accrual",
-      "name": "Value Accrual",
-      "description": "Value accrual mechanisms for token holders",
-      "evidenceEntries": 3,
-      "positive": 3,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
+      "id": "val-accrual",
+      "name": "Metric 3: Value Accrual & Control (On-chain)",
+      "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
       "criteria": [
         {
-          "id": "accrual",
-          "name": "Accrual (Not Active)",
-          "status": "neutral",
-          "description": "LDO token holders currently have no direct value accrual mechanism from protocol revenue. However, governance is exploring buyback mechanisms to return value to token holders, with proposals under consideration for liquid buyback execution using protocol treasury funds.",
-          "evidences": [
+          "id": "val-accrual__defined",
+          "name": "Accrual Defined",
+          "about": "Is a mechanism (even if latent/inactive) defined in the codebase or legal IP?",
+          "status": "⚠️",
+          "notes": "LDO token holders currently have no direct value accrual mechanism from protocol revenue. However, governance is exploring buyback mechanisms to return value to token holders, with proposals under consideration for liquid buyback execution using protocol treasury funds.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "Liquid Buybacks Research",
-              "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894",
-              "comment": "Governance proposal discussing buyback mechanisms for LDO token holders"
+              "name": "Liquid buybacks research",
+              "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894"
             }
           ]
         },
         {
-          "id": "treasury-ownership",
+          "id": "val-accrual__active",
+          "name": "Accrual Active & Owned",
+          "about": "Are value flows currently active and governed by holders (non-discretionary)?",
+          "status": "⚠️",
+          "notes": "LDO token holders currently have no direct value accrual mechanism from protocol revenue.",
+          "evidence": []
+        },
+        {
+          "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
-          "status": "positive",
-          "description": "The [Lido contract](https://etherscan.io/address/0x6ca84080381e43938476814be61b779a8bb6a600#code) allows users to send ETH to the contract by `submit` function and contract puts the funds into buffered eth and mints the according shares to the user. Later on, [DepositSecurityModule](https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code) calls `deposit` function on the Lido contract and decides in which staking module to put the buffered ETH. [StakingRouter](https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999) is where each staking module can be added and updated (currently, there're [7 modules](https://lido.fi/how-lido-works/protocol-fee)). When staking module is added, caller passes what treasury and stakingModule fee must be.",
-          "evidences": [
+          "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
+          "status": "✅",
+          "notes": "The Lido contract allows users to send ETH to the contract by the submit function and the contract puts the funds into buffered ETH and mints the according shares to the user.\n\nLater on, DepositSecurityModule calls the deposit function on the Lido contract and decides in which staking module to put the buffered ETH. StakingRouter is where each staking module can be added and updated (currently, there are 7 modules). When a staking module is added, the caller passes what treasury and stakingModule fee must be.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "Lido.sol",
-              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L485",
-              "comment": "The treasury fees from staking module is routed to treasury, which is controlled by LDO holders"
+              "name": "Lido contract",
+              "url": "https://etherscan.io/address/0x6ca84080381e43938476814be61b779a8bb6a600#code"
+            },
+            {
+              "name": "DepositSecurityModule",
+              "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code"
+            },
+            {
+              "name": "StakingRouter",
+              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code"
             }
           ]
         },
         {
-          "id": "mechanism-control",
-          "name": "Mechanism Control",
-          "status": "positive",
-          "description": "To add a new staking module or update it with new fees, full governance flow required, hence controlled by LDO holders.",
-          "evidences": [
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Can holders modify accrual parameters (e.g., changing fee splits or rates)?",
+          "status": "✅",
+          "notes": "To add a new staking module or update it with new fees, full governance flow required, hence controlled by LDO holders.",
+          "evidence": [
             {
-              "id": "ev1",
-              "title": "Add",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
-              "comment": "Adding a new staking module(including fees) is given to STAKING_MODULE_MANAGE_ROLE holder"
-            },
-            {
-              "id": "ev1",
-              "title": "Update",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
-              "comment": "Updating the staking module(including fees) is given to STAKING_MODULE_MANAGE_ROLE holder"
+              "name": "StakingRouter add/update",
+              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227"
             }
           ]
         }
       ]
     },
     {
-      "id": "off-chain",
-      "name": "Off-Chain",
-      "description": "Off-chain assets and distribution controls",
-      "evidenceEntries": 4,
-      "positive": 1,
-      "neutral": 2,
-      "atRisk": 1,
-      "aboutLink": "#",
+      "id": "ip-dist",
+      "name": "Metric 4: IP & Distribution (Off-chain)",
+      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "criteria": [
         {
-          "id": "ip-brand",
+          "id": "ip-dist__brand",
           "name": "IP Ownership (Brand)",
-          "status": "at_risk",
-          "description": "European trademark registrations and the UK IPO Trademark Journal list the Lido Labs BORG Foundation (a memberless entity) as the owner, rather than the DAO or tokenholders directly.",
-          "evidences": []
+          "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?",
+          "status": "❌",
+          "notes": "European trademark registrations and the UK IPO Trademark Journal list the Lido Labs BORG Foundation (a memberless entity) as the owner, rather than the DAO or tokenholders directly.",
+          "evidence": []
         },
         {
-          "id": "ip-npd",
+          "id": "ip-dist__npd",
           "name": "IP Ownership (NPD)",
-          "status": "neutral",
-          "description": "There is no specific legal disclosure provided indicating that tokenholders have direct legal rights to patents or trade secrets; governance control is indirect through the BORG structure.",
-          "evidences": []
+          "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?",
+          "status": "⚠️",
+          "notes": "There is no specific legal disclosure provided indicating that tokenholders have direct legal rights to patents or trade secrets; governance control is indirect through the BORG structure.",
+          "evidence": []
         },
         {
-          "id": "distribution-website",
+          "id": "ip-dist__website",
           "name": "Distribution (Website)",
-          "status": "neutral",
-          "description": "While the DAO oversees the BORG, there is no public filing explicitly confirming the domain is legally owned by a tokenholder-governed entity rather than the Foundation or an individual.",
-          "evidences": []
+          "about": "Does the DAO/token entity own the primary domain (rather than an individual)?",
+          "status": "⚠️",
+          "notes": "While the DAO oversees the BORG, there is no public filing explicitly confirming the domain is legally owned by a tokenholder-governed entity rather than the Foundation or an individual.",
+          "evidence": []
         },
         {
-          "id": "distribution-socials",
+          "id": "ip-dist__socials",
           "name": "Distribution (Socials)",
-          "status": "positive",
-          "description": "Public research indicates the Lido DAO has defined governance controls over the BORG structure, which include overseeing the administrative channels and primary infrastructure.",
-          "evidences": []
-        }
-      ]
-    }
-  ],
-  "uni": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "UNI has a fixed initial supply of 1 billion tokens with algorithmic inflation capped at 2% per year. The token contract is immutable with no proxy patterns. Minting is controlled by a single minter address which should be verified as the governance Timelock.",
-      "evidenceEntries": 5,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 1,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "immutable-token",
-          "name": "Immutable Token",
-          "status": "positive",
-          "description": "Plain contract with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
-            }
-          ]
-        },
-        {
-          "id": "mint-controlled",
-          "name": "Mint controlled by DAO",
-          "status": "at_risk",
-          "description": "Minter role exists; must verify on-chain that minter = Timelock (0x1a9C8182C09F50C8318d769245beA52c32BE35BC)",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol mint function",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L99-L103",
-              "comment": "Requires verification that minter is governance Timelock"
-            }
-          ]
-        },
-        {
-          "id": "inflation-cap",
-          "name": "Inflation Cap",
-          "status": "positive",
-          "description": "uint8 public constant mintCap = 2; - hardcoded 2% maximum of total supply per mint",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L29"
-            }
-          ]
-        },
-        {
-          "id": "mint-interval",
-          "name": "Mint Interval",
-          "status": "positive",
-          "description": "uint32 public constant minimumTimeBetweenMints = 1 days * 365; - minimum 365 days between mints",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L26"
-            }
-          ]
-        },
-        {
-          "id": "deterministic-supply",
-          "name": "Deterministic Supply",
-          "status": "positive",
-          "description": "Initial supply 1B tokens at constructor; inflation schedule is algorithmic with hardcoded constraints",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol constructor",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L17"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "UNI is primarily a governance token. There is no programmatic value accrual at the token contract level (no staking, no fee distribution, no buyback). Value accrual comes through governance influence over the fee switch.",
-      "evidenceEntries": 3,
-      "positive": 1,
-      "neutral": 2,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "protocol-fees",
-          "name": "Protocol Fees to Holders",
-          "status": "neutral",
-          "description": "No receive(), stake(), or distribute() functions in Uni.sol. Fee routing is controlled by governance votes, not programmatic distribution",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
-              "comment": "No direct code reference at token level"
-            }
-          ]
-        },
-        {
-          "id": "governance-rights",
-          "name": "Governance Rights",
-          "status": "positive",
-          "description": "UNI holders vote on fee switch activation and fee routing. Quorum: 4% (40M UNI), Proposal threshold: 1% (10M UNI)",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "GovernorAlpha/Bravo",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
-            }
-          ]
-        },
-        {
-          "id": "fee-switch",
-          "name": "Fee Switch Activation",
-          "status": "neutral",
-          "description": "Fee switch can ONLY be activated via UNI governance vote, not by Uniswap Labs. Potential future cash flow via governance decisions. Recent governance proposals (2025-2025) have addressed activating protocol fees.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance proposals",
-              "url": "#"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-revenue",
-      "name": "Protocol Revenue Ownership",
-      "description": "Protocol fees flow through governance-controlled mechanisms. All versions (V2, V3, V4) have admin functions, but the admin IS the governance Timelock. No separate admin can bypass governance for fee changes.",
-      "evidenceEntries": 4,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "v2-fee-destination",
-          "name": "V2 Fee Destination",
-          "status": "positive",
-          "description": "feeToSetter controls feeTo address. feeToSetter = Timelock (governance-controlled)",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV2Factory.sol",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L40-L48"
-            }
-          ]
-        },
-        {
-          "id": "v3-fee-destination",
-          "name": "V3 Fee Destination",
-          "status": "positive",
-          "description": "setFeeProtocol() is onlyFactoryOwner. Factory owner = Timelock. Fee range: 10-25% of LP fees",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV3Pool.sol",
-              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L837-L844"
-            }
-          ]
-        },
-        {
-          "id": "v4-fee-destination",
-          "name": "V4 Fee Destination",
-          "status": "positive",
-          "description": "setProtocolFeeController() is onlyOwner. Owner expected to be Timelock",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV4PoolManager.sol",
-              "url": "https://github.com/Uniswap/v4-core/blob/main/src/ProtocolFees.sol#L29-L32"
-            }
-          ]
-        },
-        {
-          "id": "revenue-protection",
-          "name": "Revenue Protection",
-          "status": "positive",
-          "description": "Governance flow: Forum RFC → Snapshot → On-chain proposal → Timelock execution. NO separate admin can bypass governance for fee changes. Fee destinations require on-chain UNI holder vote.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance process",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-ownership",
-      "name": "Protocol Ownership",
-      "description": "Uniswap protocol contracts are immutable across all versions. Core pool/pair contracts cannot be upgraded. Governance controls parameter changes but not contract logic.",
-      "evidenceEntries": 6,
-      "positive": 6,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "v2-immutability",
-          "name": "V2 Pool Immutability",
-          "status": "positive",
-          "description": "Pairs deployed via CREATE2, deterministic addresses, no upgrade mechanism",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV2Pair.sol",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31"
-            }
-          ]
-        },
-        {
-          "id": "v3-immutability",
-          "name": "V3 Pool Immutability",
-          "status": "positive",
-          "description": "NoDelegateCall protection prevents proxy-based attacks",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV3Pool.sol",
-              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30"
-            }
-          ]
-        },
-        {
-          "id": "v4-singleton",
-          "name": "V4 Singleton Design",
-          "status": "positive",
-          "description": "Pool state stored in singleton mapping, no individual pool upgrade mechanism",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "PoolManager.sol",
-              "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93"
-            }
-          ]
-        },
-        {
-          "id": "onchain-governance",
-          "name": "On-chain Governance",
-          "status": "positive",
-          "description": "GovernorAlpha: 4% quorum, 1% proposal threshold, ~7 days voting. Timelock: 2-day minimum delay, 30-day maximum, 14-day grace period. All fee changes require on-chain proposal and execution through Timelock.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "GovernorAlpha/Timelock",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
-            }
-          ]
-        },
-        {
-          "id": "no-emergency-powers",
-          "name": "No Emergency Powers",
-          "status": "positive",
-          "description": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Core contracts review",
-              "url": "#"
-            }
-          ]
-        },
-        {
-          "id": "no-fund-extraction",
-          "name": "No Fund Extraction",
-          "status": "positive",
-          "description": "No emergency withdrawal or sweep functions in core contracts. Protocol fees can only be collected to governance-approved destinations.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Core contracts review",
-              "url": "#"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "crv": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "CRV is a non-upgradeable ERC20 token with an immutable supply logic. Minting follows a deterministic, epoch-based emission schedule enforced by an immutable Minter contract. The token is not deployed behind a proxy and core parameters cannot be arbitrarily changed.",
-      "evidenceEntries": 4,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52",
-      "criteria": [
-        {
-          "id": "mint-controlled",
-          "name": "Mint controlled by protocol logic",
-          "status": "positive",
-          "description": "Minting is restricted to an immutable Minter contract, which can only mint CRV through registered gauges based on user's LP shares or/and locked veCRV",
-          "evidences": [
-            {
-              "id": "ev0",
-              "title": "ERC20CRV.vy – only minter can call mint",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333"
-            },
-            {
-              "id": "ev1",
-              "title": "ERC20CRV.vy – minter set once",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L233"
-            },
-            {
-              "id": "ev2",
-              "title": "Minter.vy – gauge validation",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
-            }
-          ]
-        },
-        {
-          "id": "immutable-token",
-          "name": "Immutable token",
-          "status": "positive",
-          "description": "The CRV token contract is not upgradeable and does not sit behind a proxy. Core token logic is immutable.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "ERC20CRV.vy – no proxy pattern",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy"
-            }
-          ]
-        },
-        {
-          "id": "deterministic-supply",
-          "name": "Deterministic supply",
-          "status": "positive",
-          "description": "CRV does not have a hard capped supply, but emissions follow a deterministic yearly epoch schedule with a fixed decay factor of 2^(1/4). Minting rate strictly decreases and cannot be increased.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Initial supply and emission parameters",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L62"
-            },
-            {
-              "id": "ev1",
-              "title": "ERC20CRV.vy – yearly epoch logic",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L117"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "value-accrual",
-      "name": "Value Accrual Mechanism",
-      "description": "CRV accrues value primarily through veCRV. Users lock CRV to obtain veCRV, which boosts gauge emissions, controls protocol parameters, and receives protocol revenues including swap fees and crvUSD interest flows.",
-      "evidenceEntries": 4,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "protocol-emissions",
-          "name": "Protocol emissions",
-          "status": "positive",
-          "description": "Liquidity providers earn CRV emissions via gauges, with rewards calculated and minted through the Minter contract.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "LiquidityGaugeV5.vy – LP deposit & reward tracking",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L451"
-            },
-            {
-              "id": "ev2",
-              "title": "LPs' rewards are checked by their provided liquidity",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
-            }
-          ]
-        },
-        {
-          "id": "boost-mechanism",
-          "name": "veCRV boost",
-          "status": "positive",
-          "description": "veCRV holders can boost gauge rewards up to 2.5x by voting for gauges, incentivizing long-term locking.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "GaugeController.vy – vote logic",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy#L485"
-            },
-            {
-              "id": "ev2",
-              "title": "LiquidityGaugeV5.vy – boost of 2.5x",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/gauges/LiquidityGaugeV5.vy#L206"
-            }
-          ]
-        },
-        {
-          "id": "protocol-fees",
-          "name": "Protocol fees",
-          "status": "positive",
-          "description": "Admin fees from swaps are routed through FeeCollector and ultimately distributed to veCRV holders.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "StableSwap pool – withdraw_admin_fees",
-              "url": "https://github.com/curvefi/curve-contract/blob/master/contracts/pools/3pool/StableSwap3Pool.vy#L821"
-            },
-            {
-              "id": "ev2",
-              "title": "FeeCollector – receives admin fees",
-              "url": "https://etherscan.io/address/0xa2bcd1a4efbd04b63cd03f5aff2561106ebcce00#code"
-            },
-            {
-              "id": "ev3",
-              "title": "FeeDistributor.vy – veCRV claims",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/FeeDistributor.vy#L233"
-            }
-          ]
-        },
-        {
-          "id": "external-revenue",
-          "name": "External revenue dependency",
-          "status": "at_risk",
-          "description": "Value accrual partially depends on external systems such as crvUSD controllers and burner contracts, which can change allocation weights via governance.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "FeeSplitter.vy – receivers",
-              "url": "https://github.com/curvefi/fee-splitter/blob/master/contracts/FeeSplitter.vy#L158"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "uni-gio": [
-    {
-      "id": "token",
-      "name": "Token",
-      "description": "UNI has a fixed initial supply of 1 billion tokens with algorithmic inflation capped at 2% per year. The token contract is immutable with no proxy patterns. Minting is controlled by a single minter address which should be verified as the governance Timelock.",
-      "evidenceEntries": 5,
-      "positive": 4,
-      "neutral": 0,
-      "atRisk": 1,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "immutable-token",
-          "name": "Immutable Token",
-          "status": "positive",
-          "description": "Plain contract with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
-            },
-            {
-              "id": "ev2",
-              "title": "Etherscan",
-              "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code"
-            }
-          ]
-        },
-        {
-          "id": "mint-controlled",
-          "name": "Unbounded Supply",
-          "status": "at_risk",
-          "description": "",
-          "evidences": "Mint can be called once [per year](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116) which mints [2% of total supply](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120). Note that [`mintCap`](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L29) is constant and can not be changed"
-        }
-      ]
-    },
-    {
-      "id": "token-holders",
-      "name": "Token Holders",
-      "description": "UNI is primarily a governance token. There is no programmatic value accrual at the token contract level (no staking, no fee distribution, no buyback). Value accrual comes through governance influence over the fee switch.",
-      "evidenceEntries": 3,
-      "positive": 1,
-      "neutral": 2,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "subcategories": [
-        {
-          "id": "value-accrual",
-          "name": "Value Accrual",
-          "description": "Mechanisms through which UNI token holders can capture value from the protocol",
-          "criteria": [
-            {
-              "id": "protocol-fees",
-              "name": "Protocol Fees to Holders Through Burn Mechanism",
-              "status": "neutral",
-              "description": "",
-              "evidences": "Indirect value accrual happens through a burn mechanism using FirePit and FireJar contracts.\n\n**How it works:** [FeeAdapter](https://etherscan.io/address/0x5E74C9f42EEed283bFf3744fBD1889d398d40867d#code) collects protocol fees by calling [collectProtocol](https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848) and sends them to TokenJar. TokenJar has a [release](https://github.com/Uniswap/protocol-fees/blob/8604e4b9aed88bdd6be3a322e19722c40f94be2c/src/TokenJar.sol#L29) function (only callable by FirePit via `onlyReleaser` modifier) that transfers accrued tokens. FirePit's [release function](https://github.com/Uniswap/protocol-fees/blob/8604e4b9aed88bdd6be3a322e19722c40f94be2c/src/releasers/ExchangeReleaser.sol#L45) is permissionless—anyone can call it by burning **4,000 UNI** to receive all accumulated protocol fees in TokenJar.\n\n**The arbitrage:** Rational actors wait until the TokenJar holds more than $24,000 worth of fees (the approximate value of 4,000 UNI) before calling `release`. On the first day post-unification, someone burned 4,000 UNI ($24k) to claim ~$40k in fees, netting $16k profit. Over time, this margin will compress as more people monitor the contract and trigger releases earlier.\n\n**Dynamics:** The 4,000 UNI `threshold` can be changed by governance via the TimeLock contract. If UNI price drops, releases happen more frequently since the burn cost is lower. Governance controls both the threshold and when/how much gets burned.\n\n**Deflationary vs Inflationary:** While burns are deflationary, UNI has a mint function allowing 2% of total supply per year (currently 20M UNI annually for the growth budget, split quarterly—[details here](https://blog.uniswap.org/unification)). For net deflation, burns must exceed 20M UNI/year, which depends on Uniswap transaction volume. Higher volume → more fees → TokenJar fills faster → more frequent burns (at the current 4,000 UNI threshold). If Uniswap maintains dominance and ships good products, the 20M UNI annual spend can be justified by increased trading volume driving more burns."
-            }
-          ]
-        },
-        {
-          "id": "governance-rights-category",
-          "name": "Governance Rights",
-          "description": "Rights and mechanisms for UNI holders to participate in protocol governance",
-          "criteria": [
-            {
-              "id": "fee-switch",
-              "name": "Fee Switch",
-              "status": "positive",
-              "description": "Protocol fee parameters across all Uniswap versions can only be modified by the Timelock contract, which is controlled by UNI token holder governance.",
-              "evidences": "**V2:** Only the [feeToSetter address](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L40) can call setFeeTo() to change where protocol fees are sent. You can verify that feeToSetter is set to the [Timelock contract](https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC) by calling feeToSetter() on [UniswapV2Factory](https://etherscan.io/address/0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f).\n\n**V3:** Each pool's protocol fee percentage (10-25% of LP fees) can be changed by calling [setProtocolFee()](https://github.com/Uniswap/v3-core/blob/master/contracts/UniswapV3Pool.sol#L837), which has an onlyFactoryOwner modifier. The [UniswapV3Factory](https://etherscan.io/address/0x1F98431c8aD98523631AE4a59f267346ea31F984) owner is [V3FeeAdapter](https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d), whose feeSetter is the Timelock contract. Therefore, only Timelock can change V3 protocol fees.\n\n**V4:** The [setProtocolFeeController()](https://github.com/Uniswap/v4-core/blob/main/src/ProtocolFees.sol#L29-L32) function can only be called by the PoolManager owner, which is expected to be the Timelock contract. This controls who can set protocol fees."
-            },
-            {
-              "id": "token-mint",
-              "name": "Mint",
-              "status": "positive",
-              "evidences": "Mint function can only be called by `minter`(see [here](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L110)) which is set to [Timelock](https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code). Upon following the Timelock contract, it's governed by [GovernorBravoDelegator](https://etherscan.io/address/0x408ED6354d4973f66138C91495F2f2FCbd8724C3#code) which requires approvals from token holders."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol",
-      "name": "Protocol",
-      "description": "Protocol governance, fee mechanisms, and contract immutability across all Uniswap versions. All admin functions are controlled by governance Timelock.",
-      "evidenceEntries": 10,
-      "positive": 10,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "subcategories": [
-        {
-          "id": "value-accrual",
-          "name": "Value Accrual",
-          "description": "Protocol fee mechanisms and revenue controls across Uniswap versions",
-          "criteria": [
-            {
-              "id": "fee-destination",
-              "name": "Fee Destination",
-              "status": "positive",
-              "description": "Protocol fees across all Uniswap versions (V2, V3, V4)",
-              "evidences": [
-                {
-                  "id": "ev1",
-                  "title": "UniswapV2Pair.sol",
-                  "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90",
-                  "comment": "In Uniswap V2, the fees go to [FeeTo](https://github.com/Uniswap/v2-core/blob/ee547b17853e71ed4e0101ccfd52e70d5acded58/contracts/UniswapV2Pair.sol#L90) address, set inside the [UniswapV2Factory](https://etherscan.io/address/0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f#code) contract. Upon checking the `FeeTo` address, it's a TokenJar contract. Read the description inside TokenHolders."
-                },
-                {
-                  "id": "ev2",
-                  "title": "UniswapV3Pool.sol",
-                  "url": "https://github.com/Uniswap/v3-core/blob/master/contracts/UniswapV3Pool.sol#L848",
-                  "comment": "In Uniswap V3, the fees go to TokenJar through calling [collectProtocol](https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848) which is only callable by [FeeAdapter](https://etherscan.io/address/0x5E74C9f42EEed283bFf3744fBD1889d398d40867d#code) and funds go again to TokenJar. Read the description inside TokenHolders."
-                },
-                {
-                  "id": "ev3",
-                  "title": "ProtocolFees.sol",
-                  "url": "https://github.com/Uniswap/v4-core/blob/main/src/ProtocolFees.sol#L29-L32",
-                  "comment": "setProtocolFeeController() is onlyOwner. Owner expected to be Timelock"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "governance-rights",
-          "name": "Governance Rights",
-          "description": "Contract immutability, governance mechanisms, and safety protections",
-          "criteria": [
-            {
-              "id": "pool-immutability",
-              "name": "Pool Immutability",
-              "status": "positive",
-              "description": "All Uniswap versions use immutable pool contracts with no upgrade mechanisms.",
-              "evidences": [
-                {
-                  "id": "ev1",
-                  "title": "UniswapV2Pair.sol",
-                  "comment": "Uses Create2 deployment",
-                  "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31"
-                },
-                {
-                  "id": "ev2",
-                  "title": "UniswapV3Pool.sol",
-                  "comment": "Uses NoDelegateCall protection",
-                  "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30"
-                },
-                {
-                  "id": "ev3",
-                  "title": "PoolManager.sol",
-                  "comment": "Uses Singleton design",
-                  "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93"
-                }
-              ]
-            },
-            {
-              "id": "onchain-governance",
-              "name": "On-chain Governance",
-              "status": "positive",
-              "description": "GovernorAlpha: 4% quorum, 1% proposal threshold, ~7 days voting. Timelock: 2-day minimum delay, 30-day maximum, 14-day grace period. All fee changes require on-chain proposal and execution through Timelock.",
-              "evidences": [
-                {
-                  "id": "ev1",
-                  "title": "GovernorAlpha/Timelock",
-                  "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
-                }
-              ]
-            },
-            {
-              "id": "revenue-protection-mechanism",
-              "name": "Revenue Protection",
-              "status": "positive",
-              "description": "Governance flow: Forum RFC → Snapshot → On-chain proposal → Timelock execution. NO separate admin can bypass governance for fee changes. Fee destinations require on-chain UNI holder vote.",
-              "evidences": [
-                {
-                  "id": "ev1",
-                  "title": "Governance process",
-                  "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9"
-                }
-              ]
-            },
-            {
-              "id": "no-emergency-powers",
-              "name": "No Emergency Powers",
-              "status": "positive",
-              "description": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds.",
-              "evidences": ""
-            },
-            {
-              "id": "no-fund-extraction",
-              "name": "No Fund Extraction",
-              "status": "positive",
-              "description": "No emergency withdrawal or sweep functions in core contracts. Protocol fees can only be collected to governance-approved destinations.",
-              "evidences": ""
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "uni-gio2": [
-    {
-      "id": "governance",
-      "name": "Governance",
-      "description": "Governance control mechanisms for Uniswap protocol",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "workflow-control",
-          "name": "Workflow Control",
-          "status": "positive",
-          "description": "",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance Flow",
-              "url": "#",
-              "comment": "Users create a proposal on a forum, then on an off-chain snapshot and later, on-chain, after which, delay occurs before the execution. [RFC](https://gov.uniswap.org/) -> [Snapshot Poll](https://snapshot.box/#/s:uniswapgovernance.eth) -> [GovernorBravoDelegator](https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code) -> [Timelock](https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code)"
-            }
-          ]
-        },
-        {
-          "id": "role-accountability",
-          "name": "Role Accountability",
-          "status": "positive",
-          "description": "All critical roles flow through governance-controlled contracts, ensuring UNI holders maintain ultimate control over the protocol.",
-          "evidences": "**V2Factory:**\nfeeToSetter role is held by Timelock contract. Only feeToSetter can call setFeeTo() to change where protocol fees are sent.\n\n**V3Factory:**\nFactory owner is V3FeeAdapter, whose feeSetter is Timelock. Only Timelock can change V3 protocol fees via setProtocolFee().\n\n**V4PoolManager:**\nPoolManager owner is expected to be Timelock. Only owner can call setProtocolFeeController() to control who can set protocol fees.\n\n**UNI Token:**\nMinter role is held by Timelock contract. Only minter can call mint function.\n\nSince Timelock is controlled by GovernorAlpha, all operations are controlled by UNI holders."
-        }
-      ]
-    },
-    {
-      "id": "token-control",
-      "name": "Token Control",
-      "description": "Token supply and upgrade mechanisms",
-      "evidenceEntries": 3,
-      "positive": 3,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "upgrade-sovereignty",
-          "name": "Upgrade Sovereignty",
-          "status": "positive",
-          "description": "Token contract is immutable with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
-            },
-            {
-              "id": "ev2",
-              "title": "Etherscan",
-              "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code"
-            }
-          ]
-        },
-        {
-          "id": "supply-sovereignty",
-          "name": "Supply Sovereignty",
-          "status": "positive",
-          "description": "",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "",
-              "url": "#",
-              "comment": "Mint can be called once [per year](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116) which mints [2% of total supply](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120). Note that [`mintCap`](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L29) is constant and can not be changed. [Minter](https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L111) is set to [Timelock](https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code) governed by token holders."
-            }
-          ]
-        },
-        {
-          "id": "censorship-immunity",
-          "name": "Censorship Immunity",
-          "status": "positive",
-          "description": "No blacklist, whitelist, or pause functions in UNI token contract. Transfers cannot be censored.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Uni.sol - no censorship",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
-              "comment": "Standard ERC20 with no admin controls over transfers"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "protocol-control",
-      "name": "Protocol Control",
-      "description": "Protocol immutability and access controls",
-      "evidenceEntries": 2,
-      "positive": 2,
-      "neutral": 0,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "upgrade-sovereignty",
-          "name": "Upgrade Sovereignty",
-          "status": "positive",
-          "description": "All Uniswap Pair contracts and Timelock are non-upgradeable, where as GovernorBravoDelegator is upgradeable",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV2Pair.sol",
-              "comment": "Uses Create2 deployment",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31"
-            },
-            {
-              "id": "ev2",
-              "title": "UniswapV3Pool.sol",
-              "comment": "Uses NoDelegateCall protection",
-              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30"
-            },
-            {
-              "id": "ev3",
-              "title": "PoolManager.sol",
-              "comment": "Uses Singleton design",
-              "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93"
-            },
-            {
-              "id": "ev4",
-              "title": "GovernorBravoDelegator.sol",
-              "comment": "Admin(who can upgrade) is set to TimeLock contract which again requires governance flow to go through.",
-              "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code"
-            }
-          ]
-        },
-        {
-          "id": "gated-access-control",
-          "name": "Gated Access Control",
-          "status": "positive",
-          "description": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds. No emergency withdrawal or sweep functions.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Core contracts review",
-              "url": "#",
-              "comment": "No emergency powers or fund extraction mechanisms in core contracts"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "value-accrual",
-      "name": "Value Accrual",
-      "description": "Value accrual mechanisms for token holders",
-      "evidenceEntries": 3,
-      "positive": 2,
-      "neutral": 1,
-      "atRisk": 0,
-      "aboutLink": "#",
-      "criteria": [
-        {
-          "id": "accrual",
-          "name": "Accrual (Active)",
-          "status": "neutral",
-          "description": "Protocol fees across all Uniswap versions (V2, V3, V4) flow to governance-controlled destinations (TokenJar). However, value accrual is only indirect through burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit. FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "UniswapV2Pair.sol",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90",
-              "comment": "V2 fees go to FeeTo address which is set to TokenJar"
-            },
-            {
-              "id": "ev2",
-              "title": "UniswapV3Pool.sol",
-              "url": "https://github.com/Uniswap/v3-core/blob/master/contracts/UniswapV3Pool.sol#L848",
-              "comment": "V3 fees are collected via calling `collectProtocol` on the pool contract from [V3FeeAdapter](https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d#code), which calls `collectProtocol` and passes TokenJar parameter as recipient."
-            },
-            {
-              "id": "ev3",
-              "title": "ProtocolFees.sol",
-              "url": "https://github.com/Uniswap/v4-core/blob/main/src/ProtocolFees.sol#L29-L32",
-              "comment": "V4 protocol fee controller set by Timelock"
-            }
-          ]
-        },
-        {
-          "id": "treasury-ownership",
-          "name": "Treasury Ownership",
-          "status": "positive",
-          "description": "Fee destinations require on-chain UNI holder vote through governance. NO separate admin can bypass governance for fee changes.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Governance process",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/GovernorAlpha.sol#L9",
-              "comment": "Governance flow: Forum RFC → Snapshot → On-chain proposal → Timelock execution"
-            }
-          ]
-        },
-        {
-          "id": "mechanism-control",
-          "name": "Mechanism Control",
-          "status": "positive",
-          "description": "Token holders control the fee switch and burn threshold(in TokenPit) through governance proposals.",
-          "evidences": [
-            {
-              "id": "ev1",
-              "title": "Timelock governance",
-              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
-              "comment": "All parameter changes require Timelock execution controlled by UNI holders"
-            }
-          ]
+          "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)",
+          "status": "⚠️",
+          "notes": "Public research indicates the Lido DAO has defined governance controls over the BORG structure, which include overseeing the administrative channels and primary infrastructure.",
+          "evidence": []
         }
       ]
     }

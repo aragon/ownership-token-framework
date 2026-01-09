@@ -1,7 +1,5 @@
-import { IconBubble } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,39 +14,45 @@ import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
 // Types
-type CriteriaStatus = "positive" | "neutral" | "at_risk"
+export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
 
 interface Evidence {
-  id: string
-  title: string
+  name: string
   url: string
-  comment?: string
 }
 
 interface Criteria {
   id: string
   name: string
-  status: CriteriaStatus
-  body?: string
-  description?: string
-  about?: string
-  evidences?: Evidence[]
+  about: string
+  status: string
+  notes: string
+  evidence: Evidence[]
 }
 
 export interface Metric {
   id: string
   name: string
-  description: string
-  about?: string
-  evidenceEntries: number
-  positive: number
-  neutral: number
-  atRisk: number
+  about: string
   criteria: Criteria[]
-  aboutLink?: string
+}
+
+// Map emoji status to internal status type
+export function mapStatus(status: string): CriteriaStatus {
+  switch (status) {
+    case "✅":
+      return "positive"
+    case "⚠️":
+      return "neutral"
+    case "❌":
+      return "at_risk"
+    default:
+      return "tbd"
+  }
 }
 
 export interface TokenInfo {
+  id: string
   name: string
   symbol: string
   address: string
