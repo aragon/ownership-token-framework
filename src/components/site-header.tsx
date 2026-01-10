@@ -1,7 +1,7 @@
 "use client"
 
-import { useMemo, useRef, useState } from "react"
-import { Link as NavLink } from "@tanstack/react-router"
+import { useEffect, useRef, useState } from "react"
+import { Link as NavLink, useNavigate } from "@tanstack/react-router"
 import { ChevronDownIcon, PlusIcon, SearchIcon } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -21,52 +21,49 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu"
 import { SubmitTokenDialog } from "@/components/submit-token-dialog"
+import { useTokenSearch } from "@/hooks/use-token-search"
 import { FRAMEWORK_BASE_URL } from "@/lib/framework"
-import tokensData from "@/data/tokens.json"
-
-interface Token {
-  id: string
-  name: string
-  symbol: string
-  icon?: string
-}
-
-const tokens: Token[] = tokensData.tokens as Token[]
-
-function fuzzyMatch(query: string, target: string): boolean {
-  let queryIndex = 0
-  let targetIndex = 0
-  const normalizedQuery = query.toLowerCase()
-  const normalizedTarget = target.toLowerCase()
-
-  while (queryIndex < normalizedQuery.length && targetIndex < normalizedTarget.length) {
-    if (normalizedQuery[queryIndex] === normalizedTarget[targetIndex]) {
-      queryIndex += 1
-    }
-    targetIndex += 1
-  }
-
-  return queryIndex === normalizedQuery.length
-}
 
 export function SiteHeader() {
   const [submitDialogOpen, setSubmitDialogOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [highlightedIndex, setHighlightedIndex] = useState(-1)
-  const resultRefs = useRef<Array<HTMLAnchorElement | null>>([])
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+  const navigate = useNavigate()
+  const {
+    clearSearch,
+    filteredTokens,
+    hasResults,
+    highlightedIndex,
+    resultRefs,
+    searchQuery,
+    setHighlightedIndex,
+    updateSearchQuery,
+  } = useTokenSearch()
+  const activeIndex = hasResults
+    ? Math.max(highlightedIndex, 0)
+    : highlightedIndex
 
-  const filteredTokens = useMemo(() => {
-    const query = searchQuery.trim()
-    if (!query) return []
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) {
+        return
+      }
 
-    return tokens.filter((token) => {
-      const nameMatch = fuzzyMatch(query, token.name)
-      const symbolMatch = fuzzyMatch(query, token.symbol)
-      return nameMatch || symbolMatch
-    })
-  }, [searchQuery])
+      const activeElement = document.activeElement
+      const isEditable =
+        activeElement instanceof HTMLInputElement ||
+        activeElement instanceof HTMLTextAreaElement ||
+        activeElement instanceof HTMLSelectElement ||
+        activeElement?.getAttribute("contenteditable") === "true"
 
-  const hasResults = filteredTokens.length > 0
+      if (isEditable) return
+
+      event.preventDefault()
+      searchInputRef.current?.focus()
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [])
 
   return (
     <header className="border-b bg-background">
@@ -136,8 +133,7 @@ export function SiteHeader() {
             <Input
               className="h-9 pl-9 pr-8 text-base shadow-sm"
               onChange={(event) => {
-                setSearchQuery(event.target.value)
-                setHighlightedIndex(-1)
+                updateSearchQuery(event.target.value)
               }}
               onKeyDown={(event) => {
                 if (event.key === "ArrowDown" && hasResults) {
@@ -145,8 +141,17 @@ export function SiteHeader() {
                   setHighlightedIndex(0)
                   resultRefs.current[0]?.focus()
                 }
+                if (event.key === "Enter" && hasResults) {
+                  event.preventDefault()
+                  const token = filteredTokens[0]
+                  if (token) {
+                    clearSearch()
+                    navigate({ params: { tokenId: token.id }, to: "/tokens/$tokenId" })
+                  }
+                }
               }}
               placeholder="Search tokens"
+              ref={searchInputRef}
               type="search"
               value={searchQuery}
             />
@@ -159,11 +164,10 @@ export function SiteHeader() {
                   filteredTokens.map((token, index) => (
                     <NavLink
                       className="flex items-center gap-3 rounded-lg px-2 py-1.5 text-sm transition hover:bg-muted data-[active=true]:bg-muted"
-                      data-active={index === highlightedIndex}
+                      data-active={index === activeIndex}
                       key={token.id}
                       onClick={() => {
-                        setSearchQuery("")
-                        setHighlightedIndex(-1)
+                        clearSearch()
                       }}
                       onKeyDown={(event) => {
                         if (event.key === "ArrowDown") {
