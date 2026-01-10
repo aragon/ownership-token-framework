@@ -13,7 +13,7 @@ function Avatar({
   return (
     <AvatarPrimitive.Root
       className={cn(
-        "size-8 rounded-full after:rounded-full data-[size=lg]:size-10 data-[size=sm]:size-6 after:border-border group/avatar relative flex shrink-0 select-none after:absolute after:inset-0 after:border after:mix-blend-darken dark:after:mix-blend-lighten",
+        "size-8 rounded-full after:rounded-full data-[size=lg]:size-10 data-[size=sm]:size-6 after:border-border group/avatar relative flex shrink-0 select-none after:absolute after:inset-0 after:border after:mix-blend-darken dark:after:mix-blend-lighten overflow-hidden",
         className
       )}
       data-size={size}
@@ -26,7 +26,7 @@ function Avatar({
 function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
   return (
     <AvatarPrimitive.Image
-      className={cn("aspect-square size-full object-cover", className)}
+      className={cn("aspect-square size-full", className)}
       data-slot="avatar-image"
       {...props}
     />

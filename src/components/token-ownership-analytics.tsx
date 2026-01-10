@@ -195,7 +195,7 @@ const columns: ColumnDef<Token>[] = [
 // Hero Section
 function HeroSection() {
   return (
-    <section className="flex flex-col gap-y-4 py-8 lg:py-12">
+    <section className="flex flex-col gap-y-4 py-6 lg:py-12">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
         Ownership Token Index
       </h1>
@@ -237,7 +237,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
   })
 
   return (
-    <div className="space-y-4 pt-12 grow">
+    <div className="space-y-4 pt-6 pb-10 md:pt-12 md:pb-20 grow">
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">

@@ -204,7 +204,7 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
       {/* Gray background section - Content */}
       <div className="bg-muted/50 flex-1">
         <Container>
-          <div className="grid grid-cols-1 gap-6 pt-12 lg:grid-cols-[1fr_300px]">
+          <div className="grid grid-cols-1 gap-6 pt-6 pb-10 md:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
             {/* Left column - Tabs and metrics */}
 
             <AnalyticsContent metrics={metrics} />
