@@ -6,7 +6,7 @@ export default function AnalyticsContent({ metrics }: { metrics: Metric[] }) {
   // const [viewBy, setViewBy] = useState("metric")
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pb-20">
       {/* Filter bar
       <div className="flex items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">

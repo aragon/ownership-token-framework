@@ -1,6 +1,5 @@
 "use client"
 
-import { IconBubble } from "@tabler/icons-react"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -17,6 +16,8 @@ import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { PageWrapper } from "@/components/page-wrapper"
+import { Container } from "@/components/ui/container"
 import {
   Table,
   TableBody,
@@ -45,10 +46,10 @@ interface Token {
 const tokens: Token[] = tokensData.tokens as Token[]
 
 // Utility to truncate address
-function truncateAddress(address: string): string {
-  if (address.includes("...")) return address
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
+// function truncateAddress(address: string): string {
+//   if (address.includes("...")) return address
+//   return `${address.slice(0, 6)}...${address.slice(-4)}`
+// }
 
 // Column definitions
 const columns: ColumnDef<Token>[] = [
@@ -194,11 +195,11 @@ const columns: ColumnDef<Token>[] = [
 // Hero Section
 function HeroSection() {
   return (
-    <section>
+    <section className="flex flex-col gap-y-4 py-8 lg:py-12">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
         Ownership Token Index
       </h1>
-      <p className="mt-4 max-w-3xl text-muted-foreground">
+      <p className="max-w-[1024px] text-muted-foreground">
         A standardized, open-source disclosure framework for token investors
         helps clarify the value a token provides in terms of ownership. By
         utilizing this framework, you can identify the metrics and criteria that
@@ -236,7 +237,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
   })
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pt-12 grow">
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
@@ -369,20 +370,20 @@ function TokenDataTable({ data }: { data: Token[] }) {
 // Main Component
 export default function TokenOwnershipAnalytics() {
   return (
-    <main className="min-h-screen">
+    <PageWrapper className="flex flex-col">
       {/* White background section */}
       <div className="bg-background">
-        <div className="mx-auto max-w-7xl px-4 py-6 lg:px-6 lg:py-8">
+        <Container>
           <HeroSection />
-        </div>
+        </Container>
       </div>
 
       {/* Gray background section */}
-      <div className="bg-muted/50 pb-12">
-        <div className="mx-auto max-w-7xl px-4 pt-6 lg:px-6">
+      <div className="bg-muted/50 flex-1">
+        <Container>
           <TokenDataTable data={tokens} />
-        </div>
+        </Container>
       </div>
-    </main>
+    </PageWrapper>
   )
 }

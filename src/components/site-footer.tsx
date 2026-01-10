@@ -1,7 +1,9 @@
+import { Container } from "@/components/ui/container"
+
 export function SiteFooter() {
   return (
     <footer className="border-t bg-background">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 lg:gap-12 lg:px-12">
+      <Container className="flex h-20 items-center justify-between gap-4 lg:gap-12">
         {/* Built by Aragon */}
         <div className="flex items-center gap-2 shrink-0">
           <span className="text-sm text-muted-foreground">Built by</span>
@@ -55,7 +57,7 @@ export function SiteFooter() {
             © 2026 Aragon
           </span>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }
