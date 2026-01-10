@@ -16,6 +16,7 @@ import {
   ItemGroup,
   ItemTitle,
 } from "@/components/ui/item"
+import { getFrameworkUrl } from "@/lib/framework"
 import { type CriteriaStatus, type Metric, mapStatus } from "./token-detail"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
@@ -57,20 +58,31 @@ export default function MetricCard({ metric }: { metric: Metric }) {
           <HoverCard>
             <HoverCardTrigger
               render={
-                <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal" />
+                <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal cursor-help" />
               }
             >
               About this metric
             </HoverCardTrigger>
             <HoverCardContent align="start" className="w-80 p-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold">{metric.name}</h4>
-                <p className="text-sm text-muted-foreground">{metric.about}</p>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <h4 className="font-semibold">{metric.name}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {metric.about}
+                  </p>
+                </div>
+                <a
+                  className="inline-flex items-center gap-1 text-sm text-chart-4 hover:text-chart-4/80 transition-colors"
+                  href={getFrameworkUrl(metric.id)}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Learn more about this metric →
+                </a>
               </div>
             </HoverCardContent>
           </HoverCard>
         </div>
-        <p className="mt-1 text-sm text-muted-foreground">{metric.about}</p>
       </div>
 
       {/* Criteria list */}

@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
+import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import appCss from "../styles.css?url"
 
@@ -41,6 +42,7 @@ function RootComponent() {
     <>
       <SiteHeader />
       <Outlet />
+      <SiteFooter />
     </>
   )
 }

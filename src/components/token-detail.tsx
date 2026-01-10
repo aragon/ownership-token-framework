@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import metricsData from "@/data/metrics.json"
 import tokensData from "@/data/tokens.json"
+import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
@@ -76,11 +77,30 @@ export interface TokenInfo {
   infoDescription: string
 }
 
-// Helper to get metrics by token ID
+// Helper to get metrics by token ID, enriched with framework definitions
 function getMetricsByTokenId(tokenId: string): Metric[] {
   const metrics = metricsData[tokenId as keyof typeof metricsData]
   if (!metrics) return []
-  return metrics as Metric[]
+
+  // Enrich metrics with framework "about" descriptions
+  return (metrics as Metric[]).map((metric) => {
+    const frameworkMetric = getFrameworkMetric(metric.id)
+
+    return {
+      ...metric,
+      // Use framework definition as source of truth for "about" text
+      about: frameworkMetric?.about || metric.about,
+      criteria: metric.criteria.map((criteria) => {
+        const frameworkCriteria = getFrameworkCriteria(criteria.id)
+
+        return {
+          ...criteria,
+          // Use framework definition as source of truth for "about" text
+          about: frameworkCriteria?.about || criteria.about,
+        }
+      }),
+    }
+  })
 }
 
 // Helper to get token by ID
