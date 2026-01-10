@@ -8,6 +8,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { PageWrapper } from "@/components/page-wrapper"
+import { Container } from "@/components/ui/container"
 import metricsData from "@/data/metrics.json"
 import tokensData from "@/data/tokens.json"
 import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
@@ -113,7 +115,7 @@ function getTokenById(tokenId: string): TokenInfo | null {
 // Token Hero Section
 function TokenHero({ token }: { token: TokenInfo }) {
   return (
-    <section className="py-6">
+    <section className="py-6 flex flex-col gap-6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -126,7 +128,7 @@ function TokenHero({ token }: { token: TokenInfo }) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="mt-4 flex items-start gap-3">
+      <div className="flex items-start gap-3">
         <Avatar className="size-10">
           <AvatarImage alt={token.name} src={token.icon} />
           <AvatarFallback className="bg-blue-500 text-white">
@@ -136,12 +138,10 @@ function TokenHero({ token }: { token: TokenInfo }) {
         <h1 className="text-3xl font-bold">{token.name}</h1>
       </div>
 
-      <p className="mt-4 max-w-4xl text-muted-foreground">
-        {token.description}
-      </p>
+      <p className="max-w-4xl text-muted-foreground">{token.description}</p>
 
       {/* Stats row */}
-      <div className="mt-6 flex flex-wrap items-baseline text-sm">
+      <div className="flex flex-wrap items-baseline text-sm">
         <div className="flex items-center gap-1">
           <span className="text-muted-foreground">
             Last updated: {token.lastUpdated} by
@@ -175,8 +175,8 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
   if (!token) {
     return (
-      <main className="min-h-screen bg-background">
-        <div className="mx-auto max-w-7xl px-4 lg:px-6 py-12">
+      <PageWrapper className="bg-background">
+        <Container className="py-12">
           <h1 className="text-2xl font-bold">Token not found</h1>
           <p className="mt-2 text-muted-foreground">
             The token with ID "{tokenId}" could not be found.
@@ -187,28 +187,28 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
           >
             ← Back to tokens
           </Link>
-        </div>
-      </main>
+        </Container>
+      </PageWrapper>
     )
   }
 
   return (
-    <main className="min-h-screen">
+    <PageWrapper>
       {/* White background section - Hero */}
       <div className="bg-background">
-        <div className="mx-auto max-w-7xl px-4 lg:px-6">
+        <Container>
           <TokenHero token={token} />
-        </div>
+        </Container>
       </div>
 
       {/* Gray background section - Content */}
-      <div className="bg-muted/50 pb-12">
-        <div className="mx-auto max-w-7xl px-4 lg:px-6">
-          <div className="grid grid-cols-1 gap-6 pt-6 lg:grid-cols-[1fr_300px]">
+      <div className="bg-muted/50 flex-1">
+        <Container>
+          <div className="grid grid-cols-1 gap-6 pt-6 pb-10 md:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
             {/* Left column - Tabs and metrics */}
-            <div>
-              <AnalyticsContent metrics={metrics} />
-              {/* <Tabs defaultValue="analytics">
+
+            <AnalyticsContent metrics={metrics} />
+            {/* <Tabs defaultValue="analytics">
                 <TabsList>
                   <TabsTrigger value="analytics">Analytics</TabsTrigger>
                   <TabsTrigger value="version-log">Version log</TabsTrigger>
@@ -226,7 +226,6 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
                   </div>
                 </TabsContent>
               </Tabs> */}
-            </div>
 
             {/* Right column - Info sidebar */}
             <div>
@@ -235,8 +234,8 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
-    </main>
+    </PageWrapper>
   )
 }
