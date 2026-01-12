@@ -10,7 +10,7 @@
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "Governance 1: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.\n\nGovernance 2: Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This primarily is used for treasury operations and management of certain staking modules. | Governance 1 flow: Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock → Executor → Agent → Protocol Contracts\n\n**Governance 2 (Easy Track):** Whitelisted proposers (node ops, committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
+          "notes": "**Governance 1:** Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.\n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This primarily is used for treasury operations and management of certain staking modules. \n\nWhitelisted proposers (node ops, committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
           "evidence": [
             {
               "name": "DualGovernance",
@@ -43,7 +43,7 @@
           "name": "Access Control managed by Holders",
           "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?",
           "status": "✅",
-          "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.\n\nVoting: Voting contract is controlled by LDO holders.\n\nAgent: EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\nTokenManager: MINT_ROLE is given to Voting contract. BURN_ROLE is given to no one as of now, but its permission manager is Voting contract.\n\nStakingRouter: STAKING_MODULE_MANAGE_ROLE is given to Agent contract. Since Agent is only callable by Governance 1, all operations are controlled by LDO holders.",
+          "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.\n\n**Voting:** Voting contract is controlled by LDO holders.\n\n**Agent:** `EXECUTE_ROLE` is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.\n\n**TokenManager:** `MINT_ROLE` is given to Voting contract. `BURN_ROLE` is given to no one as of now, but its permission manager is Voting contract.\n\n**StakingRouter:** `STAKING_MODULE_MANAGE_ROLE` is given to Agent contract. Since Agent is only callable by Governance 1, all operations are controlled by LDO holders.",
           "evidence": [
             {
               "name": "Agent",
@@ -71,7 +71,7 @@
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the upgrade logic via governance, or is the contract immutable?",
           "status": "✅",
-          "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token’s doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token’s behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by APP_MANAGER_ROLE, which is assigned to the Agent contract.",
+          "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token’s doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token’s behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by `APP_MANAGER_ROLE`, which is assigned to the Agent contract.",
           "evidence": [
             {
               "name": "LDO Token",
@@ -92,7 +92,7 @@
           "name": "Supply Sovereignty",
           "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles).",
           "status": "✅",
-          "notes": "The LDO token’s controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\nThis enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
+          "notes": "The LDO token’s controller (TokenManager) can mint unlimited tokens. However, minting requires `MINT_ROLE` on TokenManager, which is held by the Voting contract.\n\nThis enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
           "evidence": [
             {
               "name": "MiniMeToken.generateTokens",
@@ -105,7 +105,7 @@
           "name": "Censorship Immunity",
           "about": "Are there no \"Guardian\" or \"Admin\" roles capable of freezing, blacklisting, or seizing tokens?",
           "status": "✅",
-          "notes": "Controller can burn tokens from any address and enable/disable transfers. Currently, BURN_ROLE on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1 to call setPermission on ACL.",
+          "notes": "Controller can burn tokens from any address and enable/disable transfers. Currently, `BURN_ROLE` on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1 to call setPermission on ACL.",
           "evidence": [
             {
               "name": "MiniMeToken.destroyTokens",
@@ -133,7 +133,7 @@
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the implementation logic of the specific \"Engine\" or product?",
           "status": "✅",
-          "notes": "The protocol contracts can be upgraded by the Agent contract (hence, by LDO holders).\n\nStakingRouter: proxy_getAdmin is set to Agent.\n\nAgent: Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, …) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself). Hence, upgrade is controlled by LDO holders.\n\nDualGovernance, Executor, EmergencyProtectedTimeLock: NOT upgradeable.",
+          "notes": "The protocol contracts can be upgraded by the Agent contract (hence, by LDO holders).\n\n**StakingRouter:** `proxy_getAdmin` is set to Agent.\n\n**Agent:** Uses Aragon v1 Proxy. Upgrading requires calling `setApp(Agent, …)` on the Kernel, which requires `APP_MANAGER_ROLE` (currently given to Agent itself). Hence, upgrade is controlled by LDO holders.\n\nDualGovernance, Executor, EmergencyProtectedTimeLock: NOT upgradeable.",
           "evidence": [
             {
               "name": "StakingRouter",
