@@ -20,4 +20,7 @@ const config = defineConfig({
   ],
 })
 
+console.log("VITE_TOKEN_SYMBOL:", process.env.VITE_TOKEN_SYMBOL)
+console.log("VERCEL_GIT_COMMIT_REF:", process.env.VERCEL_GIT_COMMIT_REF)
+
 export default config
