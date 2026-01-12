@@ -194,7 +194,7 @@ function HeroSection() {
   return (
     <section className="flex flex-col gap-y-4 py-6 lg:py-12">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Ownership Token Index
+        A verifiable standard for tokens
       </h1>
       <p className="max-w-[1024px] text-muted-foreground">
         A standardized, open-source disclosure framework for token investors
