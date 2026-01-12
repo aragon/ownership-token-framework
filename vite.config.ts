@@ -8,8 +8,11 @@ import { defineConfig, loadEnv } from "vite"
 
 const config = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "")
+  const rawTokenSymbol = env.VITE_TOKEN_SYMBOL ?? ""
   const tokenSymbolEnv =
-    env.VITE_TOKEN_SYMBOL ?? env.VERCEL_GIT_COMMIT_REF ?? ""
+    rawTokenSymbol.startsWith("$")
+      ? env.VERCEL_GIT_COMMIT_REF ?? ""
+      : rawTokenSymbol || env.VERCEL_GIT_COMMIT_REF || ""
 
   return {
     define: {
@@ -25,8 +28,5 @@ const config = defineConfig(({ mode }) => {
     ],
   }
 })
-
-console.log("VITE_TOKEN_SYMBOL:", process.env.VITE_TOKEN_SYMBOL)
-console.log("VERCEL_GIT_COMMIT_REF:", process.env.VERCEL_GIT_COMMIT_REF)
 
 export default config
