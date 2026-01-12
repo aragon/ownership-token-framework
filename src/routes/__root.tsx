@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
+import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import appCss from "../styles.css?url"
 
@@ -38,10 +39,11 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SiteHeader />
       <Outlet />
-    </>
+      <SiteFooter />
+    </div>
   )
 }
 
