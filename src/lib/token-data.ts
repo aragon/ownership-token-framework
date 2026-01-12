@@ -4,6 +4,8 @@ export type Token = (typeof tokensData.tokens)[number]
 
 const rawTokens = tokensData.tokens as Token[]
 
+console.log("VITE_TOKEN_SYMBOL:", import.meta.env.VITE_TOKEN_SYMBOL)
+
 function normalizeTokenSymbol(value: string): string {
   return value.trim().toUpperCase()
 }
