@@ -114,7 +114,7 @@ const peopleRoute = createRoute({
 ```
 
 See [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading) for more.
-
+ 
 ## Learn More
 
 - [TanStack Start](https://tanstack.com/start/latest)
