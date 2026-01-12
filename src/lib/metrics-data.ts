@@ -1,0 +1,45 @@
+import metricsData from "@/data/metrics.json"
+import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
+
+interface Evidence {
+  name: string
+  url: string
+}
+
+interface Criteria {
+  id: string
+  name: string
+  about: string
+  status: string
+  notes: string
+  evidence: Evidence[]
+}
+
+export interface Metric {
+  id: string
+  name: string
+  about: string
+  criteria: Criteria[]
+}
+
+export function getMetricsByTokenId(tokenId: string): Metric[] {
+  const metrics = metricsData[tokenId as keyof typeof metricsData]
+  if (!metrics) return []
+
+  return (metrics as Metric[]).map((metric) => {
+    const frameworkMetric = getFrameworkMetric(metric.id)
+
+    return {
+      ...metric,
+      about: frameworkMetric?.about || metric.about,
+      criteria: metric.criteria.map((criteria) => {
+        const frameworkCriteria = getFrameworkCriteria(criteria.id)
+
+        return {
+          ...criteria,
+          about: frameworkCriteria?.about || criteria.about,
+        }
+      }),
+    }
+  })
+}

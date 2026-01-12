@@ -1,0 +1,43 @@
+{
+  "topics": [
+    {
+      "id": "intro",
+      "name": "Overview",
+      "about": "The Ownership Token Index is an MVP dashboard for evaluating the credibility and worthiness of token ownership across protocols.",
+      "questions": [
+        {
+          "id": "intro__purpose",
+          "question": "What is the purpose of the Ownership Token Index?",
+          "answer": "To establish whether holding a token provides meaningful ownership rights in a protocol, or if the claim is mostly speculative. We use a standardized framework so results are comparable across projects."
+        },
+        {
+          "id": "intro__target-users",
+          "question": "Who is this for?",
+          "answer": "Crypto investors, governance participants, analysts, and researchers who want an objective view of token ownership quality."
+        }
+      ]
+    },
+    {
+      "id": "submission",
+      "name": "Submission",
+      "about": "How tokens are proposed, reviewed, and added to the index.",
+      "questions": [
+        {
+          "id": "submission__how",
+          "question": "How do I submit a token for analysis?",
+          "answer": "Use the submit flow to share a token, its contract address, and a short description of why it matters. We review each submission for completeness and scope before adding it to the index."
+        },
+        {
+          "id": "submission__what-happens-next",
+          "question": "What happens after I submit?",
+          "answer": "We confirm the details, perform an initial review using the framework, and publish a write-up once the evidence is verified. You will hear from us when it is ready."
+        },
+        {
+          "id": "submission__where-does-it-go",
+          "question": "Where does the submission go internally?",
+          "answer": "Submissions are logged for the team to triage and track. That keeps the workflow consistent while we gather sources and prepare the analysis."
+        }
+      ]
+    }
+  ]
+}

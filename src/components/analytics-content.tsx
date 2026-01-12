@@ -1,5 +1,5 @@
+import type { Metric } from "@/lib/metrics-data"
 import MetricCard from "./metric-card"
-import type { Metric } from "./token-detail"
 
 export default function AnalyticsContent({ metrics }: { metrics: Metric[] }) {
   // const [filterValue, setFilterValue] = useState("")
