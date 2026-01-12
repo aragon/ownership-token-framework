@@ -18,6 +18,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
+import { useTokens } from "@/hooks/use-tokens"
 import {
   Table,
   TableBody,
@@ -26,7 +27,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import tokensData from "@/data/tokens.json"
 
 // Types
 interface Token {
@@ -41,9 +41,6 @@ interface Token {
   lastUpdated: string
   network: string
 }
-
-// Get tokens from JSON data
-const tokens: Token[] = tokensData.tokens as Token[]
 
 // Utility to truncate address
 // function truncateAddress(address: string): string {
@@ -369,6 +366,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
 
 // Main Component
 export default function TokenOwnershipAnalytics() {
+  const tokens = useTokens() as Token[]
   return (
     <PageWrapper className="flex flex-col">
       {/* White background section */}

@@ -10,35 +10,14 @@ import {
 } from "@/components/ui/breadcrumb"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
-import metricsData from "@/data/metrics.json"
-import tokensData from "@/data/tokens.json"
-import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
+import { type Metric, getMetricsByTokenId } from "@/lib/metrics-data"
+import { getTokenById } from "@/lib/token-data"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
 // Types
 export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
 
-interface Evidence {
-  name: string
-  url: string
-}
-
-interface Criteria {
-  id: string
-  name: string
-  about: string
-  status: string
-  notes: string
-  evidence: Evidence[]
-}
-
-export interface Metric {
-  id: string
-  name: string
-  about: string
-  criteria: Criteria[]
-}
 
 // Map emoji status to internal status type
 export function mapStatus(status: string): CriteriaStatus {
@@ -79,38 +58,8 @@ export interface TokenInfo {
   infoDescription: string
 }
 
-// Helper to get metrics by token ID, enriched with framework definitions
-function getMetricsByTokenId(tokenId: string): Metric[] {
-  const metrics = metricsData[tokenId as keyof typeof metricsData]
-  if (!metrics) return []
+export type { Metric }
 
-  // Enrich metrics with framework "about" descriptions
-  return (metrics as Metric[]).map((metric) => {
-    const frameworkMetric = getFrameworkMetric(metric.id)
-
-    return {
-      ...metric,
-      // Use framework definition as source of truth for "about" text
-      about: frameworkMetric?.about || metric.about,
-      criteria: metric.criteria.map((criteria) => {
-        const frameworkCriteria = getFrameworkCriteria(criteria.id)
-
-        return {
-          ...criteria,
-          // Use framework definition as source of truth for "about" text
-          about: frameworkCriteria?.about || criteria.about,
-        }
-      }),
-    }
-  })
-}
-
-// Helper to get token by ID
-function getTokenById(tokenId: string): TokenInfo | null {
-  const token = tokensData.tokens.find((t) => t.id === tokenId)
-  if (!token) return null
-  return token as TokenInfo
-}
 
 // Token Hero Section
 function TokenHero({ token }: { token: TokenInfo }) {

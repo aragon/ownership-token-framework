@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react"
-import tokensData from "@/data/tokens.json"
+import { useTokens } from "@/hooks/use-tokens"
 
 interface Token {
   id: string
@@ -8,15 +8,16 @@ interface Token {
   icon?: string
 }
 
-const tokens: Token[] = tokensData.tokens as Token[]
-
 function fuzzyMatch(query: string, target: string): boolean {
   let queryIndex = 0
   let targetIndex = 0
   const normalizedQuery = query.toLowerCase()
   const normalizedTarget = target.toLowerCase()
 
-  while (queryIndex < normalizedQuery.length && targetIndex < normalizedTarget.length) {
+  while (
+    queryIndex < normalizedQuery.length &&
+    targetIndex < normalizedTarget.length
+  ) {
     if (normalizedQuery[queryIndex] === normalizedTarget[targetIndex]) {
       queryIndex += 1
     }
@@ -27,6 +28,7 @@ function fuzzyMatch(query: string, target: string): boolean {
 }
 
 export function useTokenSearch() {
+  const tokens = useTokens() as Token[]
   const [searchQuery, setSearchQuery] = useState("")
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const resultRefs = useRef<Array<HTMLAnchorElement | null>>([])
@@ -40,7 +42,7 @@ export function useTokenSearch() {
       const symbolMatch = fuzzyMatch(query, token.symbol)
       return nameMatch || symbolMatch
     })
-  }, [searchQuery])
+  }, [searchQuery, tokens])
 
   const hasResults = filteredTokens.length > 0
 

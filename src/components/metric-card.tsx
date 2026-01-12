@@ -17,7 +17,8 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { getFrameworkUrl } from "@/lib/framework"
-import { type CriteriaStatus, type Metric, mapStatus } from "./token-detail"
+import type { Metric } from "@/lib/metrics-data"
+import { type CriteriaStatus, mapStatus } from "./token-detail"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 
 interface MarkdownComponentProps {

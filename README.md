@@ -58,6 +58,7 @@ Set the following environment variables (see `.env.example`):
 NOTION_API_TOKEN=
 NOTION_DATABASE_ID=
 SLACK_WEBHOOK_URL=
+VITE_TOKEN_SYMBOL=
 ```
 
 The Notion database should have these properties:
@@ -68,6 +69,13 @@ The Notion database should have these properties:
 - `Contract` (Rich text)
 - `Description` (Rich text)
 - `Submitter Email` (Email)
+
+## Token Filtering (Vercel Branch Name)
+
+Set `VITE_TOKEN_SYMBOL` to a token symbol (e.g. `LDO`) to filter the app to a
+single token. On Vercel, set `VITE_TOKEN_SYMBOL` to `$VERCEL_GIT_COMMIT_REF`
+and name the branch after the token symbol. If the branch name does not match a
+symbol, the full list renders.
 
 ## Routing
 
