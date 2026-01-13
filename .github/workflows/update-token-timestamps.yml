@@ -1,0 +1,42 @@
+name: Update token timestamps
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [development]
+
+permissions:
+  contents: write
+
+jobs:
+  update-token-timestamp:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout development
+        uses: actions/checkout@v4
+        with:
+          ref: development
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Normalize token symbol
+        run: echo "TOKEN_SYMBOL=$(echo \"${{ github.event.pull_request.head.ref }}\" | awk -F/ '{print toupper($NF)}')" >> $GITHUB_ENV
+
+      - name: Update timestamp
+        run: node scripts/update-token-timestamps.mjs --symbol "$TOKEN_SYMBOL"
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/tokens.json
+          git commit -m "chore: update ${TOKEN_SYMBOL} lastUpdated"
+          git push origin HEAD:development

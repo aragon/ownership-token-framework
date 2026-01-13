@@ -4,16 +4,19 @@ export function SiteFooter() {
   return (
     <footer className="border-t bg-background">
       <Container className="flex h-20 items-center justify-between gap-4 lg:gap-12">
-        {/* Built by Aragon */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm text-muted-foreground">Built by</span>
+        <a
+          className="flex items-center gap-2 shrink-0"
+          href="https://aragon.org"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           <img
             alt="Aragon"
             className="h-6"
             src="/logo-aragon.svg"
             style={{ width: "96.75px" }}
           />
-        </div>
+        </a>
 
         {/* Navigation Links */}
         <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
@@ -23,15 +26,7 @@ export function SiteFooter() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Aragon App
-          </a>
-          <a
-            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://aragon.org"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Website
+            Launch app
           </a>
           <a
             className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
@@ -39,15 +34,23 @@ export function SiteFooter() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Twitter / X
+            X
           </a>
           <a
             className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://www.aragon.org/terms-and-conditions"
+            href="https://github.com/aragon/ownership-token-index"
             rel="noopener noreferrer"
             target="_blank"
           >
-            Terms of Service
+            Github
+          </a>
+          <a
+            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
+            href="https://aragon.org/terms-and-conditions"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Terms of service
           </a>
         </nav>
 

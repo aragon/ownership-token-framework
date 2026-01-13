@@ -124,8 +124,8 @@ export function SiteHeader() {
               src="/logo-square.png"
             />
             <div className="flex items-center gap-1 text-sm md:text-base font-semibold leading-6">
-              <span className="text-foreground">Token Ownership</span>
-              <span className="text-muted-foreground">Analytics</span>
+              <span className="text-foreground">Ownership Token</span>
+              <span className="text-muted-foreground">Index</span>
             </div>
           </NavLink>
 
@@ -149,22 +149,13 @@ export function SiteHeader() {
                   FAQ
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              <NavigationMenuItem className="xl:hidden">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="data-active:focus:bg-muted data-active:hover:bg-muted data-active:bg-muted/50 focus-visible:ring-ring/50 hover:bg-muted focus:bg-muted flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1">
                     More
                     <ChevronDownIcon className="ml-1 size-3" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
-                    <DropdownMenuItem>
-                      <Link
-                        className="flex w-full items-center"
-                        href="https://blockworks.co/token-transparency"
-                        isExternal
-                      >
-                        Blockworks
-                      </Link>
-                    </DropdownMenuItem>
                     <DropdownMenuItem
                       className="xl:hidden"
                       onClick={() => setSubmitDialogOpen(true)}
@@ -227,7 +218,7 @@ export function SiteHeader() {
           }
         >
           <Button
-            className="h-8 w-8 md:hidden"
+            className="h-8 w-8 sm:hidden"
             onClick={() => {
               setIsMobileSearchOpen(true)
             }}
@@ -237,10 +228,10 @@ export function SiteHeader() {
             <SearchIcon className="size-4" />
           </Button>
 
-          <div className="relative hidden md:block w-42 lg:w-60 xl:w-64">
+          <div className="relative hidden sm:block w-42 lg:w-60 xl:w-64">
             <SearchIcon className="absolute left-3 top-1/2 size-[12px] -translate-y-1/2 text-foreground" />
             <Input
-              className="h-8 pl-7 pr-3 text-sm shadow-sm md:h-9 md:pl-9 lg:pr-8 md:text-base"
+              className="h-8 pl-8 pr-3 text-sm shadow-sm sm:h-9 lg:pl-9 lg:pr-8 md:text-base"
               onChange={(event) => {
                 updateSearchQuery(event.target.value)
               }}
@@ -326,7 +317,7 @@ export function SiteHeader() {
         <div
           className={
             isMobileSearchOpen
-              ? "flex w-full items-center gap-2 md:hidden"
+              ? "flex w-full items-center gap-2 sm:hidden"
               : "hidden"
           }
         >
