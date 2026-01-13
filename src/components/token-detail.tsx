@@ -12,6 +12,7 @@ import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
 import { type Metric, getMetricsByTokenId } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
+import { formatUnixTimestamp } from "@/lib/format-date"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
@@ -45,7 +46,7 @@ export interface TokenInfo {
   positive: number
   neutral: number
   atRisk: number
-  lastUpdated: string
+  lastUpdated: number
   updatedBy: {
     name: string
     avatar?: string
@@ -93,7 +94,7 @@ function TokenHero({ token }: { token: TokenInfo }) {
       <div className="flex flex-wrap items-baseline text-sm">
         <div className="flex items-center gap-1">
           <span className="text-muted-foreground">
-            Last updated: {token.lastUpdated} by
+            Last updated: {formatUnixTimestamp(token.lastUpdated)} by
           </span>
           <Avatar className="size-5">
             <AvatarImage
