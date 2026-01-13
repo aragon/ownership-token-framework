@@ -24,10 +24,11 @@ jobs:
           node-version: "20"
 
       - name: Normalize token symbol
-        run: echo "TOKEN_SYMBOL=$(echo \"${{ github.event.pull_request.head.ref }}\" | awk -F/ '{print toupper($NF)}')" >> $GITHUB_ENV
+        id: normalize
+        run: echo "token_symbol=$(echo \"${{ github.event.pull_request.head.ref }}\" | awk -F/ '{print toupper($NF)}')" >> $GITHUB_OUTPUT
 
       - name: Update timestamp
-        run: node scripts/update-token-timestamps.mjs --symbol "$TOKEN_SYMBOL"
+        run: node scripts/update-token-timestamps.mjs --symbol "${{ steps.normalize.outputs.token_symbol }}"
 
       - name: Commit and push
         run: |
@@ -38,5 +39,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/tokens.json
-          git commit -m "chore: update ${TOKEN_SYMBOL} lastUpdated"
+          git commit -m "chore: update ${{ steps.normalize.outputs.token_symbol }} lastUpdated"
           git push origin HEAD:development
