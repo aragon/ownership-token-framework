@@ -47,36 +47,6 @@ Add components using shadcn:
 pnpm dlx shadcn@latest add button
 ```
 
-## Token Submissions (Notion + Slack)
-
-The submit token dialog posts to `/api/submit-token`, which creates a new row
-in a Notion database and (optionally) sends a Slack webhook notification.
-
-Set the following environment variables (see `.env.example`):
-
-```
-NOTION_API_TOKEN=
-NOTION_DATABASE_ID=
-SLACK_WEBHOOK_URL=
-VITE_TOKEN_SYMBOL=
-```
-
-The Notion database should have these properties:
-
-- `Token Name` (Title)
-- `Symbol` (Rich text)
-- `Network` (Rich text)
-- `Contract` (Rich text)
-- `Description` (Rich text)
-- `Submitter Email` (Email)
-
-## Token Filtering (Vercel Branch Name)
-
-Set `VITE_TOKEN_SYMBOL` to a token symbol (e.g. `LDO`) to filter the app to a
-single token. On Vercel, set `VITE_TOKEN_SYMBOL` to `$VERCEL_GIT_COMMIT_REF`
-and name the branch after the token symbol. If the branch name does not match a
-symbol, the full list renders.
-
 ## Routing
 
 This project uses TanStack Router with file-based routing. Routes are managed as files in `src/routes/`.
