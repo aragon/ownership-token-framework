@@ -122,5 +122,3 @@ See [Loader documentation](https://tanstack.com/router/latest/docs/framework/rea
 - [shadcn/ui](https://ui.shadcn.com)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Biome](https://biomejs.dev)
-
-Aragon ©2026
