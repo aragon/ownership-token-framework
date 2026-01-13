@@ -9,6 +9,8 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { GoogleAnalytics } from "@/components/google-analytics"
+import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
@@ -43,15 +45,34 @@ function RootComponent() {
       <SiteHeader />
       <Outlet />
       <SiteFooter />
+      <GoogleAnalytics />
     </div>
   )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const gaId = GA_MEASUREMENT_ID
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        {gaId ? (
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+        ) : null}
+        {gaId ? (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}', { send_page_view: false });`,
+            }}
+          />
+        ) : null}
       </head>
       <body>
         {children}

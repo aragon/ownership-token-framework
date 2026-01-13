@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
 import { useTokens } from "@/hooks/use-tokens"
+import { formatUnixTimestamp } from "@/lib/format-date"
 import {
   Table,
   TableBody,
@@ -38,7 +39,7 @@ interface Token {
   positive: number
   neutral: number
   atRisk: number
-  lastUpdated: string
+  lastUpdated: number
   network: string
 }
 
@@ -166,7 +167,9 @@ const columns: ColumnDef<Token>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <span className="text-muted-foreground">{row.original.lastUpdated}</span>
+      <span className="text-muted-foreground">
+        {formatUnixTimestamp(row.original.lastUpdated)}
+      </span>
     ),
   },
   {
@@ -194,7 +197,7 @@ function HeroSection() {
   return (
     <section className="flex flex-col gap-y-4 py-6 lg:py-12">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Ownership Token Index
+        A verifiable standard for tokens
       </h1>
       <p className="max-w-[1024px] text-muted-foreground">
         A standardized, open-source disclosure framework for token investors
