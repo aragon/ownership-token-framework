@@ -284,7 +284,7 @@
               "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968"
             },
             {
-              "name": "CRV Token Admin Check",
+              "name": "CRV Token: Admin is set to Agent",
               "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#readContract"
             }
           ]
@@ -294,11 +294,15 @@
           "name": "Access Control managed by Holders",
           "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?",
           "status": "✅",
-          "notes": "Protocol roles are controlled by the Agent.\n\nGauge Addition: Only the DAO can add new gauges via add_gauge on GaugeController.\n\nFee Parameters: Pool admin fees are set at deployment and can be modified by Agent (through veCRV holders voting) - See accrual section for more info.\n\nPool Factory Ownership: new pools are deployed by Factory contracts which in turn is controlled by OwnerProxy contract. This contract has two types of admin set on it(Agent and GnosisSafe). Agent is responsible for adding new pools, hence giving veCRV holders control over protocol expansion.",
+          "notes": "Protocol roles are controlled by the Agent.\n\n**Gauge Addition:** Only the Agent can add new gauges via [add_gauge](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/GaugeController.vy#L297) on GaugeController.\n\n**Fee Parameters:** Pool admin fees are set at deployment and can be modified by Agent (through veCRV holders voting) - See accrual section for more info.\n\n**Pool Factory Ownership:** new pools are deployed by Factory contracts which in turn is controlled by [OwnerProxy](https://etherscan.io/address/0x742C3cF9Af45f91B109a81EfEaf11535ECDe9571#code) contract. This contract has two types of admin set on it(Agent and GnosisSafe). Agent is responsible for adding new pools, hence giving veCRV holders control over protocol expansion.",
           "evidence": [
             {
-              "name": "GaugeController",
-              "url": "https://etherscan.io/address/0x2F50D438606C59853F044305d4073375218E06A1"
+              "name": "GaugeController: admin is set to Agent",
+              "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract"
+            },
+            {
+              "name": "Curve Pool Factory: admin is set to OwnerProxy",
+              "url": "https://etherscan.io/address/0xB9fc157394Af804a3578134A6585C0dC9cc990d4#code"
             }
           ]
         },
@@ -380,8 +384,16 @@
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the implementation logic of the specific \"Engine\" or product?",
           "status": "✅",
-          "notes": "Core protocol and pool contracts are immutable.\n\nAgent Contract: The Agent contract can be upgraded by calling setApp(Agent, ...) on the Kernel contract, which is only allowed by the Agent itself. This means only veCRV holders can upgrade the Agent contract through governance voting.\n\nVoting Contract: The voting contract can be upgraded by calling setApp(Voting, ...) on the Kernel contract, which is only allowed by the Agent itself. This means only veCRV holders can upgrade the Voting contract through governance voting.",
+          "notes": "Core protocol and pool contracts are immutable.\n\n**Agent Contract:** The Agent contract can be upgraded by calling setApp(Agent, ...) on the Kernel contract, which is only allowed by the Agent itself. This means only veCRV holders can upgrade the Agent contract through governance voting.\n\n**Voting Contract:** The voting contract can be upgraded by calling setApp(Voting, ...) on the Kernel contract, which is only allowed by the Agent itself. This means only veCRV holders can upgrade the Voting contract through governance voting.",
           "evidence": [
+            {
+              "name": "Agent",
+              "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code"
+            },
+            {
+              "name": "Voting",
+              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code"
+            },
             {
               "name": "CRV Token (Admin: Agent)",
               "url": "https://etherscan.io/address/0xd533a949740bb3306d119cc777fa900ba034cd52"
@@ -397,11 +409,11 @@
           "name": "Privileged Access controlled by holders",
           "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
           "status": "✅",
-          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\nAdd/Kill Gauge: To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting.\n\nveCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting.\n\nveCRV holders can also kill a gauge, permanently setting its rewards to 0.",
           "evidence": [
             {
               "name": "Gauge Kill Implementation",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/GaugeController.vy"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L731"
             }
           ]
         }
@@ -417,15 +429,19 @@
           "name": "Accrual Active & Owned",
           "about": "Are value flows currently active and governed by holders (non-discretionary)?",
           "status": "✅",
-          "notes": "CRV Emissions Rewards: Liquidity Providers deposit LP tokens into the Gauge Contract. LPs claim proportional rewards.\n\n2.5x Boost in CRV Emissions: LPs can boost rewards by locking CRV for veCRV. Enforced by TOKENLESS_PRODUCTION.\n\nPool rewards in crvUSD: StableSwapProxy calls withdraw_admin_fees. Fees converted to crvUSD via CowSwapBurner and sent to FeeDistributor for veCRV holders.\n\nBorrow rewards in crvUSD: Interest from controllers sent to FeeSplitter. FeeCollector receives proportional crvUSD and sends to FeeDistributor for veCRV holders.",
+          "notes": "**CRV Emissions Rewards:** Liquidity Providers deposit LP tokens into the Gauge Contract. Once the gauge receives CRV emissions, LPs can claim their proportional rewards based on their deposited LP token amount into the gauge. \n\n**2.5x Boost in CRV Emissions:** LPs can boost rewards up to 2.5x by locking CRV for veCRV. The user reward is based on a `working balance` and 2.5x reward is enforced by [TOKENLESS_PRODUCTION](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L206C59-L206C79) which is set to 40(i.e 40 * 2.5 = 100%) \n\n**Pool rewards in crvUSD:** Pools have two fees: fee (total swap fee) and admin_fee (percentage of fee taken for admin) which is applied when the [swap](https://github.com/curvefi/curve-contract/blob/574f44027d089de0eac765f5a74ea5ae96aba968/contracts/pools/3pool/StableSwap3Pool.vy#L472) occurs. [StableSwapProxy](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) calls [withdraw_admin_fees](https://github.com/curvefi/curve-contract/blob/574f44027d089de0eac765f5a74ea5ae96aba968/contracts/pools/3pool/StableSwap3Pool.vy#L809) on pools to collect admin portion of fees. \n\n Every coin inside StableSwapProxy has a burner contract attached. Later, anyone can call [burn](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/PoolProxy.vy#L223) which invokes the coin's attached burner contract to transfer fees from StableSwapProxy. One such burner is [FeeCollector](https://etherscan.io/address/0xa2bcd1a4efbd04b63cd03f5aff2561106ebcce00#code), where fees ultimately accumulate. FeeCollector uses CowSwapBurner to convert all tokens to crvUSD, and the crvUSD is sent to [FeeDistributor](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/FeeDistributor.vy#L298) where veCRV holders can claim their rewards. \n\n**Borrow rewards in crvUSD:** Borrowing Interest(paid in crvUSD) from controllers are sent to [FeeSplitter](https://github.com/curvefi/fee-splitter/blob/3b45a41356a929f137ecd96571c57e5bc3d5e797/contracts/FeeSplitter.vy). FeeCollector receives proportional crvUSD from FeeSplitter and sends to FeeDistributor for veCRV holders.",
           "evidence": [
+            {
+              "name": "working_balance uses user's LP tokens and veCRV balance to decide reward:",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L210"
+            },
             {
               "name": "FeeDistributor 2",
               "url": "https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
             },
             {
               "name": "FeeSplitter",
-              "url": "https://etherscan.io/address/0x733f5E148f470530932822162608492C07D7f0Cc"
+              "url": "https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2"
             }
           ]
         },
@@ -447,11 +463,15 @@
           "name": "Accrual Mechanism Control",
           "about": "Can holders modify accrual parameters (e.g., changing fee splits or rates)?",
           "status": "✅",
-          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.\n\nUpdate Pool Fees: Pool fee changes are executed via commit_new_fee, which can only be called by the pool owner — StableSwapProxy. Restricted to parameter_admin (Agent contract).\n\nAttaching a burner contract: set_burner on StableSwapProxy gated by ownership_admin (Agent contract).\n\nBurn: The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
+          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.\n\n**Update Pool Fees:** Pool fee changes are executed via `commit_new_fee`, which can only be called by the pool owner — `StableSwapProxy` which in turn is restricted to `parameter_admin` (Agent contract).\n\n**Attaching a burner contract:** `set_burner` on StableSwapProxy gated by `ownership_admin` (Agent contract).\n\n**Burn:** The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
           "evidence": [
             {
-              "name": "StableSwapProxy",
-              "url": "https://etherscan.io/address/0x8F942C20D02bF323dec196048239361b5ae7ec94"
+              "name": "DAI/USDC/USDT Pool: commit_new_fee",
+              "url": "https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7#code"
+            },
+            {
+              "name": "StableSwapProxy: parameter_admin, ownership_admin, set_burner, burn",
+              "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code"
             }
           ]
         }
