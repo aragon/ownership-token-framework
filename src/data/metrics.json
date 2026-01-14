@@ -194,7 +194,7 @@
           "name": "Accrual Active",
           "about": "Are value flows active and governed by holders?",
           "status": "✅",
-          "notes": "**Gauge Emissions:** veAERO holders vote on gauge weights each epoch. The Voter distributes weekly AERO emissions to gauges proportionally. Liquidity providers deposit LP tokens into gauges to earn emissions based on their share.\n\n **Growth Emissions:** veAERO holders receive the rewards from the growth emissions(see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. .\n\n**Trading Fees:** For non-slipstream pools, 100% of swap fees go to LPs staked in gauges.For slipstream (CL) pools, the swap fee is split - where some portion goes to the Gauge contract and the rest stays in a pool(claimable by LPs). The Gauge sends the fees  to the feesVotingReward contract. veAERO holders claim these fees on feesVotingReward. It’s worth noting only those veAERO holders that voted for the gauge receive these fees.",
+          "notes": "**Gauge Emissions:** veAERO holders vote on gauge weights each epoch. The Voter distributes weekly AERO emissions to gauges proportionally. Liquidity providers deposit LP tokens into gauges to earn emissions based on their share.\n\n **Growth Emissions:** veAERO holders receive the rewards from the growth emissions(see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. .\n\n**Trading Fees:** For both normal and slipstream (CL) pools, the swap fee is split - where some portion goes to the Gauge contract and the rest stays in a pool (claimable by LPs who’ve not staked their LP tokens in gauges. Coz those who’ve staked, receive AERO emissions and not fees). The Gauge sends the fees to the feesVotingReward contract. veAERO holders claim these fees on feesVotingReward. It’s worth noting only those veAERO holders that voted for the gauge receive these fees.",
           "evidence": [
             {
               "name": "Gauge Deposit Logic(see `earned` function as well)",
@@ -209,12 +209,20 @@
               "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/RewardsDistributor.sol#L126"
             },
             {
-              "name": "Non-Slipstream: Swap Fee Accrued",
+              "name": "Non-Slipstream, for unstaked LPs: Swap Fee Accrued",
               "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L378"
             },
             {
-              "name": "Non-Slipstream: Swap Fee Claimed",
+              "name": "Non-Slipstream, for unstaked LPs: Swap Fee Claimed",
               "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L143"
+            },
+            {
+              "name": "Non-Slipstream, for veAERO holders: Voter calling Gauge to claim fees",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Voter.sol#L492"
+            },
+            {
+              "name": "Non-Slipstream, for veAERO holders: Swap Fee Claimed by Gauge on PoolFees",
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/gauges/Gauge.sol#L82"
             },
             {
               "name": "Slipstream: Fees Split",
