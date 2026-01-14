@@ -14,10 +14,12 @@ import {
 } from "@tanstack/react-table"
 import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
-import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
+import { useTokens } from "@/hooks/use-tokens"
+import { formatUnixTimestamp } from "@/lib/format-date"
 import {
   Table,
   TableBody,
@@ -26,9 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { useTokens } from "@/hooks/use-tokens"
-import { formatUnixTimestamp } from "@/lib/format-date"
-import { truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -74,9 +73,7 @@ const columns: ColumnDef<Token>[] = [
         </Avatar>
         <div className="flex items-center gap-2">
           <span className="font-medium">{row.original.name}</span>
-          <span className="text-muted-foreground">
-            {truncateAddress(row.original.address)}
-          </span>
+          <span className="text-muted-foreground">{row.original.address}</span>
         </div>
       </div>
     ),
@@ -200,14 +197,10 @@ function HeroSection() {
   return (
     <section className="flex flex-col gap-y-4 py-6 lg:py-12">
       <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        A verifiable standard for tokens
+        Verify and compare enforceable ownership
       </h1>
       <p className="max-w-[1024px] text-muted-foreground">
-        A standardized, open-source disclosure framework for token investors
-        helps clarify the value a token provides in terms of ownership. By
-        utilizing this framework, you can identify the metrics and criteria that
-        matter most to you and your investments. Improved analytics and clearer
-        ownership lead to smarter investment decisions.
+        The Ownership Token Index maps enforceable claims across four metrics: token control, protocol control, value accrual, and offchain dependencies. Use it to evaluate tokens on fundamentals.
       </p>
     </section>
   )
