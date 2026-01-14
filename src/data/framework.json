@@ -11,7 +11,7 @@
       },
       {
         "id": "gov-fdn__access-control",
-        "name": "Access Control managed by Holders",
+        "name": "Role Accountability",
         "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?"
       },
       {
@@ -55,7 +55,7 @@
       },
       {
         "id": "prot-ctrl__privileged",
-        "name": "Privileged Access controlled by holders",
+        "name": "Gated Access Control",
         "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?"
       }
     ]
