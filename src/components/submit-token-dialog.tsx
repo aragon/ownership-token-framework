@@ -31,7 +31,7 @@ const submitTokenSchema = z.object({
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(80, "Name must be at most 80 characters"),
-  company: z.string().max(80, "Project name must be at most 80 characters"),
+  project: z.string().max(80, "Project name must be at most 80 characters"),
   request: z
     .string()
     .min(10, "Request must be at least 10 characters")
@@ -61,7 +61,7 @@ export function SubmitTokenDialog({
     resolver: zodResolver(submitTokenSchema),
     defaultValues: {
       name: "",
-      company: "",
+      project: "",
       request: "",
       additionalInfo: "",
       submitterEmail: "",
@@ -91,15 +91,6 @@ export function SubmitTokenDialog({
   }, [submitState.status, onOpenChange])
 
   async function onSubmit(data: SubmitTokenFormData) {
-    // TODO: Re-enable API submission once Notion + Slack credentials are ready.
-    console.log("Form submitted:", data)
-    setSubmitState({
-      status: "success",
-      message: "Submission received. We'll follow up soon.",
-    })
-    form.reset()
-    return
-    /*
     setSubmitState({ status: "submitting" })
     try {
       const response = await fetch("/api/submit-token", {
@@ -125,7 +116,6 @@ export function SubmitTokenDialog({
             : "Submission failed. Try again.",
       })
     }
-    */
   }
 
   return (
@@ -174,7 +164,7 @@ export function SubmitTokenDialog({
 
               <Controller
                 control={form.control}
-                name="company"
+                name="project"
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor="requester-project">
@@ -184,7 +174,7 @@ export function SubmitTokenDialog({
                       {...field}
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
-                      id="requester-company"
+                      id="requester-project"
                       placeholder="Project name"
                     />
                     {fieldState.invalid && (

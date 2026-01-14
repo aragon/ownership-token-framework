@@ -1,9 +1,8 @@
 type SubmitTokenPayload = {
-  tokenName: string
-  tokenSymbol: string
-  contractAddress: string
-  network: string
-  description: string
+  name: string
+  project: string
+  request: string
+  additionalInfo: string
   submitterEmail: string
 }
 
@@ -33,11 +32,10 @@ function jsonResponse(body: object, status = 200) {
 
 function getMissingFields(payload: SubmitTokenPayload) {
   const missing: string[] = []
-  if (!payload.tokenName) missing.push("tokenName")
-  if (!payload.tokenSymbol) missing.push("tokenSymbol")
-  if (!payload.contractAddress) missing.push("contractAddress")
-  if (!payload.network) missing.push("network")
-  if (!payload.description) missing.push("description")
+  if (!payload.name) missing.push("name")
+  if (!payload.project) missing.push("project")
+  if (!payload.request) missing.push("request")
+  if (!payload.additionalInfo) missing.push("additionalInfo")
   if (!payload.submitterEmail) missing.push("submitterEmail")
   return missing
 }
@@ -76,23 +74,26 @@ export default async function handler(request: Request) {
     body: JSON.stringify({
       parent: { database_id: NOTION_DATABASE_ID },
       properties: {
-        "Token Name": {
-          title: [{ text: { content: payload.tokenName } }],
+        "Project name": {
+          title: [{ text: { content: payload.project } }],
         },
-        Symbol: {
-          rich_text: [{ text: { content: payload.tokenSymbol } }],
+        "Your name": {
+          rich_text: [{ text: { content: payload.name } }],
         },
-        Network: {
-          rich_text: [{ text: { content: payload.network } }],
+        Request: {
+          rich_text: [{ text: { content: payload.request } }],
         },
-        Contract: {
-          rich_text: [{ text: { content: payload.contractAddress } }],
+        "Additional information": {
+          rich_text: [{ text: { content: payload.additionalInfo } }],
         },
-        Description: {
-          rich_text: [{ text: { content: payload.description } }],
-        },
-        "Submitter Email": {
+        "Your email": {
           email: payload.submitterEmail,
+        },
+        "Submitted at": {
+          date: { start: new Date().toISOString() },
+        },
+        Status: {
+          select: { name: "New" },
         },
       },
     }),
@@ -117,7 +118,7 @@ export default async function handler(request: Request) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        text: `New token submission: ${payload.tokenName} (${payload.tokenSymbol}) on ${payload.network} from ${payload.submitterEmail}`,
+        text: `New token request: ${payload.project} from ${payload.name} (${payload.submitterEmail}). Request: ${payload.request}`,
       }),
     })
   }
