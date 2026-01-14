@@ -62,7 +62,7 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "value=$(git show -s --format=%ct ${{ github.event.pull_request.merge_commit_sha }})" >> $GITHUB_OUTPUT
           else
-            echo "value=$(node -e \"console.log(Math.floor(new Date('${{ github.event.head_commit.timestamp }}').getTime() / 1000))\")" >> $GITHUB_OUTPUT
+            echo "value=$(node -e 'console.log(Math.floor(new Date(process.argv[1]).getTime() / 1000))' '${{ github.event.head_commit.timestamp }}')" >> $GITHUB_OUTPUT
           fi
 
       - name: Update timestamp
