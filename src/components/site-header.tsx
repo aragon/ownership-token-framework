@@ -1,7 +1,7 @@
 "use client"
 
 import { Link as NavLink, useNavigate } from "@tanstack/react-router"
-import { ChevronDownIcon, PlusIcon, SearchIcon, XIcon } from "lucide-react"
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import type { KeyboardEvent as ReactKeyboardEvent } from "react"
 import { useEffect, useRef, useState } from "react"
 import { SubmitTokenDialog } from "@/components/submit-token-dialog"

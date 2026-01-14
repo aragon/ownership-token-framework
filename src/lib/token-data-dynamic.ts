@@ -5,9 +5,9 @@
  * Replace the existing token-data.ts with this implementation once data is moved to GitHub.
  */
 
-import { fetchGitHubData } from "@/lib/data-fetcher"
 // Import local data as fallback for development
 import tokensDataLocal from "@/data/tokens.json"
+import { fetchGitHubData } from "@/lib/data-fetcher"
 
 export type Token = (typeof tokensDataLocal.tokens)[number]
 
@@ -30,7 +30,10 @@ async function fetchTokens(): Promise<Token[]> {
     cachedTokens = data.tokens
     return cachedTokens
   } catch (error) {
-    console.warn("Failed to fetch tokens from GitHub, using local fallback", error)
+    console.warn(
+      "Failed to fetch tokens from GitHub, using local fallback",
+      error
+    )
     // Fallback to local data
     cachedTokens = tokensDataLocal.tokens as Token[]
     return cachedTokens

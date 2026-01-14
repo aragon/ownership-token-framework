@@ -72,9 +72,11 @@ const columns: ColumnDef<Token>[] = [
             {row.original.name.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
-
+        <div className="flex flex-row gap-x-4">
           <span className="font-medium">{row.original.name}</span>
-          <span className="text-muted-foreground">{truncateAddress(row.original.address)}</span>
+          <span className="text-muted-foreground">
+            {truncateAddress(row.original.address)}
+          </span>
         </div>
       </div>
     ),
@@ -156,24 +158,6 @@ const columns: ColumnDef<Token>[] = [
   //   ),
   // },
   {
-    accessorKey: 'address',
-    header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        Address
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
-    ),
-    cell: ({ row }) => (
-      <span className="text-muted-foreground">
-        {truncateAddress(row.original.address)}
-      </span>
-    ),
-  },
-  {
     accessorKey: "lastUpdated",
     header: ({ column }) => (
       <Button
@@ -193,11 +177,11 @@ const columns: ColumnDef<Token>[] = [
   },
   {
     id: "actions",
-
     cell: ({ row }) => (
       <div className="flex justify-end">
         <Button
           className="size-8"
+          nativeButton={false}
           render={
             <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
           }

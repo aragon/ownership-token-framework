@@ -22,7 +22,7 @@ export function truncateAddress(address: string, start = 6, end = 4) {
 }
 
 const defaultDateFormatter = new Intl.DateTimeFormat("en-US", {
-  month: "long",
+  month: "short",
   day: "numeric",
   year: "numeric",
   timeZone: "UTC",
