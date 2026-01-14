@@ -74,6 +74,20 @@ const [currentTokens, currentMetrics] = hasAfter
 const previousTokens = hasBefore ? readJsonFromGit(before, TOKENS_PATH) : null
 const previousMetrics = hasBefore ? readJsonFromGit(before, METRICS_PATH) : null
 
+if (hasAfter && (!currentTokens || !currentMetrics)) {
+  console.error(
+    "::warning::Unable to load after JSON from git; skipping updates."
+  )
+  process.exit(0)
+}
+
+if (hasBefore && (!previousTokens || !previousMetrics)) {
+  console.error(
+    "::warning::Unable to load before JSON from git; skipping updates."
+  )
+  process.exit(0)
+}
+
 const currentTokenMap = collectTokenMap(currentTokens)
 const previousTokenMap = collectTokenMap(previousTokens)
 const currentMetricsMap = collectMetricsMap(currentMetrics)
