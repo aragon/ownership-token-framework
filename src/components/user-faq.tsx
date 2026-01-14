@@ -1,7 +1,9 @@
 "use client"
 
 import ReactMarkdown from "react-markdown"
+import { useState } from "react"
 import { PageWrapper } from "@/components/page-wrapper"
+import { SubmitTokenDialog } from "@/components/submit-token-dialog"
 import {
   Accordion,
   AccordionContent,
@@ -10,6 +12,16 @@ import {
 } from "@/components/ui/accordion"
 import { Container } from "@/components/ui/container"
 import { useFaqTopics } from "@/hooks/use-faq"
+
+const SUBMIT_TOKEN_HREF = "submit-token"
+const LINK_CLASS_NAME =
+  "cursor-pointer text-chart-4 underline decoration-dotted underline-offset-4 hover:text-foreground hover:decoration-solid transition-colors"
+const INLINE_BUTTON_CLASS_NAME = `${LINK_CLASS_NAME} bg-transparent p-0 border-0`
+
+interface MarkdownComponentProps {
+  children?: React.ReactNode
+  href?: string
+}
 
 // Hero Section
 function HeroSection() {
@@ -28,6 +40,33 @@ function HeroSection() {
 
 export default function UserFaq() {
   const topics = useFaqTopics()
+  const [submitDialogOpen, setSubmitDialogOpen] = useState(false)
+  const markdownComponents = {
+    a: ({ href, children }: MarkdownComponentProps) => {
+      if (href === SUBMIT_TOKEN_HREF) {
+        return (
+          <button
+            className={INLINE_BUTTON_CLASS_NAME}
+            onClick={() => setSubmitDialogOpen(true)}
+            type="button"
+          >
+            {children}
+          </button>
+        )
+      }
+
+      return (
+        <a
+          className={`${LINK_CLASS_NAME} not-prose`}
+          href={href}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {children}
+        </a>
+      )
+    },
+  }
 
   return (
     <PageWrapper>
@@ -69,7 +108,9 @@ export default function UserFaq() {
                       </AccordionTrigger>
                       <AccordionContent className="pb-4">
                         <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                          <ReactMarkdown>{item.answer}</ReactMarkdown>
+                          <ReactMarkdown components={markdownComponents}>
+                            {item.answer}
+                          </ReactMarkdown>
                         </div>
                       </AccordionContent>
                     </AccordionItem>
@@ -80,6 +121,11 @@ export default function UserFaq() {
           </div>
         </Container>
       </div>
+
+      <SubmitTokenDialog
+        onOpenChange={setSubmitDialogOpen}
+        open={submitDialogOpen}
+      />
     </PageWrapper>
   )
 }
