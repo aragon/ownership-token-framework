@@ -149,6 +149,7 @@ export function SiteHeader() {
                   FAQ
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              {/*
               <NavigationMenuItem className="xl:hidden">
                 <DropdownMenu>
                   <DropdownMenuTrigger className="data-active:focus:bg-muted data-active:hover:bg-muted data-active:bg-muted/50 focus-visible:ring-ring/50 hover:bg-muted focus:bg-muted flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1">
@@ -165,6 +166,7 @@ export function SiteHeader() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </NavigationMenuItem>
+              */}
             </NavigationMenuList>
           </NavigationMenu>
 
@@ -202,9 +204,11 @@ export function SiteHeader() {
                   Blockworks
                 </Link>
               </DropdownMenuItem>
+              {/*
               <DropdownMenuItem onClick={() => setSubmitDialogOpen(true)}>
                 Submit token
               </DropdownMenuItem>
+              */}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -303,6 +307,7 @@ export function SiteHeader() {
           </div>
 
           {/* Submit Button */}
+          {/*
           <Button
             className="hidden h-9 gap-1.5 shadow-sm xl:inline-flex"
             onClick={() => setSubmitDialogOpen(true)}
@@ -312,6 +317,7 @@ export function SiteHeader() {
             <PlusIcon className="size-4" />
             Submit token
           </Button>
+          */}
         </div>
 
         <div
