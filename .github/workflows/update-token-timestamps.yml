@@ -4,13 +4,18 @@ on:
   pull_request:
     types: [closed]
     branches: [development]
+  push:
+    branches: [development]
+    paths:
+      - src/data/metrics.json
+      - src/data/tokens.json
 
 permissions:
   contents: write
 
 jobs:
   update-token-timestamp:
-    if: github.event.pull_request.merged == true
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - name: Load secrets
@@ -41,12 +46,33 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Normalize token symbol
-        id: normalize
-        run: echo "token_symbol=$(echo \"${{ github.event.pull_request.head.ref }}\" | awk -F/ '{print toupper($NF)}')" >> $GITHUB_OUTPUT
+      - name: Detect changed token ids
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.pull_request.base.sha }}" --after "${{ github.event.pull_request.merge_commit_sha }}")
+          else
+            ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.before }}" --after "${{ github.event.after }}")
+          fi
+          echo "ids=$ids" >> $GITHUB_OUTPUT
+
+      - name: Resolve commit timestamp
+        id: timestamp
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "value=$(git show -s --format=%ct ${{ github.event.pull_request.merge_commit_sha }})" >> $GITHUB_OUTPUT
+          else
+            echo "value=$(node -e \"console.log(Math.floor(new Date('${{ github.event.head_commit.timestamp }}').getTime() / 1000))\")" >> $GITHUB_OUTPUT
+          fi
 
       - name: Update timestamp
-        run: node scripts/update-token-timestamps.mjs --symbol "${{ steps.normalize.outputs.token_symbol }}"
+        if: steps.changed.outputs.ids != ''
+        run: node scripts/update-token-timestamps.mjs --ids "${{ steps.changed.outputs.ids }}" --timestamp "${{ steps.timestamp.outputs.value }}"
+
+      - name: Set commit message
+        id: commit-message
+        run: |
+          echo "message=chore: update token lastUpdated" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         run: |
@@ -55,5 +81,5 @@ jobs:
             exit 0
           fi
           git add src/data/tokens.json
-          git commit -am "chore: update ${{ steps.normalize.outputs.token_symbol }} lastUpdated"
+          git commit -am "${{ steps.commit-message.outputs.message }}"
           git push origin HEAD:development
