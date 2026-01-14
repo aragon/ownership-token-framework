@@ -23,33 +23,23 @@ import {
 import { Input } from "@/components/ui/input"
 import {
   InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
 
 const submitTokenSchema = z.object({
-  tokenName: z
+  name: z
     .string()
-    .min(2, "Token name must be at least 2 characters")
-    .max(50, "Token name must be at most 50 characters"),
-  tokenSymbol: z
+    .min(2, "Name must be at least 2 characters")
+    .max(80, "Name must be at most 80 characters"),
+  company: z.string().max(80, "Project name must be at most 80 characters"),
+  request: z
     .string()
-    .min(1, "Token symbol is required")
-    .max(10, "Token symbol must be at most 10 characters")
-    .regex(
-      /^[A-Z0-9]+$/,
-      "Token symbol must be uppercase letters and numbers only"
-    ),
-  contractAddress: z
+    .min(10, "Request must be at least 10 characters")
+    .max(200, "Request must be at most 200 characters"),
+  additionalInfo: z
     .string()
-    .min(1, "Contract address is required")
-    .regex(/^0x[a-fA-F0-9]{40}$/, "Invalid Ethereum contract address"),
-  network: z.string().min(1, "Network is required"),
-  description: z
-    .string()
-    .min(20, "Description must be at least 20 characters")
-    .max(500, "Description must be at most 500 characters"),
+    .min(20, "Additional information must be at least 20 characters")
+    .max(500, "Additional information must be at most 500 characters"),
   submitterEmail: z
     .string()
     .email("Invalid email address")
@@ -70,11 +60,10 @@ export function SubmitTokenDialog({
   const form = useForm<SubmitTokenFormData>({
     resolver: zodResolver(submitTokenSchema),
     defaultValues: {
-      tokenName: "",
-      tokenSymbol: "",
-      contractAddress: "",
-      network: "ethereum",
-      description: "",
+      name: "",
+      company: "",
+      request: "",
+      additionalInfo: "",
       submitterEmail: "",
     },
   })
@@ -143,11 +132,12 @@ export function SubmitTokenDialog({
     <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Submit Token for Analysis</DialogTitle>
+          <DialogTitle>Create request</DialogTitle>
           <DialogDescription>
-            Submit a token to be evaluated using our ownership analytics
-            framework. All submissions are reviewed before being added to the
-            index.
+            Request a specific token to be evaluated using our framework and to
+            be considered for potential inclusion in the Ownership Token
+            Framework. We are also interested in any feedback you have that
+            could make the Index more helpful for you.
           </DialogDescription>
         </DialogHeader>
 
@@ -164,16 +154,16 @@ export function SubmitTokenDialog({
             <FieldGroup>
               <Controller
                 control={form.control}
-                name="tokenName"
+                name="name"
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="token-name">Token Name</FieldLabel>
+                    <FieldLabel htmlFor="requester-name">Your name</FieldLabel>
                     <Input
                       {...field}
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
-                      id="token-name"
-                      placeholder="e.g., Aave"
+                      id="requester-name"
+                      placeholder="Your name"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -184,38 +174,18 @@ export function SubmitTokenDialog({
 
               <Controller
                 control={form.control}
-                name="tokenSymbol"
+                name="company"
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="token-symbol">Token Symbol</FieldLabel>
-                    <Input
-                      {...field}
-                      aria-invalid={fieldState.invalid}
-                      autoComplete="off"
-                      id="token-symbol"
-                      placeholder="e.g., AAVE"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="contractAddress"
-                render={({ field, fieldState }) => (
-                  <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="contract-address">
-                      Contract Address
+                    <FieldLabel htmlFor="requester-project">
+                      Your project
                     </FieldLabel>
                     <Input
                       {...field}
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
-                      id="contract-address"
-                      placeholder="0x..."
+                      id="requester-company"
+                      placeholder="Project name"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -226,20 +196,17 @@ export function SubmitTokenDialog({
 
               <Controller
                 control={form.control}
-                name="network"
+                name="request"
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="network">Network</FieldLabel>
+                    <FieldLabel htmlFor="request-message">Request</FieldLabel>
                     <Input
                       {...field}
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
-                      id="network"
-                      placeholder="e.g., Ethereum, Polygon, Arbitrum"
+                      id="request-message"
+                      placeholder="What would you like us to add to or change about the Ownership Token Index?"
                     />
-                    <FieldDescription>
-                      The blockchain network where this token is deployed
-                    </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -249,25 +216,28 @@ export function SubmitTokenDialog({
 
               <Controller
                 control={form.control}
-                name="description"
+                name="additionalInfo"
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
-                    <FieldLabel htmlFor="description">Description</FieldLabel>
+                    <FieldLabel htmlFor="additional-info">
+                      Additional information
+                    </FieldLabel>
                     <InputGroup>
                       <InputGroupTextarea
                         {...field}
                         aria-invalid={fieldState.invalid}
                         className="min-h-24 resize-none"
-                        id="description"
-                        placeholder="Provide a brief description of the token and why it should be analyzed..."
+                        id="additional-info"
+                        placeholder="Please explain why this would be helpful to you."
                         rows={4}
                       />
-                      <InputGroupAddon align="block-end">
-                        <InputGroupText className="tabular-nums">
-                          {field.value.length}/500 characters
-                        </InputGroupText>
-                      </InputGroupAddon>
                     </InputGroup>
+                    <FieldDescription className="tabular-nums">
+                      {field.value.length}/500 characters
+                    </FieldDescription>
+                    <FieldDescription>
+                      Please explain why this would be helpful to you.
+                    </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -292,7 +262,8 @@ export function SubmitTokenDialog({
                       type="email"
                     />
                     <FieldDescription>
-                      We'll notify you when the token analysis is complete
+                      We will reach out to you if we need any additional
+                      information.
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -319,7 +290,7 @@ export function SubmitTokenDialog({
                 form="submit-token-form"
                 type="submit"
               >
-                Submit for Review
+                Submit request
               </Button>
             </>
           ) : null}
