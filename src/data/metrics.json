@@ -810,7 +810,7 @@
         }
       ]
     }
-  ], 
+  ],
   "aero": [
     {
       "id": "gov-fdn",
@@ -1055,7 +1055,7 @@
             {
               "name": "veAERO voters claim fees",
               "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/rewards/Reward.sol#L225 "
-            }      
+            }
           ]
         },
         {
