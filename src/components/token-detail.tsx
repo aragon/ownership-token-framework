@@ -10,9 +10,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Container } from "@/components/ui/container"
-import { formatUnixTimestamp } from "@/lib/format-date"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
+import { formatUnixTimestamp } from "@/lib/utils"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
@@ -95,18 +95,18 @@ function TokenHero({ token }: { token: TokenInfo }) {
             Last updated: {formatUnixTimestamp(token.lastUpdated)} by
           </span>
           <div className="flex gap-x-1 items-center">
-          <Avatar className="size-5">
-            <AvatarImage
-              className="rounded-full"
-              src={token.updatedBy.avatar}
-            />
-            <AvatarFallback className="text-xs">
-              {token.updatedBy.name.slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <span className="font-medium text-foreground">
-            {token.updatedBy.name}
-          </span>
+            <Avatar className="size-5">
+              <AvatarImage
+                className="rounded-full"
+                src={token.updatedBy.avatar}
+              />
+              <AvatarFallback className="text-xs">
+                {token.updatedBy.name.slice(0, 2)}
+              </AvatarFallback>
+            </Avatar>
+            <span className="font-medium text-foreground">
+              {token.updatedBy.name}
+            </span>
           </div>
         </div>
       </div>
