@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
 import { useTokens } from "@/hooks/use-tokens"
-import { formatUnixTimestamp } from "@/lib/format-date"
+import { formatUnixTimestamp } from "@/lib/utils"
 import {
   Table,
   TableBody,
@@ -28,6 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -64,16 +65,18 @@ const columns: ColumnDef<Token>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <Avatar size="sm">
           <AvatarImage alt={row.original.name} src={row.original.icon} />
           <AvatarFallback className="bg-blue-500 text-white text-xs">
             {row.original.name.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-row gap-x-4">
           <span className="font-medium">{row.original.name}</span>
-          <span className="text-muted-foreground">{row.original.address}</span>
+          <span className="text-muted-foreground">
+            {truncateAddress(row.original.address)}
+          </span>
         </div>
       </div>
     ),
@@ -174,11 +177,11 @@ const columns: ColumnDef<Token>[] = [
   },
   {
     id: "actions",
-
     cell: ({ row }) => (
       <div className="flex justify-end">
         <Button
           className="size-8"
+          nativeButton={false}
           render={
             <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
           }
