@@ -92,10 +92,11 @@ function TokenHero({ token }: { token: TokenInfo }) {
 
       {/* Stats row */}
       <div className="flex flex-wrap items-baseline text-sm">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <span className="text-muted-foreground">
             Last updated: {formatUnixTimestamp(token.lastUpdated)} by
           </span>
+          <div className="flex gap-x-1 items-center">
           <Avatar className="size-5">
             <AvatarImage
               className="rounded-full"
@@ -108,6 +109,7 @@ function TokenHero({ token }: { token: TokenInfo }) {
           <span className="font-medium text-foreground">
             {token.updatedBy.name}
           </span>
+          </div>
         </div>
       </div>
     </section>
