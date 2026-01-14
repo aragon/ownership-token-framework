@@ -1,12 +1,10 @@
 name: Update token timestamps
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [development]
   push:
     branches: [development]
     paths:
+      - src/data/metrics.json
       - src/data/tokens.json
 
 permissions:
@@ -14,7 +12,7 @@ permissions:
 
 jobs:
   update-token-timestamp:
-    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Load secrets
@@ -31,7 +29,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: development
-      
+          fetch-depth: 0
+
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@e89d40939c28e39f97cf32126055eeae86ba74ec # v6.3.0
         with:
@@ -45,64 +44,25 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Detect changed tokens
+      - name: Detect changed token ids
         id: changed
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            export BEFORE_SHA="${{ github.event.pull_request.base.sha }}"
-            export AFTER_SHA="${{ github.event.pull_request.merge_commit_sha }}"
-          else
-            export BEFORE_SHA="${{ github.event.before }}"
-            export AFTER_SHA="${{ github.sha }}"
-          fi
-          node - <<'NODE'
-          const { execSync } = require("node:child_process");
-          const { readFileSync, appendFileSync } = require("node:fs");
+          ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.before }}" --after "${{ github.event.after }}")
+          echo "ids=$ids" >> $GITHUB_OUTPUT
 
-          const beforeSha = process.env.BEFORE_SHA;
-          const afterSha = process.env.AFTER_SHA;
-
-          if (!beforeSha || !afterSha) {
-            appendFileSync(process.env.GITHUB_OUTPUT, "token_ids=\n");
-            process.exit(0);
-          }
-
-          const beforeRaw = execSync(`git show ${beforeSha}:src/data/tokens.json`, {
-            encoding: "utf8",
-          });
-          const afterRaw = readFileSync("src/data/tokens.json", "utf8");
-          const beforeData = JSON.parse(beforeRaw);
-          const afterData = JSON.parse(afterRaw);
-
-          const beforeMap = new Map(
-            (beforeData.tokens ?? []).map((token) => [token.id, token])
-          );
-
-          const changed = [];
-          for (const token of afterData.tokens ?? []) {
-            const previous = beforeMap.get(token.id);
-            if (!previous) {
-              changed.push(token.id);
-              continue;
-            }
-
-            const { lastUpdated: _prevLastUpdated, ...prevRest } = previous;
-            const { lastUpdated: _nextLastUpdated, ...nextRest } = token;
-
-            if (JSON.stringify(prevRest) !== JSON.stringify(nextRest)) {
-              changed.push(token.id);
-            }
-          }
-
-          appendFileSync(
-            process.env.GITHUB_OUTPUT,
-            `token_ids=${changed.join(",")}\n`
-          );
-          NODE
+      - name: Resolve commit timestamp
+        id: timestamp
+        run: |
+          echo "value=$(node -e 'console.log(Math.floor(new Date(process.argv[1]).getTime() / 1000))' '${{ github.event.head_commit.timestamp }}')" >> $GITHUB_OUTPUT
 
       - name: Update timestamp
-        if: steps.changed.outputs.token_ids != ''
-        run: node scripts/update-token-timestamps.mjs --ids "${{ steps.changed.outputs.token_ids }}"
+        if: steps.changed.outputs.ids != ''
+        run: node scripts/update-token-timestamps.mjs --ids "${{ steps.changed.outputs.ids }}" --timestamp "${{ steps.timestamp.outputs.value }}"
+
+      - name: Set commit message
+        id: commit-message
+        run: |
+          echo "message=chore: update token lastUpdated" >> $GITHUB_OUTPUT
 
       - name: Commit and push
         run: |
@@ -111,5 +71,5 @@ jobs:
             exit 0
           fi
           git add src/data/tokens.json
-          git commit -am "chore: update ${{ steps.normalize.outputs.token_symbol }} lastUpdated"
+          git commit -am "${{ steps.commit-message.outputs.message }}"
           git push origin HEAD:development

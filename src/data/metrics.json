@@ -227,41 +227,48 @@
       ]
     },
     {
-      "id": "ip-dist",
+      "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "criteria": [
         {
-          "id": "ip-dist__brand",
-          "name": "IP Ownership (Brand)",
-          "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?",
-          "status": "❌",
-          "notes": "European trademark registrations and the UK IPO Trademark Journal list the Lido Labs BORG Foundation (a memberless entity) as the owner, rather than the DAO or tokenholders directly.",
-          "evidence": []
+          "id": "offchain__brand",
+          "name": "Brand",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "⚠️",
+          "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
+          "evidence": [
+            {
+              "name": "UK IPO Trademark Journal",
+              "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html"
+            }
+          ]
         },
         {
-          "id": "ip-dist__npd",
-          "name": "IP Ownership (NPD)",
-          "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?",
-          "status": "⚠️",
-          "notes": "There is no specific legal disclosure provided indicating that tokenholders have direct legal rights to patents or trade secrets; governance control is indirect through the BORG structure.",
-          "evidence": []
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "✅",
+          "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "evidence": [
+            {
+              "name": "Lido Labs BORG Foundation",
+              "url": "https://research.lido.fi/t/establishment-of-lido-labs-borg-foundation-as-a-lido-dao-adjacent-foundation/9344"
+            }
+          ]
         },
         {
-          "id": "ip-dist__website",
-          "name": "Distribution (Website)",
-          "about": "Does the DAO/token entity own the primary domain (rather than an individual)?",
-          "status": "⚠️",
-          "notes": "While the DAO oversees the BORG, there is no public filing explicitly confirming the domain is legally owned by a tokenholder-governed entity rather than the Foundation or an individual.",
-          "evidence": []
-        },
-        {
-          "id": "ip-dist__socials",
-          "name": "Distribution (Socials)",
-          "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)",
-          "status": "⚠️",
-          "notes": "Public research indicates the Lido DAO has defined governance controls over the BORG structure, which include overseeing the administrative channels and primary infrastructure.",
-          "evidence": []
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "✅",
+          "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "evidence": [
+            {
+              "name": "Lido Labs BORG Foundation",
+              "url": "https://research.lido.fi/t/establishment-of-lido-labs-borg-foundation-as-a-lido-dao-adjacent-foundation/9344"
+            }
+          ]
         }
       ]
     }
@@ -482,40 +489,42 @@
       ]
     },
     {
-      "id": "ip-dist",
+      "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "criteria": [
         {
-          "id": "ip-dist__brand",
-          "name": "IP Ownership (Brand)",
-          "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?",
-          "status": "❌",
-          "notes": "The Curve trademark is owned by Swiss Stake AG (a Swiss company), not the DAO or veCRV holders directly.",
-          "evidence": []
-        },
-        {
-          "id": "ip-dist__npd",
-          "name": "IP Ownership (NPD)",
-          "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?",
+          "id": "offchain__brand",
+          "name": "Brand",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "New product development is conducted by contributors without explicit legal assignment of IP rights to tokenholders. Governance control is indirect through on-chain voting.",
-          "evidence": []
+          "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
+          "evidence": [
+            {
+              "name": "Swiss Trademark Registry",
+              "url": "https://www.swissreg.ch/database-client/register/detail?lang=de&no=16098%2F2020&type=trademark"
+            }
+          ]
         },
         {
-          "id": "ip-dist__website",
-          "name": "Distribution (Website)",
-          "about": "Does the DAO/token entity own the primary domain (rather than an individual)?",
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "The curve.fi domain is controlled by Swiss Stake AG. While the DAO governs the protocol, there is no public legal structure confirming tokenholder ownership of the primary distribution channel.",
-          "evidence": []
+          "notes": "The Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
+          "evidence": [
+            {
+              "name": "Curve Legal",
+              "url": "https://www.curve.finance/dex/ethereum/legal"
+            }
+          ]
         },
         {
-          "id": "ip-dist__socials",
-          "name": "Distribution (Socials)",
-          "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)",
-          "status": "❌",
-          "notes": "Primary social media channels are managed by Swiss Stake AG and core contributors, with no explicit on-chain governance control over messaging or account access.",
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "TBD",
           "evidence": []
         }
       ]
@@ -557,7 +566,7 @@
           "name": "Access Control managed by Holders",
           "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?",
           "status": "✅",
-          "notes": "All critical roles flow through governance-controlled contracts, ensuring UNI holders maintain ultimate control over the protocol.\n\n**V2Factory:** feeToSetter role is held by Timelock contract. Only feeToSetter can call setFeeTo() to change where protocol fees are sent.\n\n**V3Factory:** Factory owner is V3FeeAdapter, whose feeSetter is Timelock. Only Timelock can change V3 protocol fees via setProtocolFee() in UniswapV3Pool.\n\n**V4PoolManager:** PoolManager owner is Timelock. Only owner can call setProtocolFeeController() to control who can set protocol fees.\n\n**UNI Token:** Minter role is held by Timelock contract. Only minter can call mint function. Since Timelock is controlled by GovernorBravoDelegator, hence, all operations are controlled by UNI holders.",
+          "notes": "All critical roles flow through governance-controlled contracts, ensuring that UNI holders maintain ultimate control over the protocol.\n\n**V2Factory:** feeToSetter role is held by Timelock contract. Only feeToSetter can call setFeeTo() to change where protocol fees are sent.\n\n**V3Factory:** Factory owner is V3FeeAdapter, whose feeSetter is Timelock. Only Timelock can change V3 protocol fees via setProtocolFee() in UniswapV3Pool.\n\n**V4PoolManager:** PoolManager owner is Timelock. Only owner can call setProtocolFeeController() to control who can set protocol fees.\n\n**UNI Token:** Minter role is held by Timelock contract. Only minter can call mint function. Since Timelock is controlled by GovernorBravoDelegator, hence, all operations are controlled by UNI holders.",
           "evidence": [
             {
               "name": "Timelock",
@@ -772,40 +781,42 @@
       ]
     },
     {
-      "id": "ip-dist",
+      "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "criteria": [
         {
-          "id": "ip-dist__brand",
-          "name": "IP Ownership (Brand)",
-          "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?",
-          "status": "❌",
-          "notes": "Trademarks (UNISWAP, UNI) are owned by Uniswap Labs, not the DAO. Use is granted via Trademark Guidelines.",
-          "evidence": []
-        },
-        {
-          "id": "ip-dist__npd",
-          "name": "IP Ownership (NPD)",
-          "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?",
+          "id": "offchain__brand",
+          "name": "Brand",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "New products (like V4) are developed by Labs. However, the UNIfication agreement (Wyoming DUNA) binds Labs to DAO-funded service mandates.",
-          "evidence": []
+          "notes": "Core UNISWAP trademark rights are held/enforced by Universal Navigation Inc. d/b/a Uniswap Labs.\n\n_Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus brand assets could be licensed or transferred to token holders._",
+          "evidence": [
+            {
+              "name": "Uniswap Labs Trademark Guidelines",
+              "url": "https://support.uniswap.org/hc/en-us/articles/30934762216973-Uniswap-Labs-Trademark-Guidelines/"
+            }
+          ]
         },
         {
-          "id": "ip-dist__website",
-          "name": "Distribution (Website)",
-          "about": "Does the DAO/token entity own the primary domain (rather than an individual)?",
-          "status": "✅",
-          "notes": "Uniswap Labs has agreed to align the official interface (uniswap.org) with DAO governance under the 2026 Service Agreement.",
-          "evidence": []
-        },
-        {
-          "id": "ip-dist__socials",
-          "name": "Distribution (Socials)",
-          "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)",
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "Primary communication channels (X, Discord) are managed by Uniswap Labs but serve as the voice of the ecosystem.",
+          "notes": "The primary interface terms identify Uniswap Labs (Universal Navigation Inc.) as the contracting party.\n\n_Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus distribution assets could be licensed or transferred._",
+          "evidence": [
+            {
+              "name": "Uniswap Labs Terms of Service",
+              "url": "https://support.uniswap.org/hc/en-us/articles/30935100859661-Uniswap-Labs-Terms-of-Service"
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "TBD",
           "evidence": []
         }
       ]
@@ -1090,16 +1101,16 @@
       ]
     },
     {
-      "id": "ip-dist",
+      "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "criteria": [
         {
-          "id": "ip-dist__brand",
-          "name": "IP Ownership (Brand)",
-          "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?",
+          "id": "offchain__brand",
+          "name": "Brand",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "A U.S. trademark filing for \"AERODROME\" lists Perpetual Cyclist Services LLC (a Delaware for-profit company) as the applicant/owner. There is no public documentation indicating that the trademark is owned by the DAO or directly by tokenholders.",
+          "notes": "A US AERODROME trademark filing lists Perpetual Cyclist Services LLC (Delaware) as the applicant/owner.",
           "evidence": [
             {
               "name": "USPTO Report",
@@ -1108,19 +1119,11 @@
           ]
         },
         {
-          "id": "ip-dist__npd",
-          "name": "IP Ownership (NPD)",
-          "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?",
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "No tokenholder-representing legal entity is clearly documented. New product development appears to be coordinated through off-chain entities (labs/foundation), with governance influence exercised indirectly via on-chain mechanisms rather than explicit legal ownership rights.",
-          "evidence": []
-        },
-        {
-          "id": "ip-dist__website",
-          "name": "Distribution (Website)",
-          "about": "Does the DAO/token entity own the primary domain (rather than an individual or external entity)?",
-          "status": "⚠️",
-          "notes": "The primary interface legal terms identify the Aerodrome Foundation as the contracting party. There is no public filing confirming that the domain or frontend infrastructure is legally owned or directly controlled by a tokenholder-governed entity.",
+          "notes": "The primary interface terms identify the Aerodrome Foundation as the contracting party.",
           "evidence": [
             {
               "name": "Aerodrome Legal",
@@ -1129,11 +1132,11 @@
           ]
         },
         {
-          "id": "ip-dist__socials",
-          "name": "Distribution (Socials)",
-          "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)?",
-          "status": "⚠️",
-          "notes": "Public materials do not clearly document formal DAO-level administrative ownership of primary social or communication channels. Control appears to rest with the Foundation or associated operating entities rather than a legally defined tokenholder-controlled structure.",
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "TBD",
           "evidence": []
         }
       ]
