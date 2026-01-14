@@ -88,29 +88,24 @@
     ]
   },
   {
-    "id": "ip-dist",
+    "id": "offchain",
     "name": "Metric 4: IP & Distribution (Off-chain)",
     "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
     "criteria": [
       {
-        "id": "ip-dist__brand",
-        "name": "IP Ownership (Brand)",
-        "about": "Is there evidence of DAO/holder ownership of trademarks, logos, and brand names?"
+        "id": "offchain__brand",
+        "name": "Brand",
+        "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?"
       },
       {
-        "id": "ip-dist__npd",
-        "name": "IP Ownership (NPD)",
-        "about": "Do holders have legal rights to new product development (patents, trade secrets, proprietary codebase)?"
+        "id": "offchain__distribution",
+        "name": "Distribution",
+        "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?"
       },
       {
-        "id": "ip-dist__website",
-        "name": "Distribution (Website)",
-        "about": "Does the DAO/token entity own the primary domain (rather than an individual)?"
-      },
-      {
-        "id": "ip-dist__socials",
-        "name": "Distribution (Socials)",
-        "about": "Does the DAO have administrative control over primary channels (X, Discord, Telegram)"
+        "id": "offchain__licensing",
+        "name": "Licensing",
+        "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?"
       }
     ]
   }
