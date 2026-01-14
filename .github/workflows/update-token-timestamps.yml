@@ -1,9 +1,6 @@
 name: Update token timestamps
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [development]
   push:
     branches: [development]
     paths:
@@ -15,7 +12,7 @@ permissions:
 
 jobs:
   update-token-timestamp:
-    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.event.pull_request.merged == true)
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Load secrets
@@ -50,21 +47,13 @@ jobs:
       - name: Detect changed token ids
         id: changed
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.pull_request.base.sha }}" --after "${{ github.event.pull_request.merge_commit_sha }}")
-          else
-            ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.before }}" --after "${{ github.event.after }}")
-          fi
+          ids=$(node scripts/get-changed-token-ids.mjs --before "${{ github.event.before }}" --after "${{ github.event.after }}")
           echo "ids=$ids" >> $GITHUB_OUTPUT
 
       - name: Resolve commit timestamp
         id: timestamp
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "value=$(git show -s --format=%ct ${{ github.event.pull_request.merge_commit_sha }})" >> $GITHUB_OUTPUT
-          else
-            echo "value=$(node -e 'console.log(Math.floor(new Date(process.argv[1]).getTime() / 1000))' '${{ github.event.head_commit.timestamp }}')" >> $GITHUB_OUTPUT
-          fi
+          echo "value=$(node -e 'console.log(Math.floor(new Date(process.argv[1]).getTime() / 1000))' '${{ github.event.head_commit.timestamp }}')" >> $GITHUB_OUTPUT
 
       - name: Update timestamp
         if: steps.changed.outputs.ids != ''
