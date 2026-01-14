@@ -234,7 +234,7 @@
         {
           "id": "offchain__brand",
           "name": "Brand",
-          "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
           "evidence": [
@@ -247,7 +247,7 @@
         {
           "id": "offchain__distribution",
           "name": "Distribution",
-          "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "✅",
           "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
@@ -260,7 +260,7 @@
         {
           "id": "offchain__licensing",
           "name": "Licensing",
-          "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "✅",
           "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
@@ -496,7 +496,7 @@
         {
           "id": "offchain__brand",
           "name": "Brand",
-          "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
           "evidence": [
@@ -509,7 +509,7 @@
         {
           "id": "offchain__distribution",
           "name": "Distribution",
-          "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "The Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
           "evidence": [
@@ -522,7 +522,7 @@
         {
           "id": "offchain__licensing",
           "name": "Licensing",
-          "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
           "notes": "TBD",
           "evidence": []
@@ -788,7 +788,7 @@
         {
           "id": "offchain__brand",
           "name": "Brand",
-          "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "Core UNISWAP trademark rights are held/enforced by Universal Navigation Inc. d/b/a Uniswap Labs.\n\n_Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus brand assets could be licensed or transferred to token holders._",
           "evidence": [
@@ -801,7 +801,7 @@
         {
           "id": "offchain__distribution",
           "name": "Distribution",
-          "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "The primary interface terms identify Uniswap Labs (Universal Navigation Inc.) as the contracting party.\n\n_Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus distribution assets could be licensed or transferred._",
           "evidence": [
@@ -814,7 +814,7 @@
         {
           "id": "offchain__licensing",
           "name": "Licensing",
-          "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
           "notes": "TBD",
           "evidence": []
@@ -1108,7 +1108,7 @@
         {
           "id": "offchain__brand",
           "name": "Brand",
-          "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "A US AERODROME trademark filing lists Perpetual Cyclist Services LLC (Delaware) as the applicant/owner.",
           "evidence": [
@@ -1121,7 +1121,7 @@
         {
           "id": "offchain__distribution",
           "name": "Distribution",
-          "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "The primary interface terms identify the Aerodrome Foundation as the contracting party.",
           "evidence": [
@@ -1134,7 +1134,7 @@
         {
           "id": "offchain__licensing",
           "name": "Licensing",
-          "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
           "notes": "TBD",
           "evidence": []

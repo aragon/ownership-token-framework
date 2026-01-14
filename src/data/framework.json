@@ -95,17 +95,17 @@
       {
         "id": "offchain__brand",
         "name": "Brand",
-        "about": "Is there evidence of holder ownership of trademarks, logos, and brand names?"
+        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?"
       },
       {
         "id": "offchain__distribution",
         "name": "Distribution",
-        "about": "Do token holders have administrative control over primary channels (X, Discord, Telegram, Domain/Website)?"
+        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?"
       },
       {
         "id": "offchain__licensing",
         "name": "Licensing",
-        "about": "Are new products developed with token holders as the owner/licensee (patents, trade secrets, proprietary codebase)?"
+        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?"
       }
     ]
   }
