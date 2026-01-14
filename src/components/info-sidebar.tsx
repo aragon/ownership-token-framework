@@ -6,7 +6,7 @@ import {
   IconLink,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
-import { copyToClipboard } from "@/lib/utils"
+import { copyToClipboard, truncateAddress } from "@/lib/utils"
 import type { TokenInfo } from "./token-detail"
 import { Button } from "./ui/button"
 
@@ -40,7 +40,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
         >
           <span className="sr-only">Copy</span>
           {hasCopied ? <IconCheck /> : <IconCopy />}
-          {token.address}
+          {truncateAddress(token.address)}
         </Button>
         {token.links.scan && (
           <Button

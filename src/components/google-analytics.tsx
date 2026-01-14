@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect } from "react"
 import { useRouterState } from "@tanstack/react-router"
+import { useEffect } from "react"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 
 export function GoogleAnalytics() {

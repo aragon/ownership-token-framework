@@ -6,10 +6,9 @@ import {
   Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-
+import { GoogleAnalytics } from "@/components/google-analytics"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { GoogleAnalytics } from "@/components/google-analytics"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 import appCss from "../styles.css?url"
 
@@ -52,6 +51,10 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const gaId = GA_MEASUREMENT_ID
+  const gaScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}', { send_page_view: false });`
 
   return (
     <html lang="en">
@@ -63,16 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
           />
         ) : null}
-        {gaId ? (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${gaId}', { send_page_view: false });`,
-            }}
-          />
-        ) : null}
+        {gaId ? <script>{gaScript}</script> : null}
       </head>
       <body>
         {children}

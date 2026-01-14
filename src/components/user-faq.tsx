@@ -1,5 +1,6 @@
 "use client"
 
+import ReactMarkdown from "react-markdown"
 import { PageWrapper } from "@/components/page-wrapper"
 import {
   Accordion,
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/accordion"
 import { Container } from "@/components/ui/container"
 import { useFaqTopics } from "@/hooks/use-faq"
-import ReactMarkdown from "react-markdown"
 
 // Hero Section
 function HeroSection() {

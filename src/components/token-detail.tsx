@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Breadcrumb,
@@ -8,17 +9,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
-import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
-import { type Metric, getMetricsByTokenId } from "@/lib/metrics-data"
-import { getTokenById } from "@/lib/token-data"
 import { formatUnixTimestamp } from "@/lib/format-date"
+import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
+import { getTokenById } from "@/lib/token-data"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 
 // Types
 export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
-
 
 // Map emoji status to internal status type
 export function mapStatus(status: string): CriteriaStatus {
@@ -60,7 +59,6 @@ export interface TokenInfo {
 }
 
 export type { Metric }
-
 
 // Token Hero Section
 function TokenHero({ token }: { token: TokenInfo }) {
