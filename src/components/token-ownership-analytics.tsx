@@ -28,6 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -64,17 +65,16 @@ const columns: ColumnDef<Token>[] = [
       </Button>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <Avatar size="sm">
           <AvatarImage alt={row.original.name} src={row.original.icon} />
           <AvatarFallback className="bg-blue-500 text-white text-xs">
             {row.original.name.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
-        <div className="flex items-center gap-2">
+
           <span className="font-medium">{row.original.name}</span>
-          <span className="text-muted-foreground">{row.original.address}</span>
-        </div>
+
       </div>
     ),
   },
@@ -154,6 +154,24 @@ const columns: ColumnDef<Token>[] = [
   //     </div>
   //   ),
   // },
+  {
+    accessorKey: 'address',
+    header: ({ column }) => (
+      <Button
+        className="h-auto p-0 font-medium hover:bg-transparent"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        variant="ghost"
+      >
+        Address
+        <ChevronsUpDownIcon className="ml-1 size-3.5" />
+      </Button>
+    ),
+    cell: ({ row }) => (
+      <span className="text-muted-foreground">
+        {truncateAddress(row.original.address)}
+      </span>
+    ),
+  },
   {
     accessorKey: "lastUpdated",
     header: ({ column }) => (
