@@ -4,13 +4,17 @@ on:
   pull_request:
     types: [closed]
     branches: [development]
+  push:
+    branches: [development]
+    paths:
+      - src/data/tokens.json
 
 permissions:
   contents: write
 
 jobs:
   update-token-timestamp:
-    if: github.event.pull_request.merged == true
+    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Load secrets
@@ -41,12 +45,64 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Normalize token symbol
-        id: normalize
-        run: echo "token_symbol=$(echo \"${{ github.event.pull_request.head.ref }}\" | awk -F/ '{print toupper($NF)}')" >> $GITHUB_OUTPUT
+      - name: Detect changed tokens
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            export BEFORE_SHA="${{ github.event.pull_request.base.sha }}"
+            export AFTER_SHA="${{ github.event.pull_request.merge_commit_sha }}"
+          else
+            export BEFORE_SHA="${{ github.event.before }}"
+            export AFTER_SHA="${{ github.sha }}"
+          fi
+          node - <<'NODE'
+          const { execSync } = require("node:child_process");
+          const { readFileSync, appendFileSync } = require("node:fs");
+
+          const beforeSha = process.env.BEFORE_SHA;
+          const afterSha = process.env.AFTER_SHA;
+
+          if (!beforeSha || !afterSha) {
+            appendFileSync(process.env.GITHUB_OUTPUT, "token_ids=\n");
+            process.exit(0);
+          }
+
+          const beforeRaw = execSync(`git show ${beforeSha}:src/data/tokens.json`, {
+            encoding: "utf8",
+          });
+          const afterRaw = readFileSync("src/data/tokens.json", "utf8");
+          const beforeData = JSON.parse(beforeRaw);
+          const afterData = JSON.parse(afterRaw);
+
+          const beforeMap = new Map(
+            (beforeData.tokens ?? []).map((token) => [token.id, token])
+          );
+
+          const changed = [];
+          for (const token of afterData.tokens ?? []) {
+            const previous = beforeMap.get(token.id);
+            if (!previous) {
+              changed.push(token.id);
+              continue;
+            }
+
+            const { lastUpdated: _prevLastUpdated, ...prevRest } = previous;
+            const { lastUpdated: _nextLastUpdated, ...nextRest } = token;
+
+            if (JSON.stringify(prevRest) !== JSON.stringify(nextRest)) {
+              changed.push(token.id);
+            }
+          }
+
+          appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            `token_ids=${changed.join(",")}\n`
+          );
+          NODE
 
       - name: Update timestamp
-        run: node scripts/update-token-timestamps.mjs --symbol "${{ steps.normalize.outputs.token_symbol }}"
+        if: steps.changed.outputs.token_ids != ''
+        run: node scripts/update-token-timestamps.mjs --ids "${{ steps.changed.outputs.token_ids }}"
 
       - name: Commit and push
         run: |
