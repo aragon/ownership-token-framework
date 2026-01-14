@@ -1,8 +1,8 @@
 "use client"
 
-import { Controller, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useEffect, useState } from "react"
-
+import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import {
@@ -27,7 +27,6 @@ import {
   InputGroupText,
   InputGroupTextarea,
 } from "@/components/ui/input-group"
-import { zodResolver } from "@hookform/resolvers/zod"
 
 const submitTokenSchema = z.object({
   tokenName: z
