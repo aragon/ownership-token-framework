@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Container } from "@/components/ui/container"
-import { formatUnixTimestamp } from "@/lib/format-date"
+import { formatUnixTimestamp } from "@/lib/utils"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
 import AnalyticsContent from "./analytics-content"
