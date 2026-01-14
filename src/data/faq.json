@@ -1,41 +1,58 @@
 {
   "topics": [
     {
-      "id": "intro",
-      "name": "Overview",
-      "about": "The Ownership Token Index is an MVP dashboard for evaluating the credibility and worthiness of token ownership across protocols.",
+      "id": "basics",
+      "name": "Basics",
+      "about": "Core definitions and how to use the index.",
       "questions": [
         {
-          "id": "intro__purpose",
-          "question": "What is the purpose of the Ownership Token Index?",
-          "answer": "To establish whether holding a token provides meaningful ownership rights in a protocol, or if the claim is mostly speculative. We use a standardized framework so results are comparable across projects."
+          "id": "basics__ownership-token",
+          "question": "What is an ownership token?",
+          "answer": "An ownership token is a token whose holders have enforceable, onchain rights--directly or via tokenholder-governed execution--over the assets and value flows that determine economic outcomes."
         },
         {
-          "id": "intro__target-users",
-          "question": "Who is this for?",
-          "answer": "Crypto investors, governance participants, analysts, and researchers who want an objective view of token ownership quality."
+          "id": "basics__how-to-use",
+          "question": "How can I use the Ownership Token Index?",
+          "answer": "The index is intended to be used for reviewing and verifying the programmatic economic rights associated with a token using primary evidence. It also considers offchain dependencies that may reinforce or undermine expectations of ownership rights.\n\nThe Ownership Token Index is not an endorsement of any project and not investment advice. It is a framework and tool to help market participants assess token ownership fundamentals using evidence and reach their own conclusions."
         }
       ]
     },
     {
-      "id": "submission",
-      "name": "Submission",
-      "about": "How tokens are proposed, reviewed, and added to the index.",
+      "id": "methodology",
+      "name": "Methodology",
+      "about": "How evaluation, sourcing, and verification work.",
       "questions": [
         {
-          "id": "submission__how",
-          "question": "How do I submit a token for analysis?",
-          "answer": "Use the submit flow to share a token, its contract address, and a short description of why it matters. We review each submission for completeness and scope before adding it to the index."
+          "id": "methodology__evaluation",
+          "question": "How do you evaluate tokens?",
+          "answer": "We evaluate tokens across four metrics, each containing a checklist of criteria. Each criteria is checked against primary evidence, including:\nOnchain: active deployments, permissions/roles, parameters, execution history.\nOffchain (where relevant): public filings/registrations, published legal terms, and other public documentation.\n\nYou can read the full metrics and methodology here: [link]."
         },
         {
-          "id": "submission__what-happens-next",
-          "question": "What happens after I submit?",
-          "answer": "We confirm the details, perform an initial review using the framework, and publish a write-up once the evidence is verified. You will hear from us when it is ready."
+          "id": "methodology__evidence",
+          "question": "How do you source and verify evidence?",
+          "answer": "All evidence used by the index is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology here: [link]."
+        }
+      ]
+    },
+    {
+      "id": "participation",
+      "name": "Participation",
+      "about": "How tokens are selected and how to get involved.",
+      "questions": [
+        {
+          "id": "participation__selection",
+          "question": "How do you choose which tokens to feature?",
+          "answer": "We started with a set of established projects to validate the framework. Ongoing inclusion is request-driven: anyone can request a token be reviewed for possible inclusion."
         },
         {
-          "id": "submission__where-does-it-go",
-          "question": "Where does the submission go internally?",
-          "answer": "Submissions are logged for the team to triage and track. That keeps the workflow consistent while we gather sources and prepare the analysis."
+          "id": "participation__listing",
+          "question": "How can I get a token listed?",
+          "answer": "Submit a request (or refer a token) using this form: [link]."
+        },
+        {
+          "id": "participation__contribute",
+          "question": "How can I contribute to this initiative?",
+          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out here: [link]."
         }
       ]
     }
