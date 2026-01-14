@@ -44,7 +44,9 @@ const CACHE_DURATION_MS = 5 * 60 * 1000
 /**
  * Build GitHub raw content URL from data source config
  */
-function buildGitHubRawUrl(source: (typeof DATA_SOURCES)[DataSourceKey]): string {
+function buildGitHubRawUrl(
+  source: (typeof DATA_SOURCES)[DataSourceKey]
+): string {
   return `https://raw.githubusercontent.com/${source.owner}/${source.repo}/${source.branch}/${source.path}`
 }
 
