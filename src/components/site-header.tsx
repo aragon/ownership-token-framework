@@ -1,7 +1,7 @@
 "use client"
 
 import { Link as NavLink, useNavigate } from "@tanstack/react-router"
-import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
+import { ChevronDownIcon, PlusIcon, SearchIcon, XIcon } from "lucide-react"
 import type { KeyboardEvent as ReactKeyboardEvent } from "react"
 import { useEffect, useRef, useState } from "react"
 import { SubmitTokenDialog } from "@/components/submit-token-dialog"
@@ -204,11 +204,9 @@ export function SiteHeader() {
                   Blockworks
                 </Link>
               </DropdownMenuItem>
-              {/*
               <DropdownMenuItem onClick={() => setSubmitDialogOpen(true)}>
                 Submit token
               </DropdownMenuItem>
-              */}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -307,9 +305,8 @@ export function SiteHeader() {
           </div>
 
           {/* Submit Button */}
-          {/*
           <Button
-            className="hidden h-9 gap-1.5 shadow-sm xl:inline-flex"
+            className="hidden h-9 gap-1.5 shadow-sm md:inline-flex"
             onClick={() => setSubmitDialogOpen(true)}
             size="sm"
             variant="outline"
@@ -317,7 +314,6 @@ export function SiteHeader() {
             <PlusIcon className="size-4" />
             Submit token
           </Button>
-          */}
         </div>
 
         <div

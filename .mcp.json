@@ -6,6 +6,9 @@
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "TanStack Query Docs": {
+        "url": "https://tanstack.com/api/mcp"
     }
   }
 }
