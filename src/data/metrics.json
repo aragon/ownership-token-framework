@@ -939,8 +939,8 @@
           "id": "token-ctrl__censorship",
           "name": "Censorship Immunity",
           "about": "Are there no guardian or admin roles capable of freezing, blacklisting, or seizing tokens?",
-          "status": "✅",
-          "notes": "The AERO token has no blacklist, pause, or seizure mechanisms. \n\n **Team Rate:** the team rate (share of weekly emissions allocated to the team) can be modified by a Gnosis Safe controlled by the Aerodrome team.\n\n**Emission Rate:** Changes to the weekly emission rate (±0.01% or unchanged) are controlled by veAERO holders through governance.",
+          "status": "TBD",
+          "notes": "The AERO token has no blacklist, pause, or seizure mechanisms. \n\n **Team Rate:** the team rate (share of weekly emissions allocated to the team) can be modified by a Gnosis Safe controlled by the Aerodrome team.\n\n**Emission Rate:** Changes to the weekly emission rate (±0.01% or unchanged) are controlled by Governor (a multisig), soon to be handed over to governance contracts controlled by veAERO holders.",
           "evidence": [
             {
               "name": "Gnosis Safe(Team)",
@@ -1017,7 +1017,7 @@
           "name": "Accrual Active",
           "about": "Are value flows active and governed by holders?",
           "status": "✅",
-          "notes": "**Growth Emissions:** veAERO holders receive the rewards from the growth emissions(see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. .\n\n**Trading Fees:** For both normal and slipstream (CL) pools, some portion of the swap fees goes to veAERO holders.",
+          "notes": "**Growth Emissions:** veAERO holders receive the rewards from the growth emissions(see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. .\n\n**Trading Fees:** For both normal and slipstream (CL) pools, the swap fees meant for LPs who have staked their LP tokens in gauges, goes to veAERO holders.",
           "evidence": [
             {
               "name": "Gauge Deposit Logic(see `earned` function as well)",
