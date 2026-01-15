@@ -14,12 +14,10 @@ import {
 } from "@tanstack/react-table"
 import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { PageWrapper } from "@/components/page-wrapper"
 import { Container } from "@/components/ui/container"
-import { useTokens } from "@/hooks/use-tokens"
-import { formatUnixTimestamp } from "@/lib/utils"
 import {
   Table,
   TableBody,
@@ -28,7 +26,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { truncateAddress } from "@/lib/utils"
+import { useTokens } from "@/hooks/use-tokens"
+import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -203,7 +202,9 @@ function HeroSection() {
         Verify and compare enforceable ownership
       </h1>
       <p className="max-w-[1024px] text-muted-foreground">
-        The Ownership Token Index maps enforceable claims across four metrics: token control, protocol control, value accrual, and offchain dependencies. Use it to evaluate tokens on fundamentals.
+        The Ownership Token Index maps enforceable claims across four metrics:
+        token control, protocol control, value accrual, and offchain
+        dependencies. Use it to evaluate tokens on fundamentals.
       </p>
     </section>
   )
