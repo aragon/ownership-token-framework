@@ -24,7 +24,7 @@ const METRIC_ANCHORS: Record<string, string> = {
   "token-ctrl": "#ii-metric-1-token-control-on-chain",
   "prot-ctrl": "#iii-metric-2-protocol-control-on-chain",
   "val-accrual": "#iv-metric-3-value-accrual--control-on-chain",
-  "offchain": "#v-metric-4-ip--distribution-off-chain",
+  offchain: "#v-metric-4-ip--distribution-off-chain",
 }
 
 /**
