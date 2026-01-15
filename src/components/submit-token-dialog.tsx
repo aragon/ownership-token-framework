@@ -1,6 +1,5 @@
-"use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
+import { CircleCheckIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group"
+import { submitTokenFn } from "@/routes/api.submit-token"
 
 const submitTokenSchema = z.object({
   name: z
@@ -66,14 +66,15 @@ export function SubmitTokenDialog({
   })
   const [submitState, setSubmitState] = useState<{
     status: "idle" | "submitting" | "error" | "success"
-    message?: string
   }>({ status: "idle" })
 
   useEffect(() => {
-    if (!open) {
+    if (open) {
+      // Reset state when dialog opens
       setSubmitState({ status: "idle" })
+      form.reset()
     }
-  }, [open])
+  }, [open, form])
 
   useEffect(() => {
     if (submitState.status !== "success") {
@@ -90,28 +91,10 @@ export function SubmitTokenDialog({
   async function onSubmit(data: SubmitTokenFormData) {
     setSubmitState({ status: "submitting" })
     try {
-      const response = await fetch("/api/submit-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-      const payload = await response.json().catch(() => ({}))
-      if (!response.ok) {
-        throw new Error(payload?.error || "Submission failed. Try again.")
-      }
+      await submitTokenFn({ data })
       setSubmitState({ status: "success" })
-      form.reset()
-      onOpenChange?.(false)
-    } catch (error) {
-      setSubmitState({
-        status: "error",
-        message:
-          error instanceof Error
-            ? error.message
-            : "Submission failed. Try again.",
-      })
+    } catch {
+      setSubmitState({ status: "error" })
     }
   }
 
@@ -129,11 +112,10 @@ export function SubmitTokenDialog({
         </DialogHeader>
 
         {submitState.status === "success" ? (
-          <section className="rounded-lg border bg-muted/30 px-4 py-6">
-            <h3 className="text-lg font-semibold">Submission received</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Thanks for the submission. We’ll review it and notify you when the
-              analysis is ready.
+          <section className="flex flex-col items-center gap-3 rounded-lg border bg-muted/30 px-4 py-8 text-center">
+            <CircleCheckIcon className="size-10 text-green-500" />
+            <p className="text-base">
+              Thanks for the submission. We'll be in touch shortly!
             </p>
           </section>
         ) : (
@@ -262,9 +244,9 @@ export function SubmitTokenDialog({
           </form>
         )}
 
-        <DialogFooter>
-          {submitState.status !== "success" ? (
-            <>
+        {submitState.status !== "success" ? (
+          <DialogFooter className="flex-col gap-2 sm:flex-col">
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
               <Button
                 onClick={() => onOpenChange?.(false)}
                 type="button"
@@ -279,12 +261,14 @@ export function SubmitTokenDialog({
               >
                 Submit request
               </Button>
-            </>
-          ) : null}
-          {submitState.status === "error" ? (
-            <p className="text-sm text-destructive">{submitState.message}</p>
-          ) : null}
-        </DialogFooter>
+            </div>
+            {submitState.status === "error" ? (
+              <p className="text-sm text-destructive text-right">
+                Submission failed. Try again.
+              </p>
+            ) : null}
+          </DialogFooter>
+        ) : null}
       </DialogContent>
     </Dialog>
   )
