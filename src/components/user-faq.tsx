@@ -11,7 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Container } from "@/components/ui/container"
-import { useFaqTopics } from "@/hooks/hooks/use-faq"
+import { useFaqTopics } from "@/hooks/use-faq"
 
 const SUBMIT_TOKEN_HREF = "submit-token"
 const LINK_CLASS_NAME =
