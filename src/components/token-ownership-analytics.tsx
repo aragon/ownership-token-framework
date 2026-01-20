@@ -15,6 +15,7 @@ import {
 import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
 import { PageWrapper } from "@/components/page-wrapper"
+import { NewsletterSignup } from "@/components/newsletter-signup"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
@@ -385,6 +386,8 @@ export default function TokenOwnershipAnalytics() {
           <TokenDataTable data={tokens} />
         </Container>
       </div>
+
+      <NewsletterSignup />
     </PageWrapper>
   )
 }
