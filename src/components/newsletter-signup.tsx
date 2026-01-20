@@ -57,7 +57,7 @@ export function NewsletterSignup() {
         clearTimeout(resetTimerRef.current)
       }
     }
-  }, [status])
+  }, [status, form.reset])
 
   async function onSubmit(data: SignupFormData) {
     setStatus("submitting")
