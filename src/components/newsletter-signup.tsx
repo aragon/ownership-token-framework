@@ -10,7 +10,7 @@ import { Field, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { newsletterSignupFn } from "@/routes/api.newsletter-signup"
 
-const RESET_DELAY_MS = 3000
+const RESET_DELAY_MS = 10_000
 const emailSchema = z.object({
   email: z
     .string()
@@ -67,11 +67,12 @@ export function NewsletterSignup() {
       const response = await newsletterSignupFn({ data })
       setAlreadySubscribed(Boolean(response.alreadySubscribed))
       setStatus("success")
-    } catch {
+    } catch (error) {
       setStatus("error")
+      console.error("Newsletter signup error:", error)
       form.setError("email", {
         type: "server",
-        message: "Something went wrong. Please try again.",
+        message: "Unable to complete signup. Please try again later.",
       })
     }
   }
