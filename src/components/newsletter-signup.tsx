@@ -62,7 +62,6 @@ export function NewsletterSignup() {
   async function onSubmit(data: SignupFormData) {
     setStatus("submitting")
     setAlreadySubscribed(false)
-    setSubmitError(null)
 
     try {
       const response = await newsletterSignupFn({ data })
@@ -86,13 +85,13 @@ export function NewsletterSignup() {
 
   return (
     <section className="bg-background">
-      <Container className="py-16 sm:py-20">
+      <Container className="px-12 py-20">
         <div className="mx-auto flex max-w-[800px] flex-col items-center gap-6 text-center">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight text-accent-foreground">
               Stay up-to-date on the latest token reports
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg font-normal text-accent-foreground">
               Get an email when we publish a new token report or release major
               updates to the Index.
             </p>
@@ -117,7 +116,7 @@ export function NewsletterSignup() {
                       {...field}
                       aria-invalid={isInvalid}
                       aria-label="Email address"
-                      className="h-9 w-full bg-background shadow-sm"
+                      className="h-9 w-full rounded-md bg-background shadow-sm"
                       data-invalid={isInvalid}
                       disabled={status === "submitting"}
                       autoComplete="email"
