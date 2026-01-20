@@ -100,8 +100,8 @@ export function NewsletterSignup() {
 
           <form
             className="flex w-full flex-col items-center gap-2 sm:flex-row sm:items-start sm:justify-center"
-            onSubmit={form.handleSubmit(onSubmit)}
             noValidate
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             <Controller
               control={form.control}
@@ -109,18 +109,15 @@ export function NewsletterSignup() {
               render={({ field, fieldState }) => {
                 const isInvalid = fieldState.invalid
                 return (
-                  <Field
-                    className="w-full sm:w-80"
-                    data-invalid={isInvalid}
-                  >
+                  <Field className="w-full sm:w-80" data-invalid={isInvalid}>
                     <Input
                       {...field}
                       aria-invalid={isInvalid}
                       aria-label="Email address"
+                      autoComplete="email"
                       className="h-9 w-full rounded-md bg-background shadow-sm"
                       data-invalid={isInvalid}
                       disabled={status === "submitting"}
-                      autoComplete="email"
                       onChange={(event) => {
                         field.onChange(event)
                         form.clearErrors("email")
@@ -129,7 +126,10 @@ export function NewsletterSignup() {
                       type="email"
                     />
                     {fieldState.invalid && (
-                      <FieldError className="text-left" errors={[fieldState.error]} />
+                      <FieldError
+                        className="text-left"
+                        errors={[fieldState.error]}
+                      />
                     )}
                   </Field>
                 )

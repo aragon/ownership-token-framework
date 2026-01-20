@@ -77,9 +77,7 @@ export const newsletterSignupFn = createServerFn({ method: "POST" }).handler(
         response.status === 400 &&
         errorPayload.error?.code === "INVALID_PARAMETERS"
       ) {
-        throw new Error(
-          errorPayload.error.message || "Invalid email address."
-        )
+        throw new Error(errorPayload.error.message || "Invalid email address.")
       }
 
       // Handle authentication errors (401 Unauthorized)
