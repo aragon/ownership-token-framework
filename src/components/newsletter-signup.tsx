@@ -1,8 +1,10 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { CheckIcon, LoaderCircleIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
+import { match } from "ts-pattern"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
@@ -98,58 +100,82 @@ export function NewsletterSignup() {
             </p>
           </div>
 
-          <form
-            className="flex w-full flex-col items-center gap-2 sm:flex-row sm:items-start sm:justify-center"
-            noValidate
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <Controller
-              control={form.control}
-              name="email"
-              render={({ field, fieldState }) => {
-                const isInvalid = fieldState.invalid
-                return (
-                  <Field className="w-full sm:w-80" data-invalid={isInvalid}>
-                    <Input
-                      {...field}
-                      aria-invalid={isInvalid}
-                      aria-label="Email address"
-                      autoComplete="email"
-                      className="h-9 w-full rounded-md bg-background shadow-sm"
-                      data-invalid={isInvalid}
-                      disabled={status === "submitting"}
-                      onChange={(event) => {
-                        field.onChange(event)
-                        form.clearErrors("email")
-                      }}
-                      placeholder="you@domain.com"
-                      type="email"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError
-                        className="text-left"
-                        errors={[fieldState.error]}
-                      />
-                    )}
-                  </Field>
-                )
-              }}
-            />
-            <Button
-              className="h-9 w-full px-4 shadow-sm sm:w-auto"
-              disabled={status === "submitting"}
-              type="submit"
-              variant="outline"
+          <div className="w-full space-y-3">
+            <form
+              className="flex w-full flex-col items-center gap-2 sm:flex-row sm:items-start sm:justify-center"
+              noValidate
+              onSubmit={form.handleSubmit(onSubmit)}
             >
-              {status === "submitting" ? "Notifying..." : "Notify me"}
-            </Button>
-          </form>
+              <Controller
+                control={form.control}
+                name="email"
+                render={({ field, fieldState }) => {
+                  const isInvalid = fieldState.invalid
+                  return (
+                    <Field className="w-full sm:w-80" data-invalid={isInvalid}>
+                      <Input
+                        {...field}
+                        aria-invalid={isInvalid}
+                        aria-label="Email address"
+                        autoComplete="email"
+                        className="h-9 w-full rounded-md bg-background shadow-sm"
+                        data-invalid={isInvalid}
+                        disabled={status === "submitting"}
+                        onChange={(event) => {
+                          field.onChange(event)
+                          form.clearErrors("email")
+                        }}
+                        placeholder="you@domain.com"
+                        type="email"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError
+                          className="text-left"
+                          errors={[fieldState.error]}
+                        />
+                      )}
+                    </Field>
+                  )
+                }}
+              />
+              <Button
+                className="w-full sm:w-auto"
+                disabled={status === "submitting" || status === "success"}
+                size="lg"
+                type="submit"
+                variant={status === "success" ? "success" : "outline"}
+              >
+                {match(status)
+                  .with("submitting", () => (
+                    <>
+                      <LoaderCircleIcon
+                        aria-hidden="true"
+                        className="animate-spin"
+                        data-icon="inline-start"
+                      />
+                      Subscribing
+                    </>
+                  ))
+                  .with("success", () => (
+                    <>
+                      <CheckIcon aria-hidden="true" data-icon="inline-start" />
+                      Subscribed
+                    </>
+                  ))
+                  .with("idle", "error", () => "Notify me")
+                  .exhaustive()}
+              </Button>
+            </form>
 
-          {message ? (
-            <p aria-live="polite" className="text-sm">
-              {message}
-            </p>
-          ) : null}
+            {message && (
+              <p
+                aria-live="polite"
+                className="text-center text-sm text-muted-foreground"
+              >
+                {message}
+              </p>
+            )}
+          </div>
         </div>
       </Container>
     </section>
