@@ -26,9 +26,9 @@ function isAlreadySubscribed(payload: EmailOctopusV16ErrorResponse): boolean {
   )
 }
 
-export const newsletterSignupFn = createServerFn({ method: "POST" }).handler(
-  async (ctx): Promise<NewsletterSignupResult> => {
-    const data = ctx.data as unknown as NewsletterSignupData
+export const newsletterSignupFn = createServerFn({ method: "POST" })
+  .inputValidator((data: NewsletterSignupData) => data)
+  .handler(async ({ data }): Promise<NewsletterSignupResult> => {
     const email = data.email?.trim()
 
     if (!email) {

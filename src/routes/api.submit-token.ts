@@ -66,15 +66,17 @@ async function notifyFailure(error: string, submission: SubmissionData) {
   }
 }
 
-export const submitTokenFn = createServerFn({ method: "POST" }).handler(
-  async (ctx) => {
-    const data = ctx.data as unknown as {
+export const submitTokenFn = createServerFn({ method: "POST" })
+  .inputValidator(
+    (data: {
       name: string
       project: string
       request: string
       additionalInfo: string
       submitterEmail: string
-    }
+    }) => data
+  )
+  .handler(async ({ data }) => {
 
     const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN
     const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
