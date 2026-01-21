@@ -1,4 +1,4 @@
-import { ComponentProps } from "react"
+import type { ComponentProps } from "react"
 import { Container } from "@/components/ui/container"
 import { cn } from "@/lib/utils"
 
@@ -44,9 +44,15 @@ export function SiteFooter() {
         <nav className="flex flex-col lg:flex-row lg:flex-1 items-center justify-center gap-1 w-full lg:w-auto">
           <FooterLink href="https://app.aragon.org">Aragon App</FooterLink>
           <FooterLink href="https://aragon.org">Website</FooterLink>
-          <FooterLink href="https://twitter.com/AragonProject">Twitter/X</FooterLink>
-          <FooterLink href="https://github.com/aragon/ownership-token-index">Github</FooterLink>
-          <FooterLink href="https://aragon.org/terms-and-conditions">Terms of service</FooterLink>
+          <FooterLink href="https://twitter.com/AragonProject">
+            Twitter/X
+          </FooterLink>
+          <FooterLink href="https://github.com/aragon/ownership-token-index">
+            Github
+          </FooterLink>
+          <FooterLink href="https://aragon.org/terms-and-conditions">
+            Terms of service
+          </FooterLink>
         </nav>
 
         {/* Copyright */}
