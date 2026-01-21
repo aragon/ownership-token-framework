@@ -38,9 +38,6 @@ interface Token {
   address: string
   icon?: string
   evidenceEntries: number
-  positive: number
-  neutral: number
-  atRisk: number
   lastUpdated: number
   network: string
 }
@@ -75,89 +72,7 @@ function IconBubble({ className }: { className?: string }) {
   )
 }
 
-function IconCircleArrowUp({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-label="Up arrow"
-      className={className}
-      fill="currentColor"
-      height="16"
-      role="img"
-      viewBox="0 0 24 24"
-      width="16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path
-        d="m16 12-4-4-4 4"
-        fill="none"
-        stroke="white"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path
-        d="M12 16V8"
-        fill="none"
-        stroke="white"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  )
-}
 
-function IconCircleDot({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-label="Neutral"
-      className={className}
-      fill="currentColor"
-      height="16"
-      role="img"
-      viewBox="0 0 24 24"
-      width="16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <circle cx="12" cy="12" fill="white" r="2" />
-    </svg>
-  )
-}
-
-function IconCircleArrowDown({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-label="Down arrow"
-      className={className}
-      fill="currentColor"
-      height="16"
-      role="img"
-      viewBox="0 0 24 24"
-      width="16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path
-        d="M12 8v8"
-        fill="none"
-        stroke="white"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path
-        d="m8 12 4 4 4-4"
-        fill="none"
-        stroke="white"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  )
-}
 
 // Metric pill component for consistent styling
 interface MetricPillProps {
@@ -235,75 +150,6 @@ const columns: ColumnDef<Token>[] = [
       <MetricPill
         icon={<IconBubble className="size-4" />}
         value={row.original.evidenceEntries}
-      />
-    ),
-  },
-  {
-    accessorKey: "positive",
-    meta: {
-      headerClassName: "hidden lg:table-cell",
-      cellClassName: "hidden lg:table-cell",
-    },
-    header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Positive
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
-    ),
-    cell: ({ row }) => (
-      <MetricPill
-        icon={<IconCircleArrowUp className="size-4 text-green-500" />}
-        value={row.original.positive}
-      />
-    ),
-  },
-  {
-    accessorKey: "neutral",
-    meta: {
-      headerClassName: "hidden lg:table-cell",
-      cellClassName: "hidden lg:table-cell",
-    },
-    header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Neutral
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
-    ),
-    cell: ({ row }) => (
-      <MetricPill
-        icon={<IconCircleDot className="size-4 text-neutral-400" />}
-        value={row.original.neutral}
-      />
-    ),
-  },
-  {
-    accessorKey: "atRisk",
-    meta: {
-      headerClassName: "hidden lg:table-cell",
-      cellClassName: "hidden lg:table-cell",
-    },
-    header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        At risk
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
-    ),
-    cell: ({ row }) => (
-      <MetricPill
-        icon={<IconCircleArrowDown className="size-4 text-red-500" />}
-        value={row.original.atRisk}
       />
     ),
   },

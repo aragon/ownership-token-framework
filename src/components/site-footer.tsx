@@ -31,7 +31,6 @@ export function SiteFooter() {
     <footer className="border-t bg-background">
       <Container className="flex h-auto lg:h-20 flex-col lg:flex-row items-center justify-between gap-4 lg:gap-12 py-4 lg:py-0">
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm text-muted-foreground">Built by</span>
           <img
             alt="Aragon"
             className="h-6"
@@ -42,10 +41,9 @@ export function SiteFooter() {
 
         {/* Navigation Links */}
         <nav className="flex flex-col lg:flex-row lg:flex-1 items-center justify-center gap-1 w-full lg:w-auto">
-          <FooterLink href="https://app.aragon.org">Aragon App</FooterLink>
-          <FooterLink href="https://aragon.org">Website</FooterLink>
+          <FooterLink href="https://app.aragon.org">Launch app</FooterLink>
           <FooterLink href="https://twitter.com/AragonProject">
-            Twitter/X
+            X
           </FooterLink>
           <FooterLink href="https://github.com/aragon/ownership-token-index">
             Github
