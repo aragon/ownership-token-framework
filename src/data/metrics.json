@@ -10,7 +10,7 @@
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "**Governance 1:** Voting (LDO holders) → DualGovernance (stETH veto window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH veto.\n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This primarily is used for treasury operations and management of certain staking modules. \n\nWhitelisted proposers (node ops, committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
+          "notes": "**Governance 1A:** Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts. \n\n**Governance 1B:** Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts. \n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This is primarily used for grunting, treasury operations, and management of staking modules. \n\nEasy Track Motions proposers (committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
           "evidence": [
             {
               "name": "DualGovernance",
@@ -154,7 +154,7 @@
           "name": "Privileged Access controlled by holders",
           "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
           "status": "⚠️",
-          "notes": "Users funds that have been deposited into Lido’s buffered ETH can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO. \n\n Guardians are addresses of node operators + LDO dev team.",
+          "notes": "Users funds that have been deposited into Lido Protocol are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO holders. \n\n Guardians are addresses of node operators + LDO dev team, connected to automated software that performs security checks on deposits and runs on trusted entities. \n\n While Guardians can initially choose which staking module receives a deposit, the checks in Lido’s deposit method prevent them from allocating arbitrary amounts of stake.  Stake allocation is enforced on-chain by the StakingRouter, which applies the allocation strategy and prevents guardians from exerting lasting influence over stake distribution.",
           "evidence": [
             {
               "name": "DepositSecurityModule",
@@ -167,6 +167,14 @@
             {
               "name": "Guardians",
               "url": "https://docs.lido.fi/guides/deposit-security-manual#committee-membership"
+            },
+            {
+              "name": "Guardians use automated software",
+              "url": "https://docs.lido.fi/guides/deposit-security-manual/#tldr"
+            },
+            {
+              "name": "Guardians cannot control stake allocation",
+              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L647"
             }
           ]
         }
@@ -195,15 +203,11 @@
           "name": "Treasury Ownership",
           "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
           "status": "✅",
-          "notes": "The Lido contract allows users to send ETH to the contract by the submit function and the contract puts the funds into buffered ETH and mints the according shares to the user.\n\nLater on, DepositSecurityModule calls the deposit function on the Lido contract and decides in which staking module to put the buffered ETH. StakingRouter is where each staking module can be added and updated (currently, there are 7 modules). When a staking module is added, the caller passes what treasury and stakingModule fee must be. \n\nWhile the Agent (and therefore LDO holders) controls the addition and updating of staking modules along with their respective treasury fees, it is the Guardians who determine which staking module receives the buffered ETH deposits.",
+          "notes": "The Lido DAO Treasury is the Agent contract itself, controlled by LDO holders. Decisions on Treasury Management excluded from the Dual Governance scope and can't be challenged by stETH holders. The Treasury Management Committee is responsible for maintaining and executing policies related to treasury management in accordance with the [approved principles](https://research.lido.fi/t/proposal-to-approve-lido-dao-treasury-management-principles-and-authorize-the-formation-of-a-treasury-management-committee/4279). The committee proposes and enacts strategies and decisions via Governance 2. \n\n LDO holders, via governance, control treasury revenue by approving staking modules and setting and updating each module’s treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
           "evidence": [
             {
-              "name": "Lido contract",
-              "url": "https://etherscan.io/address/0x6ca84080381e43938476814be61b779a8bb6a600#code"
-            },
-            {
-              "name": "DepositSecurityModule",
-              "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code"
+              "name": "Agent",
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
             },
             {
               "name": "StakingRouter",
