@@ -1,5 +1,3 @@
-"use client"
-
 import { SignupInput } from "@/components/signup-input"
 import { Container } from "@/components/ui/container"
 
