@@ -77,7 +77,6 @@ export const submitTokenFn = createServerFn({ method: "POST" })
     }) => data
   )
   .handler(async ({ data }) => {
-
     const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN
     const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
 
@@ -142,5 +141,4 @@ export const submitTokenFn = createServerFn({ method: "POST" })
     }
 
     return { ok: true }
-  }
-)
+  })

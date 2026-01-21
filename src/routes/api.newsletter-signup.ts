@@ -108,5 +108,4 @@ export const newsletterSignupFn = createServerFn({ method: "POST" })
       // Handle network errors or unexpected failures
       throw new Error("Network error. Please check your connection.")
     }
-  }
-)
+  })
