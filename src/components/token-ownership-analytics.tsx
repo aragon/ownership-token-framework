@@ -46,6 +46,7 @@ interface Token {
 }
 
 declare module "@tanstack/react-table" {
+  // biome-ignore lint/correctness/noUnusedVariables: Type parameters required by @tanstack/react-table
   interface ColumnMeta<TData, TValue> {
     headerClassName?: string
     cellClassName?: string
@@ -56,9 +57,11 @@ declare module "@tanstack/react-table" {
 function IconBubble({ className }: { className?: string }) {
   return (
     <svg
+      aria-label="Message bubble"
       className={className}
       fill="none"
       height="16"
+      role="img"
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -75,9 +78,11 @@ function IconBubble({ className }: { className?: string }) {
 function IconCircleArrowUp({ className }: { className?: string }) {
   return (
     <svg
+      aria-label="Up arrow"
       className={className}
       fill="currentColor"
       height="16"
+      role="img"
       viewBox="0 0 24 24"
       width="16"
       xmlns="http://www.w3.org/2000/svg"
@@ -106,9 +111,11 @@ function IconCircleArrowUp({ className }: { className?: string }) {
 function IconCircleDot({ className }: { className?: string }) {
   return (
     <svg
+      aria-label="Neutral"
       className={className}
       fill="currentColor"
       height="16"
+      role="img"
       viewBox="0 0 24 24"
       width="16"
       xmlns="http://www.w3.org/2000/svg"
@@ -122,9 +129,11 @@ function IconCircleDot({ className }: { className?: string }) {
 function IconCircleArrowDown({ className }: { className?: string }) {
   return (
     <svg
+      aria-label="Down arrow"
       className={className}
       fill="currentColor"
       height="16"
+      role="img"
       viewBox="0 0 24 24"
       width="16"
       xmlns="http://www.w3.org/2000/svg"
