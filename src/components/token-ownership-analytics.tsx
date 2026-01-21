@@ -72,8 +72,6 @@ function IconBubble({ className }: { className?: string }) {
   )
 }
 
-
-
 // Metric pill component for consistent styling
 interface MetricPillProps {
   value: number
