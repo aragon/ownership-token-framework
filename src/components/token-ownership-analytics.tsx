@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-table"
 import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
+import { HeroHeader } from "@/components/hero-header"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -195,22 +196,6 @@ const columns: ColumnDef<Token>[] = [
   },
 ]
 
-// Hero Section
-function HeroSection() {
-  return (
-    <section className="flex flex-col gap-y-4 py-6 lg:py-12">
-      <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Verify and compare enforceable ownership
-      </h1>
-      <p className="max-w-[1024px] text-muted-foreground">
-        The Ownership Token Index maps enforceable claims across four metrics:
-        token control, protocol control, value accrual, and offchain
-        dependencies. Use it to evaluate tokens on fundamentals.
-      </p>
-    </section>
-  )
-}
-
 function TokenDataTable({ data }: { data: Token[] }) {
   const navigate = useNavigate()
   const [sorting, setSorting] = useState<SortingState>([])
@@ -373,12 +358,8 @@ export default function TokenOwnershipAnalytics() {
   const tokens = useTokens() as Token[]
   return (
     <PageWrapper className="flex flex-col">
-      {/* White background section */}
-      <div className="bg-background">
-        <Container>
-          <HeroSection />
-        </Container>
-      </div>
+      {/* White background section with Hero Header */}
+      <HeroHeader />
 
       {/* Gray background section */}
       <div className="bg-muted/50 flex-1">
