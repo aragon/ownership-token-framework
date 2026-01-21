@@ -54,6 +54,7 @@ export const newsletterSignupFn = createServerFn({ method: "POST" })
             api_key: apiKey,
             email_address: email,
             status: "SUBSCRIBED",
+            tags: ["ownership-token"],
           }),
         }
       )
