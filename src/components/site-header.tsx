@@ -112,8 +112,8 @@ export function SiteHeader() {
         <div
           className={
             isMobileSearchOpen
-              ? "hidden items-center gap-x-4 md:flex xl:gap-x-12"
-              : "flex items-center gap-x-4 xl:gap-x-12"
+              ? "hidden items-center gap-x-3 md:flex md:gap-x-6 lg:gap-x-12"
+              : "flex items-center gap-x-3 md:gap-x-6 lg:gap-x-12"
           }
         >
           {/* Logo */}
@@ -123,7 +123,7 @@ export function SiteHeader() {
               className="size-8 rounded-lg object-cover"
               src="/logo-square.png"
             />
-            <div className="flex items-center gap-1 text-sm md:text-base font-semibold leading-6">
+            <div className="flex items-center gap-1 text-base font-semibold leading-6">
               <span className="text-foreground">Ownership Token</span>
               <span className="text-muted-foreground">Index</span>
             </div>
@@ -215,12 +215,12 @@ export function SiteHeader() {
         <div
           className={
             isMobileSearchOpen
-              ? "hidden items-center gap-3 shrink-0 md:flex md:gap-4"
-              : "flex items-center gap-3 shrink-0 md:gap-4"
+              ? "hidden items-center gap-4 shrink-0 md:flex"
+              : "flex items-center gap-4 shrink-0"
           }
         >
           <Button
-            className="h-8 w-8 sm:hidden"
+            className="h-9 w-9 md:hidden"
             onClick={() => {
               setIsMobileSearchOpen(true)
             }}
@@ -230,10 +230,10 @@ export function SiteHeader() {
             <SearchIcon className="size-4" />
           </Button>
 
-          <div className="relative hidden sm:block w-42 lg:w-60 xl:w-64">
-            <SearchIcon className="absolute left-3 top-1/2 size-[12px] -translate-y-1/2 text-foreground" />
+          <div className="relative hidden md:block w-40 lg:w-60">
+            <SearchIcon className="absolute left-3 top-1/2 size-[10.67px] -translate-y-1/2 text-foreground" />
             <Input
-              className="h-8 pl-8 pr-3 text-sm shadow-sm sm:h-9 lg:pl-9 lg:pr-8 md:text-base"
+              className="h-9 pl-9 pr-8 text-base shadow-sm"
               onChange={(event) => {
                 updateSearchQuery(event.target.value)
               }}
@@ -243,7 +243,7 @@ export function SiteHeader() {
               type="search"
               value={searchQuery}
             />
-            <kbd className="absolute right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 items-center justify-center rounded-sm bg-secondary text-xs text-muted-foreground lg:flex">
+            <kbd className="absolute right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 items-center justify-center rounded-sm bg-secondary text-xs text-muted-foreground md:flex">
               /
             </kbd>
             {searchQuery.trim().length > 0 ? (
@@ -319,7 +319,7 @@ export function SiteHeader() {
         <div
           className={
             isMobileSearchOpen
-              ? "flex w-full items-center gap-2 sm:hidden"
+              ? "flex w-full items-center gap-2 md:hidden"
               : "hidden"
           }
         >
