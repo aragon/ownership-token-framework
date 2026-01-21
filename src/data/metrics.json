@@ -13,6 +13,10 @@
           "notes": "**Governance 1A:** Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts. \n\n**Governance 1B:** Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts. \n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This is primarily used for grunting, treasury operations, and management of staking modules. \n\nEasy Track Motions proposers (committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
           "evidence": [
             {
+              "name": "Voting",
+              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code"
+            },
+            {
               "name": "DualGovernance",
               "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code"
             },
