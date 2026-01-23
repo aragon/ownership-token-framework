@@ -10,7 +10,7 @@
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "**Governance 1A:** Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts. \n\n**Governance 1B:** Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts. \n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This is primarily used for grunting, treasury operations, and management of staking modules. \n\nEasy Track Motions proposers (committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
+          "notes": "**Governance 1A:** Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts. \n\n**Governance 1B:** Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts. \n\n**Governance 2:** Lido Easy Track is an optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. This is primarily used for granting, treasury operations, and management of staking modules. \n\nEasy Track Motions proposers (committees) create motions for predefined actions like staking limit increases or grants top-ups. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote. Max 20 active motions; emergency dev multisig pause available.",
           "evidence": [
             {
               "name": "Voting",
@@ -109,7 +109,7 @@
           "name": "Censorship Immunity",
           "about": "Are there no \"Guardian\" or \"Admin\" roles capable of freezing, blacklisting, or seizing tokens?",
           "status": "✅",
-          "notes": "Controller can burn tokens from any address and enable/disable transfers. Currently, `BURN_ROLE` on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1 to call setPermission on ACL.",
+          "notes": "Controller can burn tokens from any address and enable/disable transfers. Currently, `BURN_ROLE` on the TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1B to call setPermission on ACL.",
           "evidence": [
             {
               "name": "MiniMeToken.destroyTokens",
@@ -157,8 +157,8 @@
           "id": "prot-ctrl__privileged",
           "name": "Privileged Access controlled by holders",
           "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
-          "status": "⚠️",
-          "notes": "Users funds that have been deposited into Lido Protocol are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO holders. \n\n Guardians are addresses of node operators + LDO dev team, connected to automated software that performs security checks on deposits and runs on trusted entities. \n\n While Guardians can initially choose which staking module receives a deposit, the checks in Lido’s deposit method prevent them from allocating arbitrary amounts of stake.  Stake allocation is enforced on-chain by the StakingRouter, which applies the allocation strategy and prevents guardians from exerting lasting influence over stake distribution.",
+          "status": "✅",
+          "notes": "Users funds that have been deposited into Lido Protocol are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO holders. \n\n Guardians are addresses of node operators + LDO dev team, connected to automated software that performs security checks on deposits and runs on trusted entities. \n\n While deposits are operationally executed by the DepositSecurityModule (Guardians), this does not constitute privileged protocol control independent of LDO holders: \n\n 1. Guardians are fully accountable to LDO holders. They can be rotated, replaced, or their mandate changed through on-chain voting. \n\n 2. Guardians do not control protocol parameters or economic risk. They cannot change staking ratios, fee splits, module shares, or risk parameters. All meaningful economic and risk-related decisions remain under LDO control.",
           "evidence": [
             {
               "name": "DepositSecurityModule",
@@ -207,7 +207,7 @@
           "name": "Treasury Ownership",
           "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
           "status": "✅",
-          "notes": "The Lido DAO Treasury is the Agent contract itself, controlled by LDO holders. Decisions on Treasury Management excluded from the Dual Governance scope and can't be challenged by stETH holders. The Treasury Management Committee is responsible for maintaining and executing policies related to treasury management in accordance with the [approved principles](https://research.lido.fi/t/proposal-to-approve-lido-dao-treasury-management-principles-and-authorize-the-formation-of-a-treasury-management-committee/4279). The committee proposes and enacts strategies and decisions via Governance 2. \n\n LDO holders, via governance, control treasury revenue by approving staking modules and setting and updating each module’s treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
+          "notes": "The Lido DAO Treasury is the Agent contract itself, controlled by LDO holders. Decisions on Treasury Management excluded from the Dual Governance scope and can't be challenged by stETH holders. The Treasury Management Committee is responsible for maintaining and executing policies related to treasury management in accordance with the [approved principles](https://research.lido.fi/t/proposal-to-approve-lido-dao-treasury-management-principles-and-authorize-the-formation-of-a-treasury-management-committee/4279). The committee proposes and enacts strategies and decisions via Governance 2. \n\n LDO holders, via Governance 1A, control treasury revenue by approving staking modules and setting and updating each module’s treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
           "evidence": [
             {
               "name": "Agent",
