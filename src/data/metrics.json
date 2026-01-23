@@ -1251,7 +1251,7 @@
           "id": "token-ctrl__censorship",
           "name": "Censorship Immunity",
           "about": "Are there no guardian or admin roles capable of freezing, blacklisting, or seizing tokens?",
-          "status": "TBD",
+          "status": "✅",
           "notes": "No Guardian or blacklist capabilities exist in the AAVE token contract.",
           "evidence": [
             {
@@ -1308,7 +1308,7 @@
           "id": "prot-ctrl__privileged",
           "name": "Gated Access Control",
           "about": "Are sensitive parameters gated by privileged roles?",
-          "status": "⚠️",
+          "status": "✅",
           "notes": "Roles can be broadly classified into Core Protocol Roles and Delegated Steward Roles. AAVE holders elect and revoke all these roles with their standard governance procedure.\n\nCore Protocol Roles: EMERGENCY_ADMIN, RISK_ADMIN, POOL_ADMIN, ASSET_LISTING_ADMIN.\n\nCore Protocol Roles live in ACLManager, which is owned by the ACLAdmin, verifiable in PoolAddressesProvider. ACLAdmin is owned by PayloadsController, which is controlled by token holders to add execution payloads of successful proposals.\n\n Delegated Steward Roles with their targets of control:\n1. Risk Stewards → Risk Parameters\n2. Finance Stewards → Treasury\n3. Aave Guardians → Emergency\n\nProtocol Emergency Guardian (EMERGENCY_ADMIN): another Guardian multisig that executes limited emergency operations for the protocol",
           "evidence": [
             {
