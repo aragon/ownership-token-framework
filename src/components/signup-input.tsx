@@ -90,7 +90,7 @@ export function SignupInput(props: ISignupInputProps) {
     status === "success"
       ? alreadySubscribed
         ? "You're already on the list. Thanks for staying in the loop!"
-        : "Thanks for signing up! Please check your inbox to confirm."
+        : "You're subscribed. Thanks for signing up!"
       : null
 
   return (
