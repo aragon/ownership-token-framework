@@ -3,7 +3,7 @@
     {
       "id": "basics",
       "name": "Basics",
-      "about": "Core definitions and how to use the index.",
+      "about": "Core definitions and how to use the framework.",
       "questions": [
         {
           "id": "basics__ownership-token",
@@ -12,8 +12,8 @@
         },
         {
           "id": "basics__how-to-use",
-          "question": "How can I use the Ownership Token Index?",
-          "answer": "The index is intended for reviewing and verifying the programmatic economic rights associated with a token using primary evidence. It evaluates both onchain mechanisms and relevant offchain dependencies that may reinforce or undermine expectations of ownership rights.\n\nThe Ownership Token Index is not an endorsement of any project and is not investment advice. The Index evaluates tokenholder rights and related dependencies, not whether a project generates value. It provides structure and primary evidence that can inform fundamental analysis and help market participants reach their own conclusions, but it is not sufficient on its own."
+          "question": "How can I use the Ownership Token Framework?",
+          "answer": "The framework is intended for reviewing and verifying the programmatic economic rights associated with a token using primary evidence. It evaluates both onchain mechanisms and relevant offchain dependencies that may reinforce or undermine expectations of ownership rights.\n\nThe Ownership Token Framework is not an endorsement of any project and is not investment advice. The Framework evaluates tokenholder rights and related dependencies, not whether a project generates value. It provides structure and primary evidence that can inform fundamental analysis and help market participants reach their own conclusions, but it is not sufficient on its own."
         }
       ]
     },
@@ -30,7 +30,7 @@
         {
           "id": "methodology__evidence",
           "question": "How do you source and verify evidence?",
-          "answer": "All evidence used by the index is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
+          "answer": "All evidence used by the Framework is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
         }
       ]
     },
