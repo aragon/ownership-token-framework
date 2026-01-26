@@ -12,7 +12,7 @@ export function NewsletterSignup() {
             </h2>
             <p className="text-lg font-normal text-accent-foreground">
               Get an email when we publish a new token report or release major
-              updates to the Index.
+              updates to the Framework.
             </p>
           </div>
 
