@@ -1,4 +1,4 @@
-# Ownership Token Index
+# Ownership Token Framework
  
 A TanStack Start application with React, TypeScript, Tailwind CSS, and shadcn/ui.
 
