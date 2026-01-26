@@ -107,7 +107,7 @@ export function SubmitTokenDialog({
             Request a specific token to be evaluated using our framework and to
             be considered for potential inclusion in the Ownership Token
             Framework. We are also interested in any feedback you have that
-            could make the Index more helpful for you.
+            could make the Framework more helpful for you.
           </DialogDescription>
         </DialogHeader>
 
@@ -174,7 +174,7 @@ export function SubmitTokenDialog({
                       id="request-message"
                     />
                     <FieldDescription>
-                      What would you like us to add to or change about the Ownership Token Index?
+                      What would you like us to add to or change about the Ownership Token Framework?
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
