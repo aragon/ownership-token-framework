@@ -69,6 +69,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
                       className="font-sans text-sm font-normal leading-5 text-[#0588f0]"
                       href={learnMoreLink}
                       isExternal
+                      hideExternalIcon
                     >
                       Learn more about this {variant === "h3" ? "metric" : "criteria"} →
                     </Link>
