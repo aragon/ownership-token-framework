@@ -6,8 +6,10 @@ import {
   Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
-
+import { GoogleAnalytics } from "@/components/google-analytics"
+import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
@@ -21,7 +23,7 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Ownership Token Index",
+        title: "Ownership Token Framework",
       },
     ],
     links: [
@@ -38,18 +40,33 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <SiteHeader />
       <Outlet />
-    </>
+      <SiteFooter />
+      <GoogleAnalytics />
+    </div>
   )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const gaId = GA_MEASUREMENT_ID
+  const gaScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}', { send_page_view: false });`
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        {gaId ? (
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+        ) : null}
+        {gaId ? <script>{gaScript}</script> : null}
       </head>
       <body>
         {children}

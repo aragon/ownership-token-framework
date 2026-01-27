@@ -9,7 +9,8 @@
     "test": "vitest run",
     "format": "biome format",
     "lint": "biome lint",
-    "check": "biome check --write"
+    "check": "biome check --write",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
@@ -18,7 +19,9 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource-variable/inter": "^5.2.8",
-    "@tabler/icons-react": "^3.36.0",
+    "@hookform/resolvers": "^5.2.2",
+    "@tabler/icons-react": "^3.36.1",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.0.6",
     "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-router": "^1.132.0",
@@ -34,6 +37,8 @@
     "nitro": "latest",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.70.0",
+    "react-markdown": "^10.1.0",
     "recharts": "2.15.4",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.0.6",
@@ -53,10 +58,11 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "jsdom": "^27.0.0",
-    "shadcn": "^3.6.1",
+    "shadcn": "^3.6.3",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
     "web-vitals": "^5.1.0"
-  }
+  },
+  "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }

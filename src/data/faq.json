@@ -1,0 +1,60 @@
+{
+  "topics": [
+    {
+      "id": "basics",
+      "name": "Basics",
+      "about": "Core definitions and how to use the framework.",
+      "questions": [
+        {
+          "id": "basics__ownership-token",
+          "question": "What is an ownership token?",
+          "answer": "An ownership token is a token whose holders have enforceable, onchain rights--directly or via tokenholder-governed execution--over the assets and value flows that determine economic outcomes."
+        },
+        {
+          "id": "basics__how-to-use",
+          "question": "How can I use the Ownership Token Framework?",
+          "answer": "The framework is intended for reviewing and verifying the programmatic economic rights associated with a token using primary evidence. It evaluates both onchain mechanisms and relevant offchain dependencies that may reinforce or undermine expectations of ownership rights.\n\nThe Ownership Token Framework is not an endorsement of any project and is not investment advice. The Framework evaluates tokenholder rights and related dependencies, not whether a project generates value. It provides structure and primary evidence that can inform fundamental analysis and help market participants reach their own conclusions, but it is not sufficient on its own."
+        }
+      ]
+    },
+    {
+      "id": "methodology",
+      "name": "Methodology",
+      "about": "How evaluation, sourcing, and verification work.",
+      "questions": [
+        {
+          "id": "methodology__evaluation",
+          "question": "How do you evaluate tokens?",
+          "answer": "Our token reports include metrics, criteria, and evidence.\n\nEach of our four metrics contain a checklist of criteria. For each criteria we provide primary evidence, including:\nOnchain: active deployments, permissions/roles, parameters, execution history.\nOffchain (where relevant): public filings/registrations, published legal terms, and other public documentation.\n\nYou can read the full metric definitions and methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
+        },
+        {
+          "id": "methodology__evidence",
+          "question": "How do you source and verify evidence?",
+          "answer": "All evidence used by the Framework is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
+        }
+      ]
+    },
+    {
+      "id": "participation",
+      "name": "Participation",
+      "about": "How tokens are selected and how to get involved.",
+      "questions": [
+        {
+          "id": "participation__selection",
+          "question": "How do you choose which tokens to feature?",
+          "answer": "We started with a set of established projects to validate the framework. Ongoing inclusion is request-driven: anyone can request a token be reviewed for possible inclusion."
+        },
+        {
+          "id": "participation__listing",
+          "question": "How can I get a token listed?",
+          "answer": "Submit a request (or refer a token) using this [here](submit-token)."
+        },
+        {
+          "id": "participation__contribute",
+          "question": "How can I contribute to this initiative?",
+          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out [here](submit-token)."
+        }
+      ]
+    }
+  ]
+}

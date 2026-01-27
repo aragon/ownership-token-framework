@@ -1,5 +1,5 @@
-# Ownership Token Index
-
+# Ownership Token Framework
+ 
 A TanStack Start application with React, TypeScript, Tailwind CSS, and shadcn/ui.
 
 ## Getting Started
@@ -34,9 +34,10 @@ This project uses Tailwind CSS v4 for styling.
 This project uses Biome for linting and formatting:
 
 ```bash
-pnpm lint      # Run linter
-pnpm format    # Format code
-pnpm check     # Lint and format with auto-fix
+pnpm lint       # Run linter
+pnpm format     # Format code
+pnpm check      # Lint and format with auto-fix
+pnpm type-check # Run TS type check
 ```
 
 ## shadcn/ui
@@ -114,9 +115,9 @@ const peopleRoute = createRoute({
 ```
 
 See [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading) for more.
-
+ 
 ## Learn More
-
+ 
 - [TanStack Start](https://tanstack.com/start/latest)
 - [TanStack Router](https://tanstack.com/router/latest)
 - [shadcn/ui](https://ui.shadcn.com)

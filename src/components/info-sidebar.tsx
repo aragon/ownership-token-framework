@@ -3,12 +3,10 @@ import {
   IconCheck,
   IconCopy,
   IconCurrencyEthereum,
-  IconExternalLink,
   IconLink,
 } from "@tabler/icons-react"
-import { ExternalLinkIcon } from "lucide-react"
 import { useEffect, useState } from "react"
-import { copyToClipboard } from "@/lib/utils"
+import { copyToClipboard, truncateAddress } from "@/lib/utils"
 import type { TokenInfo } from "./token-detail"
 import { Button } from "./ui/button"
 
@@ -26,9 +24,9 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
   return (
     <aside className="rounded-lg border bg-card p-4">
       <h3 className="font-semibold">Info</h3>
-      <p className="mt-2 text-sm text-muted-foreground">
+      {/* <p className="mt-2 text-sm text-muted-foreground">
         {token.infoDescription}
-      </p>
+      </p> */}
 
       <div className="mt-4 flex flex-wrap gap-2">
         <Button
@@ -42,11 +40,12 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
         >
           <span className="sr-only">Copy</span>
           {hasCopied ? <IconCheck /> : <IconCopy />}
-          {token.address}
+          {truncateAddress(token.address)}
         </Button>
         {token.links.scan && (
           <Button
             className="gap-1.5"
+            nativeButton={false}
             render={
               <a
                 href={token.links.scan}
@@ -67,6 +66,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
         {token.links.website && (
           <Button
             className="gap-1.5"
+            nativeButton={false}
             render={
               <a
                 aria-label="Visit website"

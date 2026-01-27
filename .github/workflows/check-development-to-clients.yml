@@ -1,0 +1,26 @@
+name: Enforce Merge Policy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          TARGET_BRANCH="${{ github.base_ref }}"
+          
+          PROTECTED_BRANCHES="ldo crv aero uni"
+          ALLOWED_SOURCE="development"
+          
+          if echo "$PROTECTED_BRANCHES" | grep -qw "$TARGET_BRANCH"; then
+            if [ "$SOURCE_BRANCH" != "$ALLOWED_SOURCE" ]; then
+              echo "::error::Merge denied. Branch '$TARGET_BRANCH' only accepts merges from '$ALLOWED_SOURCE'."
+              exit 1
+            fi
+          fi
+          
+          echo "✅ Check passed"

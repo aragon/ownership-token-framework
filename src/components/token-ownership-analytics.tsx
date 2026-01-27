@@ -1,6 +1,5 @@
 "use client"
 
-import { IconBubble } from "@tabler/icons-react"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -15,8 +14,11 @@ import {
 } from "@tanstack/react-table"
 import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
 import { useState } from "react"
+import { HeroHeader } from "@/components/hero-header"
+import { NewsletterSignup } from "@/components/newsletter-signup"
+import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Container } from "@/components/ui/container"
 import {
   Table,
   TableBody,
@@ -25,29 +27,70 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import tokensData from "@/data/tokens.json"
+import { useTokens } from "@/hooks/use-tokens"
+import { cn, formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
   id: string
   name: string
+  symbol: string
   address: string
   icon?: string
   evidenceEntries: number
-  positive: number
-  neutral: number
-  atRisk: number
-  lastUpdated: string
+  lastUpdated: number
   network: string
 }
 
-// Get tokens from JSON data
-const tokens: Token[] = tokensData.tokens as Token[]
+declare module "@tanstack/react-table" {
+  // biome-ignore lint/correctness/noUnusedVariables: Type parameters required by @tanstack/react-table
+  interface ColumnMeta<TData, TValue> {
+    headerClassName?: string
+    cellClassName?: string
+  }
+}
 
-// Utility to truncate address
-function truncateAddress(address: string): string {
-  if (address.includes("...")) return address
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
+// Custom filled icons to match Figma design
+function IconBubble({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-label="Message bubble"
+      className={className}
+      fill="none"
+      height="16"
+      role="img"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="16"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+    </svg>
+  )
+}
+
+// Metric pill component for consistent styling
+interface MetricPillProps {
+  value: number
+  icon: React.ReactNode
+  className?: string
+}
+
+function MetricPill({ value, icon, className }: MetricPillProps) {
+  return (
+    <div
+      className={cn(
+        "inline-flex h-8 items-center gap-1 rounded-lg border border-border bg-background px-2",
+        className
+      )}
+    >
+      <span className="text-base">{value}</span>
+      {icon}
+    </div>
+  )
 }
 
 // Column definitions
@@ -55,156 +98,96 @@ const columns: ColumnDef<Token>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
-      >
-        Token name
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
+      <div className="pl-12">
+        <button
+          className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          type="button"
+        >
+          Token name
+          <ChevronsUpDownIcon className="size-4" />
+        </button>
+      </div>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <Avatar size="sm">
+      <div className="flex items-center gap-4">
+        <Avatar>
           <AvatarImage alt={row.original.name} src={row.original.icon} />
           <AvatarFallback className="bg-blue-500 text-white text-xs">
             {row.original.name.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
-        <div className="flex items-center gap-2">
-          <span className="font-medium">{row.original.name}</span>
-          <span className="text-muted-foreground">{row.original.address}</span>
+        <div className="flex items-center gap-2.5">
+          <span className="font-medium text-base">{row.original.name}</span>
+          <span className="text-muted-foreground text-base">
+            {row.original.symbol !== row.original.name
+              ? row.original.symbol
+              : truncateAddress(row.original.address)}
+          </span>
         </div>
       </div>
     ),
   },
   {
     accessorKey: "evidenceEntries",
+    meta: {
+      headerClassName: "hidden md:table-cell",
+      cellClassName: "hidden md:table-cell",
+    },
     header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
+      <button
+        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
+        type="button"
       >
         Evidence entries
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
+        <ChevronsUpDownIcon className="size-4" />
+      </button>
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1.5">
-        <span>{row.original.evidenceEntries}</span>
-        <IconBubble className="size-4 text-muted-foreground" />
-      </div>
+      <MetricPill
+        icon={<IconBubble className="size-4" />}
+        value={row.original.evidenceEntries}
+      />
     ),
   },
-  // {
-  //   accessorKey: "positive",
-  //   header: ({ column }) => (
-  //     <Button
-  //       className="h-auto p-0 font-medium hover:bg-transparent"
-  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       variant="ghost"
-  //     >
-  //       Positive
-  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
-  //     </Button>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <div className="flex items-center gap-1.5">
-  //       <span>{row.original.positive}</span>
-  //       <IconCircleArrowUpFilled className="size-4 text-green-500" />
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   accessorKey: "neutral",
-  //   header: ({ column }) => (
-  //     <Button
-  //       className="h-auto p-0 font-medium hover:bg-transparent"
-  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       variant="ghost"
-  //     >
-  //       Neutral
-  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
-  //     </Button>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <div className="flex items-center gap-1.5">
-  //       <span>{row.original.neutral}</span>
-  //       <IconCircleDotFilled className="size-4 text-gray-400" />
-  //     </div>
-  //   ),
-  // },
-  // {
-  //   accessorKey: "atRisk",
-  //   header: ({ column }) => (
-  //     <Button
-  //       className="h-auto p-0 font-medium hover:bg-transparent"
-  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       variant="ghost"
-  //     >
-  //       At risk
-  //       <ChevronsUpDownIcon className="ml-1 size-3.5" />
-  //     </Button>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <div className="flex items-center gap-1.5">
-  //       <span>{row.original.atRisk}</span>
-  //       <IconCircleArrowDownFilled className="size-4 text-red-500" />
-  //     </div>
-  //   ),
-  // },
   {
     accessorKey: "lastUpdated",
     header: ({ column }) => (
-      <Button
-        className="h-auto p-0 font-medium hover:bg-transparent"
+      <button
+        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        variant="ghost"
+        type="button"
       >
         Last updated
-        <ChevronsUpDownIcon className="ml-1 size-3.5" />
-      </Button>
+        <ChevronsUpDownIcon className="size-4" />
+      </button>
     ),
     cell: ({ row }) => (
-      <span className="text-muted-foreground">{row.original.lastUpdated}</span>
+      <span className="text-muted-foreground">
+        {formatUnixTimestamp(row.original.lastUpdated)}
+      </span>
     ),
   },
   {
     id: "actions",
+    meta: {
+      headerClassName: "hidden lg:table-cell",
+      cellClassName: "hidden lg:table-cell",
+    },
     cell: ({ row }) => (
-      <Button
-        className="size-8"
-        render={
-          <Link params={{ tokenId: row.original.id }} to="/tokens/$tokenId" />
-        }
-        size="icon"
-        variant="ghost"
-      >
-        <ArrowRightIcon className="size-4" />
-      </Button>
+      <div className="flex justify-end">
+        <Link
+          className="inline-flex size-8 items-center justify-center rounded-lg hover:bg-muted"
+          params={{ tokenId: row.original.id }}
+          to="/tokens/$tokenId"
+        >
+          <ArrowRightIcon className="size-6" />
+        </Link>
+      </div>
     ),
   },
 ]
-
-// Hero Section
-function HeroSection() {
-  return (
-    <section>
-      <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
-        Ownership Token Index
-      </h1>
-      <p className="mt-4 max-w-3xl text-muted-foreground">
-        A standardized, open-source disclosure framework for token investors
-        helps clarify the value a token provides in terms of ownership. By
-        utilizing this framework, you can identify the metrics and criteria that
-        matter most to you and your investments. Improved analytics and clearer
-        ownership lead to smarter investment decisions.
-      </p>
-    </section>
-  )
-}
 
 function TokenDataTable({ data }: { data: Token[] }) {
   const navigate = useNavigate()
@@ -233,14 +216,17 @@ function TokenDataTable({ data }: { data: Token[] }) {
   })
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pt-6 pb-10 md:pt-12 md:pb-20 grow">
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
+                  <TableHead
+                    className={header.column.columnDef.meta?.headerClassName}
+                    key={header.id}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -267,7 +253,10 @@ function TokenDataTable({ data }: { data: Token[] }) {
                   }
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      className={cell.column.columnDef.meta?.cellClassName}
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -365,21 +354,20 @@ function TokenDataTable({ data }: { data: Token[] }) {
 
 // Main Component
 export default function TokenOwnershipAnalytics() {
+  const tokens = useTokens() as Token[]
   return (
-    <main className="min-h-screen">
-      {/* White background section */}
-      <div className="bg-background">
-        <div className="mx-auto max-w-7xl px-4 py-6 lg:px-6 lg:py-8">
-          <HeroSection />
-        </div>
-      </div>
+    <PageWrapper className="flex flex-col">
+      {/* White background section with Hero Header */}
+      <HeroHeader />
 
       {/* Gray background section */}
-      <div className="bg-muted/50 pb-12">
-        <div className="mx-auto max-w-7xl px-4 pt-6 lg:px-6">
+      <div className="bg-muted/50 flex-1">
+        <Container>
           <TokenDataTable data={tokens} />
-        </div>
+        </Container>
       </div>
-    </main>
+
+      <NewsletterSignup />
+    </PageWrapper>
   )
 }
