@@ -20,7 +20,7 @@ import { getFrameworkUrl } from "@/lib/framework"
 import type { Metric } from "@/lib/metrics-data"
 import { type CriteriaStatus, mapStatus } from "./token-detail"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
-import {TitlePopover} from "./ui/title-popover.tsx";
+import { TitlePopover } from "./ui/title-popover.tsx"
 
 interface MarkdownComponentProps {
   children?: React.ReactNode
@@ -56,7 +56,11 @@ export default function MetricCard({ metric }: { metric: Metric }) {
       {/* Header */}
       <div className="p-4 pb-0">
         <div className="flex items-center gap-3">
-          <TitlePopover title={metric.name} description={metric.about}  learnMoreLink={getFrameworkUrl(metric.id)}/>
+          <TitlePopover
+            description={metric.about}
+            learnMoreLink={getFrameworkUrl(metric.id)}
+            title={metric.name}
+          />
           <h3 className="font-semibold">{metric.name}</h3>
           <HoverCard>
             <HoverCardTrigger
