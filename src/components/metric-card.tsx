@@ -73,6 +73,9 @@ export default function MetricCard({ metric }: { metric: Metric }) {
             ))}
           </span>
         </div>
+        <p className="pt-1.5 text-base leading-6 tracking-normal text-muted-foreground">
+          {metric.summary}
+        </p>
       </div>
 
       {/* Criteria list */}

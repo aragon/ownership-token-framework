@@ -19,6 +19,7 @@ export interface Metric {
   id: string
   name: string
   about: string
+  summary: string
   tags?: string[]
   criteria: Criteria[]
 }

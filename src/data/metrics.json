@@ -69,8 +69,10 @@
     },
     {
       "id": "token-ctrl",
-      "name": "Metric 1: Token Control (On-chain)",
+      "name": "Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "This is a summary about the this metric related LDO. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac consequat mauris, id malesuada dui. Fusce congue ex eu pretium scelerisque. Aliquam tincidunt placerat nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sit amet neque consectetur, sagittis dolor auctor, semper ipsum. ",
+      "tags": ["Metric 1"],
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
