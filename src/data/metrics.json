@@ -243,12 +243,16 @@
           "id": "offchain__brand",
           "name": "Brand",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "⚠️",
+          "status": "✅",
           "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
           "evidence": [
             {
               "name": "UK IPO Trademark Journal",
               "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html"
+            },
+            {
+              "name": "Lido Logo",
+              "url": "https://euipo.europa.eu/eSearch/#details/trademarks/019182074"
             }
           ]
         },
@@ -257,11 +261,19 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "✅",
-          "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
             {
               "name": "Lido Labs BORG Foundation",
-              "url": "https://research.lido.fi/t/establishment-of-lido-labs-borg-foundation-as-a-lido-dao-adjacent-foundation/9344"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6"
+            },
+            {
+              "name": "Lido Ecosystem BORG Foundation",
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15"
+            },
+            {
+              "name": "Lido Alliance BORG Foundation",
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c"
             }
           ]
         },
@@ -270,11 +282,19 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "✅",
-          "notes": "Lido Labs BORG Foundation is a memberless DAO-adjacent foundation company under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companiesy under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
             {
               "name": "Lido Labs BORG Foundation",
-              "url": "https://research.lido.fi/t/establishment-of-lido-labs-borg-foundation-as-a-lido-dao-adjacent-foundation/9344"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6"
+            },
+            {
+              "name": "Lido Ecosystem BORG Foundation",
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15"
+            },
+            {
+              "name": "Lido Alliance BORG Foundation",
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c"
             }
           ]
         }
