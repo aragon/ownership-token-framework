@@ -26,9 +26,9 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
     <a
       className={cn(
         "inline-flex items-center gap-1 text-sm font-normal leading-5",
-        "text-[#0588f0] underline decoration-solid",
-        "hover:text-[#0d74ce]",
-        "active:text-[#113264]",
+        "text-chart-3 underline decoration-solid",
+        "hover:text-chart-4",
+        "active:text-chart-5",
         "transition-colors duration-200",
         className
       )}
