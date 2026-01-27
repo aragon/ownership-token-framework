@@ -19,6 +19,7 @@ import {
 import { getFrameworkUrl } from "@/lib/framework"
 import type { Metric } from "@/lib/metrics-data"
 import { type CriteriaStatus, mapStatus } from "./token-detail"
+import { Badge } from "./ui/badge.tsx"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { TitlePopover } from "./ui/title-popover.tsx"
 
@@ -54,41 +55,23 @@ export default function MetricCard({ metric }: { metric: Metric }) {
   return (
     <div className="rounded-lg border bg-card gap-y-4 flex flex-col">
       {/* Header */}
-      <div className="p-4 pb-0">
-        <div className="flex items-center gap-3">
+      <div className="p-6 pb-0">
+        <div className="flex items-center justify-between gap-3">
           <TitlePopover
             description={metric.about}
             learnMoreLink={getFrameworkUrl(metric.id)}
             title={metric.name}
           />
-          <h3 className="font-semibold">{metric.name}</h3>
-          <HoverCard>
-            <HoverCardTrigger
-              render={
-                <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal cursor-help" />
-              }
-            >
-              About this metric
-            </HoverCardTrigger>
-            <HoverCardContent align="start" className="w-80 p-4">
-              <div className="space-y-3">
-                <div className="space-y-2">
-                  <h4 className="font-semibold">{metric.name}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {metric.about}
-                  </p>
-                </div>
-                <a
-                  className="inline-flex items-center gap-1 text-sm text-chart-4 hover:text-chart-4/80 transition-colors"
-                  href={getFrameworkUrl(metric.id)}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Learn more about this metric →
-                </a>
-              </div>
-            </HoverCardContent>
-          </HoverCard>
+          <span className="flex gap-1 pr-8">
+            {metric.tags?.map((tag) => (
+              <Badge
+                key={tag}
+                variant={metric.id === "gov-fdn" ? "outline" : "secondary"}
+              >
+                {tag}
+              </Badge>
+            ))}
+          </span>
         </div>
       </div>
 
