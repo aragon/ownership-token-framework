@@ -13,7 +13,6 @@ import { cn } from "../lib/utils.ts"
 import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
 import { type CriteriaStatus, mapStatus } from "./token-detail"
 import { Badge } from "./ui/badge.tsx"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { TitlePopover } from "./ui/title-popover.tsx"
 
 interface MarkdownComponentProps {
@@ -121,23 +120,6 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                       })}
                     </div>
                   ))}
-                <HoverCard>
-                  <HoverCardTrigger
-                    render={
-                      <div className="inline-block text-sm text-chart-4 underline decoration-dotted hover:text-chart-4/80 transition-colors font-normal" />
-                    }
-                  >
-                    About this criteria
-                  </HoverCardTrigger>
-                  <HoverCardContent align="start" className="w-80 p-4">
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">{criteria.name}</h4>
-                      <p className="text-sm text-muted-foreground">
-                        {criteria.about}
-                      </p>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
               </div>
             </AccordionContent>
           </AccordionItem>

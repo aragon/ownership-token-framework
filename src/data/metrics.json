@@ -93,12 +93,12 @@
                 {
                   "name": "TokenManager (Aragon App V1 proxy)",
                   "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
-                  "type": "explorer"
+                  "type": "github"
                 },
                 {
                   "name": "Kernel",
                   "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
-                  "type": "explorer"
+                  "type": "docs"
                 }
               ]
             }

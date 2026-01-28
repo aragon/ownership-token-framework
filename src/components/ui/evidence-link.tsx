@@ -1,6 +1,32 @@
-import { ExternalLinkIcon, FileTextIcon, GithubIcon } from "lucide-react"
+import { FileTextIcon, GithubIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { cn } from "@/lib/utils"
+
+const ExplorerIcon = () => (
+  <svg
+    aria-hidden="true"
+    className="size-4 shrink-0"
+    fill="none"
+    viewBox="0 0 16 16"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clipPath="url(#clip0_6419_493)">
+      <path
+        d="M3.3548 7.59875C3.35481 7.5104 3.37228 7.42293 3.40619 7.34134C3.4401 7.25977 3.4898 7.1857 3.55242 7.12338C3.61505 7.06106 3.68935 7.01172 3.7711 6.9782C3.85284 6.94467 3.9404 6.92763 4.02875 6.92805L5.14615 6.93169C5.32429 6.93169 5.49515 7.00247 5.62112 7.12844C5.74711 7.25441 5.81789 7.42527 5.81789 7.60343V11.8285C5.94367 11.7911 6.10524 11.7513 6.28202 11.7097C6.40481 11.6809 6.51425 11.6114 6.59259 11.5125C6.67091 11.4136 6.71352 11.2912 6.7135 11.1651V5.92408C6.7135 5.74591 6.78426 5.57504 6.91023 5.44904C7.0362 5.32304 7.20706 5.25225 7.38524 5.25221H8.50484C8.683 5.25225 8.85387 5.32304 8.97984 5.44904C9.10581 5.57504 9.17658 5.74591 9.17658 5.92408V10.7882C9.17658 10.7882 9.45691 10.6748 9.72995 10.5595C9.83138 10.5166 9.91793 10.4448 9.97882 10.3531C10.0397 10.2613 10.0722 10.1536 10.0723 10.0435V4.24473C10.0723 4.0666 10.1431 3.89575 10.269 3.76978C10.395 3.64381 10.5658 3.57303 10.7439 3.57299H11.8635C12.0417 3.57299 12.2126 3.64376 12.3385 3.76974C12.4645 3.89571 12.5353 4.06657 12.5353 4.24473V9.01989C13.506 8.31641 14.4896 7.47036 15.2702 6.45299C15.3835 6.30532 15.4585 6.13191 15.4884 5.94825C15.5183 5.76459 15.5023 5.57636 15.4418 5.40038C15.0805 4.36074 14.5061 3.40797 13.7554 2.60306C13.0047 1.79815 12.0943 1.15881 11.0823 0.725959C10.0704 0.293111 8.97921 0.0762831 7.87865 0.0893534C6.77808 0.102424 5.69237 0.345104 4.69099 0.801862C3.6896 1.25862 2.79459 1.9194 2.06323 2.74192C1.33188 3.56442 0.780282 4.53056 0.443748 5.5785C0.107214 6.62642 -0.00684859 7.73306 0.108859 8.8276C0.224566 9.92214 0.567496 10.9805 1.1157 11.9349C1.2112 12.0995 1.3517 12.2335 1.52069 12.321C1.68968 12.4086 1.88014 12.4461 2.06972 12.4292C2.2815 12.4106 2.54517 12.3842 2.85867 12.3474C2.99513 12.3319 3.12113 12.2667 3.21264 12.1643C3.30417 12.0619 3.35481 11.9294 3.35493 11.7921L3.3548 7.59875Z"
+        fill="currentColor"
+      />
+      <path
+        d="M3.33035 14.3752C4.51048 15.2338 5.90515 15.7491 7.36002 15.8643C8.8149 15.9793 10.2733 15.6897 11.5737 15.0273C12.8742 14.3649 13.966 13.3558 14.7286 12.1114C15.491 10.867 15.8944 9.43591 15.894 7.97648C15.894 7.79437 15.8855 7.61421 15.8734 7.43509C12.9831 11.7457 7.64658 13.761 3.3306 14.3746"
+        fill="currentColor"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_6419_493">
+        <rect fill="white" height="16" width="16" />
+      </clipPath>
+    </defs>
+  </svg>
+)
 
 export type EvidenceLinkType = "generic" | "github" | "docs" | "explorer"
 
@@ -14,11 +40,11 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
   const renderIcon = () => {
     switch (type) {
       case "github":
-        return <GithubIcon className="size-[10.667px] shrink-0" />
+        return <GithubIcon className="size-4 shrink-0" />
       case "docs":
-        return <FileTextIcon className="size-[10.667px] shrink-0" />
+        return <FileTextIcon className="size-4 shrink-0" />
       case "explorer":
-        return <ExternalLinkIcon className="size-4 shrink-0" />
+        return <ExplorerIcon />
       default:
         return null
     }
@@ -29,8 +55,8 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
       className={cn(
         "inline-flex items-center gap-1 text-base font-normal leading-6 tracking-normal",
         "text-chart-3 underline decoration-solid",
-        "hover:text-chart-4",
-        "active:text-chart-5",
+        "hover:text-chart-4!",
+        "active:text-chart-5!",
         "transition-colors duration-200",
         className
       )}
