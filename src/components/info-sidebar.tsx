@@ -2,13 +2,13 @@ import {
   IconBrandTwitter,
   IconCheck,
   IconCopy,
-  IconCurrencyEthereum,
   IconLink,
 } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import { copyToClipboard, truncateAddress } from "@/lib/utils"
 import type { TokenInfo } from "./token-detail"
 import { Button } from "./ui/button"
+import { ExplorerIcon } from "./ui/explore-icon.tsx"
 
 export default function InfoSidebar({ token }: { token: TokenInfo }) {
   const [hasCopied, setHasCopied] = useState(false)
@@ -22,13 +22,17 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
   }, [hasCopied])
 
   return (
-    <aside className="rounded-lg border bg-card p-4">
-      <h3 className="font-semibold">Info</h3>
-      {/* <p className="mt-2 text-sm text-muted-foreground">
-        {token.infoDescription}
-      </p> */}
+    <aside className="rounded-lg border bg-card p-6 flex flex-col gap-4">
+      <div className="flex flex-col gap-1.5">
+        <h3 className="text-lg font-semibold leading-7 tracking-normal">
+          Info
+        </h3>
+        <p className="text-base leading-6 tracking-normal text-muted-foreground">
+          {token.infoDescription}
+        </p>
+      </div>
 
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-x-3 gap-y-2">
         <Button
           className="gap-1.5 cursor-pointer"
           onClick={() => {
@@ -39,7 +43,11 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
           variant="outline"
         >
           <span className="sr-only">Copy</span>
-          {hasCopied ? <IconCheck /> : <IconCopy />}
+          {hasCopied ? (
+            <IconCheck className="size-4" />
+          ) : (
+            <IconCopy className="size-4" />
+          )}
           {truncateAddress(token.address)}
         </Button>
         {token.links.scan && (
@@ -52,7 +60,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <IconCurrencyEthereum />
+                <ExplorerIcon />
                 Explorer
               </a>
             }
@@ -60,9 +68,6 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
             variant="outline"
           />
         )}
-      </div>
-
-      <div className="mt-2 flex flex-wrap gap-2">
         {token.links.website && (
           <Button
             className="gap-1.5"
@@ -74,7 +79,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <IconLink className="size-3.5" />
+                <IconLink className="size-4" />
                 Website
               </a>
             }
@@ -92,7 +97,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <IconBrandTwitter />
+                <IconBrandTwitter className="size-4" />
                 Twitter
               </a>
             }

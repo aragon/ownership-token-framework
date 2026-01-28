@@ -62,11 +62,6 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
           >
             <PreviewCardPrimitive.Popup className="data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-80 origin-(--transform-origin) rounded-md border border-border bg-popover p-4 drop-shadow-md shadow-md outline-hidden duration-100">
               <div className="flex w-full flex-col items-start gap-0">
-                <div className="flex w-full items-center pb-1">
-                  <p className="font-sans text-base font-medium leading-6 text-foreground">
-                    {title}
-                  </p>
-                </div>
                 <div className="flex w-full items-center justify-center">
                   <p className="min-h-px min-w-px flex-1 font-sans text-sm font-normal leading-5 text-muted-foreground">
                     {description}

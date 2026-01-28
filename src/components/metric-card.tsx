@@ -48,7 +48,7 @@ const summaryTextStyles =
 
 export default function MetricCard({ metric }: { metric: Metric }) {
   return (
-    <div className="rounded-lg border bg-card gap-y-4 flex flex-col">
+    <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-4">
       {/* Header */}
       <div className="p-6 pb-0">
         <div className="flex items-center justify-between gap-3">
@@ -94,7 +94,9 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                 {match(criteria.notes)
                   .with(P.string, (notes) => (
                     // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                    <div className={cn(summaryTextStyles, "prose pr-8 max-w-none")}>
+                    <div
+                      className={cn(summaryTextStyles, "prose pr-8 max-w-none")}
+                    >
                       <ReactMarkdown components={markdownComponents}>
                         {notes}
                       </ReactMarkdown>

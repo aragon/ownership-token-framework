@@ -5,7 +5,7 @@
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
       "summary": "This is a summary about \"Governance Foundation\" reference, related to the LDO token...",
-      "tags": ["reference"],
+      "tags": ["Reference"],
       "criteria": [
         {
           "id": "gov-fdn__workflow",
