@@ -4,8 +4,6 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
-      "summary": "This is a summary about \"Governance Foundation\" reference, related to the LDO token...",
-      "tags": ["Reference"],
       "criteria": [
         {
           "id": "gov-fdn__workflow",
@@ -69,10 +67,8 @@
     },
     {
       "id": "token-ctrl",
-      "name": "Token Control (On-chain)",
+      "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
-      "summary": "This is a summary about the this metric related LDO. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac consequat mauris, id malesuada dui. Fusce congue ex eu pretium scelerisque. Aliquam tincidunt placerat nisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sit amet neque consectetur, sagittis dolor auctor, semper ipsum. ",
-      "tags": ["Metric 1"],
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
@@ -82,25 +78,16 @@
           "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token’s doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token’s behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by `APP_MANAGER_ROLE`, which is assigned to the Agent contract.",
           "evidence": [
             {
-              "name": "Evidence title",
-              "summary": "Evidence summary",
-              "urls": [
-                {
-                  "name": "LDO Token",
-                  "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "TokenManager (Aragon App V1 proxy)",
-                  "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
-                  "type": "github"
-                },
-                {
-                  "name": "Kernel",
-                  "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
-                  "type": "docs"
-                }
-              ]
+              "name": "LDO Token",
+              "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code"
+            },
+            {
+              "name": "TokenManager (Aragon App V1 proxy)",
+              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249"
+            },
+            {
+              "name": "Kernel",
+              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc"
             }
           ]
         },
@@ -1367,8 +1354,7 @@
             {
               "name": "Stewards (addresses)",
               "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability"
-            },
-            {
+            },            {
               "name": "Protocol Emergency Guardian",
               "url": "https://aave.com/docs/ecosystem/governance#community-guardians-protocol-emergency-guardian"
             },
