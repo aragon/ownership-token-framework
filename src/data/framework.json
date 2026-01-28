@@ -1,111 +1,125 @@
 [
   {
-    "id": "gov-fdn",
-    "name": "Governance Foundation",
-    "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+    "id": "verifiability",
+    "name": "Metric 1: Verifiability",
+    "about": "Assesses whether system claims, code, and legal relationships can be independently verified without reliance on insider assertions.",
     "criteria": [
       {
-        "id": "gov-fdn__workflow",
-        "name": "On-chain Workflow Control",
-        "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs)."
+        "id": "verifiability__token-source",
+        "name": "Token Contract Source Verification",
+        "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode."
       },
       {
-        "id": "gov-fdn__access-control",
+        "id": "verifiability__protocol-source",
+        "name": "Protocol Component Source Verification",
+        "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments."
+      }
+    ]
+  },
+  {
+    "id": "prot-ctrl-plane",
+    "name": "Metric 2: Protocol Control Plane",
+    "about": "Assesses whether the protocol operates autonomously under tokenholder-controlled, rule-based governance, without dependence on discretionary actors.",
+    "criteria": [
+      {
+        "id": "prot-ctrl-plane__governance-workflow",
+        "name": "On-chain Governance Workflow",
+        "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions."
+      },
+      {
+        "id": "prot-ctrl-plane__role-accountability",
         "name": "Role Accountability",
-        "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?"
+        "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders."
       },
       {
-        "id": "gov-fdn__concentration",
-        "name": "Governance Concentration",
-        "about": "does any one group control a majority share of the voting supply?"
+        "id": "prot-ctrl-plane__token-upgrade",
+        "name": "Token Upgrade Authority",
+        "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance."
+      },
+      {
+        "id": "prot-ctrl-plane__protocol-upgrade",
+        "name": "Protocol Upgrade Authority",
+        "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders."
+      },
+      {
+        "id": "prot-ctrl-plane__licensing",
+        "name": "Licensing Terms",
+        "about": "Assesses whether protocol software, IP, and licensing rights are transparently owned or controlled by tokenholder-governed entities.",
+        "offchain": true
       }
     ]
   },
   {
-    "id": "token-ctrl",
-    "name": "Metric 1: Token Control (On-chain)",
-    "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+    "id": "token-dist",
+    "name": "Metric 3: Token Distribution",
+    "about": "Evaluates whether voting power and control are meaningfully distributed rather than concentrated.",
     "criteria": [
       {
-        "id": "token-ctrl__upgrade",
-        "name": "Upgrade Sovereignty",
-        "about": "Do holders control the upgrade logic via governance, or is the contract immutable?"
-      },
-      {
-        "id": "token-ctrl__supply",
-        "name": "Supply Sovereignty",
-        "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles)."
-      },
-      {
-        "id": "token-ctrl__censorship",
-        "name": "Censorship Immunity",
-        "about": "Are there no \"Guardian\" or \"Admin\" roles capable of freezing, blacklisting, or seizing tokens?"
+        "id": "token-dist__concentration",
+        "name": "Ownership Concentration",
+        "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply."
       }
     ]
   },
   {
-    "id": "prot-ctrl",
-    "name": "Metric 2: Protocol Control (On-chain)",
-    "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
+    "id": "cred-neutral",
+    "name": "Metric 4: Credible Neutrality",
+    "about": "Evaluates whether token usage and protocol participation are free from discretionary censorship or privileged intervention.",
     "criteria": [
       {
-        "id": "prot-ctrl__upgrade",
-        "name": "Upgrade Sovereignty",
-        "about": "Do holders control the implementation logic of the specific \"Engine\" or product?"
+        "id": "cred-neutral__censorship",
+        "name": "Token Censorship",
+        "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers."
       },
       {
-        "id": "prot-ctrl__privileged",
-        "name": "Gated Access Control",
-        "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?"
+        "id": "cred-neutral__privileged",
+        "name": "Privileged Access Gating",
+        "about": "Assesses whether economically meaningful actions or parameters are gated by tokenholder governance rather than discretionary actors."
       }
     ]
   },
   {
     "id": "val-accrual",
-    "name": "Metric 3: Value Accrual & Control (On-chain)",
-    "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
+    "name": "Metric 5: Value Accrual & Economic Independence",
+    "about": "Evaluates whether tokenholder economic claims are programmatic, enforceable, and governance-controlled.",
     "criteria": [
       {
-        "id": "val-accrual__defined",
-        "name": "Accrual Defined",
-        "about": "Is a mechanism (even if latent/inactive) defined in the codebase or legal IP?"
-      },
-      {
         "id": "val-accrual__active",
-        "name": "Accrual Active & Owned",
-        "about": "Are value flows currently active and governed by holders (non-discretionary)?"
+        "name": "Accrual Active",
+        "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed."
       },
       {
         "id": "val-accrual__treasury",
         "name": "Treasury Ownership",
-        "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?"
+        "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance."
       },
       {
         "id": "val-accrual__mechanism",
         "name": "Accrual Mechanism Control",
-        "about": "Can holders modify accrual parameters (e.g., changing fee splits or rates)?"
-      }
-    ]
-  },
-  {
-    "id": "offchain",
-    "name": "Metric 4: IP & Distribution (Off-chain)",
-    "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-    "criteria": [
+        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing."
+      },
       {
-        "id": "offchain__brand",
+        "id": "val-accrual__supply",
+        "name": "Supply Control",
+        "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes."
+      },
+      {
+        "id": "val-accrual__brand",
         "name": "Brand",
-        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?"
+        "about": "Assesses ownership and control of trademarks and brand assets relevant to the protocol.",
+        "offchain": true
       },
       {
-        "id": "offchain__distribution",
-        "name": "Distribution",
-        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?"
+        "id": "val-accrual__ip-dist",
+        "name": "IP/Distribution Control",
+        "about": "Does any offchain entity control IP or key distribution channels in ways that can redirect economic activity away from tokenholder-aligned routing?",
+        "offchain": true
       },
       {
-        "id": "offchain__licensing",
-        "name": "Licensing",
-        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?"
+        "id": "val-accrual__interface",
+        "name": "Interface Value Capture",
+        "about": "Can a dominant interface collect fees or steer routing in ways that bypass tokenholder-controlled paths?",
+        "offchain": true
       }
     ]
   }
