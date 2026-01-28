@@ -1,9 +1,11 @@
 import metricsData from "@/data/metrics.json"
 import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
+import type { EvidenceLinkType } from "../components/ui/evidence-link.tsx"
 
 interface EvidenceUrl {
   name: string
   url: string
+  type?: EvidenceLinkType
 }
 
 interface Evidence {

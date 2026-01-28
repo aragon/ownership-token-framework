@@ -2,8 +2,10 @@ import { ExternalLinkIcon, FileTextIcon, GithubIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { cn } from "@/lib/utils"
 
+export type EvidenceLinkType = "generic" | "github" | "docs" | "explorer"
+
 interface IEvidenceLinkProps extends ComponentProps<"a"> {
-  type?: "generic" | "github" | "docs" | "explorer"
+  type?: EvidenceLinkType
 }
 
 export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
