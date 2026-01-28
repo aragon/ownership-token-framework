@@ -198,7 +198,7 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
             {/* Right column - Info sidebar */}
             <div>
-              <div className="sticky top-6 flex flex-col gap-10">
+              <div className="sticky top-6 flex flex-col gap-8">
                 <InfoSidebar token={token} />
                 <div className="flex items-center gap-2">
                   <Switch
