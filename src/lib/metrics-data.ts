@@ -1,9 +1,15 @@
 import metricsData from "@/data/metrics.json"
 import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
 
-interface Evidence {
+interface EvidenceUrl {
   name: string
   url: string
+}
+
+interface Evidence {
+  name?: string
+  summary?: string
+  urls: EvidenceUrl[]
 }
 
 interface Criteria {
@@ -12,7 +18,7 @@ interface Criteria {
   about: string
   status: string
   notes: string
-  evidence: Evidence[]
+  evidence: EvidenceUrl[] | Evidence[]
 }
 
 export interface Metric {
