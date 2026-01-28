@@ -10,9 +10,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
 import { formatUnixTimestamp } from "@/lib/utils"
@@ -134,8 +133,11 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
   const [openCriteria, setOpenCriteria] = useState<string[]>([])
   const allOpen = openCriteria.length === allCriteriaIds.length
 
-  const handleToggleAll = (checked: boolean) => {
-    setOpenCriteria(checked ? allCriteriaIds : [])
+  const handleToggleAll = () => {
+    // If all closed → Expand all criterias
+    // If all open → Close all criterias
+    // If some open → Expand all criterias
+    setOpenCriteria(allOpen ? [] : allCriteriaIds)
   }
 
   if (!token) {
@@ -198,18 +200,15 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
             {/* Right column - Info sidebar */}
             <div>
-              <div className="sticky top-6 flex flex-col gap-8">
+              <div className="sticky top-6 flex flex-col gap-6">
                 <InfoSidebar token={token} />
-                <div className="flex items-center gap-2">
-                  <Switch
-                    checked={allOpen}
-                    id="open-all-criteria"
-                    onCheckedChange={handleToggleAll}
-                  />
-                  <Label className="cursor-pointer" htmlFor="open-all-criteria">
-                    {allOpen ? "Close all criterias" : "Open all criterias"}
-                  </Label>
-                </div>
+                <Button
+                  className="w-full"
+                  onClick={handleToggleAll}
+                  variant="outline"
+                >
+                  {allOpen ? "Close all criteria" : "Expand all criteria"}
+                </Button>
               </div>
             </div>
           </div>
