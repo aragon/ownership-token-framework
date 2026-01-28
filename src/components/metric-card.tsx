@@ -68,7 +68,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
             ))}
           </span>
         </div>
-        <p className={cn(summaryTextStyles, "pt-1.5")}>{metric.summary}</p>
+        <p className={cn(summaryTextStyles, "pt-1.5 pr-8")}>{metric.summary}</p>
       </div>
 
       {/* Criteria list */}
@@ -94,7 +94,7 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                 {match(criteria.notes)
                   .with(P.string, (notes) => (
                     // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                    <div className={cn(summaryTextStyles, "prose")}>
+                    <div className={cn(summaryTextStyles, "prose pr-8 max-w-none")}>
                       <ReactMarkdown components={markdownComponents}>
                         {notes}
                       </ReactMarkdown>
