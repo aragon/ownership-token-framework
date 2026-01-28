@@ -1,5 +1,4 @@
 import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
-import { ArrowUpRightIcon } from "lucide-react"
 import ReactMarkdown from "react-markdown"
 import { match, P } from "ts-pattern"
 import {
@@ -8,17 +7,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemGroup,
-  ItemTitle,
-} from "@/components/ui/item"
 import { getFrameworkUrl } from "@/lib/framework"
-import type { Metric } from "@/lib/metrics-data"
+import type { Evidence, Metric } from "@/lib/metrics-data"
 import { cn } from "../lib/utils.ts"
+import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
 import { type CriteriaStatus, mapStatus } from "./token-detail"
 import { Badge } from "./ui/badge.tsx"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
@@ -51,6 +43,7 @@ const StatusIcon = ({ status }: { status: CriteriaStatus }) => {
 
   return <config.Icon className={`size-6 ${config.iconColor}`} />
 }
+
 const summaryTextStyles =
   "text-base leading-6 tracking-normal text-muted-foreground"
 
@@ -112,35 +105,21 @@ export default function MetricCard({ metric }: { metric: Metric }) {
                 {match(criteria.evidence)
                   .with(P.union(P.nullish, []), () => null)
                   .otherwise((evidenceList) => (
-                    <ItemGroup className="gap-y-2">
-                      {evidenceList.map((evidence, index) => (
-                        <Item
-                          key={`${criteria.id}-ev-${index}`}
-                          variant="muted"
-                        >
-                          <ItemContent>
-                            <ItemTitle>{evidence.name}</ItemTitle>
-                          </ItemContent>
-                          <ItemActions>
-                            <Button
-                              render={
-                                <a
-                                  className="no-underline!"
-                                  href={evidence.url}
-                                  rel="noopener noreferrer"
-                                  target="_blank"
-                                >
-                                  <ArrowUpRightIcon className="size-3.5" />
-                                  Open
-                                </a>
-                              }
-                              size="sm"
-                              variant="outline"
-                            />
-                          </ItemActions>
-                        </Item>
-                      ))}
-                    </ItemGroup>
+                    <div className="flex flex-col gap-4">
+                      {evidenceList.map((evidence, index) => {
+                        // Convert legacy format to full evidence format
+                        const fullEvidence: Evidence = isFullEvidence(evidence)
+                          ? evidence
+                          : { urls: [evidence] }
+
+                        return (
+                          <EvidenceCard
+                            evidence={fullEvidence}
+                            key={`${criteria.id}-ev-${index}`}
+                          />
+                        )
+                      })}
+                    </div>
                   ))}
                 <HoverCard>
                   <HoverCardTrigger

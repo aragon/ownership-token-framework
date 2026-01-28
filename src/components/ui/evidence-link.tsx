@@ -27,13 +27,15 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
   return (
     <a
       className={cn(
-        "inline-flex items-center gap-1 text-sm font-normal leading-5",
+        "inline-flex items-center gap-1 text-base font-normal leading-6 tracking-normal",
         "text-chart-3 underline decoration-solid",
         "hover:text-chart-4",
         "active:text-chart-5",
         "transition-colors duration-200",
         className
       )}
+      rel="noopener noreferrer"
+      target="_blank"
       {...otherProps}
     >
       {renderIcon()}
