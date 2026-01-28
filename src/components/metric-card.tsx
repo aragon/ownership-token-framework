@@ -46,7 +46,15 @@ const StatusIcon = ({ status }: { status: CriteriaStatus }) => {
 const summaryTextStyles =
   "text-base leading-6 tracking-normal text-muted-foreground"
 
-export default function MetricCard({ metric }: { metric: Metric }) {
+interface MetricCardProps {
+  metric: Metric
+  openCriteria?: string[]
+  onOpenCriteriaChange?: (value: string[]) => void
+}
+
+export default function MetricCard(props: MetricCardProps) {
+  const { metric, openCriteria, onOpenCriteriaChange } = props
+
   return (
     <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-4">
       {/* Header */}
@@ -72,7 +80,12 @@ export default function MetricCard({ metric }: { metric: Metric }) {
       </div>
 
       {/* Criteria list */}
-      <Accordion className="w-auto" multiple>
+      <Accordion
+        className="w-auto"
+        multiple
+        onValueChange={onOpenCriteriaChange}
+        value={openCriteria}
+      >
         {metric.criteria.map((criteria) => (
           <AccordionItem
             className="mx-6 p-0"
