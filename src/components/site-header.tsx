@@ -125,7 +125,7 @@ export function SiteHeader() {
             />
             <div className="flex items-center gap-1 text-base font-semibold leading-6">
               <span className="text-foreground">Ownership Token</span>
-              <span className="text-muted-foreground">Index</span>
+              <span className="text-muted-foreground">Framework</span>
             </div>
           </NavLink>
 

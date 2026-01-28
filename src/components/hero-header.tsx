@@ -7,20 +7,15 @@ export function HeroHeader() {
       <Container className="px-12 py-10">
         <div className="flex flex-col gap-4">
           <h1 className="text-4xl font-bold leading-10 tracking-tight text-accent-foreground">
-            Ownership Token Index
+            Verify and compare enforceable ownership
           </h1>
           <div className="max-w-[800px] space-y-7 text-lg leading-7 text-accent-foreground">
             <p>
-              A standardized, open-source disclosure framework for token
-              investors helps clarify the value a token provides in terms of
-              ownership. By utilizing this framework, you can identify the
-              metrics and criteria that matter most to you and your investments.
-              Improved analytics and clearer ownership lead to smarter
-              investment decisions.
+              The Ownership Token Framework maps enforceable claims across four metrics: token control, protocol control, value accrual, and offchain dependencies. Use it to evaluate tokens on fundamentals.
             </p>
             <p>
               Get an email when we publish a new token report or release major
-              updates to the Index.
+              updates to the Framework.
             </p>
           </div>
           <SignupInput messageAlignment="left" />
