@@ -4,6 +4,7 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+      "summary": "LDO holders control the protocol through two governance workflows: a full voting flow with DualGovernance and timelocks for protocol contracts, and Easy Track for routine operations. All critical roles flow through governance-controlled contracts.",
       "criteria": [
         {
           "id": "gov-fdn__workflow",
@@ -14,23 +15,28 @@
           "evidence": [
             {
               "name": "Voting",
-              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code"
+              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+              "type": "explorer"
             },
             {
               "name": "DualGovernance",
-              "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code"
+              "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code",
+              "type": "explorer"
             },
             {
               "name": "EmergencyProtectedTimeLock",
-              "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code"
+              "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code",
+              "type": "explorer"
             },
             {
               "name": "Executor",
-              "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code"
+              "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code",
+              "type": "explorer"
             },
             {
               "name": "Agent",
-              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "type": "explorer"
             },
             {
               "name": "Easy Track Interface",
@@ -38,7 +44,8 @@
             },
             {
               "name": "Easy Track Guide",
-              "url": "https://docs.lido.fi/guides/easy-track-guide"
+              "url": "https://docs.lido.fi/guides/easy-track-guide",
+              "type": "docs"
             }
           ]
         },
@@ -51,7 +58,8 @@
           "evidence": [
             {
               "name": "Agent",
-              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "type": "explorer"
             }
           ]
         },
@@ -69,25 +77,29 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "The LDO token is immutable but has a controller (TokenManager) that can mint/burn tokens and enable/disable transfers. TokenManager is upgradeable via Aragon proxy. All privileged functions require governance approval through the Voting contract.",
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the upgrade logic via governance, or is the contract immutable?",
           "status": "✅",
-          "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token’s doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token’s behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by `APP_MANAGER_ROLE`, which is assigned to the Agent contract.",
+          "notes": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). Additionally, the token's doTransfer function includes a hook that calls the controller contract, which is upgradeable.\n\nSince TokenManager is upgradeable via Aragon proxy, the token's behavior can be modified through controller upgrades, making LDO Token partially upgradeable in practice.\n\nUpgrading TokenManager requires calling setApp(tokenManager, …) on the Kernel, protected by `APP_MANAGER_ROLE`, which is assigned to the Agent contract.",
           "evidence": [
             {
               "name": "LDO Token",
-              "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code"
+              "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
+              "type": "explorer"
             },
             {
               "name": "TokenManager (Aragon App V1 proxy)",
-              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249"
+              "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
+              "type": "explorer"
             },
             {
               "name": "Kernel",
-              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc"
+              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+              "type": "explorer"
             }
           ]
         },
@@ -96,11 +108,12 @@
           "name": "Supply Sovereignty",
           "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles).",
           "status": "✅",
-          "notes": "The LDO token’s controller (TokenManager) can mint unlimited tokens. However, minting requires `MINT_ROLE` on TokenManager, which is held by the Voting contract.\n\nThis enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
+          "notes": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires `MINT_ROLE` on TokenManager, which is held by the Voting contract.\n\nThis enforces the minting path: Voting (LDO holders) → TokenManager → Token.generateTokens(). No supply cap exists, but all mints require tokenholder approval.",
           "evidence": [
             {
               "name": "MiniMeToken.generateTokens",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385"
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
+              "type": "github"
             }
           ]
         },
@@ -113,15 +126,18 @@
           "evidence": [
             {
               "name": "MiniMeToken.destroyTokens",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401"
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
+              "type": "github"
             },
             {
               "name": "MiniMeToken.enableTransfers",
-              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419"
+              "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419",
+              "type": "github"
             },
             {
               "name": "Aragon ACL",
-              "url": "https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb"
+              "url": "https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
+              "type": "explorer"
             }
           ]
         }
@@ -131,6 +147,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
+      "summary": "Protocol contracts can be upgraded by the Agent contract (LDO holders). Deposits into staking modules are executed by DepositSecurityModule (Guardians), but Guardians are accountable to LDO holders and cannot control economic parameters.",
       "criteria": [
         {
           "id": "prot-ctrl__upgrade",
@@ -141,15 +158,18 @@
           "evidence": [
             {
               "name": "StakingRouter",
-              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code"
+              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+              "type": "explorer"
             },
             {
               "name": "Agent",
-              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "type": "explorer"
             },
             {
               "name": "Kernel",
-              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc"
+              "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+              "type": "explorer"
             }
           ]
         },
@@ -162,23 +182,28 @@
           "evidence": [
             {
               "name": "DepositSecurityModule",
-              "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code"
+              "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code",
+              "type": "explorer"
             },
             {
               "name": "Lido.sol deposit logic",
-              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641"
+              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641",
+              "type": "github"
             },
             {
               "name": "Guardians",
-              "url": "https://docs.lido.fi/guides/deposit-security-manual#committee-membership"
+              "url": "https://docs.lido.fi/guides/deposit-security-manual#committee-membership",
+              "type": "docs"
             },
             {
               "name": "Guardians use automated software",
-              "url": "https://docs.lido.fi/guides/deposit-security-manual/#tldr"
+              "url": "https://docs.lido.fi/guides/deposit-security-manual/#tldr",
+              "type": "docs"
             },
             {
               "name": "Guardians cannot control stake allocation",
-              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L647"
+              "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L647",
+              "type": "github"
             }
           ]
         }
@@ -188,6 +213,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
+      "summary": "LDO holders currently have no direct value accrual mechanism but control the treasury (Agent contract) and staking fee parameters. Buyback mechanisms are under exploration.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -198,7 +224,8 @@
           "evidence": [
             {
               "name": "Liquid buybacks research",
-              "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894"
+              "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894",
+              "type": "docs"
             }
           ]
         },
@@ -207,15 +234,17 @@
           "name": "Treasury Ownership",
           "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
           "status": "✅",
-          "notes": "The Lido DAO Treasury is the Agent contract itself, controlled by LDO holders. Decisions on Treasury Management excluded from the Dual Governance scope and can't be challenged by stETH holders. The Treasury Management Committee is responsible for maintaining and executing policies related to treasury management in accordance with the [approved principles](https://research.lido.fi/t/proposal-to-approve-lido-dao-treasury-management-principles-and-authorize-the-formation-of-a-treasury-management-committee/4279). The committee proposes and enacts strategies and decisions via Governance 2. \n\n LDO holders, via Governance 1A, control treasury revenue by approving staking modules and setting and updating each module’s treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
+          "notes": "The Lido DAO Treasury is the Agent contract itself, controlled by LDO holders. Decisions on Treasury Management excluded from the Dual Governance scope and can't be challenged by stETH holders. The Treasury Management Committee is responsible for maintaining and executing policies related to treasury management in accordance with the [approved principles](https://research.lido.fi/t/proposal-to-approve-lido-dao-treasury-management-principles-and-authorize-the-formation-of-a-treasury-management-committee/4279). The committee proposes and enacts strategies and decisions via Governance 2. \n\n LDO holders, via Governance 1A, control treasury revenue by approving staking modules and setting and updating each module's treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
           "evidence": [
             {
               "name": "Agent",
-              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
+              "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+              "type": "explorer"
             },
             {
               "name": "StakingRouter",
-              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code"
+              "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+              "type": "explorer"
             }
           ]
         },
@@ -228,7 +257,8 @@
           "evidence": [
             {
               "name": "StakingRouter add/update",
-              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227"
+              "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+              "type": "github"
             }
           ]
         }
@@ -238,6 +268,7 @@
       "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "summary": "Lido trademarks are held by Lido Labs Foundation. Distribution and licensing are managed through DAO-adjacent BORG foundations with governance controls allowing LDO holders to appoint/remove directors.",
       "criteria": [
         {
           "id": "offchain__brand",
@@ -248,11 +279,13 @@
           "evidence": [
             {
               "name": "UK IPO Trademark Journal",
-              "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html"
+              "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html",
+              "type": "docs"
             },
             {
               "name": "Lido Logo",
-              "url": "https://euipo.europa.eu/eSearch/#details/trademarks/019182074"
+              "url": "https://euipo.europa.eu/eSearch/#details/trademarks/019182074",
+              "type": "docs"
             }
           ]
         },
@@ -265,15 +298,18 @@
           "evidence": [
             {
               "name": "Lido Labs BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6",
+              "type": "docs"
             },
             {
               "name": "Lido Ecosystem BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15",
+              "type": "docs"
             },
             {
               "name": "Lido Alliance BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c",
+              "type": "docs"
             }
           ]
         },
@@ -286,15 +322,18 @@
           "evidence": [
             {
               "name": "Lido Labs BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6",
+              "type": "docs"
             },
             {
               "name": "Lido Ecosystem BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15",
+              "type": "docs"
             },
             {
               "name": "Lido Alliance BORG Foundation",
-              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c"
+              "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c",
+              "type": "docs"
             }
           ]
         }
@@ -306,6 +345,7 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+      "summary": "Governance is enforced through Aragon v1's Voting Contract, with the Agent contract set as owner for all protocol-gated functions. veCRV holders control all operations including gauge additions and fee parameters.",
       "criteria": [
         {
           "id": "gov-fdn__workflow",
@@ -316,15 +356,18 @@
           "evidence": [
             {
               "name": "Aragon Voting Contract",
-              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356"
+              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356",
+              "type": "explorer"
             },
             {
               "name": "Agent Contract",
-              "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968"
+              "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968",
+              "type": "explorer"
             },
             {
               "name": "CRV Token: Admin is set to Agent",
-              "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#readContract"
+              "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#readContract",
+              "type": "explorer"
             }
           ]
         },
@@ -337,11 +380,13 @@
           "evidence": [
             {
               "name": "GaugeController: admin is set to Agent",
-              "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract"
+              "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract",
+              "type": "explorer"
             },
             {
               "name": "Curve Pool Factory: admin is set to OwnerProxy",
-              "url": "https://etherscan.io/address/0xB9fc157394Af804a3578134A6585C0dC9cc990d4#code"
+              "url": "https://etherscan.io/address/0xB9fc157394Af804a3578134A6585C0dC9cc990d4#code",
+              "type": "explorer"
             }
           ]
         },
@@ -359,6 +404,7 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "The CRV token is immutable with no proxy patterns. Inflation is released in yearly epochs with a 2^¼ reduction factor. The Admin (Agent) can only update token name and symbol, not transfer or freeze tokens.",
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
@@ -369,7 +415,8 @@
           "evidence": [
             {
               "name": "ERC20CRV.vy Source",
-              "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code"
+              "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code",
+              "type": "explorer"
             }
           ]
         },
@@ -378,19 +425,22 @@
           "name": "Supply Sovereignty",
           "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles).",
           "status": "✅",
-          "notes": "Curve’s token inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^¼.\n\nAny unminted supply from a year is permanently lost. Mint can only occur by Minter which decides how much to mint for an user depending on the veCRV balance and provided LP tokens in a gauge.",
+          "notes": "Curve's token inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^¼.\n\nAny unminted supply from a year is permanently lost. Mint can only occur by Minter which decides how much to mint for an user depending on the veCRV balance and provided LP tokens in a gauge.",
           "evidence": [
             {
               "name": "ERC20CRV.vy Yearly Epoch Logic",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L115C40-L115C59"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L115C40-L115C59",
+              "type": "github"
             },
             {
               "name": "ERC20CRV.vy Mint Access",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333",
+              "type": "github"
             },
             {
               "name": "Minter.vy Gauge Validation",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46",
+              "type": "github"
             }
           ]
         },
@@ -403,11 +453,13 @@
           "evidence": [
             {
               "name": "ERC20CRV.vy Standard Transfer",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L272"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L272",
+              "type": "github"
             },
             {
               "name": "ERC20CRV.vy Metadata Logic",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L365"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L365",
+              "type": "github"
             }
           ]
         }
@@ -417,6 +469,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
+      "summary": "Core protocol and pool contracts are immutable. Agent and Voting contracts can be upgraded only by veCRV holders through governance. veCRV holders can add or kill gauges.",
       "criteria": [
         {
           "id": "prot-ctrl__upgrade",
@@ -427,19 +480,23 @@
           "evidence": [
             {
               "name": "Agent",
-              "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code"
+              "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code",
+              "type": "explorer"
             },
             {
               "name": "Voting",
-              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code"
+              "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+              "type": "explorer"
             },
             {
               "name": "CRV Token (Admin: Agent)",
-              "url": "https://etherscan.io/address/0xd533a949740bb3306d119cc777fa900ba034cd52"
+              "url": "https://etherscan.io/address/0xd533a949740bb3306d119cc777fa900ba034cd52",
+              "type": "explorer"
             },
             {
               "name": "GaugeController (Admin: Agent)",
-              "url": "https://etherscan.io/address/0x2F50D438606C59853F044305d4073375218E06A1"
+              "url": "https://etherscan.io/address/0x2F50D438606C59853F044305d4073375218E06A1",
+              "type": "explorer"
             }
           ]
         },
@@ -452,7 +509,8 @@
           "evidence": [
             {
               "name": "Gauge Kill Implementation",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L731"
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L731",
+              "type": "github"
             }
           ]
         }
@@ -462,6 +520,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
+      "summary": "veCRV holders receive 50% of trading fees as crvUSD rewards, with the other 50% going to LPs. Gauge weights are determined programmatically by veCRV votes. There is no separate treasury; all revenue goes to token holders.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -471,16 +530,19 @@
           "notes": "**CRV Emissions Rewards:** Liquidity Providers deposit LP tokens into the Gauge Contract. Once the gauge receives CRV emissions, LPs can claim their proportional rewards based on their deposited LP token amount into the gauge. \n\n**2.5x Boost in CRV Emissions:** LPs can boost rewards up to 2.5x by locking CRV for veCRV. The user reward is based on a `working balance` and 2.5x reward is enforced by [TOKENLESS_PRODUCTION](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L206C59-L206C79) which is set to 40(i.e 40 * 2.5 = 100%) \n\n**Pool rewards in crvUSD:** Pools have two fees: fee (total swap fee) and admin_fee (percentage of fee taken for admin) which is applied when the [swap](https://github.com/curvefi/curve-contract/blob/574f44027d089de0eac765f5a74ea5ae96aba968/contracts/pools/3pool/StableSwap3Pool.vy#L472) occurs. [StableSwapProxy](https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347) calls [withdraw_admin_fees](https://github.com/curvefi/curve-contract/blob/574f44027d089de0eac765f5a74ea5ae96aba968/contracts/pools/3pool/StableSwap3Pool.vy#L809) on pools to collect admin portion of fees. \n\n Every coin inside StableSwapProxy has a burner contract attached. Later, anyone can call [burn](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/PoolProxy.vy#L223) which invokes the coin's attached burner contract to transfer fees from StableSwapProxy. One such burner is [FeeCollector](https://etherscan.io/address/0xa2bcd1a4efbd04b63cd03f5aff2561106ebcce00#code), where fees ultimately accumulate. FeeCollector uses CowSwapBurner to convert all tokens to crvUSD, and the crvUSD is sent to [FeeDistributor](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/FeeDistributor.vy#L298) where veCRV holders can claim their rewards. \n\n**Borrow rewards in crvUSD:** Borrowing Interest(paid in crvUSD) from controllers are sent to [FeeSplitter](https://github.com/curvefi/fee-splitter/blob/3b45a41356a929f137ecd96571c57e5bc3d5e797/contracts/FeeSplitter.vy). FeeCollector receives proportional crvUSD from FeeSplitter and sends to FeeDistributor for veCRV holders.",
           "evidence": [
             {
-              "name": "working_balance uses user's LP tokens and veCRV balance to decide reward:",
-              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L210"
+              "name": "working_balance uses user's LP tokens and veCRV balance to decide reward",
+              "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L210",
+              "type": "github"
             },
             {
               "name": "FeeDistributor 2",
-              "url": "https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914"
+              "url": "https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914",
+              "type": "explorer"
             },
             {
               "name": "FeeSplitter",
-              "url": "https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2"
+              "url": "https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2",
+              "type": "explorer"
             }
           ]
         },
@@ -493,7 +555,8 @@
           "evidence": [
             {
               "name": "Earning-fees",
-              "url": "https://resources.curve.finance/vecrv/overview#earning-fees"
+              "url": "https://resources.curve.finance/vecrv/overview#earning-fees",
+              "type": "docs"
             }
           ]
         },
@@ -506,11 +569,13 @@
           "evidence": [
             {
               "name": "DAI/USDC/USDT Pool: commit_new_fee",
-              "url": "https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7#code"
+              "url": "https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7#code",
+              "type": "explorer"
             },
             {
               "name": "StableSwapProxy: parameter_admin, ownership_admin, set_burner, burn",
-              "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code"
+              "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code",
+              "type": "explorer"
             }
           ]
         }
@@ -520,6 +585,7 @@
       "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "summary": "Swiss Stake AG (Switzerland) holds the CRV trademark and is identified as the contracting party for the Curve interface. Licensing status is TBD.",
       "criteria": [
         {
           "id": "offchain__brand",
@@ -530,7 +596,8 @@
           "evidence": [
             {
               "name": "Swiss Trademark Registry",
-              "url": "https://www.swissreg.ch/database-client/register/detail?lang=de&no=16098%2F2020&type=trademark"
+              "url": "https://www.swissreg.ch/database-client/register/detail?lang=de&no=16098%2F2020&type=trademark",
+              "type": "docs"
             }
           ]
         },
@@ -543,7 +610,8 @@
           "evidence": [
             {
               "name": "Curve Legal",
-              "url": "https://www.curve.finance/dex/ethereum/legal"
+              "url": "https://www.curve.finance/dex/ethereum/legal",
+              "type": "docs"
             }
           ]
         },
@@ -552,7 +620,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "TBD",
+          "notes": "Aragon has not yet confirmed the licensing status associated with CRV.",
           "evidence": []
         }
       ]
@@ -563,29 +631,24 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+      "summary": "Governance follows an on-chain voting process with Timelock execution. All critical roles flow through the Timelock controlled by UNI holders.",
       "criteria": [
         {
           "id": "gov-fdn__workflow",
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "Users create a proposal on the forum, which progresses to an off-chain Snapshot vote, then to an on-chain vote, followed by a time delay before execution.\n\nGovernance Flow: RFC → Snapshot Poll → GovernorBravoDelegator → Timelock",
+          "notes": "Proposals progress through on-chain voting followed by a time delay before execution.\n\nGovernance Flow: GovernorBravoDelegator → Timelock",
           "evidence": [
             {
-              "name": "RFC",
-              "url": "https://gov.uniswap.org/"
-            },
-            {
-              "name": "Snapshot Poll",
-              "url": "https://snapshot.box/#/s:uniswapgovernance.eth"
-            },
-            {
               "name": "GovernorBravoDelegator",
-              "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code"
+              "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code",
+              "type": "explorer"
             },
             {
               "name": "Timelock",
-              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code"
+              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
+              "type": "explorer"
             }
           ]
         },
@@ -598,19 +661,23 @@
           "evidence": [
             {
               "name": "Timelock",
-              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code"
+              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
+              "type": "explorer"
             },
             {
               "name": "V2Factory",
-              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#code"
+              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#code",
+              "type": "explorer"
             },
             {
               "name": "V3Factory",
-              "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984#code"
+              "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984#code",
+              "type": "explorer"
             },
             {
               "name": "V4PoolManager",
-              "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code"
+              "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code",
+              "type": "explorer"
             }
           ]
         },
@@ -628,6 +695,7 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "The UNI token is immutable with no proxy patterns. Minting is limited to 2% of total supply once per year, controlled by the Timelock. No blacklist, whitelist, or pause functions exist.",
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
@@ -638,11 +706,13 @@
           "evidence": [
             {
               "name": "Uni.sol Source",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
+              "type": "github"
             },
             {
               "name": "Etherscan",
-              "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code"
+              "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code",
+              "type": "explorer"
             }
           ]
         },
@@ -655,15 +725,18 @@
           "evidence": [
             {
               "name": "Mint once per year logic",
-              "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116"
+              "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116",
+              "type": "github"
             },
             {
               "name": "2% mint cap",
-              "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120"
+              "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120",
+              "type": "github"
             },
             {
               "name": "Timelock",
-              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code"
+              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
+              "type": "explorer"
             }
           ]
         },
@@ -676,7 +749,8 @@
           "evidence": [
             {
               "name": "Uni.sol",
-              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6"
+              "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
+              "type": "github"
             }
           ]
         }
@@ -686,6 +760,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value. We look for two things: which contracts are in scope for tokenholder control and which privileged roles sit outside tokenholder control. This requires understanding the access-control patterns used in each contract, including proxies and upgrade mechanisms.",
+      "summary": "All Uniswap Pair contracts and Timelock are non-upgradeable. GovernorBravoDelegator is upgradeable but admin is set to Timelock. No pause, freeze, or admin backdoor functions exist in core contracts.",
       "criteria": [
         {
           "id": "prot-ctrl__upgrade",
@@ -696,19 +771,23 @@
           "evidence": [
             {
               "name": "V2 Factory Create2",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31"
+              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31",
+              "type": "github"
             },
             {
               "name": "V3 Pool Protection",
-              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30"
+              "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30",
+              "type": "github"
             },
             {
               "name": "V4 PoolManager: Singleton",
-              "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93"
+              "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93",
+              "type": "github"
             },
             {
               "name": "GovernorBravoDelegator",
-              "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code"
+              "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code",
+              "type": "explorer"
             }
           ]
         },
@@ -726,6 +805,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control. Without it, ownership claims rely almost entirely on expectation rather than mechanism. Value can accrue indirectly through assets held by treasuries or contracts. Note that this is only accretive, strictly speaking, if tokenholders control those assets or the IP they fund.",
+      "summary": "Protocol fees across V2, V3, and V4 flow to governance-controlled destinations (TokenJar). Value accrual is via a burn mechanism where anyone can burn 4,000 UNI to claim accumulated fees. The treasury (~$1.4B) is controlled by token holders via Timelock.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -736,31 +816,38 @@
           "evidence": [
             {
               "name": "UniswapV2Pool: feeTo",
-              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#readContract"
+              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#readContract",
+              "type": "explorer"
             },
             {
               "name": "UniswapV2Pool: Fee Destination",
-              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90"
+              "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90",
+              "type": "github"
             },
             {
               "name": "V3FeeAdapter",
-              "url": "https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d#code"
+              "url": "https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d#code",
+              "type": "explorer"
             },
             {
               "name": "UniswapV3Pool: collectProtocol",
-              "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848"
+              "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848",
+              "type": "github"
             },
             {
               "name": "V4 PoolManager",
-              "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code"
+              "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code",
+              "type": "explorer"
             },
             {
               "name": "V4 PoolManager: CollectProtocolFees",
-              "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L48"
+              "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L48",
+              "type": "github"
             },
             {
               "name": "FirePit 4000 UNI Requirement",
-              "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721"
+              "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
+              "type": "explorer"
             }
           ]
         },
@@ -773,7 +860,8 @@
           "evidence": [
             {
               "name": "TreasuryVester",
-              "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135"
+              "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+              "type": "explorer"
             }
           ]
         },
@@ -786,23 +874,28 @@
           "evidence": [
             {
               "name": "Timelock",
-              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC"
+              "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+              "type": "explorer"
             },
             {
               "name": "UniswapV2Factory",
-              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
+              "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+              "type": "explorer"
             },
             {
               "name": "UniswapV3Factory",
-              "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984"
+              "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984",
+              "type": "explorer"
             },
             {
               "name": "UniswapV3Pool: setFeeProtocol",
-              "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L837"
+              "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L837",
+              "type": "github"
             },
             {
               "name": "PoolManager(V4): setProtocolFee",
-              "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L35"
+              "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L35",
+              "type": "github"
             }
           ]
         }
@@ -812,6 +905,7 @@
       "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "summary": "Uniswap Labs (Universal Navigation Inc.) holds trademark rights and controls the primary interface. DUNI (a Wyoming DUNA) was recently adopted as the legal structure for token holders, potentially enabling future licensing or transfer of brand assets.",
       "criteria": [
         {
           "id": "offchain__brand",
@@ -822,7 +916,8 @@
           "evidence": [
             {
               "name": "Uniswap Labs Trademark Guidelines",
-              "url": "https://support.uniswap.org/hc/en-us/articles/30934762216973-Uniswap-Labs-Trademark-Guidelines/"
+              "url": "https://support.uniswap.org/hc/en-us/articles/30934762216973-Uniswap-Labs-Trademark-Guidelines/",
+              "type": "docs"
             }
           ]
         },
@@ -835,7 +930,8 @@
           "evidence": [
             {
               "name": "Uniswap Labs Terms of Service",
-              "url": "https://support.uniswap.org/hc/en-us/articles/30935100859661-Uniswap-Labs-Terms-of-Service"
+              "url": "https://support.uniswap.org/hc/en-us/articles/30935100859661-Uniswap-Labs-Terms-of-Service",
+              "type": "docs"
             }
           ]
         },
@@ -844,7 +940,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "TBD",
+          "notes": "Aragon has not yet confirmed the licensing status associated with UNI.",
           "evidence": []
         }
       ]
@@ -855,6 +951,7 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+      "summary": "AERO holders lock tokens in VotingEscrow to receive veAERO (veNFTs). veAERO holders vote each epoch on gauge weights via the Voter contract. An EmergencyCouncil exists for crisis handling with limited powers.",
       "criteria": [
         {
           "id": "gov-fdn__workflow",
@@ -865,23 +962,28 @@
           "evidence": [
             {
               "name": "AERO Token",
-              "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code"
+              "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code",
+              "type": "explorer"
             },
             {
               "name": "VotingEscrow",
-              "url": "https://basescan.org/address/0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4#code"
+              "url": "https://basescan.org/address/0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4#code",
+              "type": "explorer"
             },
             {
               "name": "Voter",
-              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#code"
+              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#code",
+              "type": "explorer"
             },
             {
               "name": "Minter",
-              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code"
+              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+              "type": "explorer"
             },
             {
               "name": "EmergencyCouncil",
-              "url": "https://aerodrome.limited/pages/security.html"
+              "url": "https://aerodrome.limited/pages/security.html",
+              "type": "docs"
             }
           ]
         },
@@ -894,11 +996,13 @@
           "evidence": [
             {
               "name": "Voter: emergencyCouncil",
-              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#readContract"
+              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#readContract",
+              "type": "explorer"
             },
             {
               "name": "EmergencyCouncil",
-              "url": "https://basescan.org/address/0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D#code"
+              "url": "https://basescan.org/address/0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D#code",
+              "type": "explorer"
             }
           ]
         },
@@ -916,6 +1020,7 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "The AERO token and Minter contracts are immutable. Minting is programmatic and epoch-based with emissions that can be adjusted by governance in fixed ±0.01% weekly increments. No blacklist, pause, or seizure mechanisms exist.",
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
@@ -926,11 +1031,13 @@
           "evidence": [
             {
               "name": "AERO Token",
-              "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code"
+              "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code",
+              "type": "explorer"
             },
             {
               "name": "Minter",
-              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code"
+              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+              "type": "explorer"
             }
           ]
         },
@@ -943,23 +1050,28 @@
           "evidence": [
             {
               "name": "Minter",
-              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code"
+              "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+              "type": "explorer"
             },
             {
               "name": "Minter Emission Increase (Epochs 1–14)",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L182"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L182",
+              "type": "github"
             },
             {
               "name": "Minter Emission Decay",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L184"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L184",
+              "type": "github"
             },
             {
               "name": "Growth Emissions Formula",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L135"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L135",
+              "type": "github"
             },
             {
               "name": "Team Emission Rate",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L192"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L192",
+              "type": "github"
             }
           ]
         },
@@ -972,19 +1084,23 @@
           "evidence": [
             {
               "name": "Gnosis Safe(Team)",
-              "url": "https://basescan.org/address/0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a#code"
+              "url": "https://basescan.org/address/0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a#code",
+              "type": "explorer"
             },
             {
               "name": "Team Rate Change",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L129"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L129",
+              "type": "github"
             },
             {
-              "name": "Emission Rate Change By Governor set to different Gnosis Safe:",
-              "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075"
+              "name": "Emission Rate Change By Governor (Gnosis Safe)",
+              "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075",
+              "type": "explorer"
             },
             {
               "name": "Emission Rate Change",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L145"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L145",
+              "type": "github"
             }
           ]
         }
@@ -994,6 +1110,7 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value.",
+      "summary": "Core Aerodrome protocol contracts are non-upgradeable. Pool fees are controlled by a Gnosis Safe (feeManager) for both regular and SlipStream pools.",
       "criteria": [
         {
           "id": "prot-ctrl__upgrade",
@@ -1004,7 +1121,8 @@
           "evidence": [
             {
               "name": "Aerodrome Contract Addresses",
-              "url": "https://aerodrome.finance/security"
+              "url": "https://aerodrome.finance/security",
+              "type": "docs"
             }
           ]
         },
@@ -1017,19 +1135,23 @@
           "evidence": [
             {
               "name": "GnosisSafe",
-              "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075#code"
+              "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075#code",
+              "type": "explorer"
             },
             {
               "name": "PoolFactory: FeeManager",
-              "url": "https://basescan.org/address/0x420DD381b31aEf6683db6B902084cB0FFECe40Da#code"
+              "url": "https://basescan.org/address/0x420DD381b31aEf6683db6B902084cB0FFECe40Da#code",
+              "type": "explorer"
             },
             {
               "name": "SlipStream: CLFactory(uses SwapFeeModule for fees)",
-              "url": "https://basescan.org/address/0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A#code"
+              "url": "https://basescan.org/address/0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A#code",
+              "type": "explorer"
             },
             {
               "name": "SwapFeeModule: `setCustomFee` is allowed by CLFactory.swapFeeManager = GnosisSafe",
-              "url": "https://basescan.org/address/0xF4171B0953b52Fa55462E4d76ecA1845Db69af00#code"
+              "url": "https://basescan.org/address/0xF4171B0953b52Fa55462E4d76ecA1845Db69af00#code",
+              "type": "explorer"
             }
           ]
         }
@@ -1039,6 +1161,7 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control.",
+      "summary": "veAERO holders receive growth emissions and trading fees from staked LP positions. There is no protocol treasury; all fees are distributed to veAERO holders and LPs.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -1049,51 +1172,63 @@
           "evidence": [
             {
               "name": "Gauge Deposit Logic(see `earned` function as well)",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/gauges/Gauge.sol#L155"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/gauges/Gauge.sol#L155",
+              "type": "github"
             },
             {
               "name": "Growth Transfer to RewardDistributor",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L201"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L201",
+              "type": "github"
             },
             {
               "name": "RewardsDistributor Claim",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/RewardsDistributor.sol#L126"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/RewardsDistributor.sol#L126",
+              "type": "github"
             },
             {
               "name": "Non-Slipstream, for unstaked LPs: Swap Fee Accrued",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L378"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L378",
+              "type": "github"
             },
             {
               "name": "Non-Slipstream, for unstaked LPs: Swap Fee Claimed",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L143"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L143",
+              "type": "github"
             },
             {
               "name": "Non-Slipstream, for veAERO holders: Voter calling Gauge to claim fees",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Voter.sol#L492"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Voter.sol#L492",
+              "type": "github"
             },
             {
               "name": "Non-Slipstream, for veAERO holders: Swap Fee Claimed by Gauge on PoolFees",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/gauges/Gauge.sol#L82"
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/gauges/Gauge.sol#L82",
+              "type": "github"
             },
             {
               "name": "Slipstream: Fees Split",
-              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844"
+              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844",
+              "type": "github"
             },
             {
               "name": "Slipstream: Gauge Fees calculated separately",
-              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844C37-L844C46"
+              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844C37-L844C46",
+              "type": "github"
             },
             {
               "name": "Non Staked LP Fees collected",
-              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L483"
+              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L483",
+              "type": "github"
             },
             {
               "name": "Gauge Fees to feesVotingReward",
-              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/gauge/CLGauge.sol#L340"
+              "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/gauge/CLGauge.sol#L340",
+              "type": "github"
             },
             {
               "name": "veAERO voters claim fees",
-              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/rewards/Reward.sol#L225 "
+              "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/rewards/Reward.sol#L225 ",
+              "type": "github"
             }
           ]
         },
@@ -1114,15 +1249,18 @@
           "evidence": [
             {
               "name": "VotingEscrow",
-              "url": "https://basescan.org/address/0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4#code"
+              "url": "https://basescan.org/address/0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4#code",
+              "type": "explorer"
             },
             {
               "name": "Voter",
-              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#code"
+              "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#code",
+              "type": "explorer"
             },
             {
               "name": "Gauge",
-              "url": "https://basescan.org/address/0x58700106298036e6d74a3deb237b9adae17d2fae#code"
+              "url": "https://basescan.org/address/0x58700106298036e6d74a3deb237b9adae17d2fae#code",
+              "type": "explorer"
             }
           ]
         }
@@ -1132,6 +1270,7 @@
       "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "summary": "Perpetual Cyclist Services LLC (Delaware) holds the US AERODROME trademark. The Aerodrome Foundation is identified as the contracting party for the primary interface. Licensing status is TBD.",
       "criteria": [
         {
           "id": "offchain__brand",
@@ -1142,7 +1281,8 @@
           "evidence": [
             {
               "name": "USPTO Report",
-              "url": "https://uspto.report/TM/99083103"
+              "url": "https://uspto.report/TM/99083103",
+              "type": "docs"
             }
           ]
         },
@@ -1155,7 +1295,8 @@
           "evidence": [
             {
               "name": "Aerodrome Legal",
-              "url": "https://aero.drome.eth.link/legal"
+              "url": "https://aero.drome.eth.link/legal",
+              "type": "docs"
             }
           ]
         },
@@ -1164,7 +1305,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "TBD",
+          "notes": "Aragon has not yet confirmed the licensing status associated with AERO.",
           "evidence": []
         }
       ]
@@ -1175,25 +1316,19 @@
       "id": "gov-fdn",
       "name": "Governance Foundation",
       "about": "When reviewing any codebase, the first step is understanding the governance model, if it exists. This determines whether permissioned functions and elevated privileges are ultimately controlled by tokenholders.",
+      "summary": "Governance involves on-chain voting with Timelock execution. AAVE, stkAAVE, and aAAVE holders participate in on-chain voting. A Governance Emergency Guardian (5/9 multisig) exists to protect against governance takeover attacks.",
       "criteria": [
         {
           "id": "gov-fdn__workflow",
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "Governance involves a 3-step process: forum discussion → snapshot voting → onchain voting + execution using Timelock. Snapshot voting is for temperature check on relevance for onchain voting. Onchain voting is done by AAVE, stkAAVE and aAAVE holders.",
+          "notes": "Governance involves onchain voting and execution using Timelock. Onchain voting is done by AAVE, stkAAVE and aAAVE holders.",
           "evidence": [
             {
               "name": "Complete Governance Flow",
-              "url": "https://aave.com/docs/ecosystem/governance"
-            },
-            {
-              "name": "Governance Forum for discussion",
-              "url": "https://governance.aave.com/"
-            },
-            {
-              "name": "Aave Snapshot Space for voting on ARFCs and AIPs",
-              "url": "https://snapshot.org/#/aave.eth"
+              "url": "https://aave.com/docs/ecosystem/governance",
+              "type": "docs"
             }
           ]
         },
@@ -1206,11 +1341,13 @@
           "evidence": [
             {
               "name": "Onchain address",
-              "url": "https://etherscan.io/address/0xCe52ab41C40575B072A18C9700091Ccbe4A06710#readProxyContract"
+              "url": "https://etherscan.io/address/0xCe52ab41C40575B072A18C9700091Ccbe4A06710#readProxyContract",
+              "type": "explorer"
             },
             {
               "name": "Detailed Governance Permissions",
-              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#governance-v3-contracts"
+              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#governance-v3-contracts",
+              "type": "github"
             }
           ]
         },
@@ -1228,29 +1365,34 @@
       "id": "token-ctrl",
       "name": "Metric 1: Token Control (On-chain)",
       "about": "Token ownership and protocol ownership are separate questions and must be analysed independently. The core question here is straightforward: can a third party meaningfully interfere with ownership of the token?",
+      "summary": "The AAVE token is an upgradeable ERC-1967 proxy controlled by token holders through the ownership chain: AAVE → ProxyAdmin → Executor → PayloadsController. Fixed 16m supply with no mint function. No Guardian or blacklist capabilities.",
       "criteria": [
         {
           "id": "token-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the upgrade logic via governance, or is the contract immutable?",
           "status": "✅",
-          "notes": "Contract is a variant of the upgradeable ERC-1967 Transparent proxy, which is owned by ProxyAdmin, which is controlled by token holders. AAVE token’s ownership chain: AAVE (Proxy) → ProxyAdmin → Executor → PayloadsController → Token Holders",
+          "notes": "Contract is a variant of the upgradeable ERC-1967 Transparent proxy, which is owned by ProxyAdmin, which is controlled by token holders. AAVE token's ownership chain: AAVE (Proxy) → ProxyAdmin → Executor → PayloadsController → Token Holders",
           "evidence": [
             {
               "name": "AAVE (Proxy)",
-              "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract"
+              "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract",
+              "type": "explorer"
             },
             {
               "name": "ProxyAdmin",
-              "url": "https://etherscan.io/address/0x86c3FfEE349A7cFf7cA88C449717B1b133bfb517#code"
+              "url": "https://etherscan.io/address/0x86c3FfEE349A7cFf7cA88C449717B1b133bfb517#code",
+              "type": "explorer"
             },
             {
               "name": "Executor",
-              "url": "https://etherscan.io/address/0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957#code"
+              "url": "https://etherscan.io/address/0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957#code",
+              "type": "explorer"
             },
             {
               "name": "PayloadsController",
-              "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#readProxyContract"
+              "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#readProxyContract",
+              "type": "explorer"
             }
           ]
         },
@@ -1262,8 +1404,9 @@
           "notes": "Fixed 16m AAVE token supply. No mint() function or inflation pathway in the bytecode.",
           "evidence": [
             {
-              "name": "The only AAVE token minting transactions ever, amounting to 16m AAVE tokens:",
-              "url": "https://etherscan.io/advanced-filter?tkn=0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9&txntype=2&fadd=0x0000000000000000000000000000000000000000"
+              "name": "AAVE token minting transactions (16m total)",
+              "url": "https://etherscan.io/advanced-filter?tkn=0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9&txntype=2&fadd=0x0000000000000000000000000000000000000000",
+              "type": "explorer"
             }
           ]
         },
@@ -1275,8 +1418,9 @@
           "notes": "No Guardian or blacklist capabilities exist in the AAVE token contract.",
           "evidence": [
             {
-              "name": "AAVE token’s implementation code",
-              "url": "https://etherscan.io/address/0x5d4aa78b08bc7c530e21bf7447988b1be7991322#code"
+              "name": "AAVE token's implementation code",
+              "url": "https://etherscan.io/address/0x5d4aa78b08bc7c530e21bf7447988b1be7991322#code",
+              "type": "explorer"
             }
           ]
         }
@@ -1286,41 +1430,49 @@
       "id": "prot-ctrl",
       "name": "Metric 2: Protocol Control (On-chain)",
       "about": "Rather than analysing everything, we focus on what directly affects ownership and value.",
+      "summary": "Holders control implementation upgrades for all v3 market deployments. Roles include Core Protocol Roles (EMERGENCY_ADMIN, RISK_ADMIN, POOL_ADMIN, ASSET_LISTING_ADMIN) and Delegated Steward Roles, all elected and revocable by AAVE holders.",
       "criteria": [
         {
           "id": "prot-ctrl__upgrade",
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the implementation logic of the protocol?",
           "status": "✅",
-          "notes": "Holders control implementation upgrades for all v3 market deployments.\n\nThe pool contract is an upgradeable proxy contract, on which Admin is set to PoolAddressProvider. PoolAddressProvider’s critical functions such as the function that includes calling upgrading the pool instance, is controlled by onlyOwner which is set to Executor contract which in turn has its owner set to PayloadsController. In order for PayloadsController to call Executor, Governance must call PayloadsController as MESSAGE_ORIGINATOR check must be equal to Governance for a proposal to move.",
+          "notes": "Holders control implementation upgrades for all v3 market deployments.\n\nThe pool contract is an upgradeable proxy contract, on which Admin is set to PoolAddressProvider. PoolAddressProvider's critical functions such as the function that includes calling upgrading the pool instance, is controlled by onlyOwner which is set to Executor contract which in turn has its owner set to PayloadsController. In order for PayloadsController to call Executor, Governance must call PayloadsController as MESSAGE_ORIGINATOR check must be equal to Governance for a proposal to move.",
           "evidence": [
             {
-              "name": "Upgradability per contract:",
-              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability"
+              "name": "Upgradability per contract",
+              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability",
+              "type": "github"
             },
             {
               "name": "Pool: admin",
-              "url": "https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2#code"
+              "url": "https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2#code",
+              "type": "explorer"
             },
             {
               "name": "PoolAddressProvider",
-              "url": "https://etherscan.io/address/0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e#code"
+              "url": "https://etherscan.io/address/0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e#code",
+              "type": "explorer"
             },
             {
               "name": "Executor contract: owner(PayloadsController)",
-              "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code"
+              "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code",
+              "type": "explorer"
             },
             {
               "name": "PayloadsController: (MESSAGE_ORIGINATOR)",
-              "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#code"
+              "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#code",
+              "type": "explorer"
             },
             {
               "name": "Governance",
-              "url": "https://etherscan.io/address/0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7#code"
+              "url": "https://etherscan.io/address/0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7#code",
+              "type": "explorer"
             },
             {
-              "name": "For more",
-              "url": "https://aave.com/docs/ecosystem/governance"
+              "name": "AAVE Governance Documentation",
+              "url": "https://aave.com/docs/ecosystem/governance",
+              "type": "docs"
             }
           ]
         },
@@ -1333,34 +1485,43 @@
           "evidence": [
             {
               "name": "Core Protocol Role addresses",
-              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#admins"
+              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#admins",
+              "type": "github"
             },
             {
               "name": "Core Protocol Roles in ACLManager",
-              "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0"
+              "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
+              "type": "explorer"
             },
             {
               "name": "EMERGENCY_ADMIN_ROLE: GnosisSafeProx",
-              "url": "https://etherscan.io/address/0x2cfe3ec4d5a6811f4b8067f0de7e47dfa938aa30#code"
+              "url": "https://etherscan.io/address/0x2cfe3ec4d5a6811f4b8067f0de7e47dfa938aa30#code",
+              "type": "explorer"
             },
             {
               "name": "POOL_ADMIN_ROLE: Executor",
-              "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code"
+              "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code",
+              "type": "explorer"
             },
             {
               "name": "Stewards (docs)",
-              "url": "https://aave.com/help/governance/aave-community"
+              "url": "https://aave.com/help/governance/aave-community",
+              "type": "docs"
             },
             {
               "name": "Stewards (addresses)",
-              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability"
-            },            {
+              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability",
+              "type": "github"
+            },
+            {
               "name": "Protocol Emergency Guardian",
-              "url": "https://aave.com/docs/ecosystem/governance#community-guardians-protocol-emergency-guardian"
+              "url": "https://aave.com/docs/ecosystem/governance#community-guardians-protocol-emergency-guardian",
+              "type": "docs"
             },
             {
               "name": "Detailed protocol permissions",
-              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts"
+              "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts",
+              "type": "github"
             }
           ]
         }
@@ -1370,17 +1531,19 @@
       "id": "val-accrual",
       "name": "Metric 3: Value Accrual & Control (On-chain)",
       "about": "Value accrual matters alongside token and protocol control.",
+      "summary": "Protocol fees flow to treasury controlled by AAVE holders. Holders can stake AAVE as stkAAVE in the Safety Module for additional yield. Treasury is composed of reserve factor fees, liquidation fees, and flashloan premiums.",
       "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Are value flows active and governed by holders?",
           "status": "✅",
-          "notes": "Alongside the protocol fees going to the AAVE token-holder controlled treasury as an important source of value accrual, holders can stake their AAVE tokens as stkAAVE in Aave’s Safety module, getting additional AAVE tokens as yield from the treasury for bearing the risk of slashing in case of protocol insolvency.\n\nCaveat: this Safety Module is in the transitional phase of being sunset in favour of aToken staking as part of the Umbrella release for automated bad debt coverage, which is live already.",
+          "notes": "Alongside the protocol fees going to the AAVE token-holder controlled treasury as an important source of value accrual, holders can stake their AAVE tokens as stkAAVE in Aave's Safety module, getting additional AAVE tokens as yield from the treasury for bearing the risk of slashing in case of protocol insolvency.\n\nCaveat: this Safety Module is in the transitional phase of being sunset in favour of aToken staking as part of the Umbrella release for automated bad debt coverage, which is live already.",
           "evidence": [
             {
               "name": "Safety Module - Incentives",
-              "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module"
+              "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module",
+              "type": "docs"
             }
           ]
         },
@@ -1393,23 +1556,28 @@
           "evidence": [
             {
               "name": "Treasury docs",
-              "url": "https://aave.com/docs/aave-v3/concepts/incentives#incentives"
+              "url": "https://aave.com/docs/aave-v3/concepts/incentives#incentives",
+              "type": "docs"
             },
             {
               "name": "RserveLogic github",
-              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/PoolLogic.sol#L105"
+              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/PoolLogic.sol#L105",
+              "type": "github"
             },
             {
-              "name": "ReserveLogic onchain - mintToTreasury() in Pool’s implementation contract",
-              "url": "https://etherscan.io/address/0x8147b99df7672a21809c9093e6f6ce1a60f119bd#code"
+              "name": "ReserveLogic onchain - mintToTreasury() in Pool's implementation contract",
+              "url": "https://etherscan.io/address/0x8147b99df7672a21809c9093e6f6ce1a60f119bd#code",
+              "type": "explorer"
             },
             {
               "name": "Flashloan premium meant for treasury",
-              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/pool/Pool.sol#L653"
+              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/pool/Pool.sol#L653",
+              "type": "github"
             },
             {
               "name": "Liquidation Fee to treasury",
-              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/LiquidationLogic.sol#L392"
+              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/LiquidationLogic.sol#L392",
+              "type": "github"
             }
           ]
         },
@@ -1418,15 +1586,17 @@
           "name": "Accrual Mechanism Control",
           "about": "Can holders modify accrual parameters (e.g., changing fee splits or rates)?",
           "status": "✅",
-          "notes": "AAVE holders (governance) ultimately control the key levers that determine fee capture and treasury flow: listing/config changes, Reserve Factor (portion of interest skimmed to treasury), liquidation protocol fees, etc., via ACL-gated admin roles. Emergency actions are typically delegated (Guardian / emergency admin), but economic controls are governance-owned, as ACLManager is controlled by AAVE holders.\n\nACLManager’s key functions to add/remove pools, admins, riskAdmins etc are controlled by Aave governance: This method can only be called by the Role Admin, specified by Aave Governance, responsible for managing the `POOL_ADMIN` role.",
+          "notes": "AAVE holders (governance) ultimately control the key levers that determine fee capture and treasury flow: listing/config changes, Reserve Factor (portion of interest skimmed to treasury), liquidation protocol fees, etc., via ACL-gated admin roles. Emergency actions are typically delegated (Guardian / emergency admin), but economic controls are governance-owned, as ACLManager is controlled by AAVE holders.\n\nACLManager's key functions to add/remove pools, admins, riskAdmins etc are controlled by Aave governance: This method can only be called by the Role Admin, specified by Aave Governance, responsible for managing the `POOL_ADMIN` role.",
           "evidence": [
             {
               "name": "POOL_ADMIN",
-              "url": "https://aave.com/docs/aave-v3/smart-contracts/acl-manager#roles-pool-admin"
+              "url": "https://aave.com/docs/aave-v3/smart-contracts/acl-manager#roles-pool-admin",
+              "type": "docs"
             },
             {
               "name": "ACLManager",
-              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/configuration/ACLManager.sol#L45"
+              "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/configuration/ACLManager.sol#L45",
+              "type": "github"
             }
           ]
         }
@@ -1436,6 +1606,7 @@
       "id": "offchain",
       "name": "Metric 4: IP & Distribution (Off-chain)",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "summary": "Quantum Swan OÜ (Estonia) holds the US AAVE trademark. Aave Interfaces Ltd is identified as the contracting party for the primary interface. Licensing status is TBD.",
       "criteria": [
         {
           "id": "offchain__brand",
@@ -1445,8 +1616,9 @@
           "notes": "A US AAVE trademark filing lists Quantum Swan OÜ (Estonia) as the applicant/owner.",
           "evidence": [
             {
-              "name": "Trademark filing:",
-              "url": "https://tsdr.uspto.gov/#caseNumber=79251290&caseSearchType=US_APPLICATION&caseType=DEFAULT&searchType=statusSearch"
+              "name": "AAVE Trademark Filing",
+              "url": "https://tsdr.uspto.gov/#caseNumber=79251290&caseSearchType=US_APPLICATION&caseType=DEFAULT&searchType=statusSearch",
+              "type": "docs"
             }
           ]
         },
@@ -1459,7 +1631,8 @@
           "evidence": [
             {
               "name": "Terms of Service",
-              "url": "https://aave.com/terms-of-service"
+              "url": "https://aave.com/terms-of-service",
+              "type": "docs"
             }
           ]
         },
@@ -1468,7 +1641,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "TBD",
+          "notes": "Aragon has not yet confirmed the licensing status associated with AAVE.",
           "evidence": []
         }
       ]
