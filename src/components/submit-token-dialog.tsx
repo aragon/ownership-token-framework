@@ -174,7 +174,8 @@ export function SubmitTokenDialog({
                       id="request-message"
                     />
                     <FieldDescription>
-                      What would you like us to add to or change about the Ownership Token Framework?
+                      What would you like us to add to or change about the
+                      Ownership Token Framework?
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />

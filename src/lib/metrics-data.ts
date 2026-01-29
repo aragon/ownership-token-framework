@@ -1,9 +1,17 @@
 import metricsData from "@/data/metrics.json"
 import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
+import type { EvidenceLinkType } from "../components/ui/evidence-link.tsx"
 
-interface Evidence {
+export interface EvidenceUrl {
   name: string
   url: string
+  type?: EvidenceLinkType
+}
+
+export interface Evidence {
+  name?: string
+  summary?: string
+  urls: EvidenceUrl[]
 }
 
 interface Criteria {
@@ -12,13 +20,15 @@ interface Criteria {
   about: string
   status: string
   notes: string
-  evidence: Evidence[]
+  evidence: EvidenceUrl[] | Evidence[]
 }
 
 export interface Metric {
   id: string
   name: string
   about: string
+  summary: string
+  tags?: string[]
   criteria: Criteria[]
 }
 
