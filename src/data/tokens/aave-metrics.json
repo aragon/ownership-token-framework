@@ -1,0 +1,261 @@
+[
+  {
+    "id": "onchain-ctrl",
+    "name": "Metric 1: Onchain Control",
+    "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+    "summary": "AAVE, stkAAVE and aAAVE holders control the protocol through onchain governance with Timelock execution. The token has fixed 16M supply with no mint function. Delegated steward roles exist but are elected and revocable by governance.",
+    "criteria": [
+      {
+        "id": "onchain-ctrl__governance-workflow",
+        "name": "On-chain Governance Workflow",
+        "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+        "status": "✅",
+        "notes": "AAVE, stkAAVE and aAAVE holders vote onchain with execution through Timelock.",
+        "evidence": [
+          { "urls": [
+            { "name": "Governance Documentation", "url": "https://aave.com/docs/ecosystem/governance", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__role-accountability",
+        "name": "Role Accountability",
+        "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+        "status": "✅",
+        "notes": "**Governance Emergency Guardian** is a 5/9 multisig elected by community to protect the protocol from governance takeover attacks by vetoing onchain payloads.\n\n**Members:** Seb (Zapper), Mounir (Paraswap), Gavi Galloway (Standard Crypto), Nenad (Defi Saver), Fernando (Balancer), Roger (Chainlink community), Mariano Conti (DeFi OG), Marin (Lido), Certora (security service provider).",
+        "evidence": [
+          { "urls": [
+            { "name": "Onchain address", "url": "https://etherscan.io/address/0xCe52ab41C40575B072A18C9700091Ccbe4A06710#readProxyContract", "type": "explorer" },
+            { "name": "Detailed Governance Permissions", "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#governance-v3-contracts", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__protocol-upgrade",
+        "name": "Protocol Upgrade Authority",
+        "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+        "status": "✅",
+        "notes": "Holders control implementation upgrades for all v3 market deployments.\n\n**Upgrade path:** Pool (upgradeable proxy) → Admin is PoolAddressProvider → onlyOwner is Executor → owner is PayloadsController → controlled by Governance.\n\nFor PayloadsController to call Executor, MESSAGE_ORIGINATOR must equal Governance for a proposal to execute.",
+        "evidence": [
+          { "urls": [
+            { "name": "Upgradability per contract", "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability", "type": "github" },
+            { "name": "Pool: admin", "url": "https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2#code", "type": "explorer" },
+            { "name": "PoolAddressProvider", "url": "https://etherscan.io/address/0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e#code", "type": "explorer" },
+            { "name": "Executor contract: owner (PayloadsController)", "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code", "type": "explorer" },
+            { "name": "PayloadsController: (MESSAGE_ORIGINATOR)", "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#code", "type": "explorer" },
+            { "name": "Governance", "url": "https://etherscan.io/address/0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7#code", "type": "explorer" },
+            { "name": "For more", "url": "https://aave.com/docs/ecosystem/governance", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__token-upgrade",
+        "name": "Token Upgrade Authority",
+        "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "Contract is a variant of the upgradeable ERC-1967 Transparent proxy, owned by ProxyAdmin, which is controlled by token holders.\n\n**Ownership chain:** AAVE (Proxy) → ProxyAdmin → Executor → PayloadsController → Token Holders",
+        "evidence": [
+          { "urls": [
+            { "name": "AAVE (Proxy)", "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract", "type": "explorer" },
+            { "name": "ProxyAdmin", "url": "https://etherscan.io/address/0x86c3FfEE349A7cFf7cA88C449717B1b133bfb517#code", "type": "explorer" },
+            { "name": "Executor", "url": "https://etherscan.io/address/0x17Dd33Ed0e3dD2a80E37489B8A63063161BE6957#code", "type": "explorer" },
+            { "name": "PayloadsController", "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#readProxyContract", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__supply",
+        "name": "Supply Control",
+        "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+        "status": "✅",
+        "notes": "Fixed 16m AAVE token supply. No mint() function or inflation pathway in the bytecode.",
+        "evidence": [
+          { "urls": [{ "name": "The only AAVE token minting transactions ever, amounting to 16m AAVE tokens", "url": "https://etherscan.io/advanced-filter?tkn=0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9&txntype=2&fadd=0x0000000000000000000000000000000000000000", "type": "explorer" }]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__access-gating",
+        "name": "Privileged Access Gating",
+        "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+        "status": "✅",
+        "notes": "Roles can be broadly classified into **Core Protocol Roles** and **Delegated Steward Roles**. AAVE holders elect and revoke all these roles with their standard governance procedure.\n\n**Core Protocol Roles:** EMERGENCY_ADMIN, RISK_ADMIN, POOL_ADMIN, ASSET_LISTING_ADMIN. These live in ACLManager, owned by ACLAdmin (verifiable in PoolAddressesProvider). ACLAdmin is owned by PayloadsController, controlled by token holders.\n\n**Delegated Steward Roles:**\n1. Risk Stewards → Risk Parameters\n2. Finance Stewards → Treasury\n3. Aave Guardians → Emergency\n\n**Protocol Emergency Guardian:** A separate multisig that executes limited emergency operations for the protocol.",
+        "evidence": [
+          { "urls": [
+            { "name": "Core Protocol Role addresses", "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#admins", "type": "github" },
+            { "name": "Core Protocol Roles in ACLManager", "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0", "type": "explorer" },
+            { "name": "EMERGENCY_ADMIN_ROLE: GnosisSafeProxy", "url": "https://etherscan.io/address/0x2cfe3ec4d5a6811f4b8067f0de7e47dfa938aa30#code", "type": "explorer" },
+            { "name": "POOL_ADMIN_ROLE: Executor", "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code", "type": "explorer" },
+            { "name": "Stewards (docs)", "url": "https://aave.com/help/governance/aave-community", "type": "docs" },
+            { "name": "Stewards (addresses)", "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability", "type": "github" },
+            { "name": "Protocol Emergency Guardian", "url": "https://aave.com/docs/ecosystem/governance#community-guardians-protocol-emergency-guardian", "type": "docs" },
+            { "name": "Detailed protocol permissions", "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__censorship",
+        "name": "Token Censorship",
+        "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+        "status": "✅",
+        "notes": "No Guardian or blacklist capabilities exist in the AAVE token contract.",
+        "evidence": [
+          { "urls": [{ "name": "AAVE token's implementation code", "url": "https://etherscan.io/address/0x5d4aa78b08bc7c530e21bf7447988b1be7991322#code", "type": "explorer" }]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "val-accrual",
+    "name": "Metric 2: Value Accrual",
+    "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+    "summary": "Protocol fees flow to governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums. Brand controlled by Quantum Swan OU.",
+    "criteria": [
+      {
+        "id": "val-accrual__active",
+        "name": "Accrual Active",
+        "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+        "status": "✅",
+        "notes": "Alongside the protocol fees going to the AAVE token-holder controlled treasury as an important source of value accrual, holders can stake their AAVE tokens as stkAAVE in Aave's Safety module, getting additional AAVE tokens as yield from the treasury for bearing the risk of slashing in case of protocol insolvency. Caveat: this Safety Module is in the transitional phase of being sunset in favour of aToken staking as part of the Umbrella release for automated bad debt coverage, which is live already.",
+        "evidence": [
+          { "urls": [{ "name": "Safety Module - Incentives", "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module", "type": "docs" }]}
+        ]
+      },
+      {
+        "id": "val-accrual__treasury",
+        "name": "Treasury Ownership",
+        "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "AAVE holders control and direct the usage of treasury for protocol growth. Treasury is composed of fees as reserve factor from accrued interests from borrowers + liquidation fees + flashloan premiums",
+        "evidence": [
+          { "urls": [
+            { "name": "Treasury docs", "url": "https://aave.com/docs/aave-v3/concepts/incentives#incentives", "type": "docs" },
+            { "name": "ReserveLogic github", "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/PoolLogic.sol#L105", "type": "github" },
+            { "name": "ReserveLogic onchain - mintToTreasury() in Pool's implementation contract", "url": "https://etherscan.io/address/0x8147b99df7672a21809c9093e6f6ce1a60f119bd#code", "type": "explorer" },
+            { "name": "Flashloan premium meant for treasury", "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/pool/Pool.sol#L653", "type": "github" },
+            { "name": "Liquidation Fee to treasury", "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/LiquidationLogic.sol#L392", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__mechanism",
+        "name": "Accrual Mechanism Control",
+        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+        "status": "✅",
+        "notes": "AAVE holders (governance) ultimately control the key levers that determine fee capture and treasury flow: listing/config changes, Reserve Factor (portion of interest skimmed to treasury), liquidation protocol fees, etc., via ACL-gated admin roles. Emergency actions are typically delegated (Guardian / emergency admin), but economic controls are governance-owned, as ACLManager is controlled by AAVE holders. ACLManager's key functions to add/remove pools, admins, riskAdmins etc are controlled by Aave governance: This method can only be called by the Role Admin, specified by Aave Governance, responsible for managing the POOL_ADMIN role.",
+        "evidence": [
+          { "urls": [
+            { "name": "POOL_ADMIN", "url": "https://aave.com/docs/aave-v3/smart-contracts/acl-manager#roles-pool-admin", "type": "docs" },
+            { "name": "ACLManager", "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/configuration/ACLManager.sol#L45", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__offchain",
+        "name": "Offchain Value Accrual",
+        "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+        "status": "TBD",
+        "notes": "Aragon has not verified additional offchain value accrual flows to the AAVE token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "verifiability",
+    "name": "Metric 3: Verifiability",
+    "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+    "summary": "AAVE token proxy and implementation are verified on Etherscan. Aave V3 protocol contracts are open source and verified.",
+    "criteria": [
+      {
+        "id": "verifiability__token-source",
+        "name": "Token Contract Source Verification",
+        "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+        "status": "✅",
+        "notes": "The AAVE token contract (proxy and implementation) source code is publicly available and verified on Etherscan.",
+        "evidence": [
+          { "urls": [
+            { "name": "AAVE Token Proxy (Etherscan)", "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract", "type": "explorer" },
+            { "name": "AAVE Token Implementation (Etherscan)", "url": "https://etherscan.io/address/0x5d4aa78b08bc7c530e21bf7447988b1be7991322#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "verifiability__protocol-source",
+        "name": "Protocol Component Source Verification",
+        "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+        "status": "✅",
+        "notes": "Aave V3 protocol contracts are open source on GitHub and verified on Etherscan, including Pool and PoolAddressProvider.",
+        "evidence": [
+          { "urls": [
+            { "name": "Aave V3 Origin (GitHub)", "url": "https://github.com/aave-dao/aave-v3-origin", "type": "github" },
+            { "name": "Pool (Etherscan)", "url": "https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2#code", "type": "explorer" },
+            { "name": "PoolAddressProvider (Etherscan)", "url": "https://etherscan.io/address/0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e#code", "type": "explorer" }
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "distribution",
+    "name": "Metric 4: Token Distribution",
+    "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+    "summary": "Aragon has not verified if any 3rd party controls a majority share of the voting power of AAVE or derivatives.",
+    "criteria": [
+      {
+        "id": "distribution__concentration",
+        "name": "Ownership Concentration",
+        "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified if any 3rd party controls a majority share of the voting power of AAVE or derivatives.",
+        "evidence": []
+      },
+      {
+        "id": "distribution__supply-schedule",
+        "name": "Supply Schedule",
+        "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified the supply schedule criteria for the AAVE token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "offchain",
+    "name": "Offchain Dependencies",
+    "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+    "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Interfaces Ltd as the contracting party.",
+    "criteria": [
+      {
+        "id": "offchain__brand",
+        "name": "Brand",
+        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "A US AAVE trademark filing lists Quantum Swan OU (Estonia) as the applicant/owner.",
+        "evidence": [
+          { "urls": [
+            { "name": "Trademark filing", "url": "https://tsdr.uspto.gov/#caseNumber=79251290&caseSearchType=US_APPLICATION&caseType=DEFAULT&searchType=statusSearch", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__distribution",
+        "name": "Distribution",
+        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "The primary interface terms identify Aave Interfaces Ltd as the contracting party.",
+        "evidence": [
+          { "urls": [
+            { "name": "Terms of Service", "url": "https://aave.com/terms-of-service", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__licensing",
+        "name": "Licensing",
+        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified all the licensing criteria associated with the AAVE token or the corresponding protocol and assets",
+        "evidence": []
+      }
+    ]
+  }
+]

@@ -1,0 +1,251 @@
+[
+  {
+    "id": "onchain-ctrl",
+    "name": "Metric 1: Onchain Control",
+    "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+    "summary": "veCRV holders control all protocol operations through Aragon v1's Voting Contract and Agent. The CRV token is immutable with programmatic inflation and no censorship capabilities. Core protocol and pool contracts are immutable.",
+    "criteria": [
+      {
+        "id": "onchain-ctrl__governance-workflow",
+        "name": "On-chain Governance Workflow",
+        "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+        "status": "✅",
+        "notes": "Governance is enforced through Aragon v1's Voting Contract, which authorizes execution via the Agent contract. The Agent contract is set as the owner for all protocol-gated functions, ensuring veCRV holders control all operations.",
+        "evidence": [
+          { "urls": [
+            { "name": "Aragon Voting Contract", "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356", "type": "explorer" },
+            { "name": "Agent Contract", "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968", "type": "explorer" },
+            { "name": "CRV Token: Admin is set to Agent", "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#readContract", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__role-accountability",
+        "name": "Role Accountability",
+        "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+        "status": "✅",
+        "notes": "Protocol roles are controlled by the Agent.\n\n**Gauge Addition:** Only the Agent can add new gauges via add_gauge on GaugeController.\n\n**Fee Parameters:** Pool admin fees are set at deployment and can be modified by Agent (through veCRV holders voting) - see accrual section for more info.\n\n**Pool Factory Ownership:** New pools are deployed by Factory contracts controlled by OwnerProxy contract. This contract has two types of admin (Agent and GnosisSafe). Agent is responsible for adding new pools, giving veCRV holders control over protocol expansion.",
+        "evidence": [
+          { "urls": [
+            { "name": "GaugeController: admin is set to Agent", "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract", "type": "explorer" },
+            { "name": "Curve Pool Factory: admin is set to OwnerProxy", "url": "https://etherscan.io/address/0xB9fc157394Af804a3578134A6585C0dC9cc990d4#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__protocol-upgrade",
+        "name": "Protocol Upgrade Authority",
+        "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+        "status": "✅",
+        "notes": "Core protocol and pool contracts are immutable.\n\n**Agent Contract:** Can be upgraded by calling setApp(Agent, ...) on the Kernel contract, which is only allowed by the Agent itself. Only veCRV holders can upgrade the Agent contract through governance voting.\n\n**Voting Contract:** Can be upgraded by calling setApp(Voting, ...) on the Kernel contract, which is only allowed by the Agent itself. Only veCRV holders can upgrade the Voting contract through governance voting.",
+        "evidence": [
+          { "urls": [
+            { "name": "Agent", "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code", "type": "explorer" },
+            { "name": "Voting", "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code", "type": "explorer" },
+            { "name": "CRV Token (Admin: Agent)", "url": "https://etherscan.io/address/0xd533a949740bb3306d119cc777fa900ba034cd52", "type": "explorer" },
+            { "name": "GaugeController (Admin: Agent)", "url": "https://etherscan.io/address/0x2F50D438606C59853F044305d4073375218E06A1", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__token-upgrade",
+        "name": "Token Upgrade Authority",
+        "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "The CRV token contract is immutable with no proxy patterns or upgrade mechanisms.",
+        "evidence": [
+          { "urls": [{ "name": "ERC20CRV.vy Source", "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code", "type": "explorer" }]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__supply",
+        "name": "Supply Control",
+        "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+        "status": "✅",
+        "notes": "Curve's token inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^1/4. Any unminted supply from a year is permanently lost. Mint can only occur by Minter which decides how much to mint for an user depending on the veCRV balance and provided LP tokens in a gauge.",
+        "evidence": [
+          { "urls": [
+            { "name": "ERC20CRV.vy Yearly Epoch Logic", "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L115C40-L115C59", "type": "github" },
+            { "name": "ERC20CRV.vy Mint Access", "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333", "type": "github" },
+            { "name": "Minter.vy Gauge Validation", "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__access-gating",
+        "name": "Privileged Access Gating",
+        "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+        "status": "✅",
+        "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+        "evidence": [
+          { "urls": [{ "name": "Gauge Kill Implementation", "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L731", "type": "github" }]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__censorship",
+        "name": "Token Censorship",
+        "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+        "status": "✅",
+        "notes": "The CRV token has no transfer restrictions, blacklist functionality, or pausable transfers. There's Admin set (Agent) on the CRV token, but it can only update token's name and symbol.",
+        "evidence": [
+          { "urls": [
+            { "name": "ERC20CRV.vy Standard Transfer", "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L272", "type": "github" },
+            { "name": "ERC20CRV.vy Metadata Logic", "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L365", "type": "github" }
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "val-accrual",
+    "name": "Metric 2: Value Accrual",
+    "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+    "summary": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards. Value flows are programmatic through the gauge system. Offchain structure shows Swiss Stake AG controls the interface and trademark.",
+    "criteria": [
+      {
+        "id": "val-accrual__active",
+        "name": "Accrual Active",
+        "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+        "status": "✅",
+        "notes": "**CRV Emissions Rewards:** Liquidity Providers deposit LP tokens into the Gauge Contract. Once the gauge receives CRV emissions, LPs can claim their proportional rewards based on their deposited LP token amount.\n\n**2.5x Boost in CRV Emissions:** LPs can boost rewards up to 2.5x by locking CRV for veCRV. The user reward is based on a working balance and 2.5x reward is enforced by TOKENLESS_PRODUCTION which is set to 40 (i.e., 40 * 2.5 = 100%).\n\n**Pool Rewards in crvUSD:** Pools have two fees: fee (total swap fee) and admin_fee (percentage of fee taken for admin) which is applied when the swap occurs. StableSwapProxy calls withdraw_admin_fees on pools to collect admin portion of fees. Every coin inside StableSwapProxy has a burner contract attached. Later, anyone can call burn which invokes the coin's attached burner contract to transfer fees from StableSwapProxy. One such burner is FeeCollector, where fees ultimately accumulate. FeeCollector uses CowSwapBurner to convert all tokens to crvUSD, and the crvUSD is sent to FeeDistributor where veCRV holders can claim their rewards.\n\n**Borrow Rewards in crvUSD:** Borrowing Interest (paid in crvUSD) from controllers are sent to FeeSplitter. FeeCollector receives proportional crvUSD from FeeSplitter and sends to FeeDistributor for veCRV holders.",
+        "evidence": [
+          { "urls": [
+            { "name": "working_balance uses user's LP tokens and veCRV balance to decide reward", "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L210", "type": "github" },
+            { "name": "FeeDistributor 2", "url": "https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914", "type": "explorer" },
+            { "name": "FeeSplitter", "url": "https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__treasury",
+        "name": "Treasury Ownership",
+        "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "50% of all trading fees are distributed to veCRV holders through crvUSD rewards, while the remaining 50% goes to the respective liquidity providers of the pools. Only veCRV holders can change this behaviour, hence Curve has no separate treasury. All revenue to the people.",
+        "evidence": [
+          { "urls": [{ "name": "Earning-fees", "url": "https://resources.curve.finance/vecrv/overview#earning-fees", "type": "docs" }]}
+        ]
+      },
+      {
+        "id": "val-accrual__mechanism",
+        "name": "Accrual Mechanism Control",
+        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+        "status": "✅",
+        "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.\n\n**Update Pool Fees:** Pool fee changes are executed via commit_new_fee, which can only be called by the pool owner (StableSwapProxy) which in turn is restricted to parameter_admin (Agent contract).\n\n**Attaching a Burner Contract:** set_burner on StableSwapProxy is gated by ownership_admin (Agent contract).\n\n**Burn:** The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
+        "evidence": [
+          { "urls": [
+            { "name": "DAI/USDC/USDT Pool: commit_new_fee", "url": "https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7#code", "type": "explorer" },
+            { "name": "StableSwapProxy: parameter_admin, ownership_admin, set_burner, burn", "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__offchain",
+        "name": "Offchain Value Accrual",
+        "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+        "status": "TBD",
+        "notes": "Aragon has not verified additional offchain value accrual flows to the CRV token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "verifiability",
+    "name": "Metric 3: Verifiability",
+    "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+    "summary": "CRV token source (Vyper) is publicly available on GitHub and verified on Etherscan. Curve DAO contracts are open source and verified.",
+    "criteria": [
+      {
+        "id": "verifiability__token-source",
+        "name": "Token Contract Source Verification",
+        "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+        "status": "✅",
+        "notes": "The CRV token contract source code (ERC20CRV.vy) is publicly available on GitHub and verified on Etherscan.",
+        "evidence": [
+          { "urls": [
+            { "name": "CRV Token (Etherscan)", "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code", "type": "explorer" },
+            { "name": "ERC20CRV.vy Source (GitHub)", "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "verifiability__protocol-source",
+        "name": "Protocol Component Source Verification",
+        "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+        "status": "✅",
+        "notes": "Curve DAO protocol contracts are open source on GitHub and verified on Etherscan, including GaugeController and Agent.",
+        "evidence": [
+          { "urls": [
+            { "name": "Curve DAO Contracts (GitHub)", "url": "https://github.com/curvefi/curve-dao-contracts", "type": "github" },
+            { "name": "GaugeController (Etherscan)", "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#code", "type": "explorer" },
+            { "name": "Agent (Etherscan)", "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code", "type": "explorer" }
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "distribution",
+    "name": "Metric 4: Token Distribution",
+    "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+    "summary": "Aragon has not verified if the majority of veCRV voting power lies with a single party.",
+    "criteria": [
+      {
+        "id": "distribution__concentration",
+        "name": "Ownership Concentration",
+        "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified if the majority of veCRV voting power lies with a single party",
+        "evidence": []
+      },
+      {
+        "id": "distribution__supply-schedule",
+        "name": "Supply Schedule",
+        "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified the supply schedule criteria for the CRV token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "offchain",
+    "name": "Offchain Dependencies",
+    "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+    "summary": "Swiss CRV trademark is held by Swiss Stake AG. Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
+    "criteria": [
+      {
+        "id": "offchain__brand",
+        "name": "Brand",
+        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
+        "evidence": [
+          { "urls": [
+            { "name": "Swiss Trademark Registry", "url": "https://www.swissreg.ch/database-client/register/detail?lang=de&no=16098%2F2020&type=trademark", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__distribution",
+        "name": "Distribution",
+        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "The Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
+        "evidence": [
+          { "urls": [
+            { "name": "Curve Legal", "url": "https://www.curve.finance/dex/ethereum/legal", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__licensing",
+        "name": "Licensing",
+        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified all the licensing criteria associated with the CRV token or the corresponding protocol and assets",
+        "evidence": []
+      }
+    ]
+  }
+]

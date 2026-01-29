@@ -1,0 +1,260 @@
+[
+  {
+    "id": "onchain-ctrl",
+    "name": "Metric 1: Onchain Control",
+    "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+    "summary": "UNI holders maintain ultimate control through GovernorBravoDelegator and Timelock. The token is immutable with a hardcoded 2% annual inflation cap. All core contracts (V2, V3, V4) are non-upgradeable with no pause/freeze functions.",
+    "criteria": [
+      {
+        "id": "onchain-ctrl__governance-workflow",
+        "name": "On-chain Governance Workflow",
+        "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+        "status": "✅",
+        "notes": "UNI holders vote onchain via GovernorBravoDelegator, with execution through Timelock after a time delay.",
+        "evidence": [
+          { "urls": [
+            { "name": "GovernorBravoDelegator", "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code", "type": "explorer" },
+            { "name": "Timelock", "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__role-accountability",
+        "name": "Role Accountability",
+        "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+        "status": "✅",
+        "notes": "All critical roles flow through governance-controlled contracts, ensuring UNI holders maintain ultimate control.\n\n**V2Factory:** feeToSetter is Timelock. Only feeToSetter can call setFeeTo() to change fee destination.\n\n**V3Factory:** Owner is V3FeeAdapter, whose feeSetter is Timelock. Only Timelock can change V3 protocol fees.\n\n**V4PoolManager:** Owner is Timelock. Only owner can call setProtocolFeeController().\n\n**UNI Token:** Minter is Timelock. Since Timelock is controlled by GovernorBravoDelegator, all operations are controlled by UNI holders.",
+        "evidence": [
+          { "urls": [
+            { "name": "Timelock", "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code", "type": "explorer" },
+            { "name": "V2Factory", "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#code", "type": "explorer" },
+            { "name": "V3Factory", "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984#code", "type": "explorer" },
+            { "name": "V4PoolManager", "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__protocol-upgrade",
+        "name": "Protocol Upgrade Authority",
+        "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+        "status": "✅",
+        "notes": "All Uniswap Pair contracts and Timelock are non-upgradeable, whereas GovernorBravoDelegator is upgradeable.\n\n**UniswapV2Pair.sol:** Uses Create2 deployment.\n\n**UniswapV3Pool.sol:** Uses NoDelegateCall protection.\n\n**PoolManager.sol (V4):** Uses Singleton design.\n\n**GovernorBravoDelegator.sol:** Admin (who can upgrade) is set to Timelock contract which again requires governance flow to go through.",
+        "evidence": [
+          { "urls": [
+            { "name": "V2 Factory Create2", "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31", "type": "github" },
+            { "name": "V3 Pool Protection", "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30", "type": "github" },
+            { "name": "V4 PoolManager: Singleton", "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93", "type": "github" },
+            { "name": "GovernorBravoDelegator", "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__token-upgrade",
+        "name": "Token Upgrade Authority",
+        "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "Token contract is immutable with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns.",
+        "evidence": [
+          { "urls": [
+            { "name": "Uni.sol Source", "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6", "type": "github" },
+            { "name": "Etherscan", "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__supply",
+        "name": "Supply Control",
+        "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+        "status": "✅",
+        "notes": "Mint can be called once per year which mints 2% of total supply. Note that mintCap is constant and can not be changed. Minter is set to Timelock governed by token holders.",
+        "evidence": [
+          { "urls": [
+            { "name": "Mint once per year logic", "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116", "type": "github" },
+            { "name": "2% mint cap", "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120", "type": "github" },
+            { "name": "Timelock", "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "onchain-ctrl__access-gating",
+        "name": "Privileged Access Gating",
+        "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+        "status": "✅",
+        "notes": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds. No emergency withdrawal or sweep functions.",
+        "evidence": []
+      },
+      {
+        "id": "onchain-ctrl__censorship",
+        "name": "Token Censorship",
+        "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+        "status": "✅",
+        "notes": "No blacklist, whitelist, or pause functions in UNI token contract. Transfers cannot be censored. Standard ERC20 with no admin controls over transfers.",
+        "evidence": [
+          { "urls": [{ "name": "Uni.sol", "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6", "type": "github" }]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "val-accrual",
+    "name": "Metric 2: Value Accrual",
+    "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+    "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury (~$1.4B) is entirely controlled by token holders. Brand and distribution controlled by Uniswap Labs, with DUNI structure for potential transfer.",
+    "criteria": [
+      {
+        "id": "val-accrual__active",
+        "name": "Accrual Active",
+        "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+        "status": "✅",
+        "notes": "Protocol fees across all Uniswap versions (V2, V3, V4) flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.\n\n**V2:** Fees go to FeeTo address which is set to TokenJar.\n\n**V3:** V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit.\n\n**V4:** Fees have not been activated yet, but Timelock (hence UNI holders) will set ProtocolFeeController address to V4FeeAdapter on the PoolManager which will call collectProtocolFees(), with a recipient as TokenJar.",
+        "evidence": [
+          { "urls": [
+            { "name": "UniswapV2Pool: feeTo", "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#readContract", "type": "explorer" },
+            { "name": "UniswapV2Pool: Fee Destination", "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90", "type": "github" },
+            { "name": "V3FeeAdapter", "url": "https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d#code", "type": "explorer" },
+            { "name": "UniswapV3Pool: collectProtocol", "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848", "type": "github" },
+            { "name": "V4 PoolManager", "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code", "type": "explorer" },
+            { "name": "V4 PoolManager: CollectProtocolFees", "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L48", "type": "github" },
+            { "name": "FirePit 4000 UNI Requirement", "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721", "type": "explorer" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__treasury",
+        "name": "Treasury Ownership",
+        "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "The treasury (~$1.4B) at the time of writing, is entirely controlled by token holders. UNI tokens were initially minted to EOA, which transferred portions to TreasuryVester (which has recipient: Timelock). Vester's claim() (callable by anyone) followed a schedule to gradually vest UNI to Timelock without rapid dilution. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+        "evidence": [
+          { "urls": [{ "name": "TreasuryVester", "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135", "type": "explorer" }]}
+        ]
+      },
+      {
+        "id": "val-accrual__mechanism",
+        "name": "Accrual Mechanism Control",
+        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+        "status": "✅",
+        "notes": "Token holders control the fee switch and burn threshold (in FirePit) through governance proposals. UNI holders control fee routing across all versions through Timelock-governed ownership.\n\n**V2:** feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted.\n\n**V3:** Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. Only factory owner can call setOwner to change fee adapter control. Protocol fee percentage can be changed by the pool owner via setFeeProtocol.\n\n**V4:** Owner of V4PoolManager is set to Timelock. Only owner can call setProtocolFeeController to change the fee controller. Protocol fees can be modified by the PoolManager owner through setProtocolFee.",
+        "evidence": [
+          { "urls": [
+            { "name": "Timelock", "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC", "type": "explorer" },
+            { "name": "UniswapV2Factory", "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f", "type": "explorer" },
+            { "name": "UniswapV3Factory", "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984", "type": "explorer" },
+            { "name": "UniswapV3Pool: setFeeProtocol", "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L837", "type": "github" },
+            { "name": "PoolManager(V4): setProtocolFee", "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L35", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "val-accrual__offchain",
+        "name": "Offchain Value Accrual",
+        "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+        "status": "TBD",
+        "notes": "Aragon has not verified additional offchain value accrual flows to the UNI token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "verifiability",
+    "name": "Metric 3: Verifiability",
+    "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+    "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, and V4 protocol contracts are open source and verified.",
+    "criteria": [
+      {
+        "id": "verifiability__token-source",
+        "name": "Token Contract Source Verification",
+        "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+        "status": "✅",
+        "notes": "The UNI token contract source code (Uni.sol) is publicly available on GitHub and verified on Etherscan.",
+        "evidence": [
+          { "urls": [
+            { "name": "UNI Token (Etherscan)", "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code", "type": "explorer" },
+            { "name": "Uni.sol Source (GitHub)", "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol", "type": "github" }
+          ]}
+        ]
+      },
+      {
+        "id": "verifiability__protocol-source",
+        "name": "Protocol Component Source Verification",
+        "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+        "status": "✅",
+        "notes": "Uniswap V2, V3, and V4 protocol contracts are open source on GitHub and verified on Etherscan.",
+        "evidence": [
+          { "urls": [
+            { "name": "Uniswap V2 Core (GitHub)", "url": "https://github.com/Uniswap/v2-core", "type": "github" },
+            { "name": "Uniswap V3 Core (GitHub)", "url": "https://github.com/Uniswap/v3-core", "type": "github" },
+            { "name": "Uniswap V4 Core (GitHub)", "url": "https://github.com/Uniswap/v4-core", "type": "github" },
+            { "name": "V2Factory (Etherscan)", "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#code", "type": "explorer" },
+            { "name": "V3Factory (Etherscan)", "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984#code", "type": "explorer" },
+            { "name": "V4PoolManager (Etherscan)", "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code", "type": "explorer" }
+          ]}
+        ]
+      }
+    ]
+  },
+  {
+    "id": "distribution",
+    "name": "Metric 4: Token Distribution",
+    "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+    "summary": "Aragon has not verified that 3rd parties do not hold more than 50% of voting power.",
+    "criteria": [
+      {
+        "id": "distribution__concentration",
+        "name": "Ownership Concentration",
+        "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified that 3rd parties do not hold more than 50% of voting power",
+        "evidence": []
+      },
+      {
+        "id": "distribution__supply-schedule",
+        "name": "Supply Schedule",
+        "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified the supply schedule criteria for the UNI token",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "offchain",
+    "name": "Offchain Dependencies",
+    "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+    "summary": "Core UNISWAP trademark rights are held by Universal Navigation Inc. (Uniswap Labs). Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain.",
+    "criteria": [
+      {
+        "id": "offchain__brand",
+        "name": "Brand",
+        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "Core UNISWAP trademark rights are held/enforced by Universal Navigation Inc. d/b/a Uniswap Labs. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus brand assets could be licensed or transferred to token holders.",
+        "evidence": [
+          { "urls": [
+            { "name": "Uniswap Labs Trademark Guidelines", "url": "https://support.uniswap.org/hc/en-us/articles/30934762216973-Uniswap-Labs-Trademark-Guidelines/", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__distribution",
+        "name": "Distribution",
+        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "The primary interface terms identify Uniswap Labs (Universal Navigation Inc.) as the contracting party. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus distribution assets could be licensed or transferred.",
+        "evidence": [
+          { "urls": [
+            { "name": "Uniswap Labs Terms of Service", "url": "https://support.uniswap.org/hc/en-us/articles/30935100859661-Uniswap-Labs-Terms-of-Service", "type": "docs" }
+          ]}
+        ]
+      },
+      {
+        "id": "offchain__licensing",
+        "name": "Licensing",
+        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "TBD",
+        "notes": "Aragon has not yet verified all the licensing criteria associated with the UNI token or the corresponding protocol and assets",
+        "evidence": []
+      }
+    ]
+  }
+]
