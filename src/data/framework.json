@@ -59,7 +59,7 @@
       {
         "id": "val-accrual__mechanism",
         "name": "Accrual Mechanism Control",
-        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing."
+        "about": "Evaluates whether only tokenholders can modify parameters governing value capture, such as fees or revenue routing."
       },
       {
         "id": "val-accrual__offchain",
@@ -97,7 +97,7 @@
       },
       {
         "id": "distribution__supply-schedule",
-        "name": "Supply Schedule",
+        "name": "Future Token Unlocks",
         "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?"
       }
     ]
