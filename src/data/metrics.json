@@ -247,6 +247,16 @@
                   "name": "Safety Module - Incentives",
                   "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module",
                   "type": "docs"
+                },
+                {
+                  "name": "Umbrella Transition",
+                  "url": "https://aave.com/help/umbrella/stake",
+                  "type": "docs"
+                },
+                {
+                  "name": "Umbrella Activation Proposal",
+                  "url": "https://vote.onaave.com/proposal/?proposalId=320",
+                  "type": "docs"
                 }
               ]
             }
