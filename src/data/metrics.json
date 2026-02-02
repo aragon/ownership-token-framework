@@ -2297,7 +2297,7 @@
           "evidence": [
             {
               "name": "V2 Fees",
-              "summary": "Fees go to FeeTo address which is set to TokenJar.",
+              "summary": "All V2 pools are active. Fees go to FeeTo address which is set to TokenJar.",
               "urls": [
                 {
                   "name": "UniswapV2Pool: feeTo",
@@ -2436,8 +2436,8 @@
             {
               "urls": [
                 {
-                  "name": "UNIfication Proposal",
-                  "url": "https://gov.uniswap.org/t/unification-proposal/25881",
+                  "name": "DUNI Proposal",
+                  "url": "https://gov.uniswap.org/t/governance-proposal-establish-uniswap-governance-as-duni-a-wyoming-duna/25770",
                   "type": "docs"
                 }
               ]
