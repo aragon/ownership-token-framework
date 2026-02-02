@@ -1549,7 +1549,7 @@
           "evidence": [
             {
               "name": "Voting",
-              "summary": "CREATE_VOTES_ROLE allows proposing votes. All LDO holders can vote on proposals. The Voting contract controls the Agent via DualGovernance flow.",
+              "summary": "CREATE_VOTES_ROLE allows proposing votes. All LDO holders can vote on proposals. The Voting contract controls the Agent via Governance 1A flow.",
               "urls": [
                 {
                   "name": "Voting",
@@ -1560,7 +1560,7 @@
             },
             {
               "name": "Agent",
-              "summary": "EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by DualGovernance, which is controlled by Voting contract.",
+              "summary": "EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by Governance 1A, which is controlled by Voting contract.",
               "urls": [
                 {
                   "name": "Agent",
@@ -1602,7 +1602,7 @@
           "evidence": [
             {
               "name": "Upgradeable Contracts",
-              "summary": "**StakingRouter:** proxy_getAdmin is set to Agent.\n\n**Agent:** Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, ...) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself).",
+              "summary": "StakingRouter: proxy_getAdmin is set to Agent.\n\nAgent: Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, ...) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself).",
               "urls": [
                 {
                   "name": "StakingRouter",
@@ -1689,7 +1689,7 @@
           "evidence": [
             {
               "name": "Minting Path",
-              "summary": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\n**Minting path:** Voting (LDO holders) → TokenManager → Token.generateTokens()",
+              "summary": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\nMinting path: Voting (LDO holders) → TokenManager → Token.generateTokens()",
               "urls": [
                 {
                   "name": "MiniMeToken.generateTokens",
@@ -1813,7 +1813,7 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "✅",
-          "notes": "Treasury is the Agent contract, fully controlled by LDO holders. Treasury decisions are excluded from Dual Governance scope (stETH holders cannot challenge).",
+          "notes": "Treasury is the Agent contract, fully controlled by LDO holders. Treasury decisions are excluded from Governance 1 scope (stETH holders cannot challenge).",
           "evidence": [
             {
               "name": "Treasury Control",
@@ -2103,8 +2103,13 @@
               "summary": "Minter is set to Timelock. Since Timelock is controlled by GovernorBravoDelegator, all minting operations are controlled by UNI holders.",
               "urls": [
                 {
-                  "name": "UNI Token Minter (Uni.sol L17)",
-                  "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L17",
+                  "name": "UNI Token",
+                  "url": "https://etherscan.io/address/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "setMinter (Uni.sol L111)",
+                  "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L111",
                   "type": "github"
                 },
                 {
