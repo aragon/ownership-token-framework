@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
 import type { Evidence, Metric } from "@/lib/metrics-data"
 import { cn } from "../lib/utils.ts"
@@ -55,6 +56,21 @@ interface MetricCardProps {
 export default function MetricCard(props: MetricCardProps) {
   const { metric, openCriteria, onOpenCriteriaChange } = props
 
+  const handleCriteriaChange = (newOpenCriteria: string[]) => {
+    // Track newly opened criteria
+    const previouslyOpen = new Set(openCriteria || [])
+    const newlyOpened = newOpenCriteria.filter((id) => !previouslyOpen.has(id))
+
+    newlyOpened.forEach((criterionId) => {
+      const criterion = metric.criteria.find((c) => c.id === criterionId)
+      if (criterion) {
+        trackCriterionOpen(criterion.id, criterion.name)
+      }
+    })
+
+    onOpenCriteriaChange?.(newOpenCriteria)
+  }
+
   return (
     <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-4">
       {/* Header */}
@@ -83,7 +99,7 @@ export default function MetricCard(props: MetricCardProps) {
       <Accordion
         className="w-auto"
         multiple
-        onValueChange={onOpenCriteriaChange}
+        onValueChange={handleCriteriaChange}
         value={openCriteria}
       >
         {metric.criteria.map((criteria) => (
