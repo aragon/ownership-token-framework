@@ -1,5 +1,3 @@
-"use client"
-
 import { useRouter } from "@tanstack/react-router"
 import { useEffect, useRef } from "react"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
@@ -33,10 +31,10 @@ export function GoogleAnalytics() {
           hasTrackedInitialPageView.current = true
           trackPageView()
         }
-      }, 100)
+      }, 200)
 
       // Cleanup interval after 5 seconds if gtag never loads
-      setTimeout(() => clearInterval(checkGtag), 5000)
+      setTimeout(() => clearInterval(checkGtag), 8000)
     }
 
     // Track subsequent navigation
