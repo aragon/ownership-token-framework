@@ -2161,7 +2161,7 @@
             },
             {
               "name": "Upgradeable Governance Contract",
-              "summary": "GovernorBravoDelegator is upgradeable. Admin (who can upgrade) is set to Timelock contract which requires governance flow to go through.",
+              "summary": "GovernorBravoDelegator is upgradeable by the Admin which is set to the Timelock. Any upgrade would require a successful governance process.",
               "urls": [
                 {
                   "name": "GovernorBravoDelegator",
@@ -2270,7 +2270,7 @@
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "✅",
-          "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
+          "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - a burn can be initiated by anyone who chooses to burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
           "evidence": [
             {
               "name": "V2 Fees",
@@ -2290,7 +2290,7 @@
             },
             {
               "name": "V3 Fees",
-              "summary": "V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar.",
+              "summary": "V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit. Only select V3 pools are currently active.",
               "urls": [
                 {
                   "name": "V3FeeAdapter",
@@ -2306,7 +2306,7 @@
             },
             {
               "name": "V4 Fees",
-              "summary": "Fees have not been activated yet, but Timelock (hence UNI holders) will set ProtocolFeeController address to V4FeeAdapter on the PoolManager which will call collectProtocolFees(), with a recipient as TokenJar.",
+              "summary": "V4 fees have not been activated yet, but in the future fees can be activated via governance process. To activate fees, Timelock will set the PoolManager's ProtocolFeeController address to a V4FeeAdapter contract.",
               "urls": [
                 {
                   "name": "V4 PoolManager",
@@ -2326,8 +2326,8 @@
               "urls": [
                 {
                   "name": "FirePit 4000 UNI Requirement",
-                  "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-                  "type": "explorer"
+                  "url": "https://github.com/Uniswap/protocol-fees/blob/8604e4b9aed88bdd6be3a322e19722c40f94be2c/src/releasers/ExchangeReleaser.sol#L35",
+                  "type": "github"
                 }
               ]
             }
@@ -2338,7 +2338,7 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "✅",
-          "notes": "The treasury (~$1.4B at the time of writing) is entirely controlled by token holders.\n\n**Initial Distribution:** UNI tokens were initially minted to an EOA, which transferred portions to TreasuryVester (with recipient set to Timelock).\n\n**Vesting Schedule:** The Vester's claim() function (callable by anyone) follows a schedule to gradually vest UNI to Timelock without rapid dilution.\n\n**Governance Control:** Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+          "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens.\n\n**Initial Distribution:** UNI tokens were initially minted to an EOA, which transferred portions to TreasuryVester (with recipient set to Timelock).\n\n**Vesting Schedule:** The Vester's claim() function (callable by anyone) follows a schedule to gradually vest UNI to Timelock without rapid dilution.\n\n**Governance Control:** Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
           "evidence": [
             {
               "urls": [
@@ -2360,7 +2360,7 @@
           "evidence": [
             {
               "name": "V2 Fee Control",
-              "summary": "feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted.",
+              "summary": "feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted. Protocol fees on V2 pools cannot be adjusted on a per pool basis.",
               "urls": [
                 {
                   "name": "Timelock",
@@ -2376,7 +2376,7 @@
             },
             {
               "name": "V3 Fee Control",
-              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. Only factory owner can call setOwner to change fee adapter control. Protocol fee percentage can be changed by the pool owner via setFeeProtocol.",
+              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter.",
               "urls": [
                 {
                   "name": "UniswapV3Factory",
