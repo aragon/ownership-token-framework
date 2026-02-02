@@ -51,22 +51,27 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const gaId = GA_MEASUREMENT_ID
-  const gaScript = `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${gaId}', { send_page_view: false });`
+  // Validate GA4 measurement ID format to prevent XSS!
+  const isValidGaId = /^G-[A-Z0-9]+$/.test(gaId)
+  const gaScript = isValidGaId
+    ? `window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${gaId}', { send_page_view: false });`
+    : null
 
   return (
     <html lang="en">
       <head>
         <HeadContent />
-        {gaId ? (
+        <title>Ownership Token Framework</title>
+        {isValidGaId ? (
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
           />
         ) : null}
-        {gaId ? <script>{gaScript}</script> : null}
+        {gaScript ? <script>{gaScript}</script> : null}
       </head>
       <body>
         {children}
