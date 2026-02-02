@@ -85,7 +85,7 @@ export default function MetricCard(props: MetricCardProps) {
             {metric.tags?.map((tag) => (
               <Badge
                 key={tag}
-                variant={metric.id === "gov-fdn" ? "outline" : "secondary"}
+                variant={metric.id === "offchain" ? "outline" : "secondary"}
               >
                 {tag}
               </Badge>
