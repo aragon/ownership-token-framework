@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useTokens } from "@/hooks/use-tokens"
-import { cn, formatUnixTimestamp, truncateAddress } from "@/lib/utils"
+import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
 // Types
 interface Token {
@@ -51,47 +51,47 @@ declare module "@tanstack/react-table" {
 }
 
 // Custom filled icons to match Figma design
-function IconBubble({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-label="Message bubble"
-      className={className}
-      fill="none"
-      height="16"
-      role="img"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-      width="16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-    </svg>
-  )
-}
+// function IconBubble({ className }: { className?: string }) {
+//   return (
+//     <svg
+//       aria-label="Message bubble"
+//       className={className}
+//       fill="none"
+//       height="16"
+//       role="img"
+//       stroke="currentColor"
+//       strokeLinecap="round"
+//       strokeLinejoin="round"
+//       strokeWidth="2"
+//       viewBox="0 0 24 24"
+//       width="16"
+//       xmlns="http://www.w3.org/2000/svg"
+//     >
+//       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+//     </svg>
+//   )
+// }
 
 // Metric pill component for consistent styling
-interface MetricPillProps {
-  value: number
-  icon: React.ReactNode
-  className?: string
-}
+// interface MetricPillProps {
+//   value: number
+//   icon: React.ReactNode
+//   className?: string
+// }
 
-function MetricPill({ value, icon, className }: MetricPillProps) {
-  return (
-    <div
-      className={cn(
-        "inline-flex h-8 items-center gap-1 rounded-lg border border-border bg-background px-2",
-        className
-      )}
-    >
-      <span className="text-base">{value}</span>
-      {icon}
-    </div>
-  )
-}
+// function MetricPill({ value, icon, className }: MetricPillProps) {
+//   return (
+//     <div
+//       className={cn(
+//         "inline-flex h-8 items-center gap-1 rounded-lg border border-border bg-background px-2",
+//         className
+//       )}
+//     >
+//       <span className="text-base">{value}</span>
+//       {icon}
+//     </div>
+//   )
+// }
 
 // Column definitions
 const columns: ColumnDef<Token>[] = [
@@ -128,29 +128,29 @@ const columns: ColumnDef<Token>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "evidenceEntries",
-    meta: {
-      headerClassName: "hidden md:table-cell",
-      cellClassName: "hidden md:table-cell",
-    },
-    header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Evidence entries
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
-    ),
-    cell: ({ row }) => (
-      <MetricPill
-        icon={<IconBubble className="size-4" />}
-        value={row.original.evidenceEntries}
-      />
-    ),
-  },
+  // {
+  //   accessorKey: "evidenceEntries",
+  //   meta: {
+  //     headerClassName: "hidden md:table-cell",
+  //     cellClassName: "hidden md:table-cell",
+  //   },
+  //   header: ({ column }) => (
+  //     <button
+  //       className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       type="button"
+  //     >
+  //       Evidence entries
+  //       <ChevronsUpDownIcon className="size-4" />
+  //     </button>
+  //   ),
+  //   cell: ({ row }) => (
+  //     <MetricPill
+  //       icon={<IconBubble className="size-4" />}
+  //       value={row.original.evidenceEntries}
+  //     />
+  //   ),
+  // },
   {
     accessorKey: "lastUpdated",
     header: ({ column }) => (

@@ -3,6 +3,15 @@ import TokenDetail from "@/components/token-detail"
 
 export const Route = createFileRoute("/tokens/$tokenId")({
   component: TokenDetailPage,
+  head: ({ params }) => {
+    return {
+      meta: [
+        {
+          title: `${params.tokenId.toUpperCase()} - Ownership Token Framework`,
+        },
+      ],
+    }
+  },
 })
 
 function TokenDetailPage() {

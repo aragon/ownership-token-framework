@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
+import { trackExpandAllCriteria } from "@/lib/analytics"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
 import { formatUnixTimestamp } from "@/lib/utils"
@@ -137,6 +138,8 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
     // If all closed → Expand all criterias
     // If all open → Close all criterias
     // If some open → Expand all criterias
+    const action = allOpen ? "collapse" : "expand"
+    trackExpandAllCriteria(action)
     setOpenCriteria(allOpen ? [] : allCriteriaIds)
   }
 
