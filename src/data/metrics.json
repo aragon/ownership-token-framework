@@ -60,7 +60,7 @@
           "name": "Governance Concentration",
           "about": "does any one group control a majority share of the voting supply?",
           "status": "TBD",
-          "notes": "Aragon has not checked the distribution of LDO holders outside of the core team is >50%",
+          "notes": "Aragon has not checked the distribution of LDO holders outside of the core team being >50%",
           "evidence": []
         }
       ]
@@ -158,7 +158,7 @@
           "name": "Privileged Access controlled by holders",
           "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
           "status": "✅",
-          "notes": "Users funds that have been deposited into Lido Protocol are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO holders. \n\n Guardians are addresses of node operators + LDO dev team, connected to automated software that performs security checks on deposits and runs on trusted entities. \n\n While deposits are operationally executed by the DepositSecurityModule (Guardians), this does not constitute privileged protocol control independent of LDO holders: \n\n 1. Guardians are fully accountable to LDO holders. They can be rotated, replaced, or their mandate changed through on-chain voting. \n\n 2. Guardians do not control protocol parameters or economic risk. They cannot change staking ratios, fee splits, module shares, or risk parameters. All meaningful economic and risk-related decisions remain under LDO control.",
+          "notes": "Users' funds that have been deposited into Lido Protocol are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule which is controlled by Guardians, not LDO holders. \n\n Guardians are addresses of node operators + LDO dev team, connected to automated software that performs security checks on deposits and runs on trusted entities. \n\n While deposits are operationally executed by the DepositSecurityModule (Guardians), this does not constitute privileged protocol control independent of LDO holders: \n\n 1. Guardians are fully accountable to LDO holders. They can be rotated, replaced, or their mandate changed through on-chain voting. \n\n 2. Guardians do not control protocol parameters or economic risk. They cannot change staking ratios, fee splits, module shares, or risk parameters. All meaningful economic and risk-related decisions remain under LDO control.",
           "evidence": [
             {
               "name": "DepositSecurityModule",
@@ -333,7 +333,7 @@
           "name": "Access Control managed by Holders",
           "about": "Are all significant privileged roles (those impacting value/ownership) gated by the holder workflow and revocable?",
           "status": "✅",
-          "notes": "Protocol roles are controlled by the Agent.\n\n**Gauge Addition:** Only the Agent can add new gauges via [add_gauge](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/GaugeController.vy#L297) on GaugeController.\n\n**Fee Parameters:** Pool admin fees are set at deployment and can be modified by Agent (through veCRV holders voting) - See accrual section for more info.\n\n**Pool Factory Ownership:** new pools are deployed by Factory contracts which in turn is controlled by [OwnerProxy](https://etherscan.io/address/0x742C3cF9Af45f91B109a81EfEaf11535ECDe9571#code) contract. This contract has two types of admin set on it(Agent and GnosisSafe). Agent is responsible for adding new pools, hence giving veCRV holders control over protocol expansion.",
+          "notes": "Protocol roles are controlled by the Agent.\n\n**Gauge Addition:** Only the Agent can add new gauges via [add_gauge](https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/GaugeController.vy#L297) on GaugeController.\n\n**Fee Parameters:** Pool admin fees are set at deployment and can be modified by Agent (through veCRV holders voting), see accrual section for more info.\n\n**Pool Factory Ownership:** new pools are deployed by Factory contracts which in turn is controlled by [OwnerProxy](https://etherscan.io/address/0x742C3cF9Af45f91B109a81EfEaf11535ECDe9571#code) contract. This contract has two types of admin set on it (Agent and GnosisSafe). Agent is responsible for adding new pools, hence giving veCRV holders control over protocol expansion.",
           "evidence": [
             {
               "name": "GaugeController: admin is set to Agent",
@@ -378,7 +378,7 @@
           "name": "Supply Sovereignty",
           "about": "Is the supply fixed/programmatic, or do holders control the minting process? (No third-party \"Minter\" roles).",
           "status": "✅",
-          "notes": "Curve’s token inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^¼.\n\nAny unminted supply from a year is permanently lost. Mint can only occur by Minter which decides how much to mint for an user depending on the veCRV balance and provided LP tokens in a gauge.",
+          "notes": "Curve’s token inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^¼.\n\nAny unminted supply from a year is permanently lost. Mint can only occur by Minter which decides how much to mint for a user depending on the veCRV balance and provided LP tokens in a gauge.",
           "evidence": [
             {
               "name": "ERC20CRV.vy Yearly Epoch Logic",
@@ -448,7 +448,7 @@
           "name": "Privileged Access controlled by holders",
           "about": "Are significant ownership restrictions or protocol parameters (risk/economic) gated specifically by holders?",
           "status": "✅",
-          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting.\n\nveCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gated control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting.\n\nveCRV holders can also kill a gauge, permanently setting its rewards to 0.",
           "evidence": [
             {
               "name": "Gauge Kill Implementation",
@@ -732,7 +732,7 @@
           "name": "Accrual Active & Owned",
           "about": "Are value flows currently active and governed by holders (non-discretionary)?",
           "status": "✅",
-          "notes": "Protocol fees across all Uniswap versions (V2, V3, V4) flow to governance-controlled destinations (TokenJar).\n\nValue accrual is via burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit. \n\n**V2:** V2 fees go to FeeTo address which is set to TokenJar. \n\n**V3:** V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit. \n\n**V4:** V4 fees have not been activated yet, but TimeLock contract(hence UNI holders) at some point will set ProtocolFeeController address to V4FeeAdapter on the PoolManager which will call collectProtocolFees(), with a recipient as TokenJar.",
+          "notes": "Protocol fees across all Uniswap versions (V2, V3, V4) flow to governance-controlled destinations (TokenJar).\n\nValue accrual is via a burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit. \n\n**V2:** V2 fees go to FeeTo address which is set to TokenJar. \n\n**V3:** V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit. \n\n**V4:** V4 fees have not been activated yet, but TimeLock contract (hence UNI holders) at some point will set ProtocolFeeController address to V4FeeAdapter on the PoolManager which will call collectProtocolFees(), with a recipient as TokenJar.",
           "evidence": [
             {
               "name": "UniswapV2Pool: feeTo",
@@ -759,7 +759,7 @@
               "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L48"
             },
             {
-              "name": "FirePit 4000 UNI Requirement",
+              "name": "FirePit 4000 UNI Requirement (threshold in ResourceManager)",
               "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721"
             }
           ]
@@ -769,7 +769,7 @@
           "name": "Treasury Ownership",
           "about": "Is the protocol treasury programmatically controlled by the token-governance workflow?",
           "status": "✅",
-          "notes": "The treasury (~$1.4B) at the time of writing, is entirely controlled by token holders.\n\nUNI tokens were initially minted to [EOA](https://etherscan.io/address/0x41653c7d61609D856f29355E404F310Ec4142Cfb), which transferred portions to TreasuryVester)(which has recipient: Timelock).\n\nVester's claim() (callable by anyone) followed a schedule to gradually vest UNI to Timelock without rapid dilution. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+          "notes": "The treasury (~$1.4B) at the time of writing, is entirely controlled by token holders.\n\nUNI tokens were initially minted to [EOA](https://etherscan.io/address/0x41653c7d61609D856f29355E404F310Ec4142Cfb), which transferred portions to TreasuryVester) (which has recipient: Timelock).\n\nVester's claim() (callable by anyone) followed a schedule to gradually vest UNI to Timelock without rapid dilution. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
           "evidence": [
             {
               "name": "TreasuryVester",
@@ -861,7 +861,7 @@
           "name": "On-chain Workflow Control",
           "about": "Does an on-chain workflow exist that gives holders ultimate voting power? (e.g., Timelocks or DAOs).",
           "status": "✅",
-          "notes": "AERO holders lock AERO in VotingEscrow to receive veAERO represented as veNFTs. veAERO holders vote each epoch on gauge weights via the Voter contract. Based on the final vote distribution, the Minter mints weekly AERO emissions, which the Voter distributes to gauges proportionally to votes received.\n\nAn EmergencyCouncil exists to handle contingencies. It can be invoked to kill or revive gauges, update pool name and symbol metadata, and rotate the EmergencyCouncil itself.",
+          "notes": "AERO holders lock AERO in VotingEscrow to receive veAERO represented as veNFTs. veAERO holders vote each epoch (week) on gauge weights via the Voter contract. Based on the final vote distribution, the Minter mints weekly AERO emissions, which the Voter distributes to gauges proportionally to votes received.\n\nAn EmergencyCouncil exists to handle contingencies. It can be invoked to kill or revive gauges, update pool name and symbol metadata, and rotate the EmergencyCouncil itself.",
           "evidence": [
             {
               "name": "AERO Token",
@@ -971,7 +971,7 @@
           "notes": "The AERO token has no blacklist, pause, or seizure mechanisms. \n\n **Team Rate:** the team rate (share of weekly emissions allocated to the team) can be modified by a Gnosis Safe controlled by the Aerodrome team.\n\n**Emission Rate:** Changes to the weekly emission rate (±0.01% or unchanged) are controlled by Governor (a multisig), soon to be handed over to governance contracts controlled by veAERO holders.",
           "evidence": [
             {
-              "name": "Gnosis Safe(Team)",
+              "name": "Gnosis Safe (Team)",
               "url": "https://basescan.org/address/0xBDE0c70BdC242577c52dFAD53389F82fd149EA5a#code"
             },
             {
@@ -979,7 +979,7 @@
               "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L129"
             },
             {
-              "name": "Emission Rate Change By Governor set to different Gnosis Safe:",
+              "name": "Emission Rate Change By Governor, set to different Gnosis Safe:",
               "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075"
             },
             {
@@ -1016,7 +1016,7 @@
           "notes": "**Non-SlipStream:** The fees are set on the PoolFactory which can be changed by the `feeManager` which is set to Gnosis Safe. \n\n **SlipStream:** For CLPoolFactory, the fees are set inside the SwapFeeModule which allows feeManager to change fees (currently set as GnosisSafe)",
           "evidence": [
             {
-              "name": "GnosisSafe",
+              "name": "FeeManager GnosisSafe",
               "url": "https://basescan.org/address/0xE6A41fE61E7a1996B59d508661e3f524d6A32075#code"
             },
             {
@@ -1024,7 +1024,7 @@
               "url": "https://basescan.org/address/0x420DD381b31aEf6683db6B902084cB0FFECe40Da#code"
             },
             {
-              "name": "SlipStream: CLFactory(uses SwapFeeModule for fees)",
+              "name": "SlipStream: CLFactory (uses SwapFeeModule for fees)",
               "url": "https://basescan.org/address/0x5e7BB104d84c7CB9B682AaC2F3d509f5F406809A#code"
             },
             {
@@ -1045,10 +1045,10 @@
           "name": "Accrual Active",
           "about": "Are value flows active and governed by holders?",
           "status": "✅",
-          "notes": "**Growth Emissions:** veAERO holders receive the rewards from the growth emissions(see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. .\n\n**Trading Fees:** For both normal and slipstream (CL) pools, the swap fees meant for LPs who have staked their LP tokens in gauges, goes to veAERO holders.",
+          "notes": "**Growth Emissions:** veAERO holders receive the rewards from the growth emissions (see Supply section for more). These growth emissions are transferred to RewardDistributor and veAERO holders can claim it in proportion of their ve balance. \n\n**Trading Fees:** For both normal and slipstream (CL) pools, the swap fees meant for LPs who have staked their LP tokens in gauges, goes to veAERO holders.",
           "evidence": [
             {
-              "name": "Gauge Deposit Logic(see `earned` function as well)",
+              "name": "Gauge Deposit Logic (see `earned` function as well)",
               "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/gauges/Gauge.sol#L155"
             },
             {
@@ -1292,10 +1292,10 @@
           "name": "Upgrade Sovereignty",
           "about": "Do holders control the implementation logic of the protocol?",
           "status": "✅",
-          "notes": "Holders control implementation upgrades for all v3 market deployments.\n\nThe pool contract is an upgradeable proxy contract, on which Admin is set to PoolAddressProvider. PoolAddressProvider’s critical functions such as the function that includes calling upgrading the pool instance, is controlled by onlyOwner which is set to Executor contract which in turn has its owner set to PayloadsController. In order for PayloadsController to call Executor, Governance must call PayloadsController as MESSAGE_ORIGINATOR check must be equal to Governance for a proposal to move.",
+          "notes": "Holders control implementation upgrades for all v3 market deployments.\n\nThe pool contract is an upgradeable proxy contract, on which Admin is set to PoolAddressProvider. PoolAddressProvider’s critical functions such as that which includes calling upgrading the pool instance, is controlled by onlyOwner which is set to Executor contract which in turn has its owner set to PayloadsController. In order for PayloadsController to call Executor, Governance must call PayloadsController as MESSAGE_ORIGINATOR check must be equal to Governance for a proposal to move.",
           "evidence": [
             {
-              "name": "Upgradability per contract:",
+              "name": "Upgradability per contract",
               "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability"
             },
             {
@@ -1307,7 +1307,7 @@
               "url": "https://etherscan.io/address/0x2f39d218133AFaB8F2B819B1066c7E434Ad94E9e#code"
             },
             {
-              "name": "Executor contract: owner(PayloadsController)",
+              "name": "Executor contract: owner (PayloadsController)",
               "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code"
             },
             {
@@ -1337,10 +1337,10 @@
             },
             {
               "name": "Core Protocol Roles in ACLManager",
-              "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0"
+              "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0#readContract"
             },
             {
-              "name": "EMERGENCY_ADMIN_ROLE: GnosisSafeProx",
+              "name": "EMERGENCY_ADMIN_ROLE: GnosisSafeProxy",
               "url": "https://etherscan.io/address/0x2cfe3ec4d5a6811f4b8067f0de7e47dfa938aa30#code"
             },
             {
@@ -1381,6 +1381,14 @@
             {
               "name": "Safety Module - Incentives",
               "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module"
+            },
+            {
+              "name": "Transition Logic",
+              "url": "https://aave.com/help/umbrella/stake"
+            },
+            {
+              "name": "Umbrella Activation Proposal",
+              "url": "https://vote.onaave.com/proposal/?proposalId=320"
             }
           ]
         },
