@@ -25,3 +25,10 @@ export function trackCriterionOpen(criterionId: string, criterionName: string) {
     content_name: criterionName,
   })
 }
+
+export function trackExpandAllCriteria(action: "expand" | "collapse") {
+  trackEvent("select_content", {
+    content_type: "expand_all_criteria",
+    content_id: action,
+  })
+}
