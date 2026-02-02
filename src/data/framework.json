@@ -108,8 +108,8 @@
     "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
     "criteria": [
       {
-        "id": "offchain__brand",
-        "name": "Brand",
+        "id": "offchain__trademark",
+        "name": "Trademark",
         "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?"
       },
       {
