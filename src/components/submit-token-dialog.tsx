@@ -107,7 +107,7 @@ export function SubmitTokenDialog({
             Request a specific token to be evaluated using our framework and to
             be considered for potential inclusion in the Ownership Token
             Framework. We are also interested in any feedback you have that
-            could make the Index more helpful for you.
+            could make the Framework more helpful for you.
           </DialogDescription>
         </DialogHeader>
 
@@ -132,7 +132,6 @@ export function SubmitTokenDialog({
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
                       id="requester-name"
-                      placeholder="Your name"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -154,7 +153,6 @@ export function SubmitTokenDialog({
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
                       id="requester-project"
-                      placeholder="Project name"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -174,8 +172,11 @@ export function SubmitTokenDialog({
                       aria-invalid={fieldState.invalid}
                       autoComplete="off"
                       id="request-message"
-                      placeholder="What would you like us to add to or change about the Ownership Token Index?"
                     />
+                    <FieldDescription>
+                      What would you like us to add to or change about the
+                      Ownership Token Framework?
+                    </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
                     )}
@@ -197,7 +198,6 @@ export function SubmitTokenDialog({
                         aria-invalid={fieldState.invalid}
                         className="min-h-24 resize-none"
                         id="additional-info"
-                        placeholder="Please explain why this would be helpful to you."
                         rows={4}
                       />
                     </InputGroup>
@@ -227,7 +227,7 @@ export function SubmitTokenDialog({
                       aria-invalid={fieldState.invalid}
                       autoComplete="email"
                       id="submitter-email"
-                      placeholder="your.email@example.com"
+                      placeholder="you@domain.com"
                       type="email"
                     />
                     <FieldDescription>

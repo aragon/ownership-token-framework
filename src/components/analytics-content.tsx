@@ -1,7 +1,14 @@
 import type { Metric } from "@/lib/metrics-data"
 import MetricCard from "./metric-card"
 
-export default function AnalyticsContent({ metrics }: { metrics: Metric[] }) {
+interface AnalyticsContentProps {
+  metrics: Metric[]
+  openCriteria?: string[]
+  onOpenCriteriaChange?: (value: string[]) => void
+}
+
+export default function AnalyticsContent(props: AnalyticsContentProps) {
+  const { metrics, openCriteria, onOpenCriteriaChange } = props
   // const [filterValue, setFilterValue] = useState("")
   // const [viewBy, setViewBy] = useState("metric")
 
@@ -36,7 +43,12 @@ export default function AnalyticsContent({ metrics }: { metrics: Metric[] }) {
       {/* Metrics */}
       <div className="space-y-4">
         {metrics.map((metric) => (
-          <MetricCard key={metric.id} metric={metric} />
+          <MetricCard
+            key={metric.id}
+            metric={metric}
+            onOpenCriteriaChange={onOpenCriteriaChange}
+            openCriteria={openCriteria}
+          />
         ))}
       </div>
     </div>

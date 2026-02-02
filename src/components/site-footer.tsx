@@ -1,57 +1,54 @@
+import type { ComponentProps } from "react"
 import { Container } from "@/components/ui/container"
+import { cn } from "@/lib/utils"
+
+interface IFooterLinkProps extends ComponentProps<"a"> {
+  href: string
+  children: React.ReactNode
+}
+
+const FooterLink: React.FC<IFooterLinkProps> = (props) => {
+  const { href, children, className, ...otherProps } = props
+
+  return (
+    <a
+      className={cn(
+        "rounded-md px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted",
+        className
+      )}
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
+      {...otherProps}
+    >
+      {children}
+    </a>
+  )
+}
 
 export function SiteFooter() {
   return (
     <footer className="border-t bg-background">
-      <Container className="flex h-20 items-center justify-between gap-4 lg:gap-12">
-        <a
-          className="flex items-center gap-2 shrink-0"
-          href="https://aragon.org"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+      <Container className="flex h-auto lg:h-20 flex-col lg:flex-row items-center justify-between gap-4 lg:gap-12 py-4 lg:py-0">
+        <div className="flex items-center gap-2 shrink-0">
           <img
             alt="Aragon"
             className="h-6"
             src="/logo-aragon.svg"
             style={{ width: "96.75px" }}
           />
-        </a>
+        </div>
 
         {/* Navigation Links */}
-        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex">
-          <a
-            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://app.aragon.org"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Launch app
-          </a>
-          <a
-            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://twitter.com/AragonProject"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            X
-          </a>
-          <a
-            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://github.com/aragon/ownership-token-index"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+        <nav className="flex flex-col lg:flex-row lg:flex-1 items-center justify-center gap-1 w-full lg:w-auto">
+          <FooterLink href="https://app.aragon.org">Launch app</FooterLink>
+          <FooterLink href="https://twitter.com/AragonProject">X</FooterLink>
+          <FooterLink href="https://github.com/aragon/ownership-token-index">
             Github
-          </a>
-          <a
-            className="rounded-md px-4 py-2 text-sm font-normal text-foreground transition-colors hover:bg-muted"
-            href="https://aragon.org/terms-and-conditions"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          </FooterLink>
+          <FooterLink href="https://aragon.org/terms-and-conditions">
             Terms of service
-          </a>
+          </FooterLink>
         </nav>
 
         {/* Copyright */}

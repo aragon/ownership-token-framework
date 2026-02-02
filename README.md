@@ -1,4 +1,4 @@
-# Ownership Token Index
+# Ownership Token Framework
  
 A TanStack Start application with React, TypeScript, Tailwind CSS, and shadcn/ui.
 
@@ -34,9 +34,10 @@ This project uses Tailwind CSS v4 for styling.
 This project uses Biome for linting and formatting:
 
 ```bash
-pnpm lint      # Run linter
-pnpm format    # Format code
-pnpm check     # Lint and format with auto-fix
+pnpm lint       # Run linter
+pnpm format     # Format code
+pnpm check      # Lint and format with auto-fix
+pnpm type-check # Run TS type check
 ```
 
 ## shadcn/ui
