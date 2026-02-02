@@ -2510,14 +2510,14 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "summary": "Core UNISWAP trademark rights are held by Universal Navigation Inc. (Uniswap Labs). Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain.",
+      "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Interface distribution remains operated by Labs.",
       "criteria": [
         {
           "id": "offchain__brand",
           "name": "Brand",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "Core UNISWAP trademark rights are held/enforced by Universal Navigation Inc. d/b/a Uniswap Labs. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus brand assets could be licensed or transferred to token holders.",
+          "notes": "Core trademark rights related to Uniswap Labs, including UNISWAP, UNI, and UNISWAP LABS, are held and enforceable by Universal Navigation Inc. d/b/a Uniswap Labs (\"Labs\").\n\nAfter the passing of the UNIfication proposal, in which Uniswap Labs entered into a service provider agreement with DUNI (formerly Uniswap Governance), Labs grants DUNI a non-exclusive, royalty-free, worldwide trademark license to use the UNISWAP mark solely in connection with DUNI's business, subject to Labs' trademark usage guidelines and limited to the term of the agreement.\n\nThe agreement does not transfer ownership of the UNISWAP mark or Labs' other trademarks to DUNI or token holders.\n\nAny broader assignment, or permanent or exclusive license, of Labs' trademarks to DUNI is explicitly deferred and would require a separate written agreement negotiated in the future.",
           "evidence": [
             {
               "urls": [
@@ -2535,7 +2535,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "The primary interface terms identify Uniswap Labs (Universal Navigation Inc.) as the contracting party. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus distribution assets could be licensed or transferred.",
+          "notes": "Distribution of Uniswap interfaces and APIs is currently operated by Uniswap Labs, which remains the contracting entity for users. DUNI does not control interface distribution today.",
           "evidence": [
             {
               "urls": [
@@ -2552,8 +2552,8 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
-          "notes": "Aragon has not yet verified all the licensing criteria associated with the UNI token or the corresponding protocol and assets",
+          "status": "⚠️",
+          "notes": "Uniswap Labs retains ownership of its pre-existing IP and trademarks. DUNI holds a limited, non-exclusive license to use the UNISWAP trademark for DUNI-related purposes, and generally receives rights to new deliverables under open-source licenses. No transfer of core Labs' IP has occurred; any broader licensing or assignment would require a separate agreement.",
           "evidence": []
         }
       ]
