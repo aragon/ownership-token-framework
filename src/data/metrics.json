@@ -2500,8 +2500,8 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
-          "notes": "Aragon has not yet verified the supply schedule criteria for the UNI token",
+          "status": "✅",
+          "notes": "The Uniswap team have stated there are no future unlocks of the Uniswap Token",
           "evidence": []
         }
       ]
@@ -2560,3 +2560,4 @@
     }
   ]
 }
+
