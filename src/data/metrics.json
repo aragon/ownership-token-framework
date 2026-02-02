@@ -2161,7 +2161,7 @@
             },
             {
               "name": "Upgradeable Governance Contract",
-              "summary": "GovernorBravoDelegator is upgradeable by the Admin which is set to the Timelock. Any upgrade would require a successful governance process.",
+              "summary": "GovernorBravoDelegator is upgradeable, with the Admin role held by the Timelock. Any upgrade would require a governance vote by UNI holders.",
               "urls": [
                 {
                   "name": "GovernorBravoDelegator",
@@ -2263,7 +2263,7 @@
       "id": "val-accrual",
       "name": "Metric 2: Value Accrual",
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury (~$1.4B) is entirely controlled by token holders. Brand and distribution controlled by Uniswap Labs, with DUNI structure for potential transfer.",
+      "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury is entirely controlled by token holders.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -2306,7 +2306,7 @@
             },
             {
               "name": "V4 Fees",
-              "summary": "V4 fees have not been activated yet, but in the future fees can be activated via governance process. To activate fees, Timelock will set the PoolManager's ProtocolFeeController address to a V4FeeAdapter contract.",
+              "summary": "V4 fees have not been activated yet, but in the future fees can be activated via governance process as described in Onchain Governance Workflow. To activate fees, Timelock will set the PoolManager's ProtocolFeeController address to a V4FeeAdapter contract which contains logic for fee collection and distribution.",
               "urls": [
                 {
                   "name": "V4 PoolManager",
@@ -2338,13 +2338,13 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "✅",
-          "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens.\n\n**Initial Distribution:** UNI tokens were initially minted to an EOA, which transferred portions to TreasuryVester (with recipient set to Timelock).\n\n**Vesting Schedule:** The Vester's claim() function (callable by anyone) follows a schedule to gradually vest UNI to Timelock without rapid dilution.\n\n**Governance Control:** Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+          "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "TreasuryVester",
-                  "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+                  "name": "Timelock",
+                  "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
                   "type": "explorer"
                 }
               ]
@@ -2427,7 +2427,7 @@
       "id": "verifiability",
       "name": "Metric 3: Verifiability",
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-      "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, and V4 protocol contracts are open source and verified.",
+      "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, V4, and UniswapX protocol contracts are open source and verified.",
       "criteria": [
         {
           "id": "verifiability__token-source",
@@ -2457,7 +2457,7 @@
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
           "status": "✅",
-          "notes": "Uniswap V2, V3, and V4 protocol contracts are open source on GitHub.",
+          "notes": "Uniswap V2, V3, V4, and UniswapX protocol contracts are open source on GitHub.",
           "evidence": [
             {
               "urls": [
@@ -2475,6 +2475,11 @@
                   "name": "Uniswap V4 Core (GitHub)",
                   "url": "https://github.com/Uniswap/v4-core",
                   "type": "github"
+                },
+                {
+                  "name": "UniswapX (GitHub)",
+                  "url": "https://github.com/Uniswap/UniswapX",
+                  "type": "github"
                 }
               ]
             }
@@ -2486,7 +2491,7 @@
       "id": "distribution",
       "name": "Metric 4: Token Distribution",
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Aragon has not verified that 3rd parties do not hold more than 50% of voting power.",
+      "summary": "",
       "criteria": [
         {
           "id": "distribution__concentration",
@@ -2501,8 +2506,40 @@
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
           "status": "✅",
-          "notes": "The Uniswap team have stated there are no future unlocks of the Uniswap Token",
-          "evidence": []
+          "notes": "Four vesting contracts distributed UNI to the Governance Timelock over four years, ending in September 2024. There are no future unlocks.",
+          "evidence": [
+            {
+              "name": "TreasuryVester Contracts",
+              "summary": "UNI tokens were initially minted to an EOA, which transferred the Treasury's portion to four vesting contracts in varying amounts. Each TreasuryVester contract was configured with: uni, recipient, vestingAmount, vestingBegin, vestingCliff, vestingEnd.",
+              "urls": [
+                {
+                  "name": "TreasuryVester Code",
+                  "url": "https://github.com/Uniswap/governance/blob/master/contracts/TreasuryVester.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "TreasuryVester 1",
+                  "url": "https://etherscan.io/address/0x4750c43867ef5f89869132eccf19b9b6c4286e1a",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 2",
+                  "url": "https://etherscan.io/address/0xe3953d9d317b834592ab58ab2c7a6ad22b54075d",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 3",
+                  "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 4",
+                  "url": "https://etherscan.io/address/0x3d30b1ab88d487b0f3061f40de76845bec3f1e94",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
