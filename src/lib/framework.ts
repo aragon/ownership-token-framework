@@ -22,9 +22,9 @@ export const FRAMEWORK_BASE_URL =
 const METRIC_ANCHORS: Record<string, string> = {
   "onchain-ctrl": "#metric-1-onchain-control",
   "val-accrual": "#metric-2-value-accrual",
-  "verifiability": "#metric-3-verifiability",
-  "distribution": "#metric-4-token-distribution",
-  "offchain": "#offchain-dependencies",
+  verifiability: "#metric-3-verifiability",
+  distribution: "#metric-4-token-distribution",
+  offchain: "#offchain-dependencies",
 }
 
 /**
