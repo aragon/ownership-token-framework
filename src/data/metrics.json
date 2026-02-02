@@ -2,7 +2,8 @@
   "aave": [
     {
       "id": "onchain-ctrl",
-      "name": "Metric 1: Onchain Control",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "AAVE, stkAAVE and aAAVE holders control the protocol through onchain governance with Timelock execution. The token has fixed 16M supply with no mint function. Delegated steward roles exist but are elected and revocable by governance.",
       "criteria": [
@@ -230,7 +231,8 @@
     },
     {
       "id": "val-accrual",
-      "name": "Metric 2: Value Accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Protocol fees flow to governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
       "criteria": [
@@ -331,6 +333,7 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
+          "tags": ["Reference"],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "TBD",
           "notes": "Aragon has not verified additional offchain value accrual flows to the AAVE token",
@@ -340,7 +343,8 @@
     },
     {
       "id": "verifiability",
-      "name": "Metric 3: Verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "AAVE token proxy and implementation are verified on Etherscan. Aave V3 protocol contracts are open source and verified.",
       "criteria": [
@@ -389,7 +393,8 @@
     },
     {
       "id": "distribution",
-      "name": "Metric 4: Token Distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not verified if any 3rd party controls a majority share of the voting power of AAVE or derivatives.",
       "criteria": [
@@ -414,12 +419,13 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
+      "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Interfaces Ltd (a separate entity from the Aave DAO) as the contracting party.",
       "criteria": [
         {
-          "id": "offchain__brand",
-          "name": "Brand",
+          "id": "offchain__trademark",
+          "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "A US AAVE trademark filing lists Quantum Swan OU (Estonia) as the applicant/owner.",
@@ -467,7 +473,8 @@
   "aero": [
     {
       "id": "onchain-ctrl",
-      "name": "Metric 1: Onchain Control",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "Aerodrome's core contracts are largely immutable with control of emissions given to veAERO holders via the gauge voting system. There are some minor areas in which privileged parties can control specific areas of the protocol, which are detailed below.",
       "criteria": [
@@ -731,7 +738,8 @@
     },
     {
       "id": "val-accrual",
-      "name": "Metric 2: Value Accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "veAERO holders receive growth emissions and trading fees from staked LP positions. There is no protocol treasury - all trading fees are distributed. Offchain brand controlled by Aerodrome Foundation.",
       "criteria": [
@@ -878,7 +886,8 @@
     },
     {
       "id": "verifiability",
-      "name": "Metric 3: Verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "AERO token source is publicly available on GitHub and verified on Basescan. Aerodrome protocol contracts are open source and verified.",
       "criteria": [
@@ -932,7 +941,8 @@
     },
     {
       "id": "distribution",
-      "name": "Metric 4: Token Distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Distribution of AERO and veAERO voting power outside of the core team has not been independently verified.",
       "criteria": [
@@ -957,12 +967,13 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
+      "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "summary": "US AERODROME trademark is held by Perpetual Cyclist Services LLC (Delaware). Primary interface terms identify the Aerodrome Foundation as the contracting party.",
       "criteria": [
         {
-          "id": "offchain__brand",
-          "name": "Brand",
+          "id": "offchain__trademark",
+          "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "A US AERODROME trademark filing lists Perpetual Cyclist Services LLC (Delaware) as the applicant/owner.",
@@ -1010,7 +1021,8 @@
   "crv": [
     {
       "id": "onchain-ctrl",
-      "name": "Metric 1: Onchain Control",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "veCRV holders control all protocol operations through Aragon v1's Voting Contract and Agent. The CRV token is immutable with programmatic inflation and no censorship capabilities. Core protocol and pool contracts are immutable.",
       "criteria": [
@@ -1224,7 +1236,8 @@
     },
     {
       "id": "val-accrual",
-      "name": "Metric 2: Value Accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards. Value flows are programmatic through the gauge system. Offchain structure shows Swiss Stake AG controls the interface and trademark.",
       "criteria": [
@@ -1342,7 +1355,8 @@
     },
     {
       "id": "verifiability",
-      "name": "Metric 3: Verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "CRV token source (Vyper) is publicly available on GitHub and verified on Etherscan. Curve DAO contracts are open source and verified.",
       "criteria": [
@@ -1391,7 +1405,8 @@
     },
     {
       "id": "distribution",
-      "name": "Metric 4: Token Distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not verified if the majority of veCRV voting power lies with a single party.",
       "criteria": [
@@ -1426,12 +1441,13 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
+      "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "summary": "Swiss CRV trademark is held by Swiss Stake AG. Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
       "criteria": [
         {
-          "id": "offchain__brand",
-          "name": "Brand",
+          "id": "offchain__trademark",
+          "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
           "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
@@ -1479,7 +1495,8 @@
   "ldo": [
     {
       "id": "onchain-ctrl",
-      "name": "Metric 1: Onchain Control",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "LDO holders exercise ultimate control through a multi-step governance flow with stETH holder veto protection via Dual Governance. All critical roles flow through governance-controlled contracts. The token has unbounded supply controlled by governance, with token behavior modifiable through controller upgrades.",
       "criteria": [
@@ -1796,7 +1813,8 @@
     },
     {
       "id": "val-accrual",
-      "name": "Metric 2: Value Accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "LDO holders currently have no direct value accrual mechanism from protocol revenue. Governance is exploring buyback mechanisms. The treasury is controlled by LDO holders, and offchain IP is held by DAO-controlled BORG foundations.",
       "criteria": [
@@ -1879,7 +1897,8 @@
     },
     {
       "id": "verifiability",
-      "name": "Metric 3: Verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "LDO token source is publicly available and verified on Etherscan. Lido core protocol contracts are open source and verified.",
       "criteria": [
@@ -1928,7 +1947,8 @@
     },
     {
       "id": "distribution",
-      "name": "Metric 4: Token Distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not yet verified the distribution of LDO holders outside of the core team.",
       "criteria": [
@@ -1953,12 +1973,13 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
+      "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
       "summary": "European trademark registrations for LIDO list Lido Labs Foundation as the owner. Lido Labs, Ecosystem, and Alliance BORG Foundations are DAO-controlled entities managing offchain IP and distribution.",
       "criteria": [
         {
-          "id": "offchain__brand",
-          "name": "Brand",
+          "id": "offchain__trademark",
+          "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "✅",
           "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
@@ -2041,7 +2062,8 @@
   "uni": [
     {
       "id": "onchain-ctrl",
-      "name": "Metric 1: Onchain Control",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "UNI holders maintain ultimate control through onchain voting. The token is immutable with a hardcoded 2% annual inflation cap. All core contracts (V2, V3, V4) are non-upgradeable with no pause/freeze functions.",
       "criteria": [
@@ -2161,7 +2183,7 @@
             },
             {
               "name": "Upgradeable Governance Contract",
-              "summary": "GovernorBravoDelegator is upgradeable. Admin (who can upgrade) is set to Timelock contract which requires governance flow to go through.",
+              "summary": "GovernorBravoDelegator is upgradeable, with the Admin role held by the Timelock. Any upgrade would require a governance vote by UNI holders.",
               "urls": [
                 {
                   "name": "GovernorBravoDelegator",
@@ -2261,16 +2283,17 @@
     },
     {
       "id": "val-accrual",
-      "name": "Metric 2: Value Accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury (~$1.4B) is entirely controlled by token holders. Brand and distribution controlled by Uniswap Labs, with DUNI structure for potential transfer.",
+      "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury is entirely controlled by token holders.",
       "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "✅",
-          "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - anyone can burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
+          "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - a burn can be initiated by anyone who chooses to burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
           "evidence": [
             {
               "name": "V2 Fees",
@@ -2290,7 +2313,7 @@
             },
             {
               "name": "V3 Fees",
-              "summary": "V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar.",
+              "summary": "V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit. Only select V3 pools are currently active.",
               "urls": [
                 {
                   "name": "V3FeeAdapter",
@@ -2306,7 +2329,7 @@
             },
             {
               "name": "V4 Fees",
-              "summary": "Fees have not been activated yet, but Timelock (hence UNI holders) will set ProtocolFeeController address to V4FeeAdapter on the PoolManager which will call collectProtocolFees(), with a recipient as TokenJar.",
+              "summary": "V4 fees have not been activated yet, but in the future fees can be activated via governance process as described in Onchain Governance Workflow. To activate fees, Timelock will set the PoolManager's ProtocolFeeController address to a V4FeeAdapter contract which contains logic for fee collection and distribution.",
               "urls": [
                 {
                   "name": "V4 PoolManager",
@@ -2326,8 +2349,8 @@
               "urls": [
                 {
                   "name": "FirePit 4000 UNI Requirement",
-                  "url": "https://etherscan.io/address/0x0D5Cd355e2aBEB8fb1552F56c965B867346d6721",
-                  "type": "explorer"
+                  "url": "https://github.com/Uniswap/protocol-fees/blob/8604e4b9aed88bdd6be3a322e19722c40f94be2c/src/releasers/ExchangeReleaser.sol#L35",
+                  "type": "github"
                 }
               ]
             }
@@ -2338,13 +2361,13 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "✅",
-          "notes": "The treasury (~$1.4B at the time of writing) is entirely controlled by token holders.\n\n**Initial Distribution:** UNI tokens were initially minted to an EOA, which transferred portions to TreasuryVester (with recipient set to Timelock).\n\n**Vesting Schedule:** The Vester's claim() function (callable by anyone) follows a schedule to gradually vest UNI to Timelock without rapid dilution.\n\n**Governance Control:** Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+          "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "TreasuryVester",
-                  "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+                  "name": "Timelock",
+                  "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
                   "type": "explorer"
                 }
               ]
@@ -2360,7 +2383,7 @@
           "evidence": [
             {
               "name": "V2 Fee Control",
-              "summary": "feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted.",
+              "summary": "feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted. Protocol fees on V2 pools cannot be adjusted on a per pool basis.",
               "urls": [
                 {
                   "name": "Timelock",
@@ -2376,7 +2399,7 @@
             },
             {
               "name": "V3 Fee Control",
-              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. Only factory owner can call setOwner to change fee adapter control. Protocol fee percentage can be changed by the pool owner via setFeeProtocol.",
+              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter.",
               "urls": [
                 {
                   "name": "UniswapV3Factory",
@@ -2425,9 +2448,10 @@
     },
     {
       "id": "verifiability",
-      "name": "Metric 3: Verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-      "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, and V4 protocol contracts are open source and verified.",
+      "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, V4, and UniswapX protocol contracts are open source and verified.",
       "criteria": [
         {
           "id": "verifiability__token-source",
@@ -2457,7 +2481,7 @@
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
           "status": "✅",
-          "notes": "Uniswap V2, V3, and V4 protocol contracts are open source on GitHub.",
+          "notes": "Uniswap V2, V3, V4, and UniswapX protocol contracts are open source on GitHub.",
           "evidence": [
             {
               "urls": [
@@ -2475,6 +2499,11 @@
                   "name": "Uniswap V4 Core (GitHub)",
                   "url": "https://github.com/Uniswap/v4-core",
                   "type": "github"
+                },
+                {
+                  "name": "UniswapX (GitHub)",
+                  "url": "https://github.com/Uniswap/UniswapX",
+                  "type": "github"
                 }
               ]
             }
@@ -2484,9 +2513,10 @@
     },
     {
       "id": "distribution",
-      "name": "Metric 4: Token Distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Aragon has not verified that 3rd parties do not hold more than 50% of voting power.",
+      "summary": "",
       "criteria": [
         {
           "id": "distribution__concentration",
@@ -2500,24 +2530,57 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
-          "notes": "Aragon has not yet verified the supply schedule criteria for the UNI token",
-          "evidence": []
+          "status": "✅",
+          "notes": "Four vesting contracts distributed UNI to the Governance Timelock over four years, ending in September 2024. There are no future unlocks.",
+          "evidence": [
+            {
+              "name": "TreasuryVester Contracts",
+              "summary": "UNI tokens were initially minted to an EOA, which transferred the Treasury's portion to four vesting contracts in varying amounts. Each TreasuryVester contract was configured with: uni, recipient, vestingAmount, vestingBegin, vestingCliff, vestingEnd.",
+              "urls": [
+                {
+                  "name": "TreasuryVester Code",
+                  "url": "https://github.com/Uniswap/governance/blob/master/contracts/TreasuryVester.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "TreasuryVester 1",
+                  "url": "https://etherscan.io/address/0x4750c43867ef5f89869132eccf19b9b6c4286e1a",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 2",
+                  "url": "https://etherscan.io/address/0xe3953d9d317b834592ab58ab2c7a6ad22b54075d",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 3",
+                  "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TreasuryVester 4",
+                  "url": "https://etherscan.io/address/0x3d30b1ab88d487b0f3061f40de76845bec3f1e94",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
+      "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "summary": "Core UNISWAP trademark rights are held by Universal Navigation Inc. (Uniswap Labs). Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain.",
+      "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Interface distribution remains operated by Labs.",
       "criteria": [
         {
-          "id": "offchain__brand",
-          "name": "Brand",
+          "id": "offchain__trademark",
+          "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "Core UNISWAP trademark rights are held/enforced by Universal Navigation Inc. d/b/a Uniswap Labs. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus brand assets could be licensed or transferred to token holders.",
+          "notes": "Core trademark rights related to Uniswap Labs, including UNISWAP, UNI, and UNISWAP LABS, are held and enforceable by Universal Navigation Inc. d/b/a Uniswap Labs (\"Labs\").\n\nAfter the passing of the UNIfication proposal, in which Uniswap Labs entered into a service provider agreement with DUNI (formerly Uniswap Governance), Labs grants DUNI a non-exclusive, royalty-free, worldwide trademark license to use the UNISWAP mark solely in connection with DUNI's business, subject to Labs' trademark usage guidelines and limited to the term of the agreement.\n\nThe agreement does not transfer ownership of the UNISWAP mark or Labs' other trademarks to DUNI or token holders.\n\nAny broader assignment, or permanent or exclusive license, of Labs' trademarks to DUNI is explicitly deferred and would require a separate written agreement negotiated in the future.",
           "evidence": [
             {
               "urls": [
@@ -2535,7 +2598,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "The primary interface terms identify Uniswap Labs (Universal Navigation Inc.) as the contracting party. Note: Uniswap Governance recently adopted DUNI (a Wyoming DUNA) as the legal structure representing token holders offchain, thus distribution assets could be licensed or transferred.",
+          "notes": "Distribution of Uniswap interfaces and APIs is currently operated by Uniswap Labs, which remains the contracting entity for users. DUNI does not control interface distribution today.",
           "evidence": [
             {
               "urls": [
@@ -2552,8 +2615,8 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
-          "notes": "Aragon has not yet verified all the licensing criteria associated with the UNI token or the corresponding protocol and assets",
+          "status": "⚠️",
+          "notes": "Uniswap Labs retains ownership of its pre-existing IP and trademarks. DUNI holds a limited, non-exclusive license to use the UNISWAP trademark for DUNI-related purposes, and generally receives rights to new deliverables under open-source licenses. No transfer of core Labs' IP has occurred; any broader licensing or assignment would require a separate agreement.",
           "evidence": []
         }
       ]
