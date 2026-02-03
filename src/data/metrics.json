@@ -2399,7 +2399,7 @@
             },
             {
               "name": "V3 Fee Control",
-              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter.",
+              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter. The pools collecting protocol fees as well as the protocol fee percentage per pool can be changed by the pool owner via setFeeProtocol",
               "urls": [
                 {
                   "name": "UniswapV3Factory",
