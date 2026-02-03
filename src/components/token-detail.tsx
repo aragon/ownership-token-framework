@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router"
+import { useMemo, useState } from "react"
 import { PageWrapper } from "@/components/page-wrapper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -9,7 +10,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
+import { trackExpandAllCriteria } from "@/lib/analytics"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
 import { formatUnixTimestamp } from "@/lib/utils"
@@ -123,6 +126,23 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
   const token = getTokenById(tokenId)
   const metrics = getMetricsByTokenId(tokenId)
 
+  const allCriteriaIds = useMemo(
+    () => metrics.flatMap((metric) => metric.criteria.map((c) => c.id)),
+    [metrics]
+  )
+
+  const [openCriteria, setOpenCriteria] = useState<string[]>([])
+  const allOpen = openCriteria.length === allCriteriaIds.length
+
+  const handleToggleAll = () => {
+    // If all closed → Expand all criterias
+    // If all open → Close all criterias
+    // If some open → Expand all criterias
+    const action = allOpen ? "collapse" : "expand"
+    trackExpandAllCriteria(action)
+    setOpenCriteria(allOpen ? [] : allCriteriaIds)
+  }
+
   if (!token) {
     return (
       <PageWrapper className="bg-background">
@@ -157,7 +177,11 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
           <div className="grid grid-cols-1 gap-6 pt-6 pb-10 md:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
             {/* Left column - Tabs and metrics */}
 
-            <AnalyticsContent metrics={metrics} />
+            <AnalyticsContent
+              metrics={metrics}
+              onOpenCriteriaChange={setOpenCriteria}
+              openCriteria={openCriteria}
+            />
             {/* <Tabs defaultValue="analytics">
                 <TabsList>
                   <TabsTrigger value="analytics">Analytics</TabsTrigger>
@@ -179,8 +203,15 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
             {/* Right column - Info sidebar */}
             <div>
-              <div className="sticky top-6">
+              <div className="sticky top-6 flex flex-col gap-6">
                 <InfoSidebar token={token} />
+                <Button
+                  className="w-full"
+                  onClick={handleToggleAll}
+                  variant="outline"
+                >
+                  {allOpen ? "Close all criteria" : "Expand all criteria"}
+                </Button>
               </div>
             </div>
           </div>

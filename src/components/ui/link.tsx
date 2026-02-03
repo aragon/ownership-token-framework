@@ -3,9 +3,16 @@ import { cn } from "@/lib/utils"
 
 type LinkProps = React.ComponentPropsWithoutRef<"a"> & {
   isExternal?: boolean
+  hideExternalIcon?: boolean
 }
 
-export function Link({ className, isExternal, children, ...props }: LinkProps) {
+export function Link({
+  className,
+  isExternal,
+  hideExternalIcon,
+  children,
+  ...props
+}: LinkProps) {
   return (
     <a
       className={cn("inline-flex items-center gap-2", className)}
@@ -14,7 +21,9 @@ export function Link({ className, isExternal, children, ...props }: LinkProps) {
       {...props}
     >
       {children}
-      {isExternal ? <ExternalLinkIcon className="size-3.5" /> : null}
+      {isExternal && !hideExternalIcon ? (
+        <ExternalLinkIcon className="size-3.5" />
+      ) : null}
     </a>
   )
 }
