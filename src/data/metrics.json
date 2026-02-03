@@ -2140,11 +2140,6 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "setMinter (Uni.sol L111)",
-                  "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L111",
-                  "type": "github"
-                },
-                {
                   "name": "Timelock (deployed minter)",
                   "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
                   "type": "explorer"
@@ -2399,7 +2394,7 @@
             },
             {
               "name": "V3 Fee Control",
-              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter.",
+              "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter. The pools collecting protocol fees as well as the protocol fee percentage per pool can be changed by the pool owner via setFeeProtocol",
               "urls": [
                 {
                   "name": "UniswapV3Factory",
@@ -2415,7 +2410,7 @@
             },
             {
               "name": "V4 Fee Control",
-              "summary": "Owner of V4PoolManager is set to Timelock. Only owner can call setProtocolFeeController to change the fee controller. Protocol fees can be modified by the PoolManager owner through setProtocolFee.",
+              "summary": "Owner of V4PoolManager is set to Timelock. Only owner can call setProtocolFeeController to change the fee controller. Protocol fees can be modified by the ProtocolFeeController through setProtocolFee.",
               "urls": [
                 {
                   "name": "PoolManager(V4): setProtocolFee",
@@ -2430,8 +2425,8 @@
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "✅",
-          "notes": "DUNI (Decentralized Unincorporated Nonprofit Association) provides legal capacity for the DAO to engage in off-chain activities such as tax compliance, legal defense, and contract execution while preserving decentralized governance.",
+          "status": "TBD",
+          "notes": "DUNI (Decentralized Unincorporated Nonprofit Association) provides legal capacity for the DAO to engage in off-chain activities such as tax compliance, legal defense, and contract execution. At the time of writing, there are no specific offchain value accrual mechanisms explicitly defined.",
           "evidence": [
             {
               "urls": [
