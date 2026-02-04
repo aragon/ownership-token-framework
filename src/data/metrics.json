@@ -2568,7 +2568,7 @@
       "name": "Offchain Dependencies",
       "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Interface distribution remains operated by Labs.",
+      "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Uniswap Labs operates a user interface and API, but the permissionless smart contracts allow anybody to operate one.",
       "criteria": [
         {
           "id": "offchain__trademark",
@@ -2593,7 +2593,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "Distribution of Uniswap interfaces and APIs is currently operated by Uniswap Labs, which remains the contracting entity for users. DUNI does not control interface distribution today.",
+          "notes": "Uniswap Labs operates a user interface and API, both of which are subject to Terms of Service. The permissionless nature of the Uniswap Protocol’s smart contracts means that any person or firm can operate an interface or API.",
           "evidence": [
             {
               "urls": [
