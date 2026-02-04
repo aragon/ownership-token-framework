@@ -30,9 +30,10 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "**Governance Emergency Guardian** is a 5/9 multisig elected by holders to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
+          "notes": "The Governance Emergency Guardian is a 5/9 multisig elected by holders to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
           "evidence": [
             {
+              "name": "Governance Emergency Guardian",
               "urls": [
                 {
                   "name": "Onchain address",
@@ -1198,9 +1199,11 @@
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
           "status": "✅",
-          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.",
           "evidence": [
             {
+              "name": "Add/Kill Gauge",
+              "summary": "To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
               "urls": [
                 {
                   "name": "Gauge Kill Implementation",
@@ -1308,7 +1311,7 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "✅",
-          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.\n\n**Update Pool Fees:** Pool fee changes are executed via commit_new_fee, which can only be called by the pool owner (StableSwapProxy) which in turn is restricted to parameter_admin (Agent contract).\n\n**Attaching a Burner Contract:** set_burner on StableSwapProxy is gated by ownership_admin (Agent contract).\n\n**Burn:** The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
+          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.",
           "evidence": [
             {
               "name": "Pool Fee Control",
