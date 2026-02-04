@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { NewsletterSignupDialog } from "@/components/newsletter-signup-dialog"
 import { Button } from "@/components/ui/button"
@@ -13,7 +11,7 @@ export const NewsletterBanner: React.FC = () => {
         aria-label="Newsletter subscription banner"
         className="bg-foreground flex items-start justify-center"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center gap-4 items-center max-w-[1440px] w-full p-4 lg:justify-center lg:px-12 lg:py-4">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-4 items-center w-full p-4 lg:justify-center lg:px-12 lg:py-4">
           <div className="flex flex-col justify-center font-medium text-primary-foreground text-center lg:text-left lg:whitespace-nowrap">
             <p className="text-base leading-6 tracking-normal">
               <span className="font-bold">AAVE</span>
