@@ -18,6 +18,7 @@ import { getTokenById } from "@/lib/token-data"
 import { formatUnixTimestamp } from "@/lib/utils"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
+import { NewsletterSignup } from "./newsletter-signup.tsx"
 
 // Types
 export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
@@ -216,6 +217,7 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
             </div>
           </div>
         </Container>
+        <NewsletterSignup />
       </div>
     </PageWrapper>
   )

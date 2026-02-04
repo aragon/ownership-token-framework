@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/accordion"
 import { Container } from "@/components/ui/container"
 import { useFaqTopics } from "@/hooks/use-faq"
+import { NewsletterSignup } from "./newsletter-signup.tsx"
 
 const SUBMIT_TOKEN_HREF = "submit-token"
 const LINK_CLASS_NAME =
@@ -121,6 +122,8 @@ export default function UserFaq() {
           </div>
         </Container>
       </div>
+
+      <NewsletterSignup />
 
       <SubmitTokenDialog
         onOpenChange={setSubmitDialogOpen}

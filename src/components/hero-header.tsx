@@ -1,4 +1,3 @@
-import { SignupInput } from "@/components/signup-input"
 import { Container } from "@/components/ui/container"
 
 export function HeroHeader() {
@@ -15,12 +14,7 @@ export function HeroHeader() {
               metrics: token control, protocol control, value accrual, and
               offchain dependencies. Use it to evaluate tokens on fundamentals.
             </p>
-            <p>
-              Get an email when we publish a new token report or release major
-              updates to the Framework.
-            </p>
           </div>
-          <SignupInput messageAlignment="left" />
         </div>
       </Container>
     </section>
