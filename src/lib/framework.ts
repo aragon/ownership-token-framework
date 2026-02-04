@@ -1,20 +1,20 @@
-import frameworkData from "@/data/framework.json";
+import frameworkData from "@/data/framework.json"
 
 export interface FrameworkMetric {
-  id: string;
-  name: string;
-  about: string;
-  criteria: FrameworkCriteria[];
+  id: string
+  name: string
+  about: string
+  criteria: FrameworkCriteria[]
 }
 
 export interface FrameworkCriteria {
-  id: string;
-  name: string;
-  about: string;
+  id: string
+  name: string
+  about: string
 }
 
 export const FRAMEWORK_BASE_URL =
-  "https://github.com/aragon/ownership-token-framework/blob/development/README.md";
+  "https://github.com/aragon/ownership-token-framework/blob/development/README.md"
 
 /**
  * Map metric IDs to their corresponding README section anchors
@@ -25,40 +25,40 @@ const METRIC_ANCHORS: Record<string, string> = {
   verifiability: "#metric-3-verifiability",
   distribution: "#metric-4-token-distribution",
   offchain: "#offchain-dependencies",
-};
+}
 
 /**
  * Get framework metric definition by ID
  */
 export function getFrameworkMetric(metricId: string): FrameworkMetric | null {
-  const metric = frameworkData.find((m) => m.id === metricId);
-  return metric || null;
+  const metric = frameworkData.find((m) => m.id === metricId)
+  return metric || null
 }
 
 /**
  * Get framework criteria definition by ID
  */
 export function getFrameworkCriteria(
-  criteriaId: string,
+  criteriaId: string
 ): FrameworkCriteria | null {
   for (const metric of frameworkData) {
-    const criteria = metric.criteria.find((c) => c.id === criteriaId);
-    if (criteria) return criteria;
+    const criteria = metric.criteria.find((c) => c.id === criteriaId)
+    if (criteria) return criteria
   }
-  return null;
+  return null
 }
 
 /**
  * Get all framework metrics
  */
 export function getAllFrameworkMetrics(): FrameworkMetric[] {
-  return frameworkData;
+  return frameworkData
 }
 
 /**
  * Get the framework URL for a specific metric, with anchor to its section
  */
 export function getFrameworkUrl(metricId: string): string {
-  const anchor = METRIC_ANCHORS[metricId];
-  return anchor ? `${FRAMEWORK_BASE_URL}${anchor}` : FRAMEWORK_BASE_URL;
+  const anchor = METRIC_ANCHORS[metricId]
+  return anchor ? `${FRAMEWORK_BASE_URL}${anchor}` : FRAMEWORK_BASE_URL
 }
