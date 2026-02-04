@@ -30,7 +30,7 @@
         {
           "id": "methodology__evidence",
           "question": "How do you source and verify evidence?",
-          "answer": "All evidence used by the Framework is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
+          "answer": "All evidence used by the Framework is public and linked in the findings. For onchain criteria, we use active deployments and execution history. For offchain criteria, we use public registrations and legal disclaimers (where available).\n\nInitial research and sourcing is done by the Aragon team. Protocol teams, investors, and community members can also submit public primary evidence to support, correct, or challenge specific findings.\n\nYou can learn more about the methodology [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
         }
       ]
     },
