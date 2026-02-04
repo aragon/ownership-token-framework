@@ -30,7 +30,7 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "**Governance Emergency Guardian** is a 5/9 multisig elected by community to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
+          "notes": "**Governance Emergency Guardian** is a 5/9 multisig elected by holders to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
           "evidence": [
             {
               "urls": [
@@ -176,8 +176,8 @@
               ]
             },
             {
-              "name": "Delegated",
-              "summary": "Delegated Steward Roles:\n\nRisk Stewards → Risk Parameters\nFinance Stewards → Treasury\nAave Guardians → Emergency",
+              "name": "Delegated Steward Roles",
+              "summary": "\n\nRisk Stewards → Risk Parameters\nFinance Stewards → Treasury\nAave Guardians → Emergency",
               "urls": [
                 {
                   "name": "Stewards (docs)",
@@ -192,8 +192,8 @@
               ]
             },
             {
-              "name": "Protocol Emergency",
-              "summary": "Protocol Emergency Guardian: A separate multisig that executes limited emergency operations for the protocol.",
+              "name": "Protocol Emergency Guardian",
+              "summary": "A separate multisig that executes limited emergency operations for the protocol.",
               "urls": [
                 {
                   "name": "Protocol Emergency Guardian",
@@ -234,7 +234,7 @@
       "name": "Value Accrual",
       "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol fees flow to governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
+      "summary": "Protocol fees flow to a governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -529,9 +529,11 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.\n\n**EmergencyCouncil:** Exists but is not elected by veAERO holders. It holds limited emergency powers, including killing or reviving gauges and managing pool metadata. This role exists explicitly for crisis handling and sits outside direct tokenholder election.",
+          "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.",
           "evidence": [
             {
+              "name": "Emergency Council",
+              "summary": "Exists but is not elected by veAERO holders. It holds limited emergency powers, including killing or reviving gauges and managing pool metadata. This role exists explicitly for crisis handling and sits outside direct tokenholder election.",
               "urls": [
                 {
                   "name": "Voter: emergencyCouncil",
