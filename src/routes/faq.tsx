@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { generateOpenGraphMetadata } from "@/lib/metadata"
 import UserFaq from "@/components/user-faq"
+import { generateOpenGraphMetadata } from "@/lib/metadata"
 
 export const Route = createFileRoute("/faq")({
   head: () => ({

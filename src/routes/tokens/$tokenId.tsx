@@ -7,9 +7,7 @@ export const Route = createFileRoute("/tokens/$tokenId")({
   component: TokenDetailPage,
   head: ({ params }) => {
     const token = getTokenById(params.tokenId)
-    const title = token
-      ? `${token.symbol} - ${token.name} | Ownership Token Framework`
-      : `${params.tokenId.toUpperCase()} - Ownership Token Framework`
+    const title = `${params.tokenId.toUpperCase()} - Ownership Token Framework`
     const description = token
       ? `${token.description} View governance metrics, evidence entries, and framework assessment for ${token.symbol}.`
       : "View detailed token analysis and governance metrics."
