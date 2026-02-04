@@ -421,7 +421,7 @@
       "name": "Offchain Dependencies",
       "tags":  ["Reference"],
       "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
-      "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Interfaces Ltd (a separate entity from the Aave DAO) as the contracting party.",
+      "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Labs (a separate entity from the Aave DAO) as the contracting party.",
       "criteria": [
         {
           "id": "offchain__trademark",
@@ -446,7 +446,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "The primary interface terms identify Aave Interfaces Ltd as the contracting party.",
+          "notes": "The primary interface terms identify Aave Labs as the contracting party.",
           "evidence": [
             {
               "urls": [
