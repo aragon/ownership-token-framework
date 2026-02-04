@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { GoogleAnalytics } from "@/components/google-analytics"
+import { NewsletterBanner } from "@/components/newsletter-banner"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
@@ -41,6 +42,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <div className="min-h-screen flex flex-col">
+      <NewsletterBanner />
       <SiteHeader />
       <Outlet />
       <SiteFooter />
