@@ -420,7 +420,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Labs (a separate entity from the Aave DAO) as the contracting party.",
       "criteria": [
         {
@@ -968,7 +968,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AERODROME trademark is held by Perpetual Cyclist Services LLC (Delaware). Primary interface terms identify the Aerodrome Foundation as the contracting party.",
       "criteria": [
         {
@@ -1442,7 +1442,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Swiss CRV trademark is held by Swiss Stake AG. Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
       "criteria": [
         {
@@ -1974,7 +1974,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "European trademark registrations for LIDO list Lido Labs Foundation as the owner. Lido Labs, Ecosystem, and Alliance BORG Foundations are DAO-controlled entities managing offchain IP and distribution.",
       "criteria": [
         {
@@ -2567,7 +2567,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Uniswap Labs operates a user interface and API, but the permissionless smart contracts allow anybody to operate one.",
       "criteria": [
         {
