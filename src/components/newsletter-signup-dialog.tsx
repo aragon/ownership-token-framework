@@ -1,3 +1,4 @@
+import { SignupInput } from "@/components/signup-input"
 import {
   Dialog,
   DialogContent,
@@ -5,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { SignupInput } from "@/components/signup-input"
 
 interface INewsletterSignupDialogProps {
   open?: boolean
@@ -18,7 +18,7 @@ export const NewsletterSignupDialog: React.FC<INewsletterSignupDialogProps> = (
   const { open, onOpenChange } = props
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog onOpenChange={onOpenChange} open={open}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Subscribe to Newsletter</DialogTitle>

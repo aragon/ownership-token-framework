@@ -14,10 +14,9 @@ export const NewsletterBanner: React.FC = () => {
 
   return (
     <>
-      <div
-        className="bg-accent border-b border-accent-foreground/10"
-        role="banner"
+      <aside
         aria-label="Newsletter subscription banner"
+        className="bg-accent border-b border-accent-foreground/10"
       >
         <Container>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 px-4 sm:px-6">
@@ -26,41 +25,41 @@ export const NewsletterBanner: React.FC = () => {
                 📬 Stay updated with new token reports and framework updates
               </p>
               <Button
+                aria-label="Dismiss banner"
+                className="shrink-0 h-8 w-8 p-0 sm:hidden"
+                onClick={() => setIsBannerVisible(false)}
                 size="sm"
                 variant="ghost"
-                onClick={() => setIsBannerVisible(false)}
-                className="shrink-0 h-8 w-8 p-0 sm:hidden"
-                aria-label="Dismiss banner"
               >
                 <XIcon className="h-4 w-4" />
               </Button>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <Button
+                className="flex-1 sm:flex-none"
+                onClick={() => setIsDialogOpen(true)}
                 size="sm"
                 variant="outline"
-                onClick={() => setIsDialogOpen(true)}
-                className="flex-1 sm:flex-none"
               >
                 Subscribe
               </Button>
               <Button
+                aria-label="Dismiss banner"
+                className="shrink-0 h-8 w-8 p-0 hidden sm:inline-flex"
+                onClick={() => setIsBannerVisible(false)}
                 size="sm"
                 variant="ghost"
-                onClick={() => setIsBannerVisible(false)}
-                className="shrink-0 h-8 w-8 p-0 hidden sm:inline-flex"
-                aria-label="Dismiss banner"
               >
                 <XIcon className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </Container>
-      </div>
+      </aside>
 
       <NewsletterSignupDialog
-        open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
+        open={isDialogOpen}
       />
     </>
   )
