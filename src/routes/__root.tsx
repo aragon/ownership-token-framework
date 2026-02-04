@@ -42,8 +42,8 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <div className="min-h-screen flex flex-col">
-      <NewsletterBanner />
       <SiteHeader />
+      <NewsletterBanner />
       <Outlet />
       <SiteFooter />
       <GoogleAnalytics />
