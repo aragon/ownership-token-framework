@@ -1,3 +1,4 @@
+// TODO: Move this file to src/lib/server/ - these are server functions, not routes
 import { createServerFn } from "@tanstack/react-start"
 
 const NOTION_VERSION = "2022-06-28"

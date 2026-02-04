@@ -96,7 +96,7 @@ export function SignupInput(props: ISignupInputProps) {
   return (
     <div className={cn("w-full space-y-3", className)}>
       <form
-        className="flex w-full flex-col items-start gap-2 sm:flex-row"
+        className="flex w-full flex-col items-start! gap-2 sm:flex-row"
         noValidate
         onSubmit={form.handleSubmit(onSubmit)}
       >
