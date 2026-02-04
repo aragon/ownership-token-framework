@@ -6,7 +6,7 @@
     "criteria": [
       {
         "id": "onchain-ctrl__governance-workflow",
-        "name": "On-chain Governance Workflow",
+        "name": "Onchain Governance Workflow",
         "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions."
       },
       {
