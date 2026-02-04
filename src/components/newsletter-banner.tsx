@@ -16,7 +16,8 @@ export const NewsletterBanner: React.FC = () => {
             <p className="text-base leading-6 tracking-normal">
               <span className="font-bold">AAVE</span>
               {", "}
-              <span className="font-bold">UNI</span>{" "}
+              <span className="font-bold">UNI</span>
+              {", "}
               <span className="font-bold">CRV</span>
               {", "}
               <span className="font-bold">LDO</span>
