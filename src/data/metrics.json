@@ -9,7 +9,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "AAVE, stkAAVE and aAAVE holders vote onchain with execution through Timelock.",
@@ -30,9 +30,10 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "**Governance Emergency Guardian** is a 5/9 multisig elected by community to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
+          "notes": "The Governance Emergency Guardian is a 5/9 multisig elected by holders to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
           "evidence": [
             {
+              "name": "Governance Emergency Guardian",
               "urls": [
                 {
                   "name": "Onchain address",
@@ -176,8 +177,8 @@
               ]
             },
             {
-              "name": "Delegated",
-              "summary": "Delegated Steward Roles:\n\nRisk Stewards → Risk Parameters\nFinance Stewards → Treasury\nAave Guardians → Emergency",
+              "name": "Delegated Steward Roles",
+              "summary": "\n\nRisk Stewards → Risk Parameters\nFinance Stewards → Treasury\nAave Guardians → Emergency",
               "urls": [
                 {
                   "name": "Stewards (docs)",
@@ -192,8 +193,8 @@
               ]
             },
             {
-              "name": "Protocol Emergency",
-              "summary": "Protocol Emergency Guardian: A separate multisig that executes limited emergency operations for the protocol.",
+              "name": "Protocol Emergency Guardian",
+              "summary": "A separate multisig that executes limited emergency operations for the protocol.",
               "urls": [
                 {
                   "name": "Protocol Emergency Guardian",
@@ -234,7 +235,7 @@
       "name": "Value Accrual",
       "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol fees flow to governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
+      "summary": "Protocol fees flow to a governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -420,7 +421,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Labs (a separate entity from the Aave DAO) as the contracting party.",
       "criteria": [
         {
@@ -480,7 +481,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "veAERO holders control emissions through epoch-based gauge voting. An EmergencyCouncil exists for crisis handling with limited emergency powers.",
@@ -529,9 +530,11 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.\n\n**EmergencyCouncil:** Exists but is not elected by veAERO holders. It holds limited emergency powers, including killing or reviving gauges and managing pool metadata. This role exists explicitly for crisis handling and sits outside direct tokenholder election.",
+          "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.",
           "evidence": [
             {
+              "name": "Emergency Council",
+              "summary": "Exists but is not elected by veAERO holders. It holds limited emergency powers, including killing or reviving gauges and managing pool metadata. This role exists explicitly for crisis handling and sits outside direct tokenholder election.",
               "urls": [
                 {
                   "name": "Voter: emergencyCouncil",
@@ -968,7 +971,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AERODROME trademark is held by Perpetual Cyclist Services LLC (Delaware). Primary interface terms identify the Aerodrome Foundation as the contracting party.",
       "criteria": [
         {
@@ -1028,7 +1031,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "Governance is enforced through Aragon v1's Voting Contract, which authorizes execution via the Agent contract. The Agent contract is set as the owner for all protocol-gated functions, ensuring veCRV holders control all operations.",
@@ -1196,9 +1199,11 @@
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
           "status": "✅",
-          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.\n\n**Add/Kill Gauge:** To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+          "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.",
           "evidence": [
             {
+              "name": "Add/Kill Gauge",
+              "summary": "To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
               "urls": [
                 {
                   "name": "Gauge Kill Implementation",
@@ -1306,7 +1311,7 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "✅",
-          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.\n\n**Update Pool Fees:** Pool fee changes are executed via commit_new_fee, which can only be called by the pool owner (StableSwapProxy) which in turn is restricted to parameter_admin (Agent contract).\n\n**Attaching a Burner Contract:** set_burner on StableSwapProxy is gated by ownership_admin (Agent contract).\n\n**Burn:** The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
+          "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.",
           "evidence": [
             {
               "name": "Pool Fee Control",
@@ -1442,7 +1447,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Swiss CRV trademark is held by Swiss Stake AG. Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
       "criteria": [
         {
@@ -1502,7 +1507,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "LDO holders exercise control through multiple governance paths with stETH holder veto protection via Dual Governance.",
@@ -1757,7 +1762,7 @@
             },
             {
               "name": "Guardian Accountability",
-              "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through on-chain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
+              "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through onchain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
               "urls": [
                 {
                   "name": "Guardian Committee Membership",
@@ -1974,7 +1979,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "European trademark registrations for LIDO list Lido Labs Foundation as the owner. Lido Labs, Ecosystem, and Alliance BORG Foundations are DAO-controlled entities managing offchain IP and distribution.",
       "criteria": [
         {
@@ -2069,7 +2074,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "UNI holders vote onchain via GovernorBravoDelegator, with execution through Timelock after a time delay.",
@@ -2567,7 +2572,7 @@
       "id": "offchain",
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
-      "about": "Onchain ownership is only one half the story, in many cases. Distribution controls coordination. Even with immutable contracts, the ability to shift users to a fork or new deployment can break the link between existing tokenholders and future activity.",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Uniswap Labs operates a user interface and API, but the permissionless smart contracts allow anybody to operate one.",
       "criteria": [
         {
