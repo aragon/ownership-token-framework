@@ -9,7 +9,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "AAVE, stkAAVE and aAAVE holders vote onchain with execution through Timelock.",
@@ -480,7 +480,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "veAERO holders control emissions through epoch-based gauge voting. An EmergencyCouncil exists for crisis handling with limited emergency powers.",
@@ -1028,7 +1028,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "Governance is enforced through Aragon v1's Voting Contract, which authorizes execution via the Agent contract. The Agent contract is set as the owner for all protocol-gated functions, ensuring veCRV holders control all operations.",
@@ -1502,7 +1502,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "LDO holders exercise control through multiple governance paths with stETH holder veto protection via Dual Governance.",
@@ -1757,7 +1757,7 @@
             },
             {
               "name": "Guardian Accountability",
-              "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through on-chain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
+              "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through onchain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
               "urls": [
                 {
                   "name": "Guardian Committee Membership",
@@ -2069,7 +2069,7 @@
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
-          "name": "On-chain Governance Workflow",
+          "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
           "notes": "UNI holders vote onchain via GovernorBravoDelegator, with execution through Timelock after a time delay.",
