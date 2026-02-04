@@ -2,6 +2,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 import {
   createRootRoute,
   HeadContent,
+  Navigate,
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
@@ -36,6 +37,7 @@ export const Route = createRootRoute({
 
   component: RootComponent,
   shellComponent: RootDocument,
+  notFoundComponent: () => <Navigate to="/" />,
 })
 
 function RootComponent() {
