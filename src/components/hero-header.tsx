@@ -10,9 +10,9 @@ export function HeroHeader() {
           </h1>
           <div className="max-w-[800px] space-y-7 text-lg leading-7 text-accent-foreground">
             <p>
-              The Ownership Token Framework maps enforceable claims across four
-              metrics: token control, protocol control, value accrual, and
-              offchain dependencies. Use it to evaluate tokens on fundamentals.
+              The Ownership Token Framework maps enforceable claims across four metrics: 
+              onchain control, value accrual, verifiability, and token distribution. 
+              Use it to evaluate tokens on fundamentals.
             </p>
           </div>
         </div>
