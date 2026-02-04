@@ -47,12 +47,12 @@
         {
           "id": "participation__listing",
           "question": "How can I get a token listed?",
-          "answer": "Submit a request (or refer a token) using this [here](submit-token)."
+          "answer": "Submit a request (or refer a token) using this [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
         },
         {
           "id": "participation__contribute",
           "question": "How can I contribute to this initiative?",
-          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out [here](submit-token)."
+          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
         }
       ]
     }
