@@ -41,7 +41,7 @@ The Ownership Token Framework is built to make that relationship explicit. "Owne
 
 The core innovation of smart-contract platforms is that economically material rights can be encoded into contracts, executed by rule, and verified from primary evidence. But in practice, these rights exist only where deployed contracts use token balances to govern permissions, execution, or economic distributions; they are not intrinsic to the ERC-20 standard. When these control planes are not implemented or are bypassable, economically material outcomes become discretionary: tokenholder exposure becomes contingent on trust and markets typically discount that uncertainty.
 
-We take the view that verifiably enforceable ownership is a prerequisite for tokens to be evaluated on fundamentals. The Framework is designed to make these rights legible, verifiable, and comparable across projects, so that participants can assess them using evidence and reach their own conclusions.
+We take the view that verifiably enforceable ownership is a prerequisite for tokens to be evaluated on fundamentals. The Framework is designed to make these rights legible, verifiable, and comparable across projects, so that participants can assess them using evidence and reach their own conclusions. The metrics and criteria can also be used in a regulatory context, by grounding assessments of control for network tokens in verifiable evidence.
 
 ---
 
