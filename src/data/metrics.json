@@ -1246,7 +1246,7 @@
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "✅",
-          "notes": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards, plus boosted CRV emissions for liquidity provision.",
+          "notes": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards, plus boosted CRV emissions for liquidity provision. They also receive 80% of the accrued interest from all crvUSD markets.",
           "evidence": [
             {
               "name": "CRV Emissions Rewards",
