@@ -25,7 +25,7 @@
         {
           "id": "methodology__evaluation",
           "question": "How do you evaluate tokens?",
-          "answer": "Our token reports include metrics, criteria, and evidence.\n\nEach of our four metrics contain a checklist of criteria. For each criteria we provide primary evidence, including:\nOnchain: active deployments, permissions/roles, parameters, execution history.\nOffchain (where relevant): public filings/registrations, published legal terms, and other public documentation.\n\nYou can read the full metric definitions and methodology [here](https://github.com/aragon/ownership-token-index-framework/blob/develop/README.md)."
+          "answer": "Our token reports include metrics, criteria, and evidence.\n\nEach of our four metrics contain a checklist of criteria. For each criteria we provide primary evidence, including:\nOnchain: active deployments, permissions/roles, parameters, execution history.\nOffchain (where relevant): public filings/registrations, published legal terms, and other public documentation.\n\nYou can read the full metric definitions and methodology [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
         },
         {
           "id": "methodology__evidence",
@@ -47,12 +47,12 @@
         {
           "id": "participation__listing",
           "question": "How can I get a token listed?",
-          "answer": "Submit a request (or refer a token) using this [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
+          "answer": "Submit a request (or refer a token) using this [here](submit-token)."
         },
         {
           "id": "participation__contribute",
           "question": "How can I contribute to this initiative?",
-          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out [here](https://github.com/aragon/ownership-token-framework/blob/development/README.md)."
+          "answer": "If you want to provide feedback, propose improvements, or explore collaboration, reach out [here](submit-token)."
         }
       ]
     }
