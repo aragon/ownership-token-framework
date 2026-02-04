@@ -11,6 +11,7 @@ import { NewsletterBanner } from "@/components/newsletter-banner"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
+import { generateOpenGraphMetadata } from "@/lib/metadata"
 import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
@@ -23,9 +24,7 @@ export const Route = createRootRoute({
         name: "viewport",
         content: "width=device-width, initial-scale=1",
       },
-      {
-        title: "Ownership Token Framework",
-      },
+      ...generateOpenGraphMetadata(),
     ],
     links: [
       {
