@@ -8,10 +8,12 @@ interface IOpenGraphMetadata {
   twitterCard?: "summary" | "summary_large_image"
 }
 
+const BASE_URL = "https://otf.aragon.org"
+
 const DEFAULT_TITLE = "Ownership Token Framework"
 const DEFAULT_DESCRIPTION =
   "The Ownership Token Framework maps enforceable claims across four metrics: onchain control, value accrual, verifiability, and token distribution. Use it to evaluate tokens on fundamentals."
-const DEFAULT_IMAGE = "/og-share-large.png"
+const DEFAULT_IMAGE = `${BASE_URL}/og-share-large.png`
 const DEFAULT_IMAGE_WIDTH = "1200"
 const DEFAULT_IMAGE_HEIGHT = "631"
 
