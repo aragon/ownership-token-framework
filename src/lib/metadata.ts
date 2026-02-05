@@ -11,8 +11,7 @@ interface IOpenGraphMetadata {
 }
 
 class MetadataUtils {
-  baseUrl =
-    "https://ownership-token-framework-git-60a84b-aragons-projects-9afe7a60.vercel.app"
+  baseUrl = "https://otf.aragon.org"
 
   private defaultTitle = "Ownership Token Framework"
   private defaultDescription =
@@ -48,7 +47,9 @@ class MetadataUtils {
       url,
     } = params || {}
 
-    const fullUrl = url ? `${this.baseUrl}${url.startsWith("/") ? url : `/${url}`}` : this.baseUrl
+    const fullUrl = url
+      ? `${this.baseUrl}${url.startsWith("/") ? url : `/${url}`}`
+      : this.baseUrl
 
     const normalizedImage = this.normalizeImageUrl(image)
 
