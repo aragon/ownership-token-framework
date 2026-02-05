@@ -20,7 +20,8 @@ I want to create OpenGraph image screenshots for my website. Please help me with
   - Main routes: `route-name.png` (e.g., `index.png`, `faq.png`)
   - Token routes: `tokens-{token-id}.png` (e.g., `tokens-aave.png`)
 - Base viewport resolution: 1200x630 pixels (OpenGraph standard)
-- Final resolution with effects: 1280x710 pixels (includes 40px padding on all sides)
+- Double check that resolution is correct for all screenshots, 1200x630 pixels is a must!
+- Final resolution: 1200x630 pixels (padding and effects are applied then resized back to standard dimensions)
 - Use device scale factor of 2 for high-quality rendering
 
 ## Visual Effects (Enhanced Version)

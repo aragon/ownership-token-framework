@@ -97,67 +97,33 @@ async function captureScreenshot(page, url, outputPath) {
 async function applyEffects(inputPath, outputPath) {
   try {
     // Load the screenshot and resize to exact dimensions
-    const screenshot = await sharp(inputPath)
-      .resize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, { fit: 'cover' })
-      .toBuffer();
+    let image = sharp(inputPath)
+      .resize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, { fit: 'cover' });
     
-    // Calculate final dimensions with padding
-    const finalWidth = VIEWPORT_WIDTH + (EFFECTS.padding * 2);
-    const finalHeight = VIEWPORT_HEIGHT + (EFFECTS.padding * 2);
-    
-    // Create rounded corners mask
-    const roundedMask = Buffer.from(
+    // Apply rounded corners using the toFile path (simpler approach)
+    // Create a circular mask SVG and apply it
+    const roundedCornersSvg = Buffer.from(
       `<svg width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}">
         <rect x="0" y="0" width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}" 
               rx="${EFFECTS.borderRadius}" ry="${EFFECTS.borderRadius}" fill="white"/>
       </svg>`
     );
     
-    // Apply rounded corners to screenshot
-    const roundedScreenshot = await sharp(screenshot)
-      .composite([{
-        input: roundedMask,
-        blend: 'dest-in',
-      }])
-      .toBuffer();
-    
-    // Create shadow effect as a separate layer
-    const shadowLayer = Buffer.from(
-      `<svg width="${finalWidth}" height="${finalHeight}">
-        <defs>
-          <filter id="shadow">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="${EFFECTS.shadow.blur / 2}"/>
-            <feOffset dx="${EFFECTS.shadow.offsetX}" dy="${EFFECTS.shadow.offsetY}"/>
-            <feComponentTransfer>
-              <feFuncA type="linear" slope="0.15"/>
-            </feComponentTransfer>
-          </filter>
-        </defs>
-        <rect x="${EFFECTS.padding}" y="${EFFECTS.padding}" 
-              width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}" 
-              rx="${EFFECTS.borderRadius}" fill="black" 
-              filter="url(#shadow)"/>
-      </svg>`
-    );
-    
-    const compositeOps = [
-      // Add shadow
+    // Apply rounded corners and resize to final dimensions
+    let compositeOps = [
       {
-        input: shadowLayer,
+        input: await image.composite([{
+          input: roundedCornersSvg,
+          blend: 'dest-in',
+        }]).toBuffer(),
         top: 0,
         left: 0,
-      },
-      // Add the rounded screenshot
-      {
-        input: roundedScreenshot,
-        top: EFFECTS.padding,
-        left: EFFECTS.padding,
       }
     ];
     
-    // Add gradient overlay if enabled
+    // If gradient is enabled, add it
     if (EFFECTS.gradient.enabled) {
-      const gradientOverlay = Buffer.from(
+      const gradientSvg = Buffer.from(
         `<svg width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}">
           <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -174,25 +140,23 @@ async function applyEffects(inputPath, outputPath) {
         </svg>`
       );
       
+      // Composite the gradient on top
       compositeOps.push({
-        input: gradientOverlay,
-        top: EFFECTS.padding,
-        left: EFFECTS.padding,
+        input: gradientSvg,
+        top: 0,
+        left: 0,
       });
     }
     
-    // Create final image with all effects
-    await sharp({
-      create: {
-        width: finalWidth,
-        height: finalHeight,
-        channels: 4,
-        background: EFFECTS.backgroundColor,
-      }
-    })
-    .composite(compositeOps)
-    .png({ quality: 95, compressionLevel: 9 })
-    .toFile(outputPath);
+    // Create the final image with effects applied
+    const finalImage = await sharp(compositeOps[0].input)
+      .composite(compositeOps.slice(1))
+      .png({ quality: 95, compressionLevel: 9 })
+      .toBuffer();
+    
+    // Write the final image (already at 1200x630)
+    await sharp(finalImage)
+      .toFile(outputPath);
     
     // Clean up temp file
     if (fs.existsSync(inputPath)) {
