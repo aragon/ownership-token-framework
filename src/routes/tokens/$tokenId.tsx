@@ -1,9 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, notFound } from "@tanstack/react-router"
 import TokenDetail from "@/components/token-detail"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
 import { getTokenById } from "@/lib/token-data"
 
 export const Route = createFileRoute("/tokens/$tokenId")({
+  beforeLoad: ({ params }) => {
+    const token = getTokenById(params.tokenId)
+    if (!token) {
+      throw notFound()
+    }
+  },
   component: TokenDetailPage,
   head: ({ params }) => {
     const token = getTokenById(params.tokenId)
