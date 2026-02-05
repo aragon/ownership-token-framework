@@ -1,85 +1,116 @@
 interface IOpenGraphMetadata {
-  title: string
-  description: string
+  title?: string
+  description?: string
   image?: string
+  imageAlt?: string
   type?: "website" | "article"
   imageWidth?: string
   imageHeight?: string
   twitterCard?: "summary" | "summary_large_image"
 }
 
-const BASE_URL = "https://otf.aragon.org"
+class MetadataUtils {
+  baseUrl = "https://ownership-token-framework-git-60a84b-aragons-projects-9afe7a60.vercel.app"
 
-const DEFAULT_TITLE = "Ownership Token Framework"
-const DEFAULT_DESCRIPTION =
-  "The Ownership Token Framework maps enforceable claims across four metrics: onchain control, value accrual, verifiability, and token distribution. Use it to evaluate tokens on fundamentals."
-const DEFAULT_IMAGE = `${BASE_URL}/og-share-large.png`
-const DEFAULT_IMAGE_WIDTH = "1200"
-const DEFAULT_IMAGE_HEIGHT = "631"
+  private defaultTitle = "Ownership Token Framework"
+  private defaultDescription =
+    "The Ownership Token Framework maps enforceable claims across four metrics: onchain control, value accrual, verifiability, and token distribution. Use it to evaluate tokens on fundamentals."
+  private defaultImage = `${this.baseUrl}/og-share-large.png`
+  private defaultImageWidth = "1200"
+  private defaultImageHeight = "631"
+  private defaultImageAlt = "Ownership Token Framework"
+  private siteName = "Ownership Token Framework"
+  private twitterSite = "@aragonproject"
 
-export const generateOpenGraphMetadata = (params?: IOpenGraphMetadata) => {
-  const {
-    title = DEFAULT_TITLE,
-    description = DEFAULT_DESCRIPTION,
-    image = DEFAULT_IMAGE,
-    type = "website",
-    imageWidth = DEFAULT_IMAGE_WIDTH,
-    imageHeight = DEFAULT_IMAGE_HEIGHT,
-    twitterCard = "summary_large_image",
-  } = params || {}
+  generateOpenGraphMetadata = (params?: IOpenGraphMetadata) => {
+    const {
+      title = this.defaultTitle,
+      description = this.defaultDescription,
+      image = this.defaultImage,
+      imageAlt = this.defaultImageAlt,
+      type = "website",
+      imageWidth = this.defaultImageWidth,
+      imageHeight = this.defaultImageHeight,
+      twitterCard = "summary_large_image",
+    } = params || {}
 
-  const meta = [
-    {
-      title,
-    },
-    {
-      name: "description",
-      content: description,
-    },
-    {
-      property: "og:type",
-      content: type,
-    },
-    {
-      property: "og:title",
-      content: title,
-    },
-    {
-      property: "og:description",
-      content: description,
-    },
-    {
-      property: "og:image",
-      content: image,
-    },
-    {
-      name: "twitter:card",
-      content: twitterCard,
-    },
-    {
-      name: "twitter:title",
-      content: title,
-    },
-    {
-      name: "twitter:description",
-      content: description,
-    },
-    {
-      name: "twitter:image",
-      content: image,
-    },
-  ]
+    const meta = [
+      {
+        title,
+      },
+      {
+        name: "description",
+        content: description,
+      },
+      {
+        property: "og:type",
+        content: type,
+      },
+      {
+        property: "og:title",
+        content: title,
+      },
+      {
+        property: "og:description",
+        content: description,
+      },
+      {
+        property: "og:site_name",
+        content: this.siteName,
+      },
+      {
+        property: "og:url",
+        content: this.baseUrl,
+      },
+      {
+        property: "og:locale",
+        content: "en_US",
+      },
+      {
+        property: "og:image",
+        content: image,
+      },
+      {
+        property: "og:image:width",
+        content: imageWidth,
+      },
+      {
+        property: "og:image:height",
+        content: imageHeight,
+      },
+      {
+        property: "og:image:alt",
+        content: imageAlt,
+      },
+      {
+        name: "twitter:card",
+        content: twitterCard,
+      },
+      {
+        name: "twitter:site",
+        content: this.twitterSite,
+      },
+      {
+        name: "twitter:title",
+        content: title,
+      },
+      {
+        name: "twitter:description",
+        content: description,
+      },
+      {
+        name: "twitter:image",
+        content: image,
+      },
+      {
+        name: "twitter:image:alt",
+        content: imageAlt,
+      },
+    ]
 
-  if (imageWidth && imageHeight) {
-    meta.splice(6, 0, {
-      property: "og:image:width",
-      content: imageWidth,
-    })
-    meta.splice(7, 0, {
-      property: "og:image:height",
-      content: imageHeight,
-    })
+    return meta
   }
-
-  return meta
 }
+
+export const metadataUtils = new MetadataUtils()
+export const generateOpenGraphMetadata = metadataUtils.generateOpenGraphMetadata

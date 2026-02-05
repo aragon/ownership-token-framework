@@ -11,13 +11,15 @@ export const Route = createFileRoute("/tokens/$tokenId")({
     const description = token
       ? `${token.description} View governance metrics, evidence entries, and framework assessment for ${token.symbol}.`
       : "View detailed token analysis and governance metrics."
-    const image = token?.icon || "/logo512.png"
+    const image = token?.icon
+    const imageAlt = token ? `${token.symbol} token logo` : undefined
 
     return {
       meta: generateOpenGraphMetadata({
         title,
         description,
         image,
+        imageAlt,
         type: "article",
       }),
     }
