@@ -9,6 +9,8 @@ export const Route = createFileRoute("/faq")({
       description:
         "Frequently asked questions about the Ownership Token Framework, governance evaluation, and token assessment criteria.",
       twitterCard: "summary",
+      image: "/og-images/faq.png",
+      imageAlt: "Frequently asked questions",
     }),
   }),
   component: FaqPage,

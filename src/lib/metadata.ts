@@ -10,7 +10,8 @@ interface IOpenGraphMetadata {
 }
 
 class MetadataUtils {
-  baseUrl = "https://ownership-token-framework-git-60a84b-aragons-projects-9afe7a60.vercel.app"
+  baseUrl =
+    "https://ownership-token-framework-git-60a84b-aragons-projects-9afe7a60.vercel.app"
 
   private defaultTitle = "Ownership Token Framework"
   private defaultDescription =
@@ -22,17 +23,30 @@ class MetadataUtils {
   private siteName = "Ownership Token Framework"
   private twitterSite = "@aragonproject"
 
+  private normalizeImageUrl = (image?: string): string => {
+    if (!image) return this.defaultImage
+    // If image is already a full URL (starts with http/https), return as-is
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image
+    }
+    // Otherwise, prepend baseUrl (ensuring no double slashes)
+    const cleanPath = image.startsWith("/") ? image : `/${image}`
+    return `${this.baseUrl}${cleanPath}`
+  }
+
   generateOpenGraphMetadata = (params?: IOpenGraphMetadata) => {
     const {
       title = this.defaultTitle,
       description = this.defaultDescription,
-      image = this.defaultImage,
+      image,
       imageAlt = this.defaultImageAlt,
       type = "website",
       imageWidth = this.defaultImageWidth,
       imageHeight = this.defaultImageHeight,
       twitterCard = "summary_large_image",
     } = params || {}
+
+    const normalizedImage = this.normalizeImageUrl(image)
 
     const meta = [
       {
@@ -68,7 +82,7 @@ class MetadataUtils {
       },
       {
         property: "og:image",
-        content: image,
+        content: normalizedImage,
       },
       {
         property: "og:image:width",
@@ -100,7 +114,7 @@ class MetadataUtils {
       },
       {
         name: "twitter:image",
-        content: image,
+        content: normalizedImage,
       },
       {
         name: "twitter:image:alt",
