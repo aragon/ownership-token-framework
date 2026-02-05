@@ -11,8 +11,10 @@ const __dirname = path.dirname(__filename);
 const BASE_URL = 'https://otf.aragon.org';
 const OUTPUT_DIR = path.join(__dirname, '..', 'public', 'og-images');
 const TEMP_DIR = path.join(__dirname, '..', 'public', 'og-images', 'temp');
-const VIEWPORT_WIDTH = 1200;
-const VIEWPORT_HEIGHT = 630;
+
+// Final output dimensions (OG standard)
+const FINAL_WIDTH = 1200;
+const FINAL_HEIGHT = 630;
 
 // Effect options
 const EFFECTS = {
@@ -25,7 +27,7 @@ const EFFECTS = {
     blur: 40,
     offsetX: 0,
     offsetY: 20,
-    color: 'rgba(0, 0, 0, 0.15)',
+    opacity: 0.15,
   },
   
   // Background color (from your --background CSS variable)
@@ -44,6 +46,10 @@ const EFFECTS = {
     opacity: 0.02,
   },
 };
+
+// Screenshot dimensions (final minus padding on all sides)
+const SCREENSHOT_WIDTH = FINAL_WIDTH - (EFFECTS.padding * 2);
+const SCREENSHOT_HEIGHT = FINAL_HEIGHT - (EFFECTS.padding * 2);
 
 // Routes to capture
 const routes = [
@@ -96,67 +102,101 @@ async function captureScreenshot(page, url, outputPath) {
 
 async function applyEffects(inputPath, outputPath) {
   try {
-    // Load the screenshot and resize to exact dimensions
-    let image = sharp(inputPath)
-      .resize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, { fit: 'cover' });
+    // Load the screenshot and resize to exact dimensions (smaller than final to leave room for padding)
+    const screenshot = await sharp(inputPath)
+      .resize(SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, { fit: 'cover' })
+      .toBuffer();
     
-    // Apply rounded corners using the toFile path (simpler approach)
-    // Create a circular mask SVG and apply it
-    const roundedCornersSvg = Buffer.from(
-      `<svg width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}">
-        <rect x="0" y="0" width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}" 
+    // Create rounded corners mask for the screenshot
+    const roundedMask = Buffer.from(
+      `<svg width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}">
+        <rect x="0" y="0" width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}" 
               rx="${EFFECTS.borderRadius}" ry="${EFFECTS.borderRadius}" fill="white"/>
       </svg>`
     );
     
-    // Apply rounded corners and resize to final dimensions
-    let compositeOps = [
+    // Apply rounded corners to screenshot
+    const roundedScreenshot = await sharp(screenshot)
+      .composite([{
+        input: roundedMask,
+        blend: 'dest-in',
+      }])
+      .png()
+      .toBuffer();
+    
+    // Create shadow as SVG (positioned where the screenshot will be)
+    const shadowSvg = Buffer.from(
+      `<svg width="${FINAL_WIDTH}" height="${FINAL_HEIGHT}">
+        <defs>
+          <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="${EFFECTS.shadow.blur / 2}"/>
+            <feOffset dx="${EFFECTS.shadow.offsetX}" dy="${EFFECTS.shadow.offsetY}"/>
+            <feComponentTransfer>
+              <feFuncA type="linear" slope="${EFFECTS.shadow.opacity}"/>
+            </feComponentTransfer>
+          </filter>
+        </defs>
+        <rect x="${EFFECTS.padding}" y="${EFFECTS.padding}" 
+              width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}" 
+              rx="${EFFECTS.borderRadius}" ry="${EFFECTS.borderRadius}"
+              fill="black" filter="url(#shadow)"/>
+      </svg>`
+    );
+    
+    // Build composite operations
+    const compositeOps = [
+      // Add shadow layer
       {
-        input: await image.composite([{
-          input: roundedCornersSvg,
-          blend: 'dest-in',
-        }]).toBuffer(),
+        input: shadowSvg,
         top: 0,
         left: 0,
+      },
+      // Add the rounded screenshot with padding offset
+      {
+        input: roundedScreenshot,
+        top: EFFECTS.padding,
+        left: EFFECTS.padding,
       }
     ];
     
-    // If gradient is enabled, add it
+    // If gradient is enabled, add it on top of the screenshot
     if (EFFECTS.gradient.enabled) {
       const gradientSvg = Buffer.from(
-        `<svg width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}">
+        `<svg width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}">
           <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" style="stop-color:rgb(72, 61, 179);stop-opacity:0.03" />
-              <stop offset="${(EFFECTS.gradient.height / VIEWPORT_HEIGHT) * 100}%" style="stop-color:rgb(72, 61, 179);stop-opacity:0" />
+              <stop offset="${(EFFECTS.gradient.height / SCREENSHOT_HEIGHT) * 100}%" style="stop-color:rgb(72, 61, 179);stop-opacity:0" />
             </linearGradient>
             <mask id="roundedMask">
-              <rect x="0" y="0" width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}" 
+              <rect x="0" y="0" width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}" 
                     rx="${EFFECTS.borderRadius}" ry="${EFFECTS.borderRadius}" fill="white"/>
             </mask>
           </defs>
-          <rect width="${VIEWPORT_WIDTH}" height="${VIEWPORT_HEIGHT}" 
+          <rect width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}" 
                 fill="url(#grad)" mask="url(#roundedMask)"/>
         </svg>`
       );
       
-      // Composite the gradient on top
       compositeOps.push({
         input: gradientSvg,
-        top: 0,
-        left: 0,
+        top: EFFECTS.padding,
+        left: EFFECTS.padding,
       });
     }
     
-    // Create the final image with effects applied
-    const finalImage = await sharp(compositeOps[0].input)
-      .composite(compositeOps.slice(1))
-      .png({ quality: 95, compressionLevel: 9 })
-      .toBuffer();
-    
-    // Write the final image (already at 1200x630)
-    await sharp(finalImage)
-      .toFile(outputPath);
+    // Create final image: white background with shadow, rounded screenshot, and gradient
+    await sharp({
+      create: {
+        width: FINAL_WIDTH,
+        height: FINAL_HEIGHT,
+        channels: 4,
+        background: EFFECTS.backgroundColor,
+      }
+    })
+    .composite(compositeOps)
+    .png({ quality: 95, compressionLevel: 9 })
+    .toFile(outputPath);
     
     // Clean up temp file
     if (fs.existsSync(inputPath)) {
@@ -182,12 +222,12 @@ async function main() {
   console.log('Starting Enhanced OpenGraph screenshot generation...\n');
   console.log(`Base URL: ${BASE_URL}`);
   console.log(`Output directory: ${OUTPUT_DIR}`);
-  console.log(`Viewport: ${VIEWPORT_WIDTH}x${VIEWPORT_HEIGHT}`);
-  console.log(`Final size: ${VIEWPORT_WIDTH + (EFFECTS.padding * 2)}x${VIEWPORT_HEIGHT + (EFFECTS.padding * 2)}`);
+  console.log(`Screenshot size: ${SCREENSHOT_WIDTH}x${SCREENSHOT_HEIGHT}`);
+  console.log(`Final output size: ${FINAL_WIDTH}x${FINAL_HEIGHT}`);
   console.log(`\nEffects applied:`);
   console.log(`  • Rounded corners (${EFFECTS.borderRadius}px)`);
   console.log(`  • Drop shadow (blur: ${EFFECTS.shadow.blur}px, offset: ${EFFECTS.shadow.offsetY}px)`);
-  console.log(`  • Padding (${EFFECTS.padding}px)`);
+  console.log(`  • Padding (${EFFECTS.padding}px on all sides)`);
   if (EFFECTS.gradient.enabled) {
     console.log(`  • Gradient overlay (top ${EFFECTS.gradient.height}px)`);
   }
@@ -200,8 +240,8 @@ async function main() {
 
   const context = await browser.newContext({
     viewport: {
-      width: VIEWPORT_WIDTH,
-      height: VIEWPORT_HEIGHT
+      width: SCREENSHOT_WIDTH,
+      height: SCREENSHOT_HEIGHT
     },
     deviceScaleFactor: 2 // Higher quality for effects
   });
