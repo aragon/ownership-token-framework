@@ -16,7 +16,7 @@ class MetadataUtils {
   private defaultTitle = "Ownership Token Framework"
   private defaultDescription =
     "The Ownership Token Framework maps enforceable claims across four metrics: onchain control, value accrual, verifiability, and token distribution. Use it to evaluate tokens on fundamentals."
-  private defaultImage = `${this.baseUrl}/og-share-large.png`
+  private defaultImage = `${this.baseUrl}/og-images/index.png`
   private defaultImageWidth = "1200"
   private defaultImageHeight = "631"
   private defaultImageAlt = "Ownership Token Framework"
