@@ -54,9 +54,6 @@ class MetadataUtils {
 
     const meta = [
       {
-        title,
-      },
-      {
         name: "description",
         content: description,
       },

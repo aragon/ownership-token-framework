@@ -16,6 +16,7 @@ export const Route = createFileRoute("/tokens/$tokenId")({
     const imageAlt = token ? `${token.symbol} token logo` : "Token details"
 
     return {
+      title,
       meta: generateOpenGraphMetadata({
         title,
         description,

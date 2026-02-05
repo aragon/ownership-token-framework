@@ -4,6 +4,7 @@ import { generateOpenGraphMetadata } from "@/lib/metadata"
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
+    title: "FAQ - Ownership Token Framework",
     meta: generateOpenGraphMetadata({
       title: "FAQ - Ownership Token Framework",
       description:

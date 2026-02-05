@@ -17,6 +17,7 @@ import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
   head: () => ({
+    title: "Ownership Token Framework",
     meta: [
       {
         charSet: "utf-8",
