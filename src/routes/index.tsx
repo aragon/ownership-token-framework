@@ -9,6 +9,7 @@ export const Route = createFileRoute("/")({
       description:
         "The Ownership Token Framework maps enforceable claims across four metrics: onchain control, value accrual, verifiability, and token distribution. Use it to evaluate tokens on fundamentals.",
       twitterCard: "summary_large_image",
+      url: "/",
     }),
   }),
   component: App,

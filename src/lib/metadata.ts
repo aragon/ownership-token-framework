@@ -7,6 +7,7 @@ interface IOpenGraphMetadata {
   imageWidth?: string
   imageHeight?: string
   twitterCard?: "summary" | "summary_large_image"
+  url?: string
 }
 
 class MetadataUtils {
@@ -44,7 +45,10 @@ class MetadataUtils {
       imageWidth = this.defaultImageWidth,
       imageHeight = this.defaultImageHeight,
       twitterCard = "summary_large_image",
+      url,
     } = params || {}
+
+    const fullUrl = url ? `${this.baseUrl}${url.startsWith("/") ? url : `/${url}`}` : this.baseUrl
 
     const normalizedImage = this.normalizeImageUrl(image)
 
@@ -74,7 +78,7 @@ class MetadataUtils {
       },
       {
         property: "og:url",
-        content: this.baseUrl,
+        content: fullUrl,
       },
       {
         property: "og:locale",

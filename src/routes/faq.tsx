@@ -11,6 +11,7 @@ export const Route = createFileRoute("/faq")({
       twitterCard: "summary",
       image: "/og-images/faq.png",
       imageAlt: "Frequently asked questions",
+      url: "/faq",
     }),
   }),
   component: FaqPage,

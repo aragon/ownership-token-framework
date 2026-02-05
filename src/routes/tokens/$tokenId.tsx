@@ -22,6 +22,7 @@ export const Route = createFileRoute("/tokens/$tokenId")({
         image,
         imageAlt,
         type: "article",
+        url: `/tokens/${params.tokenId}`,
       }),
     }
   },

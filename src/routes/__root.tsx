@@ -67,7 +67,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        <title>Ownership Token Framework</title>
         {isValidGaId ? (
           <script
             async
