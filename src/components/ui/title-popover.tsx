@@ -1,6 +1,6 @@
 import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card"
 import { CircleHelpIcon } from "lucide-react"
-import type { ComponentPropsWithoutRef } from "react"
+import { type ComponentPropsWithoutRef, useState } from "react"
 
 import { Link } from "@/components/ui/link"
 import { cn } from "@/lib/utils"
@@ -22,10 +22,15 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
     ...otherProps
   } = props
 
+  const [open, setOpen] = useState(false)
   const TitleTag = variant
 
   return (
-    <PreviewCardPrimitive.Root>
+    <PreviewCardPrimitive.Root
+      defaultOpen={false}
+      onOpenChange={setOpen}
+      open={open}
+    >
       <div
         className={cn(
           "inline-flex items-center cursor-help",
@@ -49,7 +54,14 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
           >
             {title}
           </TitleTag>
-          <CircleHelpIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3" />
+          <CircleHelpIcon
+            className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setOpen((prev) => !prev)
+            }}
+          />
         </PreviewCardPrimitive.Trigger>
 
         <PreviewCardPrimitive.Portal>

@@ -74,14 +74,14 @@ export default function MetricCard(props: MetricCardProps) {
   return (
     <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-4">
       {/* Header */}
-      <div className="p-6 pb-0">
+      <div className="p-4 pb-0 md:p-6">
         <div className="flex items-center justify-between gap-3">
           <TitlePopover
             description={metric.about}
             learnMoreLink={getFrameworkUrl(metric.id)}
             title={metric.name}
           />
-          <span className="flex gap-1 pr-8">
+          <span className="flex gap-1 pr-0 md:pr-8">
             {metric.tags?.map((tag) => (
               <Badge
                 key={tag}
@@ -92,7 +92,9 @@ export default function MetricCard(props: MetricCardProps) {
             ))}
           </span>
         </div>
-        <p className={cn(summaryTextStyles, "pt-1.5 pr-8")}>{metric.summary}</p>
+        <p className={cn(summaryTextStyles, "pt-1.5 pr-0 md:pr-8")}>
+          {metric.summary}
+        </p>
       </div>
 
       {/* Criteria list */}
@@ -104,7 +106,7 @@ export default function MetricCard(props: MetricCardProps) {
       >
         {metric.criteria.map((criteria) => (
           <AccordionItem
-            className="mx-6 p-0"
+            className="mx-4 p-0 md:mx-6"
             key={criteria.id}
             value={criteria.id}
           >
@@ -124,7 +126,10 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(P.string, (notes) => (
                     // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
                     <div
-                      className={cn(summaryTextStyles, "prose pr-8 max-w-none")}
+                      className={cn(
+                        summaryTextStyles,
+                        "prose pr-0 max-w-none md:pr-8"
+                      )}
                     >
                       <ReactMarkdown components={markdownComponents}>
                         {notes}
