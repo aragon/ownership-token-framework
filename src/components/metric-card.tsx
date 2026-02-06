@@ -92,7 +92,9 @@ export default function MetricCard(props: MetricCardProps) {
             ))}
           </span>
         </div>
-        <p className={cn(summaryTextStyles, "pt-1.5 pr-0 md:pr-8")}>{metric.summary}</p>
+        <p className={cn(summaryTextStyles, "pt-1.5 pr-0 md:pr-8")}>
+          {metric.summary}
+        </p>
       </div>
 
       {/* Criteria list */}
@@ -124,7 +126,10 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(P.string, (notes) => (
                     // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
                     <div
-                      className={cn(summaryTextStyles, "prose pr-0 max-w-none md:pr-8")}
+                      className={cn(
+                        summaryTextStyles,
+                        "prose pr-0 max-w-none md:pr-8"
+                      )}
                     >
                       <ReactMarkdown components={markdownComponents}>
                         {notes}

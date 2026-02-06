@@ -8,7 +8,6 @@ import { SubmitTokenDialog } from "@/components/submit-token-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
-import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { useTokenSearch } from "@/hooks/use-token-search"
 import { FRAMEWORK_BASE_URL } from "@/lib/framework"
+import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
   const [submitDialogOpen, setSubmitDialogOpen] = useState(false)
@@ -145,8 +145,6 @@ export function SiteHeader() {
               */}
             </NavigationMenuList>
           </NavigationMenu>
-
-
         </div>
 
         {/* Search and Submit */}
@@ -331,8 +329,6 @@ export function SiteHeader() {
             Submit token
           </Button>
         </div>
-
-
       </Container>
 
       {/* Submit Token Dialog */}

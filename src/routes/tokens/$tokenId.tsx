@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 import TokenDetail from "@/components/token-detail"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
 import { getTokenById } from "@/lib/token-data"
