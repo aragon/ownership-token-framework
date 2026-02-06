@@ -106,7 +106,7 @@ export function SiteHeader() {
           </NavLink>
 
           {/* Navigation */}
-          <NavigationMenu className="hidden md:flex">
+          <NavigationMenu className="hidden lg:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuLink render={<NavLink to="/" />}>
@@ -155,7 +155,7 @@ export function SiteHeader() {
             <DropdownMenuTrigger
               className={cn(
                 buttonVariants({ size: "sm", variant: "outline" }),
-                "flex items-center gap-2 md:hidden"
+                "flex items-center gap-2 lg:hidden"
               )}
             >
               Menu
@@ -163,7 +163,7 @@ export function SiteHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[calc(100vw-2rem)] p-2 md:w-56"
+              className="w-[calc(100vw-2rem)] p-2 lg:w-56"
             >
               <div className="relative mb-2 px-2 py-1.5">
                 <SearchIcon className="absolute left-5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -246,7 +246,7 @@ export function SiteHeader() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="relative hidden md:block w-40 lg:w-60">
+          <div className="relative hidden lg:block w-40 lg:w-60">
             <SearchIcon className="absolute left-3 top-1/2 size-[10.67px] -translate-y-1/2 text-foreground" />
             <Input
               className="h-9 pl-9 pr-8 text-base shadow-sm"
@@ -259,7 +259,7 @@ export function SiteHeader() {
               type="search"
               value={searchQuery}
             />
-            <kbd className="absolute right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 items-center justify-center rounded-sm bg-secondary text-xs text-muted-foreground md:flex">
+            <kbd className="absolute right-3 top-1/2 hidden h-4 w-4 -translate-y-1/2 items-center justify-center rounded-sm bg-secondary text-xs text-muted-foreground lg:flex">
               /
             </kbd>
             {searchQuery.trim().length > 0 ? (
@@ -322,7 +322,7 @@ export function SiteHeader() {
 
           {/* Submit Button */}
           <Button
-            className="hidden h-9 gap-1.5 shadow-sm md:inline-flex"
+            className="hidden h-9 gap-1.5 shadow-sm lg:inline-flex"
             onClick={() => setSubmitDialogOpen(true)}
             size="sm"
             variant="outline"
