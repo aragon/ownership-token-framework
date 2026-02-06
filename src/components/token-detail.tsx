@@ -204,10 +204,10 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
             {/* Right column - Info sidebar */}
             <div>
-              <div className="sticky top-6 flex flex-col gap-6">
+              <div className="sticky top-6 flex flex-col-reverse gap-6 lg:flex-col">
                 <InfoSidebar token={token} />
                 <Button
-                  className="w-full"
+                  className="w-fit lg:w-full"
                   onClick={handleToggleAll}
                   variant="outline"
                 >
