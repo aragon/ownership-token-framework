@@ -246,7 +246,7 @@ export function SiteHeader() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="relative hidden lg:block w-40 lg:w-60">
+          <div className="relative hidden lg:block lg:w-[200px]">
             <SearchIcon className="absolute left-3 top-1/2 size-[10.67px] -translate-y-1/2 text-foreground" />
             <Input
               className="h-9 pl-9 pr-8 text-base shadow-sm"
