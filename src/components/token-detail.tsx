@@ -67,7 +67,7 @@ export type { Metric }
 // Token Hero Section
 function TokenHero({ token }: { token: TokenInfo }) {
   return (
-    <section className="py-6 flex flex-col gap-6">
+    <section className="py-6 flex flex-col gap-4 md:gap-6">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -81,13 +81,13 @@ function TokenHero({ token }: { token: TokenInfo }) {
       </Breadcrumb>
 
       <div className="flex items-start gap-3">
-        <Avatar className="size-10">
+        <Avatar className="size-8 md:size-10">
           <AvatarImage alt={token.name} src={token.icon} />
           <AvatarFallback className="bg-blue-500 text-white">
             {token.name.slice(0, 2)}
           </AvatarFallback>
         </Avatar>
-        <h1 className="text-3xl font-bold">{token.name}</h1>
+        <h1 className="text-2xl font-bold md:text-3xl">{token.name}</h1>
       </div>
 
       <p className="max-w-4xl text-muted-foreground">{token.description}</p>
