@@ -99,7 +99,7 @@ export function SiteHeader() {
               className="size-8 rounded-lg object-cover"
               src="/logo-square.png"
             />
-            <div className="flex items-center gap-1 text-sm font-semibold leading-6 md:text-base">
+            <div className="flex flex-col items-baseline gap-0 text-sm leading-4 font-semibold sm:items-center sm:flex-row sm:gap-1 sm:leading-6 md:text-base ">
               <span className="text-foreground">Ownership Token</span>
               <span className="text-muted-foreground">Framework</span>
             </div>
