@@ -226,15 +226,6 @@ export function SiteHeader() {
                   FAQ
                 </NavLink>
               </DropdownMenuItem>
-              <DropdownMenuItem className="py-3">
-                <Link
-                  className="flex w-full items-center"
-                  href="https://blockworks.co/token-transparency"
-                  isExternal
-                >
-                  Blockworks
-                </Link>
-              </DropdownMenuItem>
               <DropdownMenuItem
                 className="py-3"
                 onClick={() => setSubmitDialogOpen(true)}
