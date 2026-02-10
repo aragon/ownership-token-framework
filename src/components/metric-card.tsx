@@ -1,4 +1,8 @@
-import { IconCircleCheckFilled, IconCircleDotFilled } from "@tabler/icons-react"
+import {
+  IconCircleCheckFilled,
+  IconCircleDotFilled,
+// @ts-expect-error by default it imports from cjs build and triggers serverside error
+} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import ReactMarkdown from "react-markdown"
 import { match, P } from "ts-pattern"
 import {
