@@ -41,27 +41,30 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
       >
         <PreviewCardPrimitive.Trigger
           className={cn(
-            "group inline-flex items-center text-foreground no-underline outline-none flex-1",
+            "group inline-flex sm:flex-row-reverse items-start text-foreground no-underline outline-none",
             variant === "h3" ? "gap-2" : "gap-3"
           )}
         >
-          <TitleTag
-            className={cn(
-              "font-sans not-italic underline decoration-dotted underline-offset-4 flex-1",
-              variant === "h3" && "text-lg font-bold leading-7",
-              variant === "h4" && "text-base font-medium leading-6"
-            )}
-          >
-            {title}
-          </TitleTag>
           <CircleHelpIcon
-            className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3"
+            className={cn(
+              "size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3",
+              variant === "h3" ? "mt-1.5" : "mt-1"
+            )}
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
               setOpen((prev) => !prev)
             }}
           />
+          <TitleTag
+            className={cn(
+              "font-sans not-italic sm:underline sm:decoration-dotted underline-offset-4",
+              variant === "h3" && "text-lg font-bold leading-7",
+              variant === "h4" && "text-base font-medium leading-6"
+            )}
+          >
+            {title}
+          </TitleTag>
         </PreviewCardPrimitive.Trigger>
 
         <PreviewCardPrimitive.Portal>
