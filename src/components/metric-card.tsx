@@ -72,7 +72,7 @@ export default function MetricCard(props: MetricCardProps) {
   }
 
   return (
-    <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-4">
+    <div className="rounded-lg border bg-card gap-y-4 flex flex-col">
       {/* Header */}
       <div className="p-4 pb-0 md:p-6">
         <div className="flex items-center justify-between gap-3">

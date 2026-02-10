@@ -22,7 +22,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
   }, [hasCopied])
 
   return (
-    <aside className="rounded-lg border bg-card p-6 flex flex-col gap-4">
+    <aside className="rounded-lg border bg-card p-4 flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <h3 className="text-lg font-semibold leading-7 tracking-normal">
           Info
