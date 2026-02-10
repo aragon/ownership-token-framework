@@ -3,7 +3,7 @@ import {
   IconCheck,
   IconCopy,
   IconLink,
-  // @ts-expect-error by default it imports from cjs build and triggers serverside error
+  // @ts-expect-error by default it imports from cjs build and triggers server-side error
 } from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import { useEffect, useState } from "react"
 import { copyToClipboard, truncateAddress } from "@/lib/utils"

@@ -36,7 +36,7 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   shellComponent: RootDocument,
-  notFoundComponent: () => <Navigate replace to="/" />, //todo: check
+  notFoundComponent: () => <Navigate replace to="/" />,
 })
 
 function RootComponent() {
