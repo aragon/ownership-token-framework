@@ -1,6 +1,6 @@
 import { PreviewCard as PreviewCardPrimitive } from "@base-ui/react/preview-card"
 import { CircleHelpIcon } from "lucide-react"
-import type { ComponentPropsWithoutRef } from "react"
+import { type ComponentPropsWithoutRef, useState } from "react"
 
 import { Link } from "@/components/ui/link"
 import { cn } from "@/lib/utils"
@@ -22,13 +22,18 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
     ...otherProps
   } = props
 
+  const [open, setOpen] = useState(false)
   const TitleTag = variant
 
   return (
-    <PreviewCardPrimitive.Root>
+    <PreviewCardPrimitive.Root
+      defaultOpen={false}
+      onOpenChange={setOpen}
+      open={open}
+    >
       <div
         className={cn(
-          "inline-flex items-center cursor-help",
+          "flex sm:inline-flex items-center cursor-help",
           variant === "h3" ? "gap-2" : "gap-3",
           className
         )}
@@ -36,20 +41,30 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
       >
         <PreviewCardPrimitive.Trigger
           className={cn(
-            "group inline-flex items-center text-foreground no-underline outline-none",
+            "group inline-flex sm:flex-row-reverse items-start text-foreground no-underline outline-none",
             variant === "h3" ? "gap-2" : "gap-3"
           )}
         >
+          <CircleHelpIcon
+            className={cn(
+              "size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3",
+              variant === "h3" ? "mt-1.5" : "mt-1"
+            )}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setOpen((prev) => !prev)
+            }}
+          />
           <TitleTag
             className={cn(
-              "font-sans not-italic underline decoration-dotted underline-offset-4",
+              "font-sans not-italic sm:underline sm:decoration-dotted underline-offset-4",
               variant === "h3" && "text-lg font-bold leading-7",
               variant === "h4" && "text-base font-medium leading-6"
             )}
           >
             {title}
           </TitleTag>
-          <CircleHelpIcon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3" />
         </PreviewCardPrimitive.Trigger>
 
         <PreviewCardPrimitive.Portal>

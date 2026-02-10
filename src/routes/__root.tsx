@@ -2,7 +2,6 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 import {
   createRootRoute,
   HeadContent,
-  Link,
   Navigate,
   Outlet,
   Scripts,
@@ -12,7 +11,6 @@ import { GoogleAnalytics } from "@/components/google-analytics"
 import { NewsletterBanner } from "@/components/newsletter-banner"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { Container } from "@/components/ui/container"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
 import appCss from "../styles.css?url"
@@ -40,7 +38,6 @@ export const Route = createRootRoute({
   component: RootComponent,
   shellComponent: RootDocument,
   notFoundComponent: () => <Navigate replace to="/" />,
-  errorComponent: () => <Navigate replace to="/" />,
 })
 
 function RootComponent() {

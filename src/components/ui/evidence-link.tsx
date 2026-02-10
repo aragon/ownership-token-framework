@@ -15,11 +15,11 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
   const renderIcon = () => {
     switch (type) {
       case "github":
-        return <GithubIcon className="size-4 shrink-0" />
+        return <GithubIcon className="size-4 shrink-0 mt-1" />
       case "docs":
-        return <FileTextIcon className="size-4 shrink-0" />
+        return <FileTextIcon className="size-4 shrink-0 mt-1" />
       case "explorer":
-        return <ExplorerIcon />
+        return <ExplorerIcon className="mt-1" />
       default:
         return null
     }
@@ -28,7 +28,7 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
   return (
     <a
       className={cn(
-        "inline-flex items-center gap-1 text-base font-normal leading-6 tracking-normal",
+        "inline-flex items-start gap-1 text-base font-normal leading-6 tracking-normal",
         "text-chart-3 underline decoration-solid",
         "hover:text-chart-4!",
         "active:text-chart-5!",

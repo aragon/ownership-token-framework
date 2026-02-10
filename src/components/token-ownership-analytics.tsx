@@ -119,7 +119,7 @@ const columns: ColumnDef<Token>[] = [
         </Avatar>
         <div className="flex items-center gap-2.5">
           <span className="font-medium text-base">{row.original.name}</span>
-          <span className="text-muted-foreground text-base">
+          <span className="text-muted-foreground hidden sm:block">
             {row.original.symbol !== row.original.name
               ? row.original.symbol
               : truncateAddress(row.original.address)}
