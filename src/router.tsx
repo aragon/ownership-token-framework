@@ -8,6 +8,7 @@ export const router = createRouter({
   routeTree,
   scrollRestoration: true,
   defaultPreloadStaleTime: 0,
+  trailingSlash: "preserve",
 })
 
 // Legacy function export for backward compatibility
