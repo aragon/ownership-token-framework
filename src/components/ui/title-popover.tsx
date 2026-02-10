@@ -33,7 +33,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
     >
       <div
         className={cn(
-          "inline-flex items-center cursor-help",
+          "flex sm:inline-flex items-center cursor-help",
           variant === "h3" ? "gap-2" : "gap-3",
           className
         )}
@@ -41,13 +41,13 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
       >
         <PreviewCardPrimitive.Trigger
           className={cn(
-            "group inline-flex items-center text-foreground no-underline outline-none",
+            "group inline-flex items-center text-foreground no-underline outline-none flex-1",
             variant === "h3" ? "gap-2" : "gap-3"
           )}
         >
           <TitleTag
             className={cn(
-              "font-sans not-italic underline decoration-dotted underline-offset-4",
+              "font-sans not-italic underline decoration-dotted underline-offset-4 flex-1",
               variant === "h3" && "text-lg font-bold leading-7",
               variant === "h4" && "text-base font-medium leading-6"
             )}
