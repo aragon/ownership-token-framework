@@ -166,13 +166,13 @@ export function SiteHeader() {
               <div className="relative mb-2 px-2 py-1.5">
                 <SearchIcon className="absolute left-5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  autoFocus={false}
                   className="h-9 pl-9"
                   onChange={(event) => updateSearchQuery(event.target.value)}
                   onKeyDown={(event) => {
                     event.stopPropagation()
                   }}
                   placeholder="Search tokens"
+                  tabIndex={-1}
                   value={searchQuery}
                 />
                 {searchQuery.trim().length > 0 && (
