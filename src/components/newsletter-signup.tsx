@@ -7,7 +7,7 @@ export function NewsletterSignup() {
       <Container className="px-12 py-20">
         <div className="mx-auto flex max-w-[800px] flex-col items-center gap-6 text-center">
           <div className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tight text-accent-foreground">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-accent-foreground">
               Stay up-to-date on the latest token reports
             </h2>
             <p className="text-lg font-normal text-accent-foreground">
