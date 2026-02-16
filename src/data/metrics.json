@@ -3024,12 +3024,22 @@
               ]
             },
             {
-              "name": "Mom Contract Authority",
-              "summary": "Mom contracts controlled by SKY holders via authority chain:\n\nVerify: Query each Mom contract's authority() \u2192 returns DSChief 0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9\n\nOnly hat (winning spell) can call setAuthority() to revoke.",
+              "name": "Mom Contract Authority Chain (On-Chain Verified)",
+              "summary": "All Mom contracts verified on-chain via eth.llamarpc.com:\n\nOSM_MOM (0x76416A...): authority() \u2192 DSChief\nCLIPPER_MOM (0x79FBDF...): authority() \u2192 DSChief\nLINE_MOM (0x9c257e...): authority() \u2192 DSChief\nSPLITTER_MOM (0xF51a07...): authority() \u2192 DSChief\nSTUSDS_MOM (0xf5DEe2...): authority() \u2192 DSChief\n\nComplete chain: Mom \u2192 DSChief (0x929d9A...) \u2192 GOV() \u2192 SKY token",
               "urls": [
                 {
                   "name": "OSM_MOM",
                   "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "CLIPPER_MOM",
+                  "url": "https://etherscan.io/address/0x79FBDF16b366DFb14F66cE4Ac2815Ca7296405A0#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "SPLITTER_MOM",
+                  "url": "https://etherscan.io/address/0xF51a075d468dE7dE3599C1Dc47F5C42d02C9230e#readContract",
                   "type": "explorer"
                 }
               ]
@@ -3367,11 +3377,11 @@
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "\u26a0\ufe0f",
-          "notes": "Concentration is a known concern. ~6.8B SKY voted on Feb 12, 2026 executive. Delegation system can amplify concentration. Specific holder percentages require on-chain verification.",
+          "notes": "Concentration is a known concern. ~6.8B SKY voted on Feb 12, 2026 executive. Delegation system can amplify concentration. Aragon has not been able to verify specific concentration levels. Verification requires on-chain analysis of chief.deposits() or Lock events.",
           "evidence": [
             {
               "name": "Voting Data",
-              "summary": "~6.8B SKY participated in recent executive vote.\n\nVerification method:\n- Query chief.deposits(address) for top holders\n- Analyze Lock events on DSChief\n\nConcentration claims require on-chain data to substantiate.",
+              "summary": "~6.8B SKY participated in recent executive vote.\n\nAragon has not been able to verify specific concentration levels.\n\nVerification method:\n- Query chief.deposits(address) for top holders\n- Analyze Lock events on DSChief",
               "urls": [
                 {
                   "name": "Governance Portal",
