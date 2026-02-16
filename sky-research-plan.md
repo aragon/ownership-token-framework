@@ -104,6 +104,33 @@ This research plan maps the SKY token against the Aragon Ownership Token Framewo
 - New SKY Chief contract code
 - MKR-to-SKY converter contract
 
+**SKY Chief Transition Verification Steps:**
+To determine which Chief contract is currently authoritative:
+
+1. **Query governance token on each Chief:**
+   - Old Chief (`0x0a3f6849...`): Call `GOV()` — expect MKR address
+   - New SKY Chief (`0x929d9A14...`): Call `GOV()` — expect SKY address
+
+2. **Query current hat (winning proposal):**
+   - Old Chief: Call `hat()` — returns address of current spell
+   - New SKY Chief: Call `hat()` — returns address of current spell
+   - The authoritative Chief is the one whose `hat()` matches recent executive votes on vote.makerdao.com
+
+3. **Check active deposits:**
+   - Old Chief: Call `deposits(address)` for known large voters
+   - New SKY Chief: Call `deposits(address)` for same addresses
+   - Active voting weight indicates which system is in use
+
+4. **Verify Pause Proxy recognition:**
+   - Check MCD_ADM in chainlog — this is the Chief that Pause Proxy recognizes
+   - Query: `MCD_CHAINLOG.getAddress("MCD_ADM")`
+   - If this returns old Chief, SKY governance transition may not be complete
+
+5. **Transition status classification:**
+   - If MCD_ADM = Old Chief AND New Chief has zero deposits → MKR still governs
+   - If MCD_ADM = New Chief AND New Chief has deposits → SKY governs
+   - If both have deposits → transition in progress, document split
+
 **Evidence Sufficiency:**
 - Must show SKY can be locked for voting weight
 - Must show "hat" (winning spell) execution path to Pause Proxy
@@ -129,6 +156,23 @@ This research plan maps the SKY token against the Aragon Ownership Token Framewo
 - DSS contract ownership chains
 - dss-exec-lib for role management patterns
 - Protego contract on Etherscan
+
+**Completeness Verification Method (for `wards` enumeration):**
+The DSS auth system uses a binary `wards` mapping per contract. To systematically enumerate all authorized addresses:
+
+1. **Core Contracts to Scan:** Vat, Vow, Jug, Pot, Spot, Dog, End, ESM, Cure, and all Join adapters
+2. **Query Method:** For each contract, use event log analysis:
+   - Filter `LogNote` events with `sig = rely(address)` (0x65fae35e)
+   - Filter `LogNote` events with `sig = deny(address)` (0x9c52a7f1)
+   - Compute net authorized set: addresses with rely but no subsequent deny
+3. **Alternative:** Use Etherscan's "Read Contract" to query `wards(address)` for known addresses (Pause Proxy, deployer, other DSS contracts)
+4. **Chainlog Reference:** Query MCD_CHAINLOG (`0xdA0Ab1e0017DEbCd72Be8599041a2aa3bA7e740F`) for canonical contract addresses, then check each for `wards(MCD_PAUSE_PROXY)`
+5. **Completeness Check:** Every ward should be either:
+   - MCD_PAUSE_PROXY (governance executor)
+   - Another DSS contract in the chainlog
+   - A documented operational role (e.g., keeper, oracle)
+
+If any ward is an EOA or undocumented multisig, flag as discretionary control.
 
 **Evidence Sufficiency:**
 - Complete list of privileged roles with addresses
@@ -270,6 +314,48 @@ This research plan maps the SKY token against the Aragon Ownership Token Framewo
 - Flapper contract for surplus auctions
 - Governance proposals mentioning revenue distribution
 - sUSDS/stUSDS for staking yields
+
+**Flapper/Surplus Auction Configuration Investigation:**
+To determine if SKY tokens benefit from protocol revenue:
+
+1. **Identify current Flapper contract:**
+   - Query MCD_CHAINLOG for "MCD_FLAP" address
+   - This is the contract that auctions system surplus
+
+2. **Determine auction mechanism:**
+   - Old mechanism: Flapper sells DAI for MKR, then burns MKR
+   - Check if flapper is configured to buy/burn MKR or SKY
+   - Query `flapper.gem()` — should return bid token address (MKR or SKY)
+
+3. **Check for FlapperMom/governance controls:**
+   - FlapperMom may gate flapper execution
+   - Verify governance can change flapper parameters
+
+4. **Verify active auctions:**
+   - Query `Vow.bump()` — lot size for flap auctions
+   - Query `Vow.hump()` — surplus buffer threshold
+   - Calculate: If `Vat.dai(Vow) > hump + bump`, flaps are possible
+   - Check recent `Kick` events on Flapper for active auctions
+
+5. **Alternative value accrual paths:**
+   - Smart Burn Engine (SBE) — newer mechanism for protocol buybacks
+   - Check if SBE is deployed and operational
+   - Query governance proposals for "Smart Burn" or "Protocol Owned Liquidity"
+
+6. **SKY-specific investigation:**
+   - With MKR→SKY transition, surplus may:
+     a. Still burn MKR (pre-transition)
+     b. Burn SKY via new mechanism
+     c. Accumulate in treasury without burns
+     d. Fund SKY staking rewards via vest contracts
+   - Check SKY Vest contract (`0x67eaDb32...`) for inflows from protocol
+
+7. **Evidence to collect:**
+   - Current Flapper address and configuration
+   - Gem token (MKR or SKY)
+   - Recent auction history (last 30 days)
+   - Surplus buffer status (can auctions occur?)
+   - Alternative accrual mechanisms if flapper inactive
 
 **Evidence Sufficiency:**
 - Observable protocol revenue in ETH/DAI/USDS
@@ -414,6 +500,42 @@ This research plan maps the SKY token against the Aragon Ownership Token Framewo
 - Etherscan token holders
 - Chief contract locked balances
 - Governance portal delegate stats
+
+**Snapshot Methodology:**
+To ensure reproducible and point-in-time accurate data:
+
+1. **Document the snapshot block:**
+   - Record the Ethereum block number at time of analysis (e.g., block 19,500,000)
+   - All holder queries should reference this specific block
+   - Format: "Data as of block 19,500,000 (2026-02-16 12:00 UTC)"
+
+2. **Token holder query (reproducible):**
+   - Use Etherscan API: `?module=token&action=tokenholderlist&contractaddress=0x56072C95FAA701256059aa122697B133aDEd9279`
+   - Alternative: Dune Analytics query filtering to specific block
+   - Record query timestamp and method used
+
+3. **Chief deposits query:**
+   - Query `deposits(address)` on both Chief contracts at snapshot block
+   - Use archive node RPC or Etherscan historical state
+   - Document: "Chief deposits queried at block X"
+
+4. **Delegate voting power:**
+   - Query VoteDelegate contracts for delegated balances
+   - Sum by delegate address to get effective voting power
+   - Note: Delegation changes frequently — snapshot block is critical
+
+5. **Attribution methodology:**
+   - For each top-10 holder, attempt identification via:
+     - Known labeled addresses (Etherscan tags)
+     - Cross-reference with governance portal delegate names
+     - Public disclosures in forum/proposals
+   - Mark unattributed addresses as "Unknown"
+
+6. **Concentration metrics to report:**
+   - Top 1 holder % of supply
+   - Top 5 holders cumulative %
+   - Top 10 holders cumulative %
+   - Effective voting power concentration (including delegation)
 
 **Evidence Sufficiency:**
 - Top 10 holder analysis with % of supply
