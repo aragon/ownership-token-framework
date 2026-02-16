@@ -2699,7 +2699,7 @@
                 },
                 {
                   "name": "VestingEscrow Source",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/VestingEscrow.vy#L166-L179",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy#L166-L179",
                   "type": "github"
                 }
               ]
@@ -2724,12 +2724,12 @@
                 },
                 {
                   "name": "Factory.vy set_implementations",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/Factory.vy#L390-L410",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/Factory.vy#L390-L410",
                   "type": "github"
                 },
                 {
                   "name": "MigrationFactoryOwner.vy",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/MigrationFactoryOwner.vy",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/MigrationFactoryOwner.vy",
                   "type": "github"
                 }
               ]
@@ -2754,7 +2754,7 @@
                 },
                 {
                   "name": "YB.vy renounce_ownership",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/YB.vy#L90-L100",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L90-L100",
                   "type": "github"
                 }
               ]
@@ -2774,7 +2774,7 @@
               "urls": [
                 {
                   "name": "YB.vy emit function",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/YB.vy#L103-L122",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L103-L122",
                   "type": "github"
                 },
                 {
@@ -2799,12 +2799,12 @@
               "urls": [
                 {
                   "name": "VotingEscrow.vy withdraw",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/VotingEscrow.vy#L428-L457",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L428-L457",
                   "type": "github"
                 },
                 {
                   "name": "FeeDistributor.vy claim",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/FeeDistributor.vy#L269-L277",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/FeeDistributor.vy#L269-L277",
                   "type": "github"
                 }
               ]
@@ -2822,7 +2822,7 @@
               "urls": [
                 {
                   "name": "YB.vy full source",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/YB.vy",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy",
                   "type": "github"
                 }
               ]
@@ -2899,7 +2899,7 @@
               "urls": [
                 {
                   "name": "GaugeController.vy vote_for_gauge_weights",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/GaugeController.vy#L206-L287",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/GaugeController.vy#L206-L287",
                   "type": "github"
                 },
                 {
@@ -3034,7 +3034,7 @@
                 },
                 {
                   "name": "VestingEscrow.vy",
-                  "url": "https://github.com/yield-basis/yb-core/blob/main/contracts/dao/VestingEscrow.vy",
+                  "url": "https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy",
                   "type": "github"
                 }
               ]
@@ -3089,7 +3089,7 @@
               "urls": [
                 {
                   "name": "yb-core contracts",
-                  "url": "https://github.com/yield-basis/yb-core/tree/main/contracts",
+                  "url": "https://github.com/yield-basis/yb-core/tree/master/contracts",
                   "type": "github"
                 },
                 {
