@@ -2682,65 +2682,86 @@
         "Metric 1"
       ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "SKY holders exercise **binding governance control** through DSChief approval voting with **24-hour timelock** execution via Pause Proxy. The SKY token is **non-upgradeable** with **no censorship capabilities**. All privileged roles trace to governance through the `wards` authorization system.",
+      "summary": "SKY holders exercise binding governance control through DSChief approval voting with 24-hour timelock execution via Pause Proxy. The SKY token is non-upgradeable with no censorship capabilities. All privileged roles trace to governance through the wards authorization system.",
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "\u2705",
-          "notes": "SKY holders **lock tokens in DSChief** and vote on executive spell addresses. The address with most approval becomes the **'hat'** and executes through **DSPause** with a **24-hour timelock** (86400 seconds). Recent executive votes show active participation with ~6.8B SKY voting.",
+          "notes": "SKY holders vote to elect \"spells\" (upgrade contracts). The winning spell must wait 24 hours before executing changes. This creates binding, verifiable onchain governance.\n\nGovernance Flow: SKY Holder \u2192 lock in DSChief \u2192 vote on slate \u2192 lift (crown hat) \u2192 plot + wait 24hr \u2192 exec \u2192 Pause Proxy executes via delegatecall.",
           "evidence": [
             {
-              "name": "Governance Flow",
-              "summary": "SKY Token \u2192 Lock in Chief \u2192 Vote on Slate \u2192 Hat (winning spell) \u2192 Pause Delay (24hr) \u2192 Execute via Pause Proxy \u2192 Protocol Changes.\n\nThe chainlog confirms MCD_GOV = SKY and MCD_ADM = DSChief (SKY).",
+              "name": "DSChief Contract (SKY Chief)",
+              "summary": "Approval voting contract where SKY holders lock tokens to vote. Named \"Chief\" because it selects the protocol's root authority.\n\nAddress: 0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9\nChainlog name: MCD_ADM (MakerDAO Core Contracts Admin)\nLegacy MKR Chief retained as MCD_ADM_LEGACY for backward compatibility.",
               "urls": [
                 {
-                  "name": "DSChief (SKY)",
+                  "name": "DSChief (Etherscan)",
                   "url": "https://etherscan.io/address/0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9#code",
                   "type": "explorer"
                 },
                 {
-                  "name": "Chief Source Code (voting logic)",
-                  "url": "https://github.com/sky-ecosystem/ds-chief/blob/master/src/chief.sol#L64-L127",
+                  "name": "Chainlog MCD_ADM (L35)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L35",
                   "type": "github"
                 },
                 {
-                  "name": "Chainlog - MCD_ADM Configuration",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol#L35",
-                  "type": "github"
-                },
-                {
-                  "name": "Chainlog - MCD_GOV (SKY Token)",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol#L32",
+                  "name": "MCD_GOV = SKY (L32)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L32",
                   "type": "github"
                 }
               ]
             },
             {
-              "name": "Timelock Execution",
-              "summary": "Winning spells execute through DSPause with enforced delay. The Pause Proxy executes spell code via delegatecall after the delay period.\n\n**GSM Pause Delay:** 86400 seconds (24 hours) - verified on-chain via MCD_PAUSE.delay()",
+              "name": "Approval Voting Code",
+              "summary": "Key functions in ds-chief:\n- lock(wad): Deposit SKY, receive IOU\n- vote(slate): Cast vote on slate of addresses\n- lift(whom): Crown new hat if highest approval\n- hat: Returns current winning spell address",
               "urls": [
                 {
-                  "name": "DSPause Contract",
+                  "name": "lock() - L64-73",
+                  "url": "https://github.com/sky-ecosystem/ds-chief/blob/master/src/chief.sol#L64-L73",
+                  "type": "github"
+                },
+                {
+                  "name": "vote() - L108-118",
+                  "url": "https://github.com/sky-ecosystem/ds-chief/blob/master/src/chief.sol#L108-L118",
+                  "type": "github"
+                },
+                {
+                  "name": "lift() - L121-127",
+                  "url": "https://github.com/sky-ecosystem/ds-chief/blob/master/src/chief.sol#L121-L127",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "GSM Timelock Mechanism",
+              "summary": "MCD_PAUSE at 0xbE286431454714F511008713973d3B053A2d38f3.\n\nHow it works:\n- delay storage variable = 86400 seconds (24 hours)\n- plot() schedules execution: requires eta >= now + delay\n- exec() executes: requires now >= eta\n- eta = scheduled execution timestamp (set by spell, must be 24hr+ future)\n\nExecution Proxy: MCD_PAUSE_PROXY at 0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB holds ward privileges on all core contracts.",
+              "urls": [
+                {
+                  "name": "MCD_PAUSE (Etherscan)",
                   "url": "https://etherscan.io/address/0xbE286431454714F511008713973d3B053A2d38f3#code",
                   "type": "explorer"
                 },
                 {
-                  "name": "Pause Proxy",
-                  "url": "https://etherscan.io/address/0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB#code",
-                  "type": "explorer"
+                  "name": "plot() - L111-116",
+                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L111-L116",
+                  "type": "github"
                 },
                 {
-                  "name": "DSPause Source (exec function)",
-                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L110-L136",
+                  "name": "exec() - L124-136",
+                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L124-L136",
+                  "type": "github"
+                },
+                {
+                  "name": "Chainlog MCD_PAUSE (L46)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L46",
                   "type": "github"
                 }
               ]
             },
             {
               "name": "Recent Governance Activity",
-              "summary": "Feb 12, 2026 executive spell received **6,799,323,003 SKY** supporting votes. Legacy MKR Chief has only 3,601 MKR remaining, confirming governance transition to SKY is complete.",
+              "summary": "Feb 12, 2026 executive spell received 6,799,323,003 SKY supporting votes. Legacy MKR Chief has only 3,601 MKR remaining, confirming governance transition to SKY is complete.",
               "urls": [
                 {
                   "name": "Governance Portal",
@@ -2756,54 +2777,64 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "\u2705",
-          "notes": "All core contracts use a **`wards` mapping** pattern for authorization. The **Pause Proxy** is the primary ward, executing governance decisions. 'Mom' contracts provide operational flexibility but are **governance-revocable**.",
+          "notes": "All privileged roles trace back to SKY governance. The Pause Proxy is the root authority holding ward (admin) status on all core contracts. Only governance-approved spells can act through the Pause Proxy.\n\nAuth System: wards[address] = 1 means admin privileges. rely() grants, deny() revokes. auth modifier restricts functions.",
           "evidence": [
             {
-              "name": "Auth System",
-              "summary": "Contracts use `wards[address]` mapping. Only addresses with `wards[msg.sender] == 1` can call auth-protected functions. Authorization is granted via `rely()` and revoked via `deny()`.",
+              "name": "Auth System Pattern",
+              "summary": "All Sky Protocol contracts use wards mapping:\n- wards[address] = 1 grants admin\n- rely(address) grants status (requires auth)\n- deny(address) revokes status (requires auth)\n- auth modifier restricts functions",
               "urls": [
                 {
-                  "name": "Vat Auth Pattern",
+                  "name": "Vat Auth Pattern (L28-34)",
                   "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vat.sol#L28-L34",
                   "type": "github"
-                },
-                {
-                  "name": "Vow Auth Pattern",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L47-L54",
-                  "type": "github"
                 }
               ]
             },
             {
-              "name": "Pause Proxy Authority",
-              "summary": "The **Pause Proxy** (0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB) is the ward on all core DSS contracts. It executes governance decisions after timelock delay.",
+              "name": "Core Contract Ward Mapping",
+              "summary": "Pause Proxy (0xBE8E3e36...) is ward on all primary contracts:\n\n- Vat (accounting): Only governance can modify debt ceilings\n- Vow (surplus/debt): Only governance controls surplus buffer\n- Jug (stability fees): Only governance sets fee rates\n- Dog (liquidations): Only governance modifies liquidation params\n- Spot (price feeds): Only governance changes collateral ratios\n- Pot (DSR): Only governance controls DAI Savings Rate\n- USDS/sUSDS: Only governance can upgrade implementations\n- SKY: Only governance can mint new tokens",
               "urls": [
                 {
-                  "name": "Pause Proxy Address in Chainlog",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol#L47",
-                  "type": "github"
-                }
-              ]
-            },
-            {
-              "name": "Mom Contracts (Operational Roles)",
-              "summary": "Various 'Mom' contracts can adjust operational parameters but are governance-elected and revocable:\n\n- OSM_MOM: Oracle price feed management\n- CLIPPER_MOM: Liquidation circuit breaker\n- LINE_MOM: Debt ceiling adjustments\n- LITE_PSM_MOM: PSM operational parameters",
-              "urls": [
-                {
-                  "name": "Mom Contract Addresses",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol#L62-L64",
+                  "name": "Chainlog (all addresses)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
                   "type": "github"
                 }
               ]
             },
             {
               "name": "Emergency Mechanisms",
-              "summary": "Emergency controls exist but are constrained:\n\n- **Protego** (0x5C9c3cb...): Emergency spell cancellation\n- **ESM** (0x09e05f...): Emergency Shutdown requires burning tokens",
+              "summary": "ESM (0x09e05fF6...): Emergency Shutdown requires burning MKR/SKY threshold\nProtego (0x5C9c3cb...): Emergency spell cancellation, governance-controlled",
               "urls": [
                 {
                   "name": "ESM Contract",
                   "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
                   "type": "explorer"
+                },
+                {
+                  "name": "Chainlog ESM (L54)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L54",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Mom Contracts (Operational Roles)",
+              "summary": "Can adjust parameters without 24hr delay but are governance-elected and revocable:\n\n- OSM_MOM: Stop oracle price feeds\n- CLIPPER_MOM: Circuit-breaker for liquidations\n- LINE_MOM: Wipe debt ceilings in emergency\n- SPLITTER_MOM: Pause Smart Burn Engine\n- STUSDS_MOM: Adjust sUSDS parameters",
+              "urls": [
+                {
+                  "name": "OSM_MOM (L62)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L62",
+                  "type": "github"
+                },
+                {
+                  "name": "CLIPPER_MOM (L63)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L63",
+                  "type": "github"
+                },
+                {
+                  "name": "LINE_MOM (L64)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L64",
+                  "type": "github"
                 }
               ]
             }
@@ -2814,11 +2845,11 @@
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
           "status": "\u2705",
-          "notes": "Core DSS contracts (Vat, Jug, Vow) are **not upgradeable** - no proxy pattern. Protocol changes require deploying new contracts and governance-approved spell execution. New contracts (USDS, sUSDS) use **UUPS proxy** with upgrade authority controlled by governance.",
+          "notes": "Legacy DSS contracts (Vat, Jug, Vow) are immutable\u2014cannot be upgraded. Newer contracts (USDS, sUSDS) use UUPS proxies with upgrade authority controlled by governance. SKY holders control what code runs in the protocol.",
           "evidence": [
             {
-              "name": "Core DSS Immutability",
-              "summary": "Core accounting contracts have **no proxy pattern**. Changes require deploying new contracts and migrating via governance spell:\n\n- Vat: 0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B\n- Jug: 0x19c0976f590D67707E62397C87829d896Dc0f1F1\n- Vow: 0xA950524441892A31ebddF91d3cEEFa04Bf454466",
+              "name": "Immutable Core Contracts",
+              "summary": "No proxy pattern, bytecode is permanent:\n\n- Vat: 0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B\n- Jug: 0x19c0976f590D67707E62397C87829d896Dc0f1F1\n- Vow: 0xA950524441892A31ebddF91d3cEEFa04Bf454466\n- Dog: 0x135954d155898D42C90D2a57824C690e0c7BEf1B\n- Pot: 0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7\n\nChanges require deploying new contracts and governance migration.",
               "urls": [
                 {
                   "name": "Vat (immutable)",
@@ -2829,36 +2860,36 @@
                   "name": "Jug (immutable)",
                   "url": "https://etherscan.io/address/0x19c0976f590D67707E62397C87829d896Dc0f1F1#code",
                   "type": "explorer"
-                },
-                {
-                  "name": "Vow (immutable)",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#code",
-                  "type": "explorer"
                 }
               ]
             },
             {
-              "name": "New Contracts UUPS Proxy",
-              "summary": "USDS and sUSDS use **UUPS upgradeable proxy** pattern. `_authorizeUpgrade` requires **auth modifier**, traced to governance.\n\n- USDS: 0xdC035D45d973E3EC169d2276DDab16f1e407384F\n- sUSDS: 0xa3931d71877C0E7a3148CB7Eb4463524FEc27fBD",
+              "name": "Upgradeable Contracts (UUPS)",
+              "summary": "USDS and sUSDS use UUPS pattern. _authorizeUpgrade requires auth modifier \u2192 traced to Pause Proxy.\n\n- USDS Proxy: 0xdC035D45d973E3EC169d2276DDab16f1e407384F\n- sUSDS Proxy: 0xa3931d71877C0E7a3148CB7Eb4463524FEc27fBD\n\nOnly governance-approved spells can upgrade.",
               "urls": [
                 {
-                  "name": "USDS _authorizeUpgrade",
-                  "url": "https://github.com/sky-ecosystem/usds/blob/main/src/Usds.sol#L73",
+                  "name": "USDS _authorizeUpgrade (L73)",
+                  "url": "https://github.com/sky-ecosystem/usds/blob/master/src/Usds.sol#L73",
                   "type": "github"
                 },
                 {
-                  "name": "USDS Proxy Contract",
-                  "url": "https://etherscan.io/address/0xdC035D45d973E3EC169d2276DDab16f1e407384F#code",
-                  "type": "explorer"
+                  "name": "Chainlog USDS (L500-504)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L500-L504",
+                  "type": "github"
                 }
               ]
             },
             {
               "name": "Spell Execution Pattern",
-              "summary": "All protocol changes are made through **executive spells** that execute via the Pause Proxy. Spells are published with full source code.",
+              "summary": "Protocol changes via executive spells\u2014single-use contracts with upgrade logic. All spells published with full source code.",
               "urls": [
                 {
-                  "name": "Executive Spells Repository",
+                  "name": "Example DssSpell",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/DssSpell.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "Spells Repository",
                   "url": "https://github.com/sky-ecosystem/spells-mainnet",
                   "type": "github"
                 }
@@ -2871,20 +2902,20 @@
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
           "status": "\u2705",
-          "notes": "The SKY token is **NOT upgradeable**. Standard ERC-20 contract with **no proxy pattern**, standard constructor (not initializer). Token behavior **cannot be modified** post-deployment.",
+          "notes": "The SKY governance token cannot be upgraded\u2014its code is permanent. No admin can modify token behavior or add backdoors. Standard ERC-20 with no proxy pattern.",
           "evidence": [
             {
               "name": "Non-Upgradeable Token",
-              "summary": "SKY uses standard constructor pattern with **immutable values**:\n\n- `deploymentChainId` is immutable (line 51)\n- `_DOMAIN_SEPARATOR` is immutable (line 52)\n\nNo proxy pattern, no upgrade path exists.",
+              "summary": "SKY uses standard constructor pattern with immutable values:\n- deploymentChainId is immutable (line 51)\n- _DOMAIN_SEPARATOR is immutable (line 52)\n\nNo proxy pattern, no upgrade path exists.",
               "urls": [
                 {
-                  "name": "SKY Token Constructor",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L60-L66",
+                  "name": "SKY Constructor (L60-66)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L60-L66",
                   "type": "github"
                 },
                 {
-                  "name": "SKY Token Immutable Values",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L51-L52",
+                  "name": "Immutable Values (L51-52)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L51-L52",
                   "type": "github"
                 },
                 {
@@ -2901,27 +2932,27 @@
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
           "status": "\u2705",
-          "notes": "SKY minting requires **auth modifier** - only governance-approved wards can mint. Primary supply creation is through **MkrSky converter** at fixed **24,000:1 ratio**. Burns are **permissionless**.",
+          "notes": "Only governance can mint new SKY tokens. The primary source of SKY is conversion from MKR at a fixed 24,000:1 ratio. No unilateral inflation is possible. Burns are permissionless.",
           "evidence": [
             {
               "name": "Mint Authorization",
-              "summary": "`mint()` function requires **auth modifier**. Only addresses where `wards[msg.sender] == 1` can create new SKY tokens.",
+              "summary": "mint() function requires auth modifier. Only addresses where wards[msg.sender] == 1 can create new SKY tokens.",
               "urls": [
                 {
-                  "name": "SKY mint() function",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L146-L154",
+                  "name": "mint() function (L146-154)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L146-L154",
                   "type": "github"
                 },
                 {
-                  "name": "SKY burn() functions",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L156-L177",
+                  "name": "burn() functions (L156-177)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L156-L177",
                   "type": "github"
                 }
               ]
             },
             {
               "name": "MkrSky Converter",
-              "summary": "Primary supply creation through MKR\u2192SKY conversion:\n\n- Contract: 0xA1Ea1bA18E88C381C724a75F23a130420C403f9a\n- Rate: **24,000:1** (immutable)\n- Optional **fee** parameter (governance-configurable) can reduce effective rate\n- Accumulated fees can be `collect()`ed or `burn()`ed by governance",
+              "summary": "Primary supply creation through MKR\u2192SKY conversion:\n- Contract: 0xA1Ea1bA18E88C381C724a75F23a130420C403f9a\n- Rate: 24,000:1 (immutable)\n- Optional fee parameter (governance-configurable) can reduce effective rate\n- Accumulated fees can be collect()ed or burn()ed by governance",
               "urls": [
                 {
                   "name": "MkrSky Contract",
@@ -2929,15 +2960,15 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "Conversion Logic with Fee",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/MkrSky.sol#L96-L109",
+                  "name": "Conversion Logic (L96-109)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/MkrSky.sol#L96-L109",
                   "type": "github"
                 }
               ]
             },
             {
               "name": "SKY Vest Contract",
-              "summary": "Vesting schedules for SKY distribution are governance-controlled.\n\nSKY Vest: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6",
+              "summary": "Vesting schedules for SKY distribution are governance-controlled.\nAddress: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6",
               "urls": [
                 {
                   "name": "SKY Vest Contract",
@@ -2953,22 +2984,27 @@
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
           "status": "\u2705",
-          "notes": "Emergency Shutdown Module (ESM) can cage the system but requires **burning significant SKY/MKR** to activate. Mom contracts can adjust operational parameters but are **governance-elected and revocable**. No arbitrary pause capability exists.",
+          "notes": "The only way to \"pause\" the protocol is through Emergency Shutdown, which requires burning significant tokens. No admin can arbitrarily restrict user access. Mom contracts can adjust operational parameters but are governance-elected and revocable.",
           "evidence": [
             {
               "name": "Emergency Shutdown Module",
-              "summary": "ESM can trigger emergency shutdown but requires **burning tokens** to activate - not arbitrary admin power. This is a protective mechanism, not a centralization risk.",
+              "summary": "ESM at 0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58 can cage the system but requires burning significant MKR/SKY. This is a protective mechanism, not arbitrary admin power.",
               "urls": [
                 {
                   "name": "ESM Contract",
                   "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
                   "type": "explorer"
+                },
+                {
+                  "name": "Chainlog ESM (L54)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L54",
+                  "type": "github"
                 }
               ]
             },
             {
               "name": "PSM Access",
-              "summary": "Peg Stability Modules allow DAI/USDS minting but capacity is governance-controlled. Lite PSM Mom can adjust parameters but is revocable.\n\nLite PSM Mom: 0x467b32b0407Ad764f56304420Cddaa563bDab425",
+              "summary": "Peg Stability Modules allow DAI/USDS minting but capacity is governance-controlled. Lite PSM Mom can adjust parameters but is revocable.\nLite PSM Mom: 0x467b32b0407Ad764f56304420Cddaa563bDab425",
               "urls": [
                 {
                   "name": "Lite PSM Mom",
@@ -2979,7 +3015,7 @@
             },
             {
               "name": "No Arbitrary Pause",
-              "summary": "Core contracts **cannot be paused** except through emergency shutdown which requires token burning. No admin-controlled pause function exists.",
+              "summary": "Core contracts cannot be paused except through emergency shutdown which requires token burning. No admin-controlled pause function exists.",
               "urls": []
             }
           ]
@@ -2989,20 +3025,20 @@
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
           "status": "\u2705",
-          "notes": "SKY token has **NO blacklist, freeze, or censorship capabilities**. Only storage mappings are: `wards`, `balanceOf`, `allowance`, `nonces`. Standard transfer functions have **no admin intervention points**.",
+          "notes": "SKY has no blacklist, freeze, or admin-controlled transfer blocking. Tokens cannot be seized or frozen by anyone. Only mappings are wards, balanceOf, allowance, nonces. Transfer functions are standard ERC-20.",
           "evidence": [
             {
               "name": "No Censorship Functions",
-              "summary": "Contract contains:\n- **No blacklist mapping**\n- **No freeze function**\n- **No admin transfer override**\n- **No pause mechanism**\n\nTransfer functions are standard ERC-20 with no restrictions.",
+              "summary": "Contract contains:\n- No blacklist mapping\n- No freeze function\n- No admin transfer override\n- No pause mechanism\n\ntransfer() and transferFrom() have no admin intervention points.",
               "urls": [
                 {
-                  "name": "Contract Storage Layout",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L31-L42",
+                  "name": "Contract Storage (L31-42)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L31-L42",
                   "type": "github"
                 },
                 {
-                  "name": "Transfer Functions",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol#L96-L135",
+                  "name": "Transfer Functions (L96-135)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L96-L135",
                   "type": "github"
                 }
               ]
@@ -3018,47 +3054,42 @@
         "Metric 2"
       ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol revenue flows to treasury (Vow) and is used for **SKY buybacks** through the **Smart Burn Engine**. Staking rewards active via sUSDS. All fee parameters are **governance-controlled**. RWA collateral involves offchain legal structures.",
+      "summary": "Protocol revenue (stability fees, liquidation fees) flows to SKY holders through automated buybacks via the Smart Burn Engine. Staking rewards active via sUSDS. All fee parameters are governance-controlled. RWA collateral involves offchain legal structures.",
       "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "\u2705",
-          "notes": "Protocol generates revenue from **stability fees**, **liquidation fees**, and **PSM fees**. Revenue flows to Vow and is used for **SKY buybacks** through Smart Burn Engine (Splitter + Flapper). sUSDS staking rewards also active. ~$5.5B TVL in lending.",
+          "notes": "Protocol revenue flows to SKY holders through automated buybacks. The Smart Burn Engine purchases SKY on the open market and removes it from circulation. Revenue sources: stability fees (Jug), liquidation fees (Dog/Clipper), PSM fees.",
           "evidence": [
             {
               "name": "Smart Burn Engine Contracts",
-              "summary": "Protocol surplus is routed to SKY buybacks:\n\n- **MCD_SPLIT (Splitter):** Routes surplus to flapper and other destinations\n- **MCD_FLAP (Flapper):** Executes SKY buybacks using surplus DAI/USDS\n- **FLAP_SKY_ORACLE:** Price oracle for buybacks\n- **CRON_FLAP_JOB:** Automated job triggering flap auctions",
+              "summary": "Protocol surplus routed to SKY buybacks:\n\n- MCD_SPLIT (Splitter): 0xBF7111F13386d23cb2Fba5A538107A73f6872bCF - Routes surplus to flapper\n- MCD_FLAP (Flapper): 0x374D9c3d5134052Bc558F432Afa1df6575f07407 - Executes SKY buybacks\n- FLAP_SKY_ORACLE: 0xc2ffbbDCCF1466Eb8968a846179191cb881eCdff - Price oracle\n- CRON_FLAP_JOB: 0xE564C4E237f4D7e0130FdFf6ecC8a5E931C51494 - Automated trigger",
               "urls": [
                 {
-                  "name": "MCD_SPLIT (Splitter)",
+                  "name": "MCD_SPLIT",
                   "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
                   "type": "explorer"
                 },
                 {
-                  "name": "MCD_FLAP (Flapper)",
+                  "name": "MCD_FLAP",
                   "url": "https://etherscan.io/address/0x374D9c3d5134052Bc558F432Afa1df6575f07407#code",
                   "type": "explorer"
                 },
                 {
-                  "name": "FLAP_SKY_ORACLE",
-                  "url": "https://etherscan.io/address/0xc2ffbbDCCF1466Eb8968a846179191cb881eCdff#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "Chainlog Reference (SBE contracts)",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol#L511-L514",
+                  "name": "Chainlog SBE (L511-514)",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol#L511-L514",
                   "type": "github"
                 }
               ]
             },
             {
               "name": "Revenue Mechanics",
-              "summary": "Surplus accumulates in **Vow** contract. When surplus exceeds buffer (`hump`), `flap()` can be called to auction surplus for governance token.\n\nRevenue sources:\n- Stability fees (via Jug)\n- Liquidation fees (via Dog/Clipper)\n- PSM fees",
+              "summary": "Surplus accumulates in Vow contract. When surplus exceeds buffer (hump), flap() can be called to auction surplus for governance token.\n\nRevenue sources:\n- Stability fees (via Jug)\n- Liquidation fees (via Dog/Clipper)\n- PSM fees",
               "urls": [
                 {
-                  "name": "Vow Flap Logic",
+                  "name": "Vow Flap Logic (L148-152)",
                   "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L148-L152",
                   "type": "github"
                 }
@@ -3066,7 +3097,7 @@
             },
             {
               "name": "TVL and Activity Data",
-              "summary": "~$5.5B in Ethereum lending TVL, ~$594M in staking according to DefiLlama. DefiLlama confirms 'Buybacks - SKY token buybacks; staking rewards for SKY stakers' as primary value accrual.",
+              "summary": "~$5.5B in Ethereum lending TVL, ~$594M in staking according to DefiLlama. Confirms active buyback and staking reward mechanisms.",
               "urls": [
                 {
                   "name": "DefiLlama - Sky Protocol",
@@ -3081,7 +3112,7 @@
               "urls": [
                 {
                   "name": "sUSDS Source Code",
-                  "url": "https://github.com/sky-ecosystem/stusds/blob/main/src/StUsds.sol",
+                  "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol",
                   "type": "github"
                 }
               ]
@@ -3093,11 +3124,11 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "\u2705",
-          "notes": "System surplus held in **Vow contract**, controlled by Pause Proxy. Vesting schedules managed through governance-controlled vest contracts. **No offchain custody** for onchain assets. RWA collateral involves offchain legal structures.",
+          "notes": "All protocol treasury assets are held onchain and controlled by governance. There is no offchain treasury or multi-sig outside token control. System surplus in Vow contract, controlled by Pause Proxy.\n\nCaveat: RWA collateral involves offchain legal structures.",
           "evidence": [
             {
               "name": "Vow Treasury",
-              "summary": "System surplus accumulates in Vow. Only **auth addresses** can configure parameters. Controlled by Pause Proxy \u2192 governed by SKY holders.",
+              "summary": "System surplus accumulates in Vow at 0xA950524441892A31ebddF91d3cEEFa04Bf454466. Only auth addresses can configure parameters. Controlled by Pause Proxy \u2192 governed by SKY holders.",
               "urls": [
                 {
                   "name": "Vow Contract",
@@ -3108,7 +3139,7 @@
             },
             {
               "name": "Vest Contracts",
-              "summary": "Token vesting controlled by governance:\n\n- USDS Vest: 0xc447a9745aDe9A44Bb9E37B7F6C92f9582544110\n- SKY Vest: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6\n- MKR Vest: 0x0fC8D4f2151453ca0cA56f07359049c8f07997Bd",
+              "summary": "Token vesting controlled by governance:\n- USDS Vest: 0xc447a9745aDe9A44Bb9E37B7F6C92f9582544110\n- SKY Vest: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6\n- MKR Vest: 0x0fC8D4f2151453ca0cA56f07359049c8f07997Bd",
               "urls": [
                 {
                   "name": "USDS Vest",
@@ -3124,7 +3155,7 @@
             },
             {
               "name": "RWA Caveat",
-              "summary": "**Real-World Asset (RWA)** collateral involves offchain legal structures outside direct token control. Example: RWA001-A is currently being offboarded per recent spell.",
+              "summary": "Real-World Asset (RWA) collateral involves offchain legal structures outside direct token control. Example: RWA001-A being offboarded per recent spell.",
               "urls": []
             }
           ]
@@ -3134,11 +3165,11 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "\u2705",
-          "notes": "All value capture parameters are **governance-controlled** via `file()` functions requiring **auth**. Stability fees (Jug), surplus buffer (Vow hump), DSR (Pot), sUSDS rate - all require governance approval to modify.",
+          "notes": "Governance controls all revenue knobs\u2014stability fees, savings rates, auction parameters. SKY holders decide how much value the protocol captures and how it's distributed. All via file() functions requiring auth.",
           "evidence": [
             {
               "name": "Fee Parameter Control",
-              "summary": "Governance controls all revenue parameters:\n\n- **Stability fees:** Set via `file()` on Jug\n- **Surplus buffer (hump):** Set via `file()` on Vow\n- **DSR:** Controlled via Pot contract\n- **sUSDS rate:** Set via `file('str', ...)` requiring auth",
+              "summary": "Governance controls all revenue parameters:\n- Stability fees: Set via file() on Jug\n- Surplus buffer (hump): Set via file() on Vow\n- DSR: Controlled via Pot contract\n- sUSDS rate: Set via file('str', ...) requiring auth",
               "urls": [
                 {
                   "name": "Jug (Stability Fees)",
@@ -3146,13 +3177,13 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "Vow file() function",
+                  "name": "Vow file() (L96-103)",
                   "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L96-L103",
                   "type": "github"
                 },
                 {
-                  "name": "sUSDS Rate Control",
-                  "url": "https://github.com/sky-ecosystem/stusds/blob/main/src/StUsds.sol#L237-L248",
+                  "name": "sUSDS Rate (L237-248)",
+                  "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol#L237-L248",
                   "type": "github"
                 },
                 {
@@ -3172,7 +3203,7 @@
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "TBD",
-          "notes": "**No verified offchain value accrual** mechanisms directing value to SKY tokenholders. DAI Foundation is independent entity. RWA revenue flows onchain to the protocol, not offchain to holders.",
+          "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is independent and does not distribute value to tokenholders. RWA revenue flows onchain to the protocol, not offchain to holders.",
           "evidence": []
         }
       ]
@@ -3184,32 +3215,32 @@
         "Metric 3"
       ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-      "summary": "All SKY and Sky Protocol contracts are **open source** under **AGPL-3.0-or-later** license. Complete source code available on GitHub. Contracts verified on Etherscan. Full chainlog documents all addresses.",
+      "summary": "SKY token source code is fully open source (AGPL-3.0) and verified on Etherscan. Every protocol contract is open source. The chainlog provides a single source of truth for all deployed addresses.",
       "criteria": [
         {
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
           "status": "\u2705",
-          "notes": "SKY token source code is publicly available at **sky-ecosystem/sky** GitHub repository. Contract is **verified on Etherscan**. License: **AGPL-3.0-or-later**. Compiler: Solidity 0.8.21.",
+          "notes": "SKY token source code is fully open source (AGPL-3.0) and verified on Etherscan. Anyone can audit the code. Compiler: Solidity 0.8.21.",
           "evidence": [
             {
               "name": "Source Verification",
-              "summary": "Token source matches deployed bytecode. Fully open source.",
+              "summary": "Token source matches deployed bytecode. Fully open source at sky-ecosystem/sky repository.",
               "urls": [
                 {
-                  "name": "SKY Token Source (GitHub)",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/src/Sky.sol",
+                  "name": "SKY Token Source",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
                   "type": "github"
                 },
                 {
-                  "name": "SKY Token (Etherscan Verified)",
+                  "name": "SKY Token (Etherscan)",
                   "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
                   "type": "explorer"
                 },
                 {
                   "name": "License (AGPL-3.0)",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/LICENSE",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/LICENSE",
                   "type": "github"
                 }
               ]
@@ -3221,7 +3252,7 @@
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
           "status": "\u2705",
-          "notes": "All core DSS contracts, governance contracts, and new Sky contracts are **open source**. Complete **chainlog** with all addresses available in spells-mainnet repository. All verified on Etherscan.",
+          "notes": "Every protocol contract is open source under AGPL-3.0. The chainlog provides a single source of truth for all deployed addresses in addresses_mainnet.sol.",
           "evidence": [
             {
               "name": "Protocol Repositories",
@@ -3251,11 +3282,11 @@
             },
             {
               "name": "Chainlog Documentation",
-              "summary": "Complete contract registry with all addresses in `addresses_mainnet.sol`. Executive spells published with full source code.",
+              "summary": "Complete contract registry with all addresses in addresses_mainnet.sol. Executive spells published with full source code.",
               "urls": [
                 {
                   "name": "Chainlog (addresses_mainnet.sol)",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/main/src/test/addresses_mainnet.sol",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
                   "type": "github"
                 },
                 {
@@ -3281,18 +3312,18 @@
         "Metric 4"
       ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Voting power appears **concentrated** among a small number of entities. Recent executive votes show ~6.8B SKY participating, with reports indicating a few entities account for most votes. **Vote delegation** further concentrates power.",
+      "summary": "Historical data suggests a small number of entities (~4) control most voting power. This creates centralization risk despite the decentralized governance mechanism. Vote delegation further concentrates power.",
       "criteria": [
         {
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "\u26a0\ufe0f",
-          "notes": "Voting power is **concentrated**. Feb 12, 2026 executive had 6,799,323,003 SKY. Historical reports indicate **'four entities account for nearly all votes.'** Vote delegation further concentrates power. Legacy governance shows only 3,601 MKR remaining.",
+          "notes": "Voting power is concentrated. Feb 12, 2026 executive had 6,799,323,003 SKY. Historical reports indicate 'four entities account for nearly all votes.' Vote delegation further concentrates power. Legacy governance shows only 3,601 MKR remaining.\n\n[UNVERIFIED] Specific addresses and voting power percentages require archive node queries.",
           "evidence": [
             {
               "name": "Voting Data",
-              "summary": "Recent executive vote participation and legacy governance status indicate concentration.\n\n**Note:** Specific addresses and voting power percentages would require archive node queries. The 'four entities' claim is sourced from forum discussions.",
+              "summary": "Recent executive vote participation and legacy governance status indicate concentration.\n\nNote: The 'four entities' claim is sourced from forum discussions and not independently verified with onchain data.",
               "urls": [
                 {
                   "name": "Governance Portal",
@@ -3312,7 +3343,7 @@
                 },
                 {
                   "name": "VoteDelegate Source",
-                  "url": "https://github.com/sky-ecosystem/vote-delegate/blob/main/src/VoteDelegate.sol",
+                  "url": "https://github.com/sky-ecosystem/vote-delegate/blob/master/src/VoteDelegate.sol",
                   "type": "github"
                 }
               ]
@@ -3324,11 +3355,11 @@
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
           "status": "TBD",
-          "notes": "SKY Vest contract exists. **Specific schedules and cliff dates not enumerated** in this analysis. Would require querying vest contract events and storage.",
+          "notes": "Vesting contracts exist for SKY, USDS, and MKR distributions, but specific unlock schedules were not enumerated in this analysis. Would require querying vest contract events and storage.",
           "evidence": [
             {
               "name": "Vest Contracts",
-              "summary": "Vesting schedules exist but specific unlock dates and amounts require further investigation.\n\n- SKY Vest: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6\n- USDS Vest: 0xc447a9745aDe9A44Bb9E37B7F6C92f9582544110\n- MKR Vest (active): 0x0fC8D4f2151453ca0cA56f07359049c8f07997Bd",
+              "summary": "Vesting schedules exist but specific dates not enumerated:\n\n- SKY Vest: 0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6\n- USDS Vest: 0xc447a9745aDe9A44Bb9E37B7F6C92f9582544110\n- MKR Vest (active): 0x0fC8D4f2151453ca0cA56f07359049c8f07997Bd",
               "urls": [
                 {
                   "name": "SKY Vest Contract",
@@ -3348,18 +3379,18 @@
         "Reference"
       ],
       "about": "Economically material assets and obligations often sit offchain\u2014outside the custody and direct enforcement of a token\u2014while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Maker and Dai trademarks held by **independent DAI Foundation** (Denmark). Core protocol software is **AGPL-3.0-or-later** licensed. Domain ownership not verified. Frontend code is open source.",
+      "summary": "Maker and DAI trademarks are held by an independent Danish foundation, not by SKY tokenholders. All code is AGPL-3.0 licensed. Domain ownership not verified but open source frontends exist.",
       "criteria": [
         {
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "\u26a0\ufe0f",
-          "notes": "Maker and Dai trademarks held by **DAI Foundation** (Denmark) since 2020. Foundation operates **independently** according to 'objective and rigid statutes.' **Not directly controlled** by SKY token governance. SKY-specific trademark status not verified.",
+          "notes": "The Maker and DAI trademarks are held by an independent Danish foundation, not by SKY tokenholders. This creates a dependency on an offchain entity that cannot be controlled through governance.\n\nDAI Foundation operates according to 'objective and rigid statutes' - independent of token governance.\n\n[UNVERIFIED] SKY-specific trademark status not verified.",
           "evidence": [
             {
               "name": "DAI Foundation",
-              "summary": "Independent non-profit entity in Denmark. 'In the beginning of 2020, the Maker Foundation transferred the ownership of Maker and Dai trademarks to the Dai Foundation for perpetual safekeeping.'\n\nFoundation operates according to rigid statutes defining its mandate - independent of token governance.",
+              "summary": "Independent non-profit in Denmark holding Maker and Dai trademarks since 2020. 'The Maker Foundation transferred ownership of Maker and Dai trademarks to the Dai Foundation for perpetual safekeeping.'",
               "urls": [
                 {
                   "name": "DAI Foundation Website",
@@ -3380,11 +3411,11 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "Primary domains include sky.money, vote.makerdao.com, vote.sky.money. **Ownership not verified**. Multiple interfaces reduce single-point-of-failure risk. Frontend code is **open source**.",
+          "notes": "Web domains and interfaces are not directly token-controlled. However, open source frontends exist that anyone can deploy. Primary domains: sky.money, vote.makerdao.com, vote.sky.money. Ownership not verified.",
           "evidence": [
             {
               "name": "Frontend Availability",
-              "summary": "Multiple open source frontends available:\n\n- governance-portal-v2\n- sky-governance-portal\n\nReduces dependency on any single operator.",
+              "summary": "Multiple open source frontends available:\n- governance-portal-v2\n- sky-governance-portal\n\nReduces dependency on any single operator.",
               "urls": [
                 {
                   "name": "Governance Portal Source",
@@ -3405,20 +3436,20 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "\u2705",
-          "notes": "All core protocol code licensed **AGPL-3.0-or-later**. Anyone can **fork and deploy**. Modified versions must provide source code. IP held by Dai Foundation for community benefit. Maker Foundation dissolved.",
+          "notes": "All code is AGPL-3.0 licensed. Anyone can fork, deploy, and compete with the protocol. The license requires source disclosure, preventing proprietary forks. IP held by Dai Foundation for community benefit.",
           "evidence": [
             {
               "name": "Open Source Licensing",
-              "summary": "GNU Affero General Public License v3.0 or later.\n\n**AGPL implications:**\n- Anyone can fork and deploy\n- Modified versions must provide source code\n- Reduces centralization risk\n\nCopyright holders: Dai Foundation (2023+), historical contributors.",
+              "summary": "GNU Affero General Public License v3.0 or later.\n\nAGPL implications:\n- Anyone can fork and deploy\n- Modified versions must provide source code\n- Reduces centralization risk\n\nCopyright: Dai Foundation (2023+), historical contributors.",
               "urls": [
                 {
                   "name": "SKY License",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/main/LICENSE",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/LICENSE",
                   "type": "github"
                 },
                 {
                   "name": "DSS License",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/main/LICENSE",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/LICENSE",
                   "type": "github"
                 }
               ]
