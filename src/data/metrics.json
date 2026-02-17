@@ -2709,7 +2709,7 @@
             },
             {
               "name": "Timelock Contract",
-              "summary": "All governance actions execute through a timelock (Pause Proxy). The 24-hour delay gives users time to exit before changes take effect.\n\nAddress: 0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+              "summary": "All governance actions execute through a timelock (Pause Proxy). The 24-hour delay gives users time to exit before changes take effect.",
               "urls": [
                 {
                   "name": "Pause Proxy (Etherscan)",
@@ -2734,22 +2734,37 @@
           "evidence": [
             {
               "name": "Core Contracts Controlled by Governance",
-              "summary": "The Pause Proxy holds admin rights on all key contracts:\n\n- Accounting (debt ceilings, collateral ratios)\n- Fee collection (stability fees, savings rates)\n- Token minting (SKY, USDS)\n- Stablecoin upgrades (USDS, sUSDS)",
+              "summary": "The Pause Proxy holds admin rights on all key contracts. Verify by calling wards(0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB) on each contract \u2014 returns 1 if authorized.",
               "urls": [
                 {
-                  "name": "Contract Registry",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
-                  "type": "github"
+                  "name": "Vat wards() \u2014 verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract#F14",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Vow wards() \u2014 verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract#F6",
+                  "type": "explorer"
+                },
+                {
+                  "name": "SKY wards() \u2014 verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract#F8",
+                  "type": "explorer"
                 }
               ]
             },
             {
               "name": "Emergency Controls",
-              "summary": "\"Mom\" contracts can adjust parameters without the 24hr delay for emergencies (circuit breakers, oracle stops). These are governance-elected and revocable.\n\nAll Mom contracts trace to the voting contract via authority() \u2014 verified on-chain.",
+              "summary": "\"Mom\" contracts can adjust parameters without the 24hr delay for emergencies. These are governance-controlled via the authority pattern.",
               "urls": [
                 {
-                  "name": "OSM_MOM",
-                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
+                  "name": "Mom authority pattern (source)",
+                  "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L31",
+                  "type": "github"
+                },
+                {
+                  "name": "OSM_MOM \u2014 verify authority()",
+                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract#F1",
                   "type": "explorer"
                 }
               ]
@@ -2768,9 +2783,14 @@
               "summary": "Core accounting contracts have no upgrade mechanism. The deployed code is permanent.",
               "urls": [
                 {
-                  "name": "Core Accounting (Vat)",
-                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#code",
-                  "type": "explorer"
+                  "name": "Vat source code",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vat.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "SKY token source code",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
+                  "type": "github"
                 }
               ]
             },
@@ -2779,8 +2799,13 @@
               "summary": "USDS and sUSDS use proxy contracts. Upgrades require governance approval through the standard voting process.",
               "urls": [
                 {
-                  "name": "USDS upgrade authorization (L73)",
+                  "name": "USDS upgrade authorization",
                   "url": "https://github.com/sky-ecosystem/usds/blob/master/src/Usds.sol#L73",
+                  "type": "github"
+                },
+                {
+                  "name": "sUSDS source code",
+                  "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol",
                   "type": "github"
                 }
               ]
@@ -2830,12 +2855,12 @@
               "summary": "Legacy MKR tokens convert to SKY at a fixed 24,000:1 ratio. The rate is immutable in the contract.",
               "urls": [
                 {
-                  "name": "Conversion Contract",
-                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#code",
+                  "name": "rate() returns 24000",
+                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract#F4",
                   "type": "explorer"
                 },
                 {
-                  "name": "Immutable rate (L36)",
+                  "name": "Immutable rate declaration",
                   "url": "https://github.com/sky-ecosystem/sky/blob/master/src/MkrSky.sol#L36",
                   "type": "github"
                 }
@@ -2855,7 +2880,12 @@
               "summary": "The only way to \"pause\" the protocol is Emergency Shutdown, which requires burning tokens past a threshold. This is a nuclear option, not an admin switch.",
               "urls": [
                 {
-                  "name": "ESM Contract",
+                  "name": "ESM source code",
+                  "url": "https://github.com/sky-ecosystem/esm/blob/master/src/ESM.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "ESM contract on Etherscan",
                   "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
                   "type": "explorer"
                 }
@@ -2908,22 +2938,42 @@
           "evidence": [
             {
               "name": "Smart Burn Engine",
-              "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, fees are used to purchase SKY on the open market.",
+              "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, the Splitter routes fees to the Flapper, which purchases SKY on UniswapV2.",
               "urls": [
                 {
-                  "name": "Buyback Contract",
+                  "name": "Smart Burn Engine docs",
+                  "url": "https://docs.sky.money/smart-burn-engine",
+                  "type": "docs"
+                },
+                {
+                  "name": "Splitter contract",
+                  "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Flapper (buyback executor)",
                   "url": "https://etherscan.io/address/0x374D9c3d5134052Bc558F432Afa1df6575f07407#code",
                   "type": "explorer"
+                },
+                {
+                  "name": "Flapper source code",
+                  "url": "https://github.com/sky-ecosystem/dss-flappers/blob/master/src/FlapperUniV2.sol",
+                  "type": "github"
                 }
               ]
             },
             {
-              "name": "Protocol Revenue",
-              "summary": "Revenue comes from:\n- Interest on loans (stability fees)\n- Liquidation penalties\n- Stablecoin swap fees",
+              "name": "Revenue Flow",
+              "summary": "Protocol revenue flows: Stability Fees \u2192 Vow (surplus) \u2192 Splitter \u2192 Flapper \u2192 SKY buybacks.\n\nRevenue sources:\n- Interest on loans (stability fees)\n- Liquidation penalties\n- Stablecoin swap fees (PSM)",
               "urls": [
                 {
-                  "name": "Fee collection code",
+                  "name": "Stability fee accrual",
                   "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L122-L128",
+                  "type": "github"
+                },
+                {
+                  "name": "Surplus routing to flapper",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L148-L152",
                   "type": "github"
                 }
               ]
@@ -2958,12 +3008,33 @@
           "notes": "Governance controls all fee rates and revenue parameters. SKY holders decide how much the protocol charges and how revenue is distributed.",
           "evidence": [
             {
-              "name": "Fee Parameters",
-              "summary": "Governance sets:\n- Stability fee rates (interest on loans)\n- Surplus buffer (threshold before buybacks)\n- Savings rates (yield paid to stakers)",
+              "name": "Fee Rate Control",
+              "summary": "Governance sets stability fee rates via the Jug contract. Each collateral type has its own rate, updated through governance spells.",
               "urls": [
                 {
-                  "name": "Fee Contract",
+                  "name": "Jug fee configuration",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L107-L111",
+                  "type": "github"
+                },
+                {
+                  "name": "Jug contract",
                   "url": "https://etherscan.io/address/0x19c0976f590D67707E62397C87829d896Dc0f1F1#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Surplus Buffer Control",
+              "summary": "The surplus buffer (\"hump\") determines when buybacks trigger. Governance can adjust this threshold to control the pace of buybacks.",
+              "urls": [
+                {
+                  "name": "Vow hump configuration",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L96-L103",
+                  "type": "github"
+                },
+                {
+                  "name": "Vow contract \u2014 read hump",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract#F4",
                   "type": "explorer"
                 }
               ]
@@ -3063,23 +3134,23 @@
         "Metric 4"
       ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Voting power concentration is a known concern. Delegation system can amplify this. Specific concentration levels require on-chain verification.",
+      "summary": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
       "criteria": [
         {
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "\u26a0\ufe0f",
-          "notes": "Concentration is a known concern. ~6.8B SKY voted on Feb 12, 2026 executive. Delegation system can amplify concentration. Aragon has not been able to verify specific concentration levels. Verification requires on-chain analysis of chief.deposits() or Lock events.",
+          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power. The delegation system can amplify concentration effects.",
           "evidence": [
             {
-              "name": "Voting Participation",
-              "summary": "~6.8B SKY participated in recent executive votes. Delegation is available, which can concentrate voting power.\n\nAragon has not been able to verify specific concentration levels.",
+              "name": "Delegation System",
+              "summary": "Vote delegation is available, which can concentrate voting power in delegate hands. Historical concerns about MKR concentration may carry over to SKY.",
               "urls": [
                 {
-                  "name": "Governance Portal",
-                  "url": "https://vote.makerdao.com",
-                  "type": "docs"
+                  "name": "Vote Delegate source",
+                  "url": "https://github.com/sky-ecosystem/vote-delegate/blob/master/src/VoteDelegate.sol",
+                  "type": "github"
                 }
               ]
             }
