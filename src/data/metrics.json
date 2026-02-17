@@ -2738,17 +2738,17 @@
               "urls": [
                 {
                   "name": "Vat wards() \u2014 verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract#F14",
+                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract",
                   "type": "explorer"
                 },
                 {
                   "name": "Vow wards() \u2014 verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract#F6",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
                   "type": "explorer"
                 },
                 {
                   "name": "SKY wards() \u2014 verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract#F8",
+                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract",
                   "type": "explorer"
                 }
               ]
@@ -2764,7 +2764,7 @@
                 },
                 {
                   "name": "OSM_MOM \u2014 verify authority()",
-                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract#F1",
+                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
                   "type": "explorer"
                 }
               ]
@@ -2856,7 +2856,7 @@
               "urls": [
                 {
                   "name": "rate() returns 24000",
-                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract#F4",
+                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract",
                   "type": "explorer"
                 },
                 {
@@ -2954,6 +2954,11 @@
                   "name": "Flapper source code",
                   "url": "https://github.com/sky-ecosystem/dss-flappers/blob/master/src/FlapperUniV2.sol",
                   "type": "github"
+                },
+                {
+                  "name": "Smart Burn Engine Dashboard",
+                  "url": "https://info.sky.money/smart-burn-engine",
+                  "type": "docs"
                 }
               ]
             },
@@ -3029,7 +3034,7 @@
                 },
                 {
                   "name": "Vow contract \u2014 read hump",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract#F4",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
                   "type": "explorer"
                 }
               ]
