@@ -2759,7 +2759,7 @@
               "urls": [
                 {
                   "name": "Mom authority pattern (source)",
-                  "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L31",
+                  "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L55",
                   "type": "github"
                 },
                 {
@@ -2940,11 +2940,6 @@
               "name": "Smart Burn Engine",
               "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, the Splitter routes fees to the Flapper, which purchases SKY on UniswapV2.",
               "urls": [
-                {
-                  "name": "Smart Burn Engine docs",
-                  "url": "https://docs.sky.money/smart-burn-engine",
-                  "type": "docs"
-                },
                 {
                   "name": "Splitter contract",
                   "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
@@ -3141,11 +3136,11 @@
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "\u26a0\ufe0f",
-          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power. The delegation system can amplify concentration effects.",
+          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
           "evidence": [
             {
               "name": "Delegation System",
-              "summary": "Vote delegation is available, which can concentrate voting power in delegate hands. Historical concerns about MKR concentration may carry over to SKY.",
+              "summary": "Vote delegation is available. Historical concerns about MKR concentration may carry over to SKY.",
               "urls": [
                 {
                   "name": "Vote Delegate source",
