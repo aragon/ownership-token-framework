@@ -3141,7 +3141,7 @@
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "⚠️",
-          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power. The delegation system can amplify concentration effects.",
+          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
           "evidence": []
         },
         {
