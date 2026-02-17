@@ -2934,7 +2934,7 @@
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "\u2705",
-          "notes": "Protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
+          "notes": "A portion of protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
           "evidence": [
             {
               "name": "Smart Burn Engine",
@@ -3141,20 +3141,8 @@
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "\u26a0\ufe0f",
-          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
-          "evidence": [
-            {
-              "name": "Delegation System",
-              "summary": "Vote delegation is available. Historical concerns about MKR concentration may carry over to SKY.",
-              "urls": [
-                {
-                  "name": "Vote Delegate source",
-                  "url": "https://github.com/sky-ecosystem/vote-delegate/blob/master/src/VoteDelegate.sol",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
+          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power. The delegation system can amplify concentration effects.",
+          "evidence": []
         },
         {
           "id": "distribution__supply-schedule",
