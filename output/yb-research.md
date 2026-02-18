@@ -58,16 +58,18 @@ Investor Vesting owner(): 0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9 (EOA)
 
 ---
 
-## Supply Metrics (Verified On-Chain)
+## Supply Metrics (Verified On-Chain 2026-02-18)
 
 | Metric | Value |
 |--------|-------|
-| YB Total Supply | 720,908,837.28 YB |
-| YB Reserve (remaining to emit) | 279,091,162.72 YB |
-| veYB Supply (locked) | 70,823,178.71 YB |
+| YB Total Supply | ~720.9M YB |
+| YB Reserve (remaining to emit) | ~279.1M YB |
+| veYB Supply (locked) | ~70.8M YB |
 | Max Supply | 1,000,000,000 YB |
 | Minted Percentage | ~72.1% |
 | veYB Lock Rate | ~9.8% of minted supply |
+
+*Note: Supply values are approximate and will change as emissions continue and locks expire/are created.*
 
 ---
 
@@ -88,9 +90,9 @@ Investor Vesting owner(): 0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9 (EOA)
   - Early execution: Enabled when mathematical certainty achieved
 
 **Source Code:**
-- VotingEscrow implements IVotes interface: [`contracts/dao/VotingEscrow.vy:34`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L34)
-- `getVotes()` function: [`contracts/dao/VotingEscrow.vy:462-474`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L462-L474)
-- `getPastVotes()` function: [`contracts/dao/VotingEscrow.vy:477-505`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L477-L505)
+- VotingEscrow implements IVotes interface: [`contracts/dao/VotingEscrow.vy:34`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L34)
+- `getVotes()` function: [`contracts/dao/VotingEscrow.vy:462-474`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L462-L474)
+- `getPastVotes()` function: [`contracts/dao/VotingEscrow.vy:477-505`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L477-L505)
 
 ---
 
@@ -106,11 +108,11 @@ Investor Vesting owner(): 0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9 (EOA)
 **EOA-Controlled Contracts:**
 - veYB.owner() = `0xa39e4d6bb25a8e55552d6d9ab1f5f8889dddc80d` ⚠️
   - Powers: `set_transfer_clearance_checker()` - can change veYB transfer rules
-  - Source: [`contracts/dao/VotingEscrow.vy:641-647`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L641-L647)
+  - Source: [`contracts/dao/VotingEscrow.vy:641-647`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L641-L647)
 
 - Vesting.owner() = `0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9` ⚠️
   - Powers: `toggle_disable()`, `rug_disabled()` - can disable recipients and reclaim unvested tokens
-  - Source: [`contracts/dao/VestingEscrow.vy:138-179`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy#L138-L179)
+  - Source: [`contracts/dao/VestingEscrow.vy:138-179`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VestingEscrow.vy#L138-L179)
 
 **Risk Assessment:** The veYB owner EOA can modify transfer clearance rules, potentially affecting governance. The vesting owner EOA has significant power over team/investor allocations but cannot affect already-vested tokens.
 
@@ -131,9 +133,9 @@ Factory.set_implementations()
 ```
 
 **Source Code:**
-- Factory.set_implementations(): [`contracts/Factory.vy:390-410`](https://github.com/yield-basis/yb-core/blob/master/contracts/Factory.vy#L390-L410)
-- MigrationFactoryOwner.set_implementations(): [`contracts/MigrationFactoryOwner.vy:149-151`](https://github.com/yield-basis/yb-core/blob/master/contracts/MigrationFactoryOwner.vy#L149-L151)
-- MigrationFactoryOwner.ADMIN immutable: [`contracts/MigrationFactoryOwner.vy:47`](https://github.com/yield-basis/yb-core/blob/master/contracts/MigrationFactoryOwner.vy#L47)
+- Factory.set_implementations(): [`contracts/Factory.vy:390-410`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L390-L410)
+- MigrationFactoryOwner.set_implementations(): [`contracts/MigrationFactoryOwner.vy:149-151`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L149-L151)
+- MigrationFactoryOwner.ADMIN immutable: [`contracts/MigrationFactoryOwner.vy:47`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L47)
 
 **On-Chain Verification:**
 ```
@@ -155,8 +157,8 @@ MigrationFactoryOwner.ADMIN() = 0x42f2a41a0d0e65a440813190880c8a65124895fa (DAO)
 - Uses snekmate ERC-20 with ownership renounced at deployment
 
 **Source Code:**
-- `renounce_ownership()`: [`contracts/dao/YB.vy:90-100`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L90-L100)
-- Constructor comment explaining deployment sequence: [`contracts/dao/YB.vy:42-46`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L42-L46)
+- `renounce_ownership()`: [`contracts/dao/YB.vy:90-100`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L90-L100)
+- Constructor comment explaining deployment sequence: [`contracts/dao/YB.vy:42-46`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L42-L46)
 
 ```vyper
 # The setup includes:
@@ -177,8 +179,8 @@ MigrationFactoryOwner.ADMIN() = 0x42f2a41a0d0e65a440813190880c8a65124895fa (DAO)
 - Only minter (GaugeController) can call `emit()`
 
 **Source Code:**
-- `_emissions()` formula: [`contracts/dao/YB.vy:52-65`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L52-L65)
-- `emit()` function with minter check: [`contracts/dao/YB.vy:103-122`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L103-L122)
+- `_emissions()` formula: [`contracts/dao/YB.vy:52-65`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L52-L65)
+- `emit()` function with minter check: [`contracts/dao/YB.vy:103-122`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L103-L122)
 
 ```vyper
 @external
@@ -200,15 +202,15 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 
 **Exit Paths Verified:**
 1. **veYB Withdrawal:** Permissionless after lock expiry
-   - Source: [`contracts/dao/VotingEscrow.vy:428-457`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VotingEscrow.vy#L428-L457)
+   - Source: [`contracts/dao/VotingEscrow.vy:428-457`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L428-L457)
    - Only check: `assert block.timestamp >= _locked.end, "The lock didn't expire"`
 
 2. **Fee Claim:** Permissionless
-   - Source: [`contracts/dao/FeeDistributor.vy:269-277`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/FeeDistributor.vy#L269-L277)
+   - Source: [`contracts/dao/FeeDistributor.vy:269-277`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L269-L277)
    - No admin check in claim flow
 
 3. **Vesting Claim:** Permissionless for vested tokens
-   - Source: [`contracts/dao/VestingEscrow.vy:273-285`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy#L273-L285)
+   - Source: [`contracts/dao/VestingEscrow.vy:273-285`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VestingEscrow.vy#L273-L285)
    - Note: toggle_disable can freeze unvested portion but NOT already-vested tokens
 
 **Gauge Killing:** DAO-controlled via `GaugeController.set_killed()` - affects emissions not user funds.
@@ -220,7 +222,7 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 **Finding:** No blacklist, freeze, or seizure functions in YB token.
 
 **Evidence:**
-- Full source review: [`contracts/dao/YB.vy`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy)
+- Full source review: [`contracts/dao/YB.vy`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy)
 - Uses snekmate ERC-20 with no custom transfer restrictions
 - Standard `transfer()` and `transferFrom()` with no admin checks
 - No pause function
@@ -239,8 +241,8 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 - Schedule: Weekly (Thursdays at 00:00 UTC), split across 4 weeks
 
 **Source Code:**
-- `_fill_epochs()`: [`contracts/dao/FeeDistributor.vy:86-107`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/FeeDistributor.vy#L86-L107)
-- `OVER_WEEKS = 4`: [`contracts/dao/FeeDistributor.vy:49`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/FeeDistributor.vy#L49)
+- `_fill_epochs()`: [`contracts/dao/FeeDistributor.vy:86-107`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L86-L107)
+- `OVER_WEEKS = 4`: [`contracts/dao/FeeDistributor.vy:49`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L49)
 
 **Documentation:** [docs.yieldbasis.com/user/veyb](https://docs.yieldbasis.com/user/veyb)
 
@@ -255,8 +257,8 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 - Factory.fee_receiver controlled by DAO via MigrationFactoryOwner chain
 
 **Source Code:**
-- FeeDistributor constructor with owner parameter: [`contracts/dao/FeeDistributor.vy:71-83`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/FeeDistributor.vy#L71-L83)
-- Factory.set_fee_receiver(): [`contracts/Factory.vy:358-364`](https://github.com/yield-basis/yb-core/blob/master/contracts/Factory.vy#L358-L364)
+- FeeDistributor constructor with owner parameter: [`contracts/dao/FeeDistributor.vy:71-83`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L71-L83)
+- Factory.set_fee_receiver(): [`contracts/Factory.vy:358-364`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364)
 
 ---
 
@@ -270,8 +272,8 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 - GaugeController is DAO-owned
 
 **Source Code:**
-- `vote_for_gauge_weights()`: [`contracts/dao/GaugeController.vy:206-287`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/GaugeController.vy#L206-L287)
-- `WEIGHT_VOTE_DELAY = 10 * 86400`: [`contracts/dao/GaugeController.vy:24`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/GaugeController.vy#L24)
+- `vote_for_gauge_weights()`: [`contracts/dao/GaugeController.vy:206-287`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/GaugeController.vy#L206-L287)
+- `WEIGHT_VOTE_DELAY = 10 * 86400`: [`contracts/dao/GaugeController.vy:24`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/GaugeController.vy#L24)
 
 ---
 
@@ -296,7 +298,7 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 - Contract: `0x01791F726B4103694969820be083196cC7c045fF`
 - Compiler: Vyper 0.4.3
 - License: GNU Affero General Public License v3.0
-- Source: [`contracts/dao/YB.vy:1-7`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L1-L7)
+- Source: [`contracts/dao/YB.vy:1-7`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L1-L7)
 
 ---
 
@@ -359,8 +361,8 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 - `disable_can_disable()`: Can permanently disable the disable function
 
 **Source Code:**
-- toggle_disable: [`contracts/dao/VestingEscrow.vy:138-162`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy#L138-L162)
-- rug_disabled: [`contracts/dao/VestingEscrow.vy:165-179`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/VestingEscrow.vy#L165-L179)
+- toggle_disable: [`contracts/dao/VestingEscrow.vy:138-162`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VestingEscrow.vy#L138-L162)
+- rug_disabled: [`contracts/dao/VestingEscrow.vy:165-179`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VestingEscrow.vy#L165-L179)
 
 **Risk:** EOA owner has significant power over vesting recipients. This is a trust-based system, not code-enforced.
 
@@ -406,8 +408,8 @@ def emit(owner: address, rate_factor: uint256) -> uint256:
 | **MigrationFactoryOwner.vy** | **Copyright (c) 2025** | **Proprietary ⚠️** |
 
 **Source Code Headers:**
-- YB.vy: `@license GNU Affero General Public License v3.0` - [`contracts/dao/YB.vy:5`](https://github.com/yield-basis/yb-core/blob/master/contracts/dao/YB.vy#L5)
-- Factory.vy: `@license Copyright (c) 2025` - [`contracts/Factory.vy:6`](https://github.com/yield-basis/yb-core/blob/master/contracts/Factory.vy#L6)
+- YB.vy: `@license GNU Affero General Public License v3.0` - [`contracts/dao/YB.vy:5`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L5)
+- Factory.vy: `@license Copyright (c) 2025` - [`contracts/Factory.vy:6`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L6)
 
 **Curve Dependency:**
 - 75M YB (7.5% of supply) allocated to Curve licensing
