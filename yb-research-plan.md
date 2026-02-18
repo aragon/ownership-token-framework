@@ -2,644 +2,573 @@
 
 ## Aragon Ownership Token Framework Analysis
 
-**Target Token:** YieldBasis (YB)
-**Network:** Ethereum Mainnet
+**Target:** YB Token (YieldBasis)
 **Token Address:** `0x01791F726B4103694969820be083196cC7c045fF`
-**Prepared:** 2026-02-16
+**Network:** Ethereum Mainnet
+**Date:** 2026-02-18
 
 ---
 
-## Executive Summary
+## Overview
 
-This research plan maps each criterion in the Aragon Ownership Token Framework to specific YieldBasis resources and defines what evidence is required to evaluate the YB token. The critical distinction: this analysis evaluates what the YB token gives its holder in terms of enforceable, on-chain control and economic value—not whether YieldBasis is a good protocol.
+This research plan maps each criterion in the Aragon Ownership Token Framework to specific YieldBasis resources and defines the investigation approach. The framework answers three core questions:
+
+1. **What do I own?** — What does the YB tokenholder unilaterally control?
+2. **Why should it have value?** — What gives YB economic value?
+3. **What threatens that value?** — Are there conflicts or risks that undermine token value?
 
 ---
 
 ## Resource Inventory
 
-### Confirmed Sources (URLs Verified)
+### Confirmed Sources
 
-#### Official Documentation
-| Source | URL | Type |
-|--------|-----|------|
-| YieldBasis Docs | https://docs.yieldbasis.com | docs |
-| Tokenomics | https://docs.yieldbasis.com/user/tokenomics | docs |
-| veYB Token | https://docs.yieldbasis.com/user/veyb | docs |
-| Contract Addresses | https://docs.yieldbasis.com/user/contract-addresses | docs |
-| Technical Overview | https://docs.yieldbasis.com/dev/overview | docs |
-| Audits & Bug Bounties | https://docs.yieldbasis.com/user/audits-bug-bounties | docs |
-| MiCA Whitepaper | https://docs.yieldbasis.com/pdf/mica-whitepaper.pdf | docs |
+| Resource | URL | Type | Verified |
+|----------|-----|------|----------|
+| YB Token Contract | https://etherscan.io/address/0x01791F726B4103694969820be083196cC7c045fF | Explorer | Yes |
+| veYB (VotingEscrow) | https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211 | Explorer | Yes |
+| GaugeController | https://etherscan.io/address/0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21 | Explorer | Yes |
+| FeeDistributor | https://etherscan.io/address/0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90 | Explorer | Yes |
+| Factory | https://etherscan.io/address/0x370a449FeBb9411c95bf897021377fe0B7D100c0 | Explorer | Yes |
+| MigrationFactoryOwner | https://etherscan.io/address/0xa68343ed4d517a277cfa1f2fc2b51f7a6794b6ad | Explorer | Yes |
+| DAO Contract (Aragon OSx) | https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa | Explorer | Yes |
+| TokenVoting Plugin | https://etherscan.io/address/0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78 | Explorer | Yes |
+| Team Vesting | https://etherscan.io/address/0x93Eb25E380229bFED6AB4bf843E5f670c12785e3 | Explorer | Yes |
+| Investor Vesting | https://etherscan.io/address/0x11988547B064CaBF65c431c14Ef1b7435084602e | Explorer | Yes |
+| Curve Licensing Vesting | https://etherscan.io/address/0x36e36D5D588D480A15A40C7668Be52D36eb206A8 | Explorer | Yes |
+| Ecosystem Reserve | https://etherscan.io/address/0x7aC5922776034132D9ff5c7889d612d98e052Cf2 | Explorer | Yes |
+| yb-core GitHub | https://github.com/yield-basis/yb-core | GitHub | Yes |
+| Documentation - Governance | https://docs.yieldbasis.com/user/governance | Docs | Yes |
+| Documentation - Tokenomics | https://docs.yieldbasis.com/user/tokenomics | Docs | Yes |
+| Documentation - veYB | https://docs.yieldbasis.com/user/veyb | Docs | Yes |
+| Documentation - Audits | https://docs.yieldbasis.com/user/audits-bug-bounties | Docs | Yes |
+| YieldBasis App | https://app.yieldbasis.com/ | UI | Yes |
+| YieldBasis Website | https://yieldbasis.com/ | Website | Yes |
 
-#### GitHub Repositories
-| Source | URL | Type |
-|--------|-----|------|
-| yb-core (Vyper contracts) | https://github.com/yield-basis/yb-core | github |
-| yb-paper (Whitepaper) | https://github.com/yield-basis/yb-paper | github |
-| yb-simulations | https://github.com/yield-basis/yb-simulations | github |
+### Key Source Code Files
 
-#### On-Chain Contracts (Etherscan-Verified)
-| Contract | Address | Type |
-|----------|---------|------|
-| YB Token | `0x01791F726B4103694969820be083196cC7c045fF` | explorer |
-| veYB | `0x8235c179E9e84688FBd8B12295EfC26834dAC211` | explorer |
-| GaugeController | `0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21` | explorer |
-| Factory | `0x370a449FeBb9411c95bf897021377fe0B7D100c0` | explorer |
-| FeeDistributor | `0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90` | explorer |
-| DAO | `0x42F2A41A0D0e65A440813190880c8a65124895Fa` | explorer |
-| Plugin | `0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78` | explorer |
+| Contract | Source Path | Purpose |
+|----------|-------------|---------|
+| YB.vy | `contracts/dao/YB.vy` | Token contract with emission logic |
+| VotingEscrow.vy | `contracts/dao/VotingEscrow.vy` | veYB locking mechanism |
+| GaugeController.vy | `contracts/dao/GaugeController.vy` | Gauge weight voting |
+| FeeDistributor.vy | `contracts/dao/FeeDistributor.vy` | Fee distribution to veYB holders |
+| VestingEscrow.vy | `contracts/dao/VestingEscrow.vy` | Team/investor vesting |
+| Factory.vy | `contracts/Factory.vy` | Pool factory with upgradability |
+| MigrationFactoryOwner.vy | `contracts/MigrationFactoryOwner.vy` | Factory admin wrapper |
 
-#### Market Contracts (cbBTC Example)
-| Contract | Address | Type |
-|----------|---------|------|
-| yb-cbBTC | `0xAC0cfa7742069a8af0c63e14FFD0fe6b3e1Bf8D2` | explorer |
-| LEVAMM | `0xDC90F6B111DF0c26e349d3cC8d3C357b191e109a` | explorer |
-| Gauge | `0xf3081A2eB8927C0462864EC3FdbE927C842A0893` | explorer |
+### Security Audits
 
-#### Vesting Contracts
-| Contract | Address | Type |
-|----------|---------|------|
-| Curve Licensing | `0x36e36D5D588D480A15A40C7668Be52D36eb206A8` | explorer |
-| Investors | `0x11988547B064CaBF65c431c14Ef1b7435084602e` | explorer |
-| Team | `0x93Eb25E380229bFED6AB4bf843E5f670c12785e3` | explorer |
-| Protocol Development Reserve | `0x525443603D6D0955142FaC8820b64Ae701F40065` | explorer |
-| Ecosystem Reserve | `0x7aC5922776034132D9ff5c7889d612d98e052Cf2` | explorer |
-
-#### Security Audits
-| Auditor | Date | URL |
-|---------|------|-----|
-| Statemind | Feb-May 2025 | https://docs.yieldbasis.com/pdf/audit/statemind.pdf |
-| Chainsecurity | July 2025 | https://docs.yieldbasis.com/pdf/audit/chainsecurity.pdf |
-| Quantstamp | April 2025 | https://docs.yieldbasis.com/pdf/audit/quantstamp.pdf |
-| Mixbytes | August 2025 | https://docs.yieldbasis.com/pdf/audit/mixbytes.pdf |
-| Electisec | August 2025 | https://docs.yieldbasis.com/pdf/audit/electisec.pdf |
-| Pashov | March-April 2025 | https://docs.yieldbasis.com/pdf/audit/pashov.pdf |
+| Auditor | Date | Status |
+|---------|------|--------|
+| Statemind | Feb-May 2025 | Completed |
+| Chainsecurity | July 2025 | Completed |
+| Quantstamp | April 2025 | Completed |
+| Mixbytes | August 2025 | Completed |
+| Electisec | August 2025 | Completed |
+| Pashov | March-April 2025 | Completed |
 
 ---
 
-## Metric 1: Onchain Control
+## Criteria-by-Criteria Research Plan
 
-### 1.1 Onchain Governance Workflow
+### Metric 1: Onchain Control
 
-**Question:** Does an onchain process exist that grants YB tokenholders ultimate authority over protocol decisions?
+#### 1.1 Onchain Governance Workflow
 
-**Investigation Approach:**
-1. Examine DAO contract (`0x42F2A41A0D0e65A440813190880c8a65124895Fa`) for governance mechanism
-2. Verify veYB contract (`0x8235c179E9e84688FBd8B12295EfC26834dAC211`) grants voting power
-3. Trace execution path from vote → proposal → execution
-4. Check Plugin contract (`0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78`) for Aragon governance integration
-5. Identify if there's a timelock between vote approval and execution
+**Question:** Does an onchain process exist that grants tokenholders ultimate authority over protocol decisions?
 
 **Sources:**
-- DAO contract bytecode on Etherscan
-- Plugin contract (likely Aragon TokenVoting or VE governance plugin)
-- veYB contract read functions
-- yb-core GitHub repository (governance contracts)
-- Docs: https://docs.yieldbasis.com/user/veyb
+- DAO Contract: `0x42F2A41A0D0e65A440813190880c8a65124895Fa`
+- TokenVoting Plugin: `0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78`
+- Documentation: https://docs.yieldbasis.com/user/governance
+
+**Investigation Approach:**
+1. Read DAO contract to verify it uses Aragon OSx framework
+2. Read TokenVoting plugin to confirm veYB voting
+3. Verify thresholds: 30% participation, 55% support, 7-day minimum
+4. Check if proposal creation requires minimum 1 veYB
+5. Verify execution is automatic on threshold met
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Verified onchain voting → execution path where veYB holders can pass and execute proposals
-- ⚠️ Partial: Governance exists but execution requires external multisig approval
-- ❌ Insufficient: No onchain execution capability, governance is advisory only
+- ✅ Verified contract addresses showing Aragon OSx deployment
+- ✅ Plugin configuration with voting parameters
+- ✅ Transaction history showing executed proposals
 
-**Anticipated Difficulty:** Need to verify the DAO uses Aragon OSx stack and trace Plugin → DAO → execution permissions. The governance may be nascent given protocol launched in late 2025.
+**Expected Result:** Positive (✅) - Aragon OSx provides onchain governance with veYB voting
 
 ---
 
-### 1.2 Role Accountability
+#### 1.2 Role Accountability
 
-**Question:** Are all privileged or value-impacting roles governed, revocable, and accountable to veYB holders?
-
-**Investigation Approach:**
-1. Map all admin/owner roles across core contracts:
-   - Factory owner
-   - GaugeController admin
-   - FeeDistributor admin
-   - Individual market contract owners (LT, LEVAMM, VirtualPool)
-2. For each role, trace ownership chain to veYB governance or identify discretionary control
-3. Check if roles can be revoked/reassigned by governance
-4. Identify any multisig or EOA controls that bypass governance
+**Question:** Are all privileged roles governed, revocable, and accountable to tokenholders?
 
 **Sources:**
-- Factory contract (`0x370a449FeBb9411c95bf897021377fe0B7D100c0`) - read owner/admin functions
-- GaugeController (`0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21`)
-- yb-core source: contracts/Factory.vy, contracts/LT.vy
-- Etherscan transaction history for admin operations
+- GaugeController owner check
+- FeeDistributor owner check
+- Factory admin chain via MigrationFactoryOwner
+- veYB owner check
+- Vesting contract owner checks
+
+**Investigation Approach:**
+1. Call `owner()` on GaugeController - expect DAO address
+2. Call `owner()` on FeeDistributor - expect DAO address
+3. Trace Factory.admin() → MigrationFactoryOwner → ADMIN immutable → expect DAO
+4. Call `owner()` on veYB - check if EOA or DAO
+5. Identify owner of vesting contracts (Team, Investor, Curve)
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: All privileged roles are either DAO-controlled or explicitly documented as governance-revocable
-- ⚠️ Partial: Some roles controlled by multisig that governance can replace
-- ❌ Insufficient: Core roles held by team EOA/multisig without governance override path
+- ✅ Each contract's owner() returning DAO address
+- ⚠️ Any EOA ownership requires flag
 
-**Anticipated Difficulty:** Factory contract likely has owner that can set implementations. Need to verify if owner is DAO or team multisig.
+**Expected Result:** Warning (⚠️) - veYB owner and vesting owners appear to be EOAs
+
+**Gaps/Concerns:**
+- veYB owner is EOA `0xa39e...` - can potentially modify veYB behavior
+- Vesting owner is EOA `0xc167...` - can disable recipients via `toggle_disable()`
+- Must verify what powers veYB owner retains
 
 ---
 
-### 1.3 Protocol Upgrade Authority
+#### 1.3 Protocol Upgrade Authority
 
-**Question:** Can core protocol logic be upgraded, and if so, who controls upgrades?
-
-**Investigation Approach:**
-1. Check if core contracts use proxy patterns (ERC-1967, UUPS, etc.)
-2. Examine Factory contract for `set_implementation` or similar upgrade functions
-3. For each core contract type (LT, LEVAMM, VirtualPool, Oracle), verify upgradeability
-4. If upgradeable, trace upgrade authority to veYB or discretionary control
-5. Check for timelocks on upgrades
+**Question:** Can core protocol logic be upgraded and is this controlled by tokenholders?
 
 **Sources:**
-- Factory.vy source on GitHub
-- Etherscan contract verification for proxy detection
-- Technical docs: https://docs.yieldbasis.com/dev/overview
+- Factory contract: `0x370a449FeBb9411c95bf897021377fe0B7D100c0`
+- Factory.vy source: `set_implementations()` function
+- MigrationFactoryOwner.vy source
+
+**Investigation Approach:**
+1. Check if Factory is upgradeable proxy or plain contract
+2. Identify `set_implementations()` access control
+3. Trace: Factory.admin() → MigrationFactoryOwner → ADMIN immutable
+4. Verify ADMIN is DAO address by reading bytecode immutable
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Upgrades controlled by veYB governance with timelock, or contracts are immutable
-- ⚠️ Partial: Upgrades possible but behind multisig that governance can replace
-- ❌ Insufficient: Team can unilaterally upgrade core contracts
+- ✅ Factory.vy source showing set_implementations requires admin
+- ✅ MigrationFactoryOwner bytecode showing ADMIN = DAO
+- ✅ Chain: DAO → MigrationFactoryOwner → Factory
 
-**Anticipated Difficulty:** Vyper contracts may use blueprint patterns rather than proxies. Need to understand YieldBasis-specific upgrade mechanism.
+**Expected Result:** Warning (⚠️) - Indirect DAO control via wrapper contract
 
 ---
 
-### 1.4 Token Upgrade Authority
+#### 1.4 Token Upgrade Authority
 
-**Question:** Can YB token behavior be modified, and if so, by whom?
-
-**Investigation Approach:**
-1. Read YB token contract source on Etherscan
-2. Check for proxy pattern (ERC-1967 slot)
-3. Identify any admin functions (setX, pause, etc.)
-4. If upgradeable, trace upgrade authority
+**Question:** Can YB token behavior be modified?
 
 **Sources:**
-- YB Token (`0x01791F726B4103694969820be083196cC7c045fF`) on Etherscan
-- yb-core source (if token contract included)
+- YB Token: `0x01791F726B4103694969820be083196cC7c045fF`
+- YB.vy source
+
+**Investigation Approach:**
+1. Check if YB token uses proxy pattern (no proxy = immutable)
+2. Call `owner()` - expect 0x0 (renounced)
+3. Review YB.vy for any admin functions
+4. Verify only GaugeController can call `emit()` for minting
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Token is immutable OR upgradeable only via veYB governance
-- ⚠️ Partial: Token upgradeable by multisig accountable to governance
-- ❌ Insufficient: Token has admin upgrade path outside governance
+- ✅ owner() = 0x0 (verified)
+- ✅ No proxy pattern in bytecode
+- ✅ snekmate ERC-20 with renounced ownership
 
-**Anticipated Difficulty:** Low - token contract verification should be straightforward. Contract is Vyper 0.4.3 per Etherscan.
+**Expected Result:** Positive (✅) - Non-upgradeable with renounced ownership
 
 ---
 
-### 1.5 Supply Control
+#### 1.5 Supply Control
 
-**Question:** How is YB token supply controlled?
-
-**Investigation Approach:**
-1. Check YB token for mint() function and its access control
-2. Verify total supply (1B) and any inflation mechanism
-3. Examine emission schedule for liquidity incentives (30% allocation)
-4. Check if governance can modify emission parameters
+**Question:** Are supply changes programmatic or tokenholder-controlled?
 
 **Sources:**
-- YB Token contract bytecode
-- Tokenomics docs: https://docs.yieldbasis.com/user/tokenomics
-- GaugeController for emission routing
-- Vesting contracts for locked supply
+- YB.vy source: `emit()` function, emission schedule
+- GaugeController: emission caller
+- Tokenomics documentation
+
+**Investigation Approach:**
+1. Review emission formula in YB.vy (exponential decay)
+2. Verify max supply = 1B YB
+3. Check who can call `emit()` - should be only GaugeController
+4. Verify GaugeController is DAO-owned
+5. Track current minted supply (~720M)
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Fixed supply OR minting only via programmatic schedule controlled by governance
-- ⚠️ Partial: Minting controlled by multisig with governance oversight
-- ❌ Insufficient: Discretionary minting capability exists
+- ✅ YB.vy showing 1B max supply constant
+- ✅ emit() restricted to minter (GaugeController)
+- ✅ Exponential decay formula enforced in code
 
-**Anticipated Difficulty:** Need to understand how the 30% liquidity incentive allocation is distributed over time.
+**Expected Result:** Positive (✅) - Programmatic emissions with no discretionary minting
 
 ---
 
-### 1.6 Privileged Access Gating
+#### 1.6 Privileged Access Gating
 
-**Question:** Can any bounded actor set block or restrict protocol actions or exit paths?
-
-**Investigation Approach:**
-1. Check for pause/emergency functions in core contracts
-2. Examine Factory for killGauge or similar functions
-3. Look for whitelist/blacklist mechanisms on markets
-4. Verify user exit paths (withdraw from LT tokens) are permissionless
+**Question:** Can any bounded actor block user exits or restrict access?
 
 **Sources:**
-- Factory.vy, LT.vy source code
-- Market contracts on Etherscan
-- Security audit reports (may identify emergency mechanisms)
+- VotingEscrow.vy: `withdraw()` function
+- FeeDistributor.vy: `claim()` function
+- LT contracts: withdrawal mechanisms
+
+**Investigation Approach:**
+1. Review VotingEscrow.withdraw() - should be permissionless after lock expiry
+2. Review FeeDistributor.claim() - should be permissionless
+3. Check for any pause functions or blocklists
+4. Verify no team-controlled emergency pause on user funds
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: No gating mechanisms, or gating only via governance with narrow scope
-- ⚠️ Partial: Emergency pause exists but is governance-revocable
-- ❌ Insufficient: Team/multisig can block user exits or protocol actions
+- ✅ withdraw() has no admin checks (only lock expiry check)
+- ✅ claim() has no admin checks
+- ✅ No pause/freeze functions in core contracts
 
-**Anticipated Difficulty:** Need to carefully review for hidden pause mechanisms. Audit reports may be helpful.
+**Expected Result:** Positive (✅) - User exits are permissionless
 
 ---
 
-### 1.7 Token Censorship
+#### 1.7 Token Censorship
 
-**Question:** Can any role freeze, blacklist, seize, or censor YB token balances or transfers?
-
-**Investigation Approach:**
-1. Review YB token contract for blacklist/freeze/seize functions
-2. Check for Pausable or similar patterns
-3. Examine transfer function for any conditional blocking
-4. Verify veYB positions (NFT-based) for censorship capability
+**Question:** Can any role freeze, blacklist, or seize token balances?
 
 **Sources:**
-- YB Token contract source
-- veYB contract source
-- Standard ERC-20 analysis
+- YB.vy source: full contract review
+- Standard ERC-20 functions
+
+**Investigation Approach:**
+1. Search YB.vy for freeze, blacklist, block, pause functions
+2. Verify standard ERC-20 transfer() has no restrictions
+3. Check for any admin-controlled transfer restrictions
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: No censorship capabilities in token contract
-- ⚠️ Partial: Pause exists but cannot target specific addresses
-- ❌ Insufficient: Blacklist/freeze capability exists
+- ✅ No censorship functions in source
+- ✅ Standard permissionless transfers
 
-**Anticipated Difficulty:** Low - standard token contract analysis.
+**Expected Result:** Positive (✅) - No censorship capability
 
 ---
 
-## Metric 2: Value Accrual
+### Metric 2: Value Accrual
 
-### 2.1 Accrual Active
+#### 2.1 Accrual Active
 
-**Question:** Are value flows to YB tokenholders currently active?
-
-**Investigation Approach:**
-1. Verify FeeDistributor (`0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90`) is receiving and distributing fees
-2. Check on-chain transaction history for fee distributions
-3. Verify veYB holders can claim rewards (weekly Thursday 00:00 UTC per docs)
-4. Quantify current fee generation from markets
+**Question:** Are value flows to tokenholders currently active?
 
 **Sources:**
-- FeeDistributor contract on Etherscan (transaction history)
-- Market contracts (admin fee collection)
-- veYB docs: https://docs.yieldbasis.com/user/veyb
-- DeFi dashboards (DefiLlama, etc.) for TVL/volume
+- FeeDistributor: `0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90`
+- FeeDistributor transaction history
+- veYB documentation
+
+**Investigation Approach:**
+1. Check FeeDistributor for recent inbound fee deposits
+2. Check for recent claim transactions by veYB holders
+3. Verify fee tokens: yb-cbBTC, yb-WBTC, yb-tBTC, yb-WETH
+4. Calculate approximate APY from recent distributions
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Observable, recent fee distributions to veYB holders
-- ⚠️ Partial: Mechanism exists but distributions are minimal
-- ❌ Insufficient: No active distributions, mechanism is theoretical only
+- ✅ Recent transactions showing fee deposits and claims
+- ✅ Non-zero token balances flowing through distributor
 
-**Anticipated Difficulty:** Protocol is relatively new (mainnet Oct 2025). Need to verify fee switch is active and distributions have occurred.
+**Expected Result:** Positive (✅) - Active distributions occurring
 
 ---
 
-### 2.2 Treasury Ownership
+#### 2.2 Treasury Ownership
 
-**Question:** Are protocol treasury assets programmatically controlled by veYB governance?
-
-**Investigation Approach:**
-1. Identify if there's a formal treasury contract
-2. Check DAO contract for asset custody
-3. Examine vesting contracts for governance control
-4. Verify any protocol-owned liquidity
+**Question:** Are treasury assets controlled by tokenholder governance?
 
 **Sources:**
-- DAO contract (`0x42F2A41A0D0e65A440813190880c8a65124895Fa`)
-- Ecosystem Reserve (`0x7aC5922776034132D9ff5c7889d612d98e052Cf2`)
-- Protocol Development Reserve (`0x525443603D6D0955142FaC8820b64Ae701F40065`)
+- FeeDistributor owner
+- Ecosystem Reserve: `0x7aC5922776034132D9ff5c7889d612d98e052Cf2`
+- Protocol Development Reserve
+
+**Investigation Approach:**
+1. Verify FeeDistributor.owner() = DAO
+2. Check Ecosystem Reserve ownership/control
+3. Map all treasury addresses and their control
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Treasury controlled by DAO with veYB voting
-- ⚠️ Partial: Treasury exists but controlled by multisig accountable to governance
-- ❌ Insufficient: Treasury controlled by team without governance oversight
+- ✅ FeeDistributor owner = DAO
+- ⚠️ Reserve contracts may have different control structures
 
-**Anticipated Difficulty:** Need to distinguish between vesting contracts (locked for specific purposes) vs. discretionary treasury.
+**Expected Result:** Positive (✅) - DAO controls primary fee distribution
 
 ---
 
-### 2.3 Accrual Mechanism Control
+#### 2.3 Accrual Mechanism Control
 
-**Question:** Can veYB holders modify parameters governing value capture?
-
-**Investigation Approach:**
-1. Identify fee parameters (admin fee formula: f_a = 1 - (1 - f_min) * √(1 - s/T))
-2. Check who can modify f_min and other fee parameters
-3. Examine gauge weight voting mechanism
-4. Verify veYB controls emission routing via GaugeController
+**Question:** Can tokenholders modify value capture parameters?
 
 **Sources:**
-- GaugeController contract
-- Factory contract (fee parameters)
-- Advanced economics docs: https://docs.yieldbasis.com/user/advanced-concepts-economics
-- LT.vy source code
+- GaugeController: gauge weight voting
+- Factory: fee parameters
+- Documentation on fee rates
+
+**Investigation Approach:**
+1. Verify veYB holders can vote on gauge weights
+2. Check if fee rates are DAO-controlled via Factory
+3. Trace fee parameter modification path
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: veYB holders control fee parameters and emission routing
-- ⚠️ Partial: Gauge voting works but fee parameters set by team
-- ❌ Insufficient: No tokenholder control over value capture parameters
+- ✅ GaugeController.vote_for_gauge_weights() accessible to veYB holders
+- ✅ Factory fee parameters controlled by admin (DAO via wrapper)
 
-**Anticipated Difficulty:** Docs mention "Curve/YB governance can tune borrow APR" - need to verify this is veYB governance vs. Curve governance.
+**Expected Result:** Positive (✅) - veYB holders control emissions and DAO controls fees
 
 ---
 
-### 2.4 Offchain Value Accrual
+#### 2.4 Offchain Value Accrual
 
-**Question:** Are there additional offchain value accrual flows benefiting YB tokenholders?
-
-**Investigation Approach:**
-1. Research YieldBasis AG (Swiss company) relationship to token
-2. Check for any legal agreements giving tokenholders claims on offchain revenue
-3. Examine MiCA whitepaper for legal structure
+**Question:** Are there additional offchain value flows?
 
 **Sources:**
-- MiCA Whitepaper: https://docs.yieldbasis.com/pdf/mica-whitepaper.pdf
-- Company registry for YieldBasis AG
+- YieldBasis AG entity information
+- Terms of service
+- Any revenue sharing agreements
+
+**Investigation Approach:**
+1. Research YieldBasis AG corporate structure
+2. Check for any offchain revenue commitment to holders
+3. Look for legal agreements tying equity to token
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Legal structure explicitly ties offchain value to tokenholders
-- TBD: Cannot verify offchain arrangements
-- ❌ N/A: No offchain value accrual mechanism claimed
+- Requires offchain legal document verification
+- May need entity filings research
 
-**Anticipated Difficulty:** High - offchain legal arrangements typically not publicly verifiable.
+**Expected Result:** TBD - Not verified
+
+**Gaps/Concerns:**
+- No evidence of offchain value accrual mechanisms
+- YieldBasis AG is team-controlled entity
 
 ---
 
-## Metric 3: Verifiability
+### Metric 3: Verifiability
 
-### 3.1 Token Contract Source Verification
+#### 3.1 Token Contract Source Verification
 
-**Question:** Is YB token source code publicly available and verified on Etherscan?
-
-**Investigation Approach:**
-1. Check Etherscan verification status for YB token
-2. Match deployed bytecode to GitHub source
-3. Verify compilation settings (Vyper 0.4.3)
+**Question:** Is YB token source verified and matching deployed bytecode?
 
 **Sources:**
-- Etherscan: `0x01791F726B4103694969820be083196cC7c045fF`
-- GitHub: https://github.com/yield-basis/yb-core
+- Etherscan verification status
+- yb-core GitHub repository
+
+**Investigation Approach:**
+1. Confirm Etherscan shows "Contract Source Code Verified"
+2. Match GitHub source to deployed bytecode
+3. Note compiler version (Vyper 0.4.3)
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Source verified on Etherscan, matches GitHub
-- ⚠️ Partial: Verified but minor discrepancies
-- ❌ Insufficient: Not verified or significant mismatch
+- ✅ Green checkmark on Etherscan
+- ✅ Source available on GitHub matching deployment
 
-**Anticipated Difficulty:** Low - standard verification check.
+**Expected Result:** Positive (✅) - Fully verified
 
 ---
 
-### 3.2 Protocol Component Source Verification
+#### 3.2 Protocol Component Source Verification
 
-**Question:** Are core protocol contracts publicly accessible and verifiable?
-
-**Investigation Approach:**
-1. Check Etherscan verification for all core contracts (Factory, veYB, GaugeController, FeeDistributor)
-2. Check verification for market contracts (LT, LEVAMM, VirtualPool, Oracle, Gauge)
-3. Cross-reference with GitHub yb-core repository
-4. Verify audit reports match deployed code
+**Question:** Are all core protocol contracts verified?
 
 **Sources:**
-- All contract addresses from https://docs.yieldbasis.com/user/contract-addresses
-- GitHub: https://github.com/yield-basis/yb-core
+- All contract addresses on Etherscan
+- yb-core repository
 - Audit reports
 
-**Evidence Sufficiency:**
-- ✅ Sufficient: All economically material contracts verified and match source
-- ⚠️ Partial: Most contracts verified, minor components unverified
-- ❌ Insufficient: Core contracts unverified or significant mismatches
+**Investigation Approach:**
+1. Check verification status for each core contract
+2. Verify audit coverage of all economically material contracts
+3. Note any unverified or closed-source components
 
-**Anticipated Difficulty:** Medium - many contracts to verify across multiple markets.
+**Evidence Sufficiency:**
+- ✅ All core contracts verified on Etherscan
+- ✅ 6 independent audits completed
+
+**Expected Result:** Positive (✅) - All contracts verified and audited
 
 ---
 
-## Metric 4: Token Distribution
+### Metric 4: Token Distribution
 
-### 4.1 Ownership Concentration
+#### 4.1 Ownership Concentration
 
-**Question:** Does any single actor or coordinated group control a majority of voting power?
-
-**Investigation Approach:**
-1. Query veYB contract for top holders and their voting power
-2. Analyze YB token distribution (top holders)
-3. Identify team/investor vesting schedules and current unlocked amounts
-4. Calculate effective voting power concentration
-5. Check for delegation patterns in veYB
+**Question:** Does any single actor control majority voting power?
 
 **Sources:**
-- veYB contract read functions
-- Etherscan token holders page
-- Vesting contracts (Team, Investors, etc.)
-- Tokenomics docs for allocation breakdown
-
-**Token Allocation (per docs):**
-| Category | Allocation | Vesting |
-|----------|-----------|---------|
-| Liquidity Incentives | 30% | Dynamic emission |
-| Team | 25% | 6-month cliff, 24-month vesting |
-| Ecosystem Reserve | 12.5% | 2-year vesting, 5% initial |
-| Investors | 12.1% | 6-month cliff, 24-month vesting |
-| Protocol Development | 7.4% | 1-year cliff, 1-year vesting |
-| Curve Licensing | 7.5% | Dynamic emission |
-| Other | 5.5% | Various |
-
-**Evidence Sufficiency:**
-- ✅ Sufficient: No single party controls >50% of voting power; distribution is meaningful
-- ⚠️ Partial: Concentration exists but documented and time-limited (vesting)
-- ❌ Insufficient: Single party or coordinated group controls majority
-
-**Anticipated Difficulty:** High - need to analyze actual veYB holdings, not just YB distribution. Protocol is new so distribution may be concentrated.
-
----
-
-### 4.2 Future Token Unlocks
-
-**Question:** Are there known future events that will materially affect token concentration?
+- veYB supply(): current locked amount
+- Top veYB holders analysis
+- Token distribution data
 
 **Investigation Approach:**
-1. Map all vesting schedules from vesting contracts
-2. Calculate unlock timeline (6-month cliff from Sept 15, 2025 = March 15, 2026)
-3. Identify any large cliff events
-
-**Sources:**
-- Vesting contract read functions
-- Tokenomics docs
-- CliffEscrow contract (`0x60043a545E22424E73A2dEbb98f8cd4361fE3DA0`)
+1. Call veYB.supply() for total locked
+2. Analyze top holder addresses
+3. Check if any address > 50% of veYB
+4. Identify related addresses (team, VC coordination)
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Vesting schedules documented, no outsized cliff events
-- ⚠️ Partial: Significant cliffs exist but are disclosed
-- ❌ Insufficient: Undocumented or sudden large unlocks possible
+- Requires holder analysis tools (Dune, Nansen)
+- Must identify coordinated control blocks
 
-**Anticipated Difficulty:** Medium - cliff for Team/Investors is ~March 2026, which is imminent.
+**Expected Result:** Warning (⚠️) - Concentration risk exists
+
+**Gaps/Concerns:**
+- ~70M veYB from ~720M minted (10%)
+- Post-cliff, team + investors = 37% of supply
+- Coordination between team/investor blocks not independently verified
 
 ---
 
-## Offchain Dependencies
+#### 4.2 Future Token Unlocks
 
-### 5.1 Trademark
+**Question:** Will vesting events materially affect concentration?
 
-**Question:** Are core trademarks owned by a tokenholder-controlled legal entity?
+**Sources:**
+- Vesting contract parameters
+- VestingEscrow.vy source
+- Tokenomics documentation
 
 **Investigation Approach:**
-1. Search USPTO/EUIPO for "YieldBasis" or "Yield Basis" trademarks
-2. Identify registrant entity
-3. Determine if registrant is DAO-controlled or team-controlled
-
-**Sources:**
-- USPTO TESS database
-- EUIPO search
-- MiCA whitepaper (may identify legal entity structure)
+1. Read vesting contract cliff dates (Sept 15, 2025 + 6 months = March 15, 2026)
+2. Calculate unlock amounts: Team 250M, Investors 121M
+3. Review VestingEscrow owner powers: toggle_disable(), rug_disabled()
+4. Assess concentration impact
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Trademark held by DAO-controlled entity
-- ⚠️ Partial: Trademark held by team entity (YieldBasis AG) with no formal DAO control
-- ❌ Insufficient: Unknown trademark ownership
+- ✅ Vesting parameters readable onchain
+- ⚠️ EOA owner with disable capability is concerning
 
-**Anticipated Difficulty:** High - likely registered to YieldBasis AG, which is team-controlled.
+**Expected Result:** Warning (⚠️) - Imminent cliff with concentration risk
+
+**Gaps/Concerns:**
+- 6-month cliff ends ~March 15, 2026 (imminent)
+- 37% of supply (371M) begins unlocking
+- Vesting owner EOA can disable recipients - trust-based system
 
 ---
 
-### 5.2 Distribution
+### Offchain Dependencies
 
-**Question:** Are primary domains and interfaces owned by tokenholder-controlled entity?
+#### Trademark
+
+**Question:** Are trademarks controlled by tokenholder entity?
+
+**Sources:**
+- USPTO trademark search
+- Swiss trademark registry
+- YieldBasis AG corporate records
 
 **Investigation Approach:**
-1. Check WHOIS for yieldbasis.com domain ownership
-2. Identify who controls app.yieldbasis.com frontend
-3. Review Terms of Service for contracting party
-
-**Sources:**
-- WHOIS lookup
-- Terms of Service on website
-- MiCA whitepaper
+1. Search USPTO for "YieldBasis" trademark
+2. Search Swiss IP registry
+3. Identify registrant entity
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Domain/interfaces controlled by DAO or DAO-controlled entity
-- ⚠️ Partial: Controlled by team entity without formal DAO oversight
-- ❌ Insufficient: Unknown or clearly team-only control
+- Requires trademark database searches
+- Must link to tokenholder-controlled entity
 
-**Anticipated Difficulty:** High - likely team-controlled (YieldBasis AG).
+**Expected Result:** TBD - Not verified
+
+**Gaps/Concerns:**
+- Likely owned by YieldBasis AG (team entity)
+- No evidence of DAO trademark control
 
 ---
 
-### 5.3 Licensing
+#### Distribution
 
-**Question:** Is core protocol software/IP controlled by tokenholder-controlled entity?
+**Question:** Are domains and interfaces controlled by tokenholder entity?
+
+**Sources:**
+- yieldbasis.com WHOIS
+- app.yieldbasis.com hosting
+- Terms of service
 
 **Investigation Approach:**
-1. Check GitHub repository license
-2. Examine Curve licensing arrangement (7.5% allocation)
-3. Identify any proprietary components
-
-**Sources:**
-- yb-core LICENSE file
-- Curve Licensing vesting contract
-- MiCA whitepaper
+1. Check domain registration details
+2. Review terms of service contracting party
+3. Identify hosting/infrastructure control
 
 **Evidence Sufficiency:**
-- ✅ Sufficient: Open source with permissive license, no restrictive IP
-- ⚠️ Partial: Open source but with business source license or Curve licensing dependency
-- ❌ Insufficient: Proprietary or controlled by team entity
+- ⚠️ Domain likely team-controlled
+- No DAO control over frontend
 
-**Anticipated Difficulty:** Medium - need to understand Curve licensing relationship.
-
----
-
-## Gaps and Concerns
-
-### High-Priority Gaps
-
-1. **Governance Maturity:** YieldBasis launched October 2025. The DAO and governance mechanisms may be nascent. Need to verify if onchain governance is active or if team retains operational control.
-
-2. **Factory Owner:** The Factory contract sets implementations for all markets. Its owner controls protocol upgrades. Critical to verify if owner is DAO or team multisig.
-
-3. **Team/Investor Unlock:** 6-month cliff ends ~March 2026. 25% (Team) + 12.1% (Investors) = 37.1% unlocking soon. Need to verify if these tokens can immediately vote as veYB.
-
-4. **veYB Concentration:** Even if governance mechanisms exist, if team/investors hold majority of veYB, governance is de facto team-controlled.
-
-### Medium-Priority Gaps
-
-5. **Curve Integration Dependency:** Protocol relies on Curve pools and crvUSD lending. Curve governance decisions could materially affect YieldBasis. This is an external dependency.
-
-6. **YieldBasis AG Role:** Swiss company appears to be operational entity. Unclear what formal relationship exists between company and DAO.
-
-7. **Emergency Powers:** Need to verify if any emergency pause or kill mechanisms exist and who controls them.
-
-### Information Quality Notes
-
-- **Confirmed Sources:** All URLs in Resource Inventory have been verified accessible
-- **Contract Verification:** Need to check Etherscan verification status for all contracts
-- **Audit Reports:** 6 audits completed, but findings not publicly detailed - need to review PDFs
+**Expected Result:** Warning (⚠️) - Team controls distribution
 
 ---
 
-## Research Execution Checklist
+#### Licensing
 
-### Phase 1: Contract Analysis
-- [ ] Read YB token contract - verify upgradeability, mint/burn, censorship
-- [ ] Read veYB contract - verify voting power calculation, lock mechanics
-- [ ] Read Factory contract - identify owner, upgrade authority
-- [ ] Read GaugeController - verify veYB controls gauges
-- [ ] Read FeeDistributor - verify distribution mechanism
-- [ ] Read DAO/Plugin contracts - verify governance execution path
+**Question:** Is core IP controlled by tokenholder entity?
 
-### Phase 2: Governance Verification
-- [ ] Trace Factory owner to DAO or team
-- [ ] Verify onchain governance proposals exist and can execute
-- [ ] Map all privileged roles and their accountability
-- [ ] Check for timelocks on critical functions
+**Sources:**
+- yb-core license headers
+- Factory.vy license
+- Curve licensing agreement
 
-### Phase 3: Value Accrual Verification
-- [ ] Verify fee distributions have occurred (FeeDistributor txn history)
-- [ ] Quantify current value flows to veYB holders
-- [ ] Verify gauge voting is active
+**Investigation Approach:**
+1. Review license headers in all contracts
+2. Note AGPL vs proprietary split
+3. Analyze Curve licensing relationship (7.5% of supply)
 
-### Phase 4: Distribution Analysis
-- [ ] Query veYB top holders
-- [ ] Calculate team/investor veYB holdings
-- [ ] Map vesting unlock timeline
+**Evidence Sufficiency:**
+- ✅ License headers in source code
+- ⚠️ Mixed licensing (AGPL + proprietary)
+- ⚠️ Curve dependency via licensing fee
 
-### Phase 5: Offchain Dependencies
-- [ ] USPTO trademark search
-- [ ] WHOIS domain lookup
-- [ ] Review yb-core LICENSE
-
-### Phase 6: Documentation
-- [ ] Compile findings into yb-research.md
-- [ ] Create yb-tokens.json entry
-- [ ] Create yb-metrics.json entry
+**Expected Result:** Warning (⚠️) - Mixed licensing with external dependency
 
 ---
 
-## Expected Output Format
+## Summary of Anticipated Findings
 
-Following the existing token entries (AAVE, AERO, etc.), the final deliverables will include:
+### Positive Areas (✅)
+- Onchain governance via Aragon OSx
+- Non-upgradeable YB token with renounced ownership
+- Programmatic emissions with fixed max supply
+- Permissionless user exits
+- No censorship capability
+- Active fee distributions to veYB holders
+- Fully verified and audited contracts
 
-**yb-tokens.json entry:**
-```json
-{
-  "id": "yb",
-  "name": "YB",
-  "symbol": "YB",
-  "address": "0x01791F726B4103694969820be083196cC7c045fF",
-  "icon": "[CoinGecko icon URL]",
-  "description": "[1-2 sentence summary]",
-  "network": "ethereum",
-  "evidenceEntries": [count],
-  "positive": [count],
-  "neutral": [count],
-  "atRisk": [count],
-  "lastUpdated": [timestamp],
-  "links": {
-    "website": "https://yieldbasis.com/",
-    "twitter": "https://x.com/yieldbasis",
-    "scan": "https://etherscan.io/token/0x01791F726B4103694969820be083196cC7c045fF"
-  }
-}
-```
+### Areas of Concern (⚠️)
+- veYB owner is EOA (not DAO)
+- Vesting contract owner is EOA with disable powers
+- Imminent vesting cliff (March 2026) with 37% unlock
+- Indirect protocol upgrade path via wrapper contract
+- Team controls domain and likely trademark
+- Mixed licensing with proprietary Factory code
+- Curve technology dependency (7.5% licensing fee)
 
-**yb-metrics.json:** Following the exact schema of existing entries, with:
-- 5 metric categories (onchain-ctrl, val-accrual, verifiability, distribution, offchain)
-- Status per criterion (✅, ⚠️, TBD)
-- Notes explaining findings
-- Evidence arrays with URLs (name, url, type)
+### Unknown/TBD
+- Offchain value accrual mechanisms
+- Trademark ownership verification
+- Current veYB holder concentration analysis
+- Coordination between team/investor voting blocks
 
 ---
 
-## Critical Distinction Reminder
+## Execution Checklist
 
-This analysis evaluates **the YB token**, not the YieldBasis protocol:
+For each criterion, the research agent should:
 
-- Governance power only counts if it's **enforced on-chain** and cannot be circumvented by the team
-- Revenue only counts if there's a **binding mechanism** directing it to token holders
-- Claims about future plans, roadmap items, or "intended" governance are **not evidence** of current token value
-- If the team retains effective control (via Factory ownership, veYB majority, or operational discretion), this must be documented regardless of governance aspirations
+1. [ ] Read all specified contract addresses
+2. [ ] Extract relevant function return values
+3. [ ] Trace ownership/admin chains to ultimate authority
+4. [ ] Match source code to documented behavior
+5. [ ] Record transaction evidence where applicable
+6. [ ] Flag any discrepancies from expected results
+7. [ ] Note confidence level for each finding
+
+---
+
+## Output Requirements
+
+The research phase should produce:
+
+1. **yb-research.md** — Detailed findings with evidence citations
+2. **yb-tokens.json** — Token entry matching schema
+3. **yb-metrics.json** — Full metrics entry with all criteria scored
+
+All claims must have:
+- Contract address or GitHub line reference
+- View function output or transaction hash
+- Documentation URL where applicable
