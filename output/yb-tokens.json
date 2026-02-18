@@ -1,0 +1,24 @@
+{
+  "id": "yb",
+  "name": "YB",
+  "symbol": "YB",
+  "address": "0x01791F726B4103694969820be083196cC7c045fF",
+  "icon": "https://coin-images.coingecko.com/coins/images/54871/small/yieldbasis_400x400.png",
+  "description": "YB is the governance token of YieldBasis, a leveraged LP yield farming protocol. veYB holders control emissions, vote on proposals, and receive protocol revenue.",
+  "network": "ethereum",
+  "evidenceEntries": 18,
+  "positive": 10,
+  "neutral": 2,
+  "atRisk": 6,
+  "lastUpdated": 1739836800,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://yieldbasis.com/",
+    "twitter": "https://x.com/yieldbasis",
+    "scan": "https://etherscan.io/token/0x01791F726B4103694969820be083196cC7c045fF"
+  },
+  "infoDescription": "YieldBasis is a leveraged LP yield protocol built on Curve infrastructure, enabling liquidity providers to achieve higher yields through borrowing against LP positions."
+}
