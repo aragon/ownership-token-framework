@@ -4,7 +4,7 @@
     "name": "Onchain Control",
     "tags": ["Metric 1"],
     "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-    "summary": "veYB holders control the protocol through **Aragon OSx governance** with automatic execution. The **YB token is non-upgradeable** with renounced ownership (owner = 0x0). Factory upgrades are controlled via MigrationFactoryOwner, which is DAO-controlled. However, **veYB owner and vesting owners remain EOAs** outside governance control.",
+    "summary": "veYB (vote-escrowed YB, locked tokens for governance power) holders control the protocol through Aragon OSx governance with automatic execution. The YB token is non-upgradeable with renounced ownership. Factory upgrades are controlled via MigrationFactoryOwner, which is DAO-controlled. However, veYB owner and vesting owners remain EOAs (externally owned accounts, i.e., regular wallets rather than smart contracts) outside governance control.",
     "criteria": [
       {
         "id": "onchain-ctrl__governance-workflow",
@@ -15,7 +15,7 @@
         "evidence": [
           {
             "name": "Governance System",
-            "summary": "Aragon OSx DAO with TokenVoting Plugin. veYB implements IVotes interface for Aragon compatibility.",
+            "summary": "Aragon OSx DAO with TokenVoting Plugin. veYB implements standard voting interface for Aragon compatibility.",
             "urls": [
               {
                 "name": "DAO Contract",
@@ -46,7 +46,7 @@
         "name": "Role Accountability",
         "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
         "status": "⚠️",
-        "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner (0xa39e...) can modify transfer clearance rules. Vesting owner (0xc167...) can disable recipients and reclaim unvested tokens.",
+        "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner can modify transfer clearance rules. Vesting owner can disable recipients and reclaim unvested tokens. See contract links below.",
         "evidence": [
           {
             "name": "DAO-Controlled Contracts",
@@ -131,7 +131,7 @@
         "evidence": [
           {
             "name": "Token Ownership",
-            "summary": "owner() returns 0x0. Token uses snekmate ERC-20 with renounced ownership at deployment.",
+            "summary": "owner() returns 0x0. Token uses standard ERC-20 implementation with renounced ownership at deployment.",
             "urls": [
               {
                 "name": "YB Token Contract",
@@ -212,7 +212,7 @@
         "name": "Token Censorship",
         "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
         "status": "✅",
-        "notes": "**No blacklist, freeze, or seizure functions** in YB token. Uses snekmate ERC-20 with standard transfer()/transferFrom(). No admin checks on transfers. No pause function.",
+        "notes": "**No blacklist, freeze, or seizure functions** in YB token. Uses standard ERC-20 with transfer()/transferFrom(). No admin checks on transfers. No pause function.",
         "evidence": [
           {
             "urls": [
@@ -232,7 +232,7 @@
     "name": "Value Accrual",
     "tags": ["Metric 2"],
     "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-    "summary": "veYB holders receive **protocol revenue via FeeDistributor** (actively distributing yb-LP tokens weekly). Gauge voting directs YB emissions. Treasury and fee parameters are **DAO-controlled**. Offchain value accrual from YieldBasis AG has not been verified.",
+    "summary": "veYB holders receive protocol revenue via FeeDistributor (actively distributing yb-LP tokens weekly). Gauge voting directs YB emissions. Treasury and fee parameters are DAO-controlled. Offchain value accrual from YieldBasis AG has not been verified.",
     "criteria": [
       {
         "id": "val-accrual__active",
@@ -335,7 +335,7 @@
     "name": "Verifiability",
     "tags": ["Metric 3"],
     "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-    "summary": "All core contracts are **verified on Etherscan** with matching GitHub source (Vyper 0.4.3). Protocol has undergone **6 independent security audits** (Statemind, Chainsecurity, Quantstamp, Mixbytes, Electisec, Pashov).",
+    "summary": "All core contracts are verified on Etherscan with matching GitHub source (Vyper 0.4.3). Protocol has undergone 6 independent security audits (Statemind, Chainsecurity, Quantstamp, Mixbytes, Electisec, Pashov).",
     "criteria": [
       {
         "id": "verifiability__token-source",
@@ -392,7 +392,7 @@
     "name": "Token Distribution",
     "tags": ["Metric 4"],
     "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-    "summary": "~71M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) face **6-month cliff ending ~March 15, 2026** (imminent), creating concentration risk. Vesting contracts owned by **EOA with disable capability**.",
+    "summary": "~71M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) face 6-month cliff ending ~March 15, 2026 (imminent), creating concentration risk. Vesting contracts owned by EOA with disable capability.",
     "criteria": [
       {
         "id": "distribution__concentration",
@@ -456,7 +456,7 @@
     "name": "Offchain Dependencies",
     "tags": ["Reference"],
     "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-    "summary": "Trademark and domain likely controlled by **YieldBasis AG** (team entity, not tokenholder-controlled). DAO contracts use **AGPL v3.0** (open source), but **Factory uses proprietary license**. 7.5% of supply allocated to **Curve licensing fee** indicates technology dependency.",
+    "summary": "Trademark and domain likely controlled by YieldBasis AG (team entity, not tokenholder-controlled). DAO contracts use AGPL v3.0 (open source), but Factory uses proprietary license. 7.5% of supply allocated to Curve licensing fee indicates technology dependency.",
     "criteria": [
       {
         "id": "offchain__trademark",
