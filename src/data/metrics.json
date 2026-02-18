@@ -3134,14 +3134,14 @@
         "Metric 4"
       ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
+      "summary": "Aragon has not been able to verify the concentration of holdings.",
       "criteria": [
         {
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "⚠️",
-          "notes": "Aragon has not been able to verify the concentration of holdings, although some concerns have been raised in the past regarding the concentration of MKR voting power.",
+          "notes": "Aragon has not been able to verify the concentration of holdings.",
           "evidence": []
         },
         {
