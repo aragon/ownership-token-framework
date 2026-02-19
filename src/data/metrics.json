@@ -2897,7 +2897,7 @@
         "Metric 2"
       ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "veYB holders receive protocol admin fees via FeeDistributor (programmatic, not discretionary). Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. Gauge voting controls YB emission allocation. DAO can redirect fee receiver.",
+      "summary": "veYB holders receive protocol admin fees via FeeDistributor (programmatic). Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction and gauge voting controls emissions. Ecosystem Reserve is EOA-controlled, not DAO.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -2943,21 +2943,21 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
-          "notes": "**FeeDistributor is programmatic**, not discretionary\u2014fees flow automatically to veYB holders.\n\n**Discretionary control:** DAO can change fee_receiver via MigrationFactoryOwner. Ecosystem Reserve (125M YB) is a VestingEscrow controlled by an EOA, not the DAO.",
+          "status": "TBD",
+          "notes": "**Treasury Ownership** refers to non-automated revenues requiring discrete transactions to distribute\u2014distinct from programmatic fee flows like FeeDistributor.\n\nThe primary YB reserve (Ecosystem Reserve) is controlled by an EOA, not the DAO. The DAO holds a small amount of YB directly.",
           "evidence": [
             {
-              "name": "Fee Receiver Control",
-              "summary": "DAO controls Factory.fee_receiver via MigrationFactoryOwner.set_fee_receiver(). This determines where admin fees are routed.",
+              "name": "Ecosystem Reserve",
+              "summary": "Ecosystem Reserve is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside vesting contracts.",
               "urls": [
-                {
-                  "name": "MigrationFactoryOwner.set_fee_receiver",
-                  "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145",
-                  "type": "github"
-                },
                 {
                   "name": "Ecosystem Reserve (EOA-controlled)",
                   "url": "https://etherscan.io/address/0x7aC5922776034132D9ff5c7889d612d98e052Cf2",
+                  "type": "explorer"
+                },
+                {
+                  "name": "DAO Contract",
+                  "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
                   "type": "explorer"
                 }
               ]
@@ -2969,8 +2969,24 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "\u2705",
-          "notes": "veYB holders control **gauge weights** via vote_for_gauge_weights(). Higher gauge weight = more YB emissions to that pool's stakers, which incentivizes LP staking and generates the admin fees distributed to veYB holders. 10-day vote lock prevents manipulation.",
+          "notes": "veYB holders control both the **direction of automated value flows** and **emission routing**:\n\n**Fee direction:** DAO controls Factory.fee_receiver via MigrationFactoryOwner, determining where admin fees are routed.\n\n**Gauge voting:** veYB holders vote on gauge weights. Higher weight = more YB emissions to that pool's stakers, incentivizing LP staking which generates admin fees. 10-day vote lock prevents manipulation.",
           "evidence": [
+            {
+              "name": "Fee Flow Direction",
+              "summary": "DAO controls Factory.fee_receiver via MigrationFactoryOwner.set_fee_receiver(). This determines where admin fees are routed.",
+              "urls": [
+                {
+                  "name": "MigrationFactoryOwner.set_fee_receiver",
+                  "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145",
+                  "type": "github"
+                },
+                {
+                  "name": "Factory.set_fee_receiver",
+                  "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364",
+                  "type": "github"
+                }
+              ]
+            },
             {
               "name": "Gauge Voting",
               "summary": "veYB holders vote on gauge weights to direct YB emissions. This indirectly controls fee generation by incentivizing LP staking.",
