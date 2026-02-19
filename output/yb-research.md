@@ -20,7 +20,7 @@ YB is the governance token of YieldBasis, a leveraged LP yield farming protocol 
 
 3. **What threatens that value?** The veYB contract owner is an EOA (deployer._yb.eth), not the DAO—this EOA can change transfer clearance rules for veYB positions but cannot censor the underlying YB token. Mixed licensing (proprietary Factory code) and Curve technology dependency are also noted.
 
-**Overall Assessment:** 12 positive (✅), 2 neutral (TBD), 4 at-risk (⚠️)
+**Overall Assessment:** 11 positive (✅), 3 neutral (TBD), 4 at-risk (⚠️)
 
 ---
 
@@ -264,36 +264,34 @@ Admin fees are generated from leveraged LP positions in each LT (Liquidity Token
 
 ---
 
-### 2.2 Treasury Ownership ✅
+### 2.2 Treasury Ownership TBD
 
-**Finding:** The DAO controls discretionary treasury assets. Note: FeeDistributor is a programmatic fee flow, not a discretionary treasury.
+**Finding:** The primary reserve of YB tokens (Ecosystem Reserve) is controlled by an EOA, not the DAO. The DAO holds a small amount of YB directly.
 
-**Programmatic Fee Flow (FeeDistributor):**
-- FeeDistributor.owner() = DAO
-- Fees flow automatically to veYB holders based on voting power
-- This is NOT discretionary treasury—it's automatic distribution
+**Treasury Ownership** refers to non-automated revenues that require discrete transactions to distribute—distinct from programmatic fee flows like FeeDistributor.
 
-**Discretionary Treasury Control:**
-- Factory.fee_receiver and fee parameters controlled by DAO via MigrationFactoryOwner
-- DAO can change where admin fees are directed
+**On-Chain Verification (2026-02-18):**
+- DAO contract (`0x42F2A41A0D0e65A440813190880c8a65124895Fa`) holds ~887K YB directly
+- Ecosystem Reserve (`0x7aC5922776034132D9ff5c7889d612d98e052Cf2`) holds ~63.4M YB
+- Ecosystem Reserve owner: `0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9` (EOA, not DAO)
 
-**Source Code:**
-- FeeDistributor constructor with owner parameter: [`contracts/dao/FeeDistributor.vy:71-83`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L71-L83)
-- Factory.set_fee_receiver(): [`contracts/Factory.vy:358-364`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364)
-- MigrationFactoryOwner.set_fee_receiver(): [`contracts/MigrationFactoryOwner.vy:143-145`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145)
+**Key Finding:** The Ecosystem Reserve is a VestingEscrow contract controlled by an EOA, not the DAO. This represents the largest pool of discretionary YB outside of the vesting contracts.
 
-**Ecosystem Reserve:**
-- Address: `0x7aC5922776034132D9ff5c7889d612d98e052Cf2`
-- Owner: `0xc1671c9efc9a2ecc347238bea054fc6d1c6c28f9` (EOA)
-- This is a VestingEscrow contract controlled by an EOA, not the DAO
+**Status Rationale:** TBD because the primary discretionary treasury (Ecosystem Reserve) is not DAO-controlled. The DAO holds only a small amount directly.
 
 ---
 
 ### 2.3 Accrual Mechanism Control ✅
 
-**Finding:** veYB holders control fee allocation through gauge weight voting. Gauge weights determine both YB emission routing and indirectly affect the value of LP tokens (which are the admin fees).
+**Finding:** veYB holders control both the direction of automated value flows (fee_receiver, gauge weights) and emission routing.
 
-**Gauge Voting Controls Fees:**
+**Fee Flow Direction (DAO-Controlled):**
+- Factory.fee_receiver parameter controlled by DAO via MigrationFactoryOwner
+- DAO can change where admin fees are directed
+- Source: [`contracts/Factory.vy:358-364`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364)
+- Source: [`contracts/MigrationFactoryOwner.vy:143-145`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145)
+
+**Gauge Voting Controls Emissions:**
 - veYB holders vote on gauge weights via `vote_for_gauge_weights()`
 - Higher gauge weight = more YB emissions to that pool's stakers
 - This incentivizes LP staking, which generates the admin fees distributed to veYB holders
@@ -485,7 +483,8 @@ graph TD
    - Mitigated by permissionless contracts
 
 5. **Ecosystem Reserve EOA Control**
-   - 125M YB in VestingEscrow controlled by EOA, not DAO
+   - ~63.4M YB in VestingEscrow controlled by EOA, not DAO
+   - Primary discretionary treasury is not tokenholder-controlled
 
 ---
 
