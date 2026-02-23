@@ -23,6 +23,8 @@ export const NewsletterBanner: React.FC = () => {
               <span className="font-bold">LDO</span>
               {", "}
               <span className="font-bold">AERO</span>
+              {", "}
+              <span className="font-bold">SKY</span>
               {
                 " are now live on the dashboard. Be first to know when new tokens are listed."
               }
