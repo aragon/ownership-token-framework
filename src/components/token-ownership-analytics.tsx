@@ -17,6 +17,7 @@ import { useState } from "react"
 import { HeroHeader } from "@/components/hero-header"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { PageWrapper } from "@/components/page-wrapper"
+import { TestimonialsSection } from "@/components/testimonials-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Container } from "@/components/ui/container"
 import {
@@ -366,6 +367,8 @@ export default function TokenOwnershipAnalytics() {
           <TokenDataTable data={tokens} />
         </Container>
       </div>
+
+      <TestimonialsSection />
 
       <NewsletterSignup />
     </PageWrapper>
