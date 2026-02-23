@@ -11,7 +11,7 @@ interface IOpenGraphMetadata {
 }
 
 class MetadataUtils {
-  baseUrl = "https://otf.aragon123.org"
+  baseUrl = "https://ownership-token-framework-git-737a30-aragons-projects-9afe7a60.vercel.app"
 
   private defaultTitle = "Ownership Token Framework"
   private defaultDescription =
