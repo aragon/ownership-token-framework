@@ -2897,7 +2897,7 @@
         "Metric 2"
       ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "veYB holders receive **protocol admin fees** (a subset of protocol revenue) via FeeDistributor. Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
+      "summary": "veYB holders receive protocol admin fees (a subset of protocol revenue) via FeeDistributor. Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
       "criteria": [
         {
           "id": "val-accrual__active",
