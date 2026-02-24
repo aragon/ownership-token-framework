@@ -528,7 +528,7 @@
             },
             {
               "name": "Emergency Council",
-              "summary": "Exists to handle contingencies. It can kill or revive gauges, update pool name and symbol metadata, and rotate the EmergencyCouncil itself.",
+              "summary": "Exists to handle contingencies. It can kill or revive gauges, update pool name and symbol metadata, and rotate the EmergencyCouncil itself.  Critically, it can also activate or deactivate (m)veNFTs affecting user allocations. This will be superseded by the governance once enabled.",
               "urls": [
                 {
                   "name": "EmergencyCouncil",
