@@ -22,16 +22,14 @@ function TestimonialCard({
     <article
       className={cn(
         "rounded-2xl border border-border/70 bg-background p-5 shadow-sm md:p-8",
-        className,
+        className
       )}
     >
       <div className="flex items-start gap-2 text-foreground">
         <span className="w-4 text-2xl leading-8 font-bold text-primary md:w-6 md:text-4xl md:leading-10">
           &ldquo;
         </span>
-        <p className="text-base leading-6 text-foreground md:text-lg md:leading-7">
-          {quote}
-        </p>
+        <p className="text-lg leading-7 text-foreground">{quote}</p>
       </div>
 
       <div className="mt-4 pl-6 md:mt-6 md:pl-8">
@@ -66,11 +64,11 @@ export function TestimonialsSection() {
 
   return (
     <section className="bg-muted/50">
-      <Container className="py-10 md:py-20">
+      <Container className="py-8 lg:py-10">
         <div className="flex flex-col gap-8 md:gap-10">
-          <h2 className="text-center text-3xl leading-9 font-bold tracking-tight text-accent-foreground md:text-4xl md:leading-10">
+          <h3 className="text-center text-xl md:text-2xl leading-8 font-bold tracking-tight text-accent-foreground md:leading-9">
             {title}
-          </h2>
+          </h3>
 
           <div className="grid w-full grid-cols-1 items-start gap-6 md:grid-cols-2">
             {testimonials.map(({ id, ...rest }) => (

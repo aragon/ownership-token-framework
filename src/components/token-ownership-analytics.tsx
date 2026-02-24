@@ -217,7 +217,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
   })
 
   return (
-    <div className="space-y-4 pt-6 pb-10 md:pt-12 md:pb-20 grow">
+    <div className="space-y-4 grow pt-6 pb-6 md:pt-12 md:pb-10">
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
