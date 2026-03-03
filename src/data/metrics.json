@@ -2682,7 +2682,7 @@
         "Metric 1"
       ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "veYB holders control the protocol through Aragon OSx governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (deployer._yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
+      "summary": "veYB holders control the protocol through Aragon OSx governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (_yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
@@ -2698,6 +2698,11 @@
                 {
                   "name": "DAO Contract",
                   "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
+                  "type": "explorer"
+                },
+                {
+                  "name": "veYB (VotingEscrow)",
+                  "url": "https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211",
                   "type": "explorer"
                 },
                 {
@@ -2719,7 +2724,7 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "✅",
-          "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner (deployer._yb.eth) can change transfer clearance rules. However, transfer restrictions do not constitute censorship—users remain custodians of their locked YB and can always withdraw after lock expiry.",
+          "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner (_yb.eth) can change transfer clearance rules. However, transfer restrictions do not constitute censorship—users remain custodians of their locked YB and can always withdraw after lock expiry.",
           "evidence": [
             {
               "name": "DAO-Controlled Contracts",
@@ -2743,7 +2748,7 @@
               ]
             },
             {
-              "name": "veYB Owner (deployer._yb.eth)",
+              "name": "veYB Owner (_yb.eth)",
               "summary": "Can call set_transfer_clearance_checker() to change veYB transfer rules. This restricts veNFT transfers, NOT custody—users remain owners of their locked YB.",
               "urls": [
                 {
@@ -2897,7 +2902,7 @@
         "Metric 2"
       ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "veYB holders receive protocol admin fees (a subset of protocol revenue) via FeeDistributor. Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
+      "summary": "veYB holders receive **protocol admin fees** (a subset of protocol revenue) via FeeDistributor. Fees originate from LT (Liquidity Token) vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -2949,15 +2954,20 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "TBD",
-          "notes": "**Treasury Ownership** refers to non-automated revenues requiring discrete transactions to distribute—distinct from programmatic fee flows like FeeDistributor.\n\nThe **Ecosystem Reserve** is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside the vesting contracts. The DAO holds a small amount of YB directly.",
+          "notes": "The **Ecosystem Reserve** is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside the vesting contracts. The DAO holds a small amount of YB directly.",
           "evidence": [
             {
               "name": "Ecosystem Reserve",
-              "summary": "Ecosystem Reserve (0x7aC5922776034132D9ff5c7889d612d98e052Cf2) is a VestingEscrow controlled by EOA (0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9), not the DAO.",
+              "summary": "Ecosystem Reserve is a VestingEscrow controlled by an EOA, not the DAO.",
               "urls": [
                 {
                   "name": "Ecosystem Reserve",
                   "url": "https://etherscan.io/address/0x7aC5922776034132D9ff5c7889d612d98e052Cf2",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Ecosystem Reserve Owner (EOA)",
+                  "url": "https://etherscan.io/address/0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9",
                   "type": "explorer"
                 },
                 {
@@ -3089,18 +3099,18 @@
         "Metric 4"
       ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "~75M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) have 24-month vesting with a 6-month cliff ending March 2026, after which 25% unlocks and the remaining 75% vests linearly over 18 months.",
+      "summary": "~77M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) have 24-month vesting with a 6-month cliff ending March 2026, after which 25% unlocks and the remaining 75% vests linearly over 18 months.",
       "criteria": [
         {
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
           "status": "⚠️",
-          "notes": "~75M veYB locked from ~722M minted YB (~10% participation). Post-cliff, **Team (250M) + Investors (121M) = 371M YB (37%)** could potentially influence governance if coordinated, given low current veYB participation.",
+          "notes": "~77M veYB locked from ~722M minted YB (~10% participation). Post-cliff, **Team (250M) + Investors (121M) = 371M YB (37%)** could potentially influence governance if coordinated, given low current veYB participation.",
           "evidence": [
             {
               "name": "veYB Supply",
-              "summary": "veYB supply ~75M tokens locked. Low participation rate means large token holders have outsized influence.",
+              "summary": "veYB supply ~77M tokens locked. Low participation rate means large token holders have outsized influence.",
               "urls": [
                 {
                   "name": "veYB Contract",
