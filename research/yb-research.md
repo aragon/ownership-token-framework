@@ -22,7 +22,7 @@ YB is the governance token of YieldBasis. This analysis evaluates YB against the
 
 3. **What threatens that value?** The veYB contract owner is an EOA (_yb.eth), not the DAO—this EOA can change transfer clearance rules for veYB positions but cannot censor the underlying YB token. Users remain custodians of their locked YB. The Ecosystem Reserve (~63.4M YB) is controlled by an EOA, not the DAO. Mixed licensing (proprietary Factory code) is a noted concern.
 
-**Overall Assessment:** 12 positive (✅), 2 neutral (TBD), 4 at-risk (⚠️)
+**Overall Assessment:** 11 positive (✅), 3 neutral (TBD), 4 at-risk (⚠️)
 
 ---
 
