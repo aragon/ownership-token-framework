@@ -16,13 +16,13 @@
 
 YB is the governance token of YieldBasis. This analysis evaluates YB against the Aragon Ownership Token Framework to answer three core questions:
 
-1. **What do I own?** veYB (vote-escrowed YB) holders control protocol governance through Aragon OSx, direct emissions via gauge voting, and receive protocol admin fees. The YB token itself is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through the MigrationFactoryOwner.
+1. **What do I own?** veYB (vote-escrowed YB) holders control protocol governance through Aragon governance, direct emissions via gauge voting, and receive protocol admin fees. The YB token itself is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through the MigrationFactoryOwner.
 
 2. **Why should it have value?** veYB holders receive protocol admin fees (distributed weekly in yb-LP tokens via the FeeDistributor) and control emission allocation via gauge voting. Value accrual mechanisms are active and programmatic.
 
-3. **What threatens that value?** The veYB contract owner is an EOA (deployer._yb.eth), not the DAO—this EOA can change transfer clearance rules for veYB positions but cannot censor the underlying YB token. Users remain custodians of their locked YB. The Ecosystem Reserve (~63.4M YB) is controlled by an EOA, not the DAO. Mixed licensing (proprietary Factory code) and Curve technology dependency are noted concerns.
+3. **What threatens that value?** The veYB contract owner is an EOA (_yb.eth), not the DAO—this EOA can change transfer clearance rules for veYB positions but cannot censor the underlying YB token. Users remain custodians of their locked YB. The Ecosystem Reserve (~63.4M YB) is controlled by an EOA, not the DAO. Mixed licensing (proprietary Factory code) is a noted concern.
 
-**Overall Assessment:** 12 positive (✅), 2 neutral (TBD), 4 at-risk (⚠️)
+**Overall Assessment:** 11 positive (✅), 3 neutral (TBD), 4 at-risk (⚠️)
 
 ---
 
@@ -31,12 +31,12 @@ YB is the governance token of YieldBasis. This analysis evaluates YB against the
 | Contract | Address | Owner | Verified |
 |----------|---------|-------|----------|
 | YB Token | `0x01791F726B4103694969820be083196cC7c045fF` | `0x0` (renounced) | ✅ On-chain |
-| veYB (VotingEscrow) | `0x8235c179E9e84688FBd8B12295EfC26834dAC211` | `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (deployer._yb.eth) | ⚠️ EOA |
+| veYB (VotingEscrow) | `0x8235c179E9e84688FBd8B12295EfC26834dAC211` | `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (_yb.eth) | ⚠️ EOA |
 | GaugeController | `0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21` | `0x42F2A41A0D0e65A440813190880c8a65124895Fa` (DAO) | ✅ DAO |
 | FeeDistributor | `0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90` | `0x42F2A41A0D0e65A440813190880c8a65124895Fa` (DAO) | ✅ DAO |
 | Factory | `0x370a449FeBb9411c95bf897021377fe0B7D100c0` | `0xA68343ed4d517a277cFA1F2FC2b51f7a6794B6AD` (MigrationFactoryOwner) | ✅ Indirect DAO |
 | MigrationFactoryOwner | `0xa68343ed4d517a277cfa1f2fc2b51f7a6794b6ad` | ADMIN immutable = `0x42F2A41A0D0e65A440813190880c8a65124895Fa` (DAO) | ✅ DAO |
-| DAO | `0x42F2A41A0D0e65A440813190880c8a65124895Fa` | Aragon OSx | ✅ veYB holders |
+| DAO | `0x42F2A41A0D0e65A440813190880c8a65124895Fa` | Aragon governance | ✅ veYB holders |
 | TokenVoting Plugin | `0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78` | - | ✅ Verified |
 | Team Vesting | `0x93Eb25E380229bFED6AB4bf843E5f670c12785e3` | `0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9` (EOA) | EOA |
 | Investor Vesting | `0x11988547B064CaBF65c431c14Ef1b7435084602e` | `0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9` (EOA) | EOA |
@@ -53,7 +53,7 @@ cast call 0x8235c179E9e84688FBd8B12295EfC26834dAC211 "owner()(address)" --rpc-ur
 → 0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d
 
 cast lookup-address 0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d --rpc-url https://ethereum.publicnode.com
-→ deployer._yb.eth
+→ _yb.eth
 
 cast call 0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21 "owner()(address)" --rpc-url https://ethereum.publicnode.com
 → 0x42F2A41A0D0e65A440813190880c8a65124895Fa (DAO)
@@ -107,7 +107,7 @@ cast call 0x8235c179E9e84688FBd8B12295EfC26834dAC211 "supply()(uint256)" --rpc-u
 
 ### 1.1 Onchain Governance Workflow ✅
 
-**Finding:** veYB holders control the protocol through Aragon OSx governance. Proposals can be executed immediately when support and participation thresholds are met and remaining votes cannot change the outcome.
+**Finding:** veYB holders control the protocol through Aragon governance. Proposals can be executed immediately when support and participation thresholds are met and remaining votes cannot change the outcome.
 
 **Evidence:**
 - DAO Contract: `0x42F2A41A0D0e65A440813190880c8a65124895Fa`
@@ -128,7 +128,7 @@ cast call 0x8235c179E9e84688FBd8B12295EfC26834dAC211 "supply()(uint256)" --rpc-u
 
 ### 1.2 Role Accountability ✅
 
-**Finding:** Core protocol roles (GaugeController, FeeDistributor, Factory via MigrationFactoryOwner) are DAO-controlled. The veYB contract owner is an EOA (deployer._yb.eth), but this does not constitute material censorship risk.
+**Finding:** Core protocol roles (GaugeController, FeeDistributor, Factory via MigrationFactoryOwner) are DAO-controlled. The veYB contract owner is an EOA (_yb.eth), but this does not constitute material censorship risk.
 
 **DAO-Controlled Contracts:**
 - GaugeController.owner() = DAO ✅
@@ -136,7 +136,7 @@ cast call 0x8235c179E9e84688FBd8B12295EfC26834dAC211 "supply()(uint256)" --rpc-u
 - MigrationFactoryOwner.ADMIN = DAO (immutable) ✅
 
 **EOA-Controlled Contract:**
-- veYB.owner() = `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (ENS: deployer._yb.eth)
+- veYB.owner() = `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (ENS: _yb.eth)
   - Power: `set_transfer_clearance_checker()` - can change veYB transfer rules
   - Current setting: GaugeController, which only checks `self.vote_user_power[user] == 0` (users cannot transfer while votes are active)
   - Source: [`contracts/dao/VotingEscrow.vy:640-647`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L640-L647)
@@ -256,7 +256,7 @@ def get_adjustment() -> uint256:
 - Ownership renounced
 
 **veYB Transfer Restrictions:**
-- The deployer EOA (deployer._yb.eth) can change transfer rules via `set_transfer_clearance_checker()`
+- The deployer EOA (_yb.eth) can change transfer rules via `set_transfer_clearance_checker()`
 - However, this restricts veNFT transfers, NOT custody—users remain owners of their locked YB
 - Users can always withdraw after lock expiry regardless of transfer restrictions
 
@@ -464,49 +464,35 @@ cast call 0x93Eb25E380229bFED6AB4bf843E5f670c12785e3 "END_TIME()(uint256)" --rpc
 
 ### Trademark TBD
 
-**Finding:** Aragon has not been able to verify YieldBasis trademark registration status.
-
-Trademark likely owned by YieldBasis AG (Swiss company), which is team-controlled, not tokenholder-controlled.
+**Finding:** Aragon has not been able to verify trademark ownership.
 
 ---
 
 ### Distribution ⚠️
 
-**Finding:** Primary domains and interfaces are team-controlled.
-
-**Evidence:**
-- yieldbasis.com - team controlled
-- app.yieldbasis.com - team controlled
-- No evidence of DAO control over distribution channels
-
-**Note:** Smart contracts are permissionless and can be accessed via alternative interfaces.
+**Finding:** Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels.
 
 ---
 
 ### Licensing ⚠️
 
-**Finding:** Mixed licensing with significant concerns.
+**Finding:** Mixed licensing.
 
 **License Analysis:**
 
-| Contract | License | Risk |
-|----------|---------|------|
-| YB.vy | AGPL v3.0 | Open source ✅ |
-| VotingEscrow.vy | AGPL v3.0 | Open source ✅ |
-| GaugeController.vy | AGPL v3.0 | Open source ✅ |
-| FeeDistributor.vy | AGPL v3.0 | Open source ✅ |
-| VestingEscrow.vy | AGPL v3.0 | Open source ✅ |
-| **Factory.vy** | **Copyright (c) 2025** | **Proprietary ⚠️** |
-| **MigrationFactoryOwner.vy** | **Copyright (c) 2025** | **Proprietary ⚠️** |
+| Contract | License |
+|----------|---------|
+| YB.vy | AGPL v3.0 |
+| VotingEscrow.vy | AGPL v3.0 |
+| GaugeController.vy | AGPL v3.0 |
+| FeeDistributor.vy | AGPL v3.0 |
+| VestingEscrow.vy | AGPL v3.0 |
+| Factory.vy | Copyright (c) 2025 |
+| MigrationFactoryOwner.vy | Copyright (c) 2025 |
 
 **Source Code Headers:**
 - YB.vy: `@license GNU Affero General Public License v3.0` - [`contracts/dao/YB.vy:5`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L5)
 - Factory.vy: `@license Copyright (c) 2025` - [`contracts/Factory.vy:6`](https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L6)
-
-**Curve Dependency:**
-- 75M YB (7.5% of supply) allocated to Curve licensing
-- Technology dependency on Curve's infrastructure
-- Vesting contract: `0x36e36D5D588D480A15A40C7668Be52D36eb206A8`
 
 ---
 
@@ -528,8 +514,8 @@ graph TD
     Markets -->|admin fees| FD
     FD -->|distribute| VE
 
-    subgraph "EOA Controlled (deployer._yb.eth)"
-        VEOwner[deployer._yb.eth] -.->|set_transfer_clearance_checker| VE
+    subgraph "EOA Controlled (_yb.eth)"
+        VEOwner[_yb.eth] -.->|set_transfer_clearance_checker| VE
     end
 
     subgraph "EOA Controlled (Ecosystem)"
@@ -543,39 +529,28 @@ graph TD
 
 ### Areas of Concern
 
-1. **veYB Owner EOA** - `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (deployer._yb.eth)
+1. **veYB Owner EOA** - `0xa39E4d6bb25A8E55552D6D9ab1f5f8889DDdC80d` (_yb.eth)
    - Can modify transfer clearance rules for veYB positions
    - Does NOT constitute censorship—users remain custodians of locked YB
-   - Should ideally be transferred to DAO
 
 2. **Ecosystem Reserve EOA Control** - `0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9`
    - Controls ~63.4M YB
    - Not DAO-controlled
-   - Represents primary discretionary reserve outside vesting
 
 3. **Proprietary Factory License**
    - Core protocol component under "Copyright (c) 2025"
-   - Not open source
-
-4. **Curve Technology Dependency**
-   - 7.5% of supply as licensing fee
-   - Infrastructure dependency
-
-5. **Team-Controlled Distribution**
-   - Domains and UI are team controlled
-   - Mitigated by permissionless contracts
 
 ---
 
 ## Conclusion
 
-The YB token demonstrates strong on-chain governance properties with Aragon OSx, programmatic value accrual via FeeDistributor, and a non-upgradeable token with renounced ownership. Protocol upgrades are controlled by the DAO through the MigrationFactoryOwner—this constitutes ownership.
+The YB token demonstrates strong on-chain governance properties with Aragon governance, programmatic value accrual via FeeDistributor, and a non-upgradeable token with renounced ownership. Protocol upgrades are controlled by the DAO through the MigrationFactoryOwner—this constitutes ownership.
 
-The veYB contract owner (deployer._yb.eth) can modify transfer clearance rules for veYB positions, but this does not constitute censorship—users remain custodians of their locked YB and can always withdraw after lock expiry. YB and veYB are not materially exposed to censorship.
+The veYB contract owner (_yb.eth) can modify transfer clearance rules for veYB positions, but this does not constitute censorship—users remain custodians of their locked YB and can always withdraw after lock expiry. YB and veYB are not materially exposed to censorship.
 
 The Ecosystem Reserve (~63.4M YB) is controlled by an EOA, not the DAO—this is a notable finding for Treasury Ownership evaluation.
 
-The mixed licensing model (AGPL for DAO contracts, proprietary for Factory) and Curve technology dependency are noted concerns.
+The mixed licensing model (AGPL for DAO contracts, proprietary for Factory) is a noted concern.
 
 ---
 
