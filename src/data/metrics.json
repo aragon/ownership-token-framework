@@ -2682,18 +2682,18 @@
         "Metric 1"
       ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "veYB holders control the protocol through Aragon OSx governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (_yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
+      "summary": "veYB holders control the protocol through Aragon governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (_yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "✅",
-          "notes": "veYB holders vote onchain via Aragon OSx DAO. Proposals require **30% participation**, **55% support**, and a **7-day voting period**. Proposals can be executed before the full voting period concludes when mathematical certainty is achieved (thresholds met, remaining votes cannot change outcome). Minimum 1 veYB required to create proposals.",
+          "notes": "veYB holders vote onchain via Aragon governance DAO. Proposals require **30% participation**, **55% support**, and a **7-day voting period**. Proposals can be executed before the full voting period concludes when mathematical certainty is achieved (thresholds met, remaining votes cannot change outcome). Minimum 1 veYB required to create proposals.",
           "evidence": [
             {
               "name": "Governance System",
-              "summary": "Aragon OSx DAO with TokenVoting Plugin. veYB implements standard IVotes interface for Aragon compatibility.",
+              "summary": "Aragon governance DAO with TokenVoting Plugin. veYB implements standard IVotes interface for Aragon compatibility.",
               "urls": [
                 {
                   "name": "DAO Contract",
@@ -3155,14 +3155,14 @@
         "Reference"
       ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Trademark and domain likely controlled by YieldBasis AG (team entity, not tokenholder-controlled). DAO contracts use AGPL v3.0 (open source), but Factory uses proprietary license. 7.5% of supply allocated to Curve licensing fee indicates technology dependency.",
+      "summary": "Aragon has not been able to verify trademark ownership. Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels. DAO contracts use AGPL v3.0 (open source), but Factory uses proprietary license.",
       "criteria": [
         {
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "TBD",
-          "notes": "Aragon has not been able to verify YieldBasis trademark registration status. The trademark is likely owned by YieldBasis AG (Swiss company), which is team-controlled, not tokenholder-controlled.",
+          "notes": "Aragon has not been able to verify trademark ownership.",
           "evidence": []
         },
         {
@@ -3170,7 +3170,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "yieldbasis.com and app.yieldbasis.com are controlled by the team. No evidence of DAO control over primary distribution channels. Smart contracts remain permissionless.",
+          "notes": "Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels.",
           "evidence": [
             {
               "urls": [
@@ -3188,7 +3188,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "**Mixed licensing**: YB.vy, VotingEscrow.vy, GaugeController.vy use AGPL v3.0 (open source). **Factory.vy uses 'Copyright (c) 2025'** (proprietary). 75M YB (7.5%) allocated to Curve licensing indicates technology dependency.",
+          "notes": "**Mixed licensing**: YB.vy, VotingEscrow.vy, GaugeController.vy use AGPL v3.0 (open source). **Factory.vy uses 'Copyright (c) 2025'** (proprietary).",
           "evidence": [
             {
               "name": "License Analysis",
