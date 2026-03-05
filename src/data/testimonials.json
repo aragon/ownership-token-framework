@@ -1,0 +1,21 @@
+{
+  "title": "Evidence-backed due diligence for investors",
+  "testimonials": [
+    {
+      "id": "miles-a16z",
+      "name": "Miles Jennings",
+      "organization": "a16z",
+      "avatar": "/images/testimonials/miles-jennings.png",
+      "url": "https://a16zcrypto.com/",
+      "quote": "Aragon's index provides much needed transparency for network tokens. It shows who still has power over a token after it launches, what that means for users and investors, and what risks come with those hidden dependencies."
+    },
+    {
+      "id": "f5-crypto",
+      "name": "Paul Otto",
+      "organization": "F5 Crypto",
+      "avatar": "/images/testimonials/paul-otto.png",
+      "url": "https://www.f5.xyz/",
+      "quote": "Aragon's OTF asks important questions about a crypto project's token design. For example, who controls where revenues go, and who can change that? It then answers these in detail with direct links to the source. The insights provided by the OTF has become a vital part in our token analysis at F5 Crypto."
+    }
+  ]
+}
