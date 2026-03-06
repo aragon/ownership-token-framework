@@ -2106,6 +2106,1214 @@
       ]
     }
   ],
+  "ondo": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": [
+        "Metric 1"
+      ],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "ONDO governance controls **Flux Finance only** through GovernorBravo with Timelock execution. The DAO does not control OUSG, USDY, Global Markets, or Ondo Chain. The ONDO token contract has a team multisig holding `DEFAULT_ADMIN_ROLE` and `MINTER_ROLE`. Current supply is 10B, but MINTER_ROLE allows additional minting.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "⚠️",
+          "notes": "ONDO holders vote onchain via GovernorBravo with Timelock execution. However, governance scope is limited to **Flux Finance only**. Core Ondo products (OUSG, USDY, Global Markets, Ondo Chain) are not governed by ONDO tokenholders.",
+          "evidence": [
+            {
+              "name": "Governance Parameters",
+              "summary": "Proposal threshold: 100M ONDO (1% of supply)\nQuorum: 1M ONDO (0.01% of supply)\nVoting period: ~3 days (21600 blocks)\nTimelock delay: 1 day (86400 seconds)",
+              "urls": [
+                {
+                  "name": "Governor",
+                  "url": "https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Timelock",
+                  "url": "https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Ondo DAO on Tally",
+                  "url": "https://www.tally.xyz/gov/ondo-dao",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Governance Scope Limitation",
+              "summary": "ONDO governance controls Flux Finance (Comptroller, fToken markets). It does not control:\n\n**OUSG**: ProxyAdmin owner is Management Multisig\n**USDY**: ProxyAdmin owner is Team Multisig\n**Global Markets**: Admin is a contract (see link below)\n**Ondo Chain**: Not launched; no ONDO utility confirmed",
+              "urls": [
+                {
+                  "name": "Comptroller (DAO-controlled)",
+                  "url": "https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG ProxyAdmin owner (Management Multisig)",
+                  "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY ProxyAdmin owner (Team Multisig)",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "⚠️",
+          "notes": "Flux Finance roles are DAO-controlled via Timelock. However, the ONDO token contract and core Ondo products have privileged roles held by team multisigs, not the DAO.",
+          "evidence": [
+            {
+              "name": "DAO-Controlled Roles (Flux Finance)",
+              "summary": "Comptroller admin: Timelock\nfUSDC/fDAI/fUSDT/fFRAX/fOUSG admin: Timelock\n\nThe DAO controls all Flux Finance parameters via governance proposals.",
+              "urls": [
+                {
+                  "name": "Comptroller",
+                  "url": "https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "fUSDC",
+                  "url": "https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readContract",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Team-Controlled Roles (ONDO Token)",
+              "summary": "DEFAULT_ADMIN_ROLE: Team Multisig (4-of-7)\nMINTER_ROLE: Team Multisig (4-of-7)\n\nThe team can grant/revoke roles and mint new ONDO tokens without DAO approval.",
+              "urls": [
+                {
+                  "name": "Team Multisig",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Team-Controlled Roles (Core Products)",
+              "summary": "OUSG DEFAULT_ADMIN_ROLE: Management Multisig\nUSDY ProxyAdmin owner: Team Multisig\nGMTokenManager/USDon DEFAULT_ADMIN_ROLE: Contract (see GMTokenManager link)\n\nMultichain deployments have separate multisigs with varying thresholds.",
+              "urls": [
+                {
+                  "name": "Management Multisig (OUSG)",
+                  "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "⚠️",
+          "notes": "Flux Finance fToken contracts use a delegator pattern controlled by the DAO via Timelock. OUSG and USDY are upgradeable proxies controlled by team multisigs on all chains.",
+          "evidence": [
+            {
+              "name": "Flux Finance (DAO-Controlled)",
+              "summary": "fToken contracts use CErc20Delegator pattern. Admin is Timelock controlled by DAO. The DAO can upgrade implementations via governance.",
+              "urls": [
+                {
+                  "name": "fUSDC (Delegator)",
+                  "url": "https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Flux Finance GitHub",
+                  "url": "https://github.com/flux-finance/contracts",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "OUSG/USDY (Team-Controlled)",
+              "summary": "Ethereum OUSG ProxyAdmin owner: 4-of-7 Multisig\nEthereum USDY ProxyAdmin owner: 4-of-7 Multisig\nPolygon OUSG ProxyAdmin owner: 3-of-6 Multisig\nMantle USDY ProxyAdmin owner: 4-of-7 Multisig\nArbitrum USDY ProxyAdmin owner: 4-of-? Multisig\n\nThe DAO has no upgrade authority over OUSG or USDY on any chain.",
+              "urls": [
+                {
+                  "name": "OUSG Proxy",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Proxy",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Polygon OUSG",
+                  "url": "https://polygonscan.com/address/0xbA11C5effA33c4D6F8f593CFA394241CfE925811",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "⚠️",
+          "notes": "The ONDO token is not upgradeable (no proxy pattern). However, it uses AccessControl with `DEFAULT_ADMIN_ROLE` and `MINTER_ROLE` held by a team multisig, not the DAO.",
+          "evidence": [
+            {
+              "name": "ONDO Token Roles",
+              "summary": "DEFAULT_ADMIN_ROLE holder: Team Multisig (see link)\nMINTER_ROLE holder: Team Multisig (see link)\n\nThe team can grant/revoke roles and mint new tokens. The DAO has no control over these roles.",
+              "urls": [
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Team Multisig",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Contract Source Note",
+              "summary": "The deployed ONDO token uses AccessControl (`supportsInterface(0x7965db0b) = true`). The public ondo-v1 repository shows a simpler Ownable-based contract, indicating the deployed contract differs from the public repo.",
+              "urls": [
+                {
+                  "name": "Public ondo-v1 repo (differs from deployed)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "⚠️",
+          "notes": "ONDO has a fixed total supply of 10B tokens with no scheduled inflation per documentation. However, MINTER_ROLE exists and is held by a team multisig. The supply is not immutably fixed.",
+          "evidence": [
+            {
+              "name": "Current Supply",
+              "summary": "Total supply: 10,000,000,000 ONDO (verified onchain)\nTeam Multisig balance: ~5.9B ONDO (~59% of supply)\n\nDocumentation states \"no scheduled or planned inflation\" but this is a policy statement, not code enforcement. The code allows minting via MINTER_ROLE.",
+              "urls": [
+                {
+                  "name": "ONDO Token totalSupply",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Token Documentation",
+                  "url": "https://docs.ondo.foundation/ondo-token",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "⚠️",
+          "notes": "OUSG and USDY have extensive transfer restrictions (KYC requirements, blocklists, sanctions checks) enforced by Ondo Finance, not the DAO. Flux Finance fTokens use Chainalysis sanctions checking.",
+          "evidence": [
+            {
+              "name": "OUSG Transfer Restrictions",
+              "summary": "KYC required via OndoIDRegistry. Sender, receiver, and msg.sender must all be KYC-approved. The DAO does not control the KYC registry.",
+              "urls": [
+                {
+                  "name": "OUSG KYC check (source)",
+                  "url": "https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/ousg/ousg.sol#L62-L89",
+                  "type": "github"
+                },
+                {
+                  "name": "OndoIDRegistry",
+                  "url": "https://etherscan.io/address/0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "USDY Transfer Restrictions",
+              "summary": "USDY has blocklist, allowlist, and sanctions list checks. Transfers require passing all three checks. These are controlled by company, not DAO.",
+              "urls": [
+                {
+                  "name": "USDY restrictions (source)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L84-L115",
+                  "type": "github"
+                },
+                {
+                  "name": "USDY Contract",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Flux Finance",
+              "summary": "fToken transfers have sanctions checking via Chainalysis oracle. No user blocklist functionality. DAO can pause via governance.",
+              "urls": [
+                {
+                  "name": "Flux Finance Docs",
+                  "url": "https://docs.fluxfinance.com/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "✅",
+          "notes": "The ONDO token has no blocklist, freeze, or seizure functions. Transfers are permissionless. Before January 2024, transfers were disabled except for the owner, but transfers are now enabled.",
+          "evidence": [
+            {
+              "name": "No Censorship Capability",
+              "summary": "`transferAllowed = true` (verified onchain)\nNo blacklist mapping\nNo pause function for transfers\nNo force transfer or seize functions\n\nThe token contract has a `whenTransferAllowed` modifier but transfers are permanently enabled.",
+              "urls": [
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Source code (ondo-v1)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": [
+        "Metric 2"
+      ],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "There is **no active value accrual mechanism** for ONDO tokenholders. Flux Finance reserve factors are 0% across all markets. No protocol fees are collected. USDY/OUSG revenue accrues to Ondo Finance Inc., not tokenholders. No FeeDistributor contract exists.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "⚠️",
+          "notes": "There is no active value accrual mechanism for ONDO tokenholders. Flux Finance reserve factors are 0% across all markets. 100% of interest goes to lenders, 0% to protocol. No fee distribution, staking rewards, or buyback program exists.",
+          "evidence": [
+            {
+              "name": "Zero Reserve Factors",
+              "summary": "fUSDC reserveFactorMantissa: 0\nfDAI reserveFactorMantissa: 0\nfUSDT reserveFactorMantissa: 0\nfFRAX reserveFactorMantissa: 0\nfOUSG reserveFactorMantissa: 0\n\nAll Flux Finance markets have 0% reserve factor. No protocol fees are collected.",
+              "urls": [
+                {
+                  "name": "fUSDC reserveFactorMantissa",
+                  "url": "https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "fDAI reserveFactorMantissa",
+                  "url": "https://etherscan.io/address/0xe2bA8693cE7474900A045757fe0efCa900F6530b#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "_setReserveFactor (source)",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1173",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "OUSG/USDY Revenue",
+              "summary": "Revenue from OUSG and USDY (management fees, yield spreads) accrues to Ondo Finance Inc., not ONDO tokenholders. There is no programmatic distribution to tokenholders.",
+              "urls": [
+                {
+                  "name": "Ondo Finance Docs",
+                  "url": "https://docs.ondo.finance/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "TBD",
+          "notes": "Aragon has not been able to identify a specific DAO treasury address. Flux Finance reserve factors are 0%, so no reserves accumulate. The Timelock holds no significant assets. No FeeDistributor or Treasury contract identified.",
+          "evidence": [
+            {
+              "name": "No Treasury Identified",
+              "summary": "The Timelock holds no significant assets. With 0% reserve factors, no reserves accumulate in fToken contracts.\n\nFeeDistributor search methodology:\n1. Searched Flux Finance GitHub for fee-related contracts: none found\n2. Reviewed Timelock transaction history: no fee distribution interactions\n3. Checked Ondo DAO proposals on Tally: no fee distribution proposals\n4. Searched official docs: no mention of fee distribution",
+              "urls": [
+                {
+                  "name": "Timelock",
+                  "url": "https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Ondo DAO Proposals",
+                  "url": "https://www.tally.xyz/gov/ondo-dao",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "✅",
+          "notes": "ONDO holders can change Flux Finance fee parameters via governance. The Comptroller admin is the Timelock, and `_setReserveFactor()` can be called by admin. However, the current setting is 0% and no FeeDistributor exists to route collected fees.",
+          "evidence": [
+            {
+              "name": "Fee Parameter Control",
+              "summary": "Comptroller admin = Timelock (DAO-controlled)\n`_setReserveFactor()` can be called by admin\nDAO can propose to set non-zero reserve factors\n\nHowever, even with non-zero reserve factors, there is no FeeDistributor contract to distribute collected fees to tokenholders. Reserves would accumulate in fToken contracts, not flow to ONDO holders.",
+              "urls": [
+                {
+                  "name": "Comptroller",
+                  "url": "https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "CTokenModified _setReserveFactor",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1173",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "tags": [
+            "Reference"
+          ],
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "⚠️",
+          "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG management fees and yield spreads. This value does not flow to ONDO tokenholders.",
+          "evidence": [
+            {
+              "name": "Company Revenue",
+              "summary": "USDY: Backed by short-term US Treasuries. Yield passed to holders. Ondo Finance retains the spread between treasury yields and USDY yield.\n\nOUSG: Similar structure with management fees retained by company.\n\nGlobal Markets: Tokenized stocks with fees and spreads accruing to company.\n\nNone of this revenue flows to ONDO tokenholders.",
+              "urls": [
+                {
+                  "name": "USDY Documentation",
+                  "url": "https://docs.ondo.finance/",
+                  "type": "docs"
+                },
+                {
+                  "name": "OUSG Documentation",
+                  "url": "https://docs.ondo.finance/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": [
+        "Metric 3"
+      ],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "The ONDO token is verified on Etherscan. Flux Finance contracts are verified and match the public GitHub repository. OUSG/USDY contracts are verified. Note: The deployed ONDO token differs from the public ondo-v1 repository.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "✅",
+          "notes": "The ONDO token contract is verified on Etherscan with source code available. The deployed contract uses AccessControl, which differs from the simpler Ownable-based contract in the public ondo-v1 repository.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "ONDO Token (Etherscan verified)",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Public ondo-v1 repo (differs from deployed)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "✅",
+          "notes": "Flux Finance contracts are verified on Etherscan and match the public GitHub repository. OUSG and USDY contracts are verified with audit code available.",
+          "evidence": [
+            {
+              "name": "Flux Finance",
+              "urls": [
+                {
+                  "name": "Comptroller",
+                  "url": "https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Governor",
+                  "url": "https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Flux Finance GitHub",
+                  "url": "https://github.com/flux-finance/contracts",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "OUSG/USDY",
+              "urls": [
+                {
+                  "name": "OUSG",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY GitHub",
+                  "url": "https://github.com/ondoprotocol/usdy",
+                  "type": "github"
+                },
+                {
+                  "name": "Audit code (Code4rena)",
+                  "url": "https://github.com/code-423n4/2024-03-ondo-finance",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": [
+        "Metric 4"
+      ],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "~59% of ONDO supply is held by a single team multisig. This gives the team effective control over governance. Vesting schedules exist per documentation but specific addresses are not publicly verifiable onchain.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "⚠️",
+          "notes": "~59% of ONDO supply is held by a single team multisig. This gives the team unilateral control over governance. The team can pass any proposal and block any proposal.",
+          "evidence": [
+            {
+              "name": "Team Holdings",
+              "summary": "Team Multisig balance: ~5.9B ONDO (~59% of supply)\nTotal supply: 10B ONDO\nMultisig config: 4-of-7\n\nThis multisig also holds DEFAULT_ADMIN_ROLE and MINTER_ROLE on the ONDO token. \"Decentralized governance\" is effectively team governance.",
+              "urls": [
+                {
+                  "name": "Team Multisig holdings",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "ONDO Token totalSupply",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "⚠️",
+          "notes": "Per documentation, unlock schedules exist for team and investors. Aragon has not been able to verify specific vesting contract addresses from onchain data.",
+          "evidence": [
+            {
+              "name": "Documented Schedule",
+              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, 18-month release\nCoinList Tranche 2 (~1.7%): 1-year lock, 6-month release\nSeed Investors (<7%): 1-year cliff, 48-month release\nSeries A (<7%): 1-year cliff, 48-month release\nCore Team: 5-year vesting\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
+              "urls": [
+                {
+                  "name": "Token Documentation",
+                  "url": "https://docs.ondo.foundation/ondo-token",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": [
+        "Reference"
+      ],
+      "about": "Economically material assets and obligations often sit offchain, outside the custody and direct enforcement of a token, while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "Aragon has not been able to verify trademark ownership for Ondo. Primary distribution channels are controlled by Ondo Finance Inc. Flux Finance code is open source (BSD-3-Clause); OUSG/USDY code is BUSL-1.1 licensed.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "Aragon has not been able to verify USPTO registration for \"Ondo\" or \"Ondo Finance\" trademark.",
+          "evidence": []
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "⚠️",
+          "notes": "Ondo Finance Inc. controls primary distribution channels. ondo.finance and fluxfinance.com are operated by the company. No DAO control over frontend access.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Ondo Finance",
+                  "url": "https://ondo.finance/",
+                  "type": "docs"
+                },
+                {
+                  "name": "Flux Finance",
+                  "url": "https://fluxfinance.com/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "Flux Finance code is open source (BSD-3-Clause license, Compound V2 fork). OUSG/USDY code is BUSL-1.1 licensed. Aragon has not verified if license holder is tokenholder-controlled.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Flux Finance LICENSE (BSD-3-Clause)",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/LICENSE",
+                  "type": "github"
+                },
+                {
+                  "name": "USDY License Header (BUSL-1.1)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L1",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sky": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": [
+        "Metric 1"
+      ],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "SKY holders exercise binding governance through an approval-based voting workflow with a 24-hour timelock before any changes take effect. The token is non-upgradeable with no censorship capabilities. All privileged roles trace back to governance.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "✅",
+          "notes": "SKY holders vote to elect \"spells\" (upgrade contracts). The winning spell must wait 24 hours before it can execute changes. This creates binding, verifiable onchain governance.",
+          "evidence": [
+            {
+              "name": "Governance Workflow",
+              "summary": "How votes become protocol changes:\n\n1. Lock SKY tokens in voting contract\n2. Vote for a \"spell\" (upgrade contract)\n3. Winning spell schedules execution via plot()\n4. 24-hour delay enforced (eta >= now + 86400s)\n5. After delay, anyone can trigger exec()\n\nThe plot() function enforces the delay — no spell can execute without waiting.",
+              "urls": [
+                {
+                  "name": "Voting Contract",
+                  "url": "https://etherscan.io/address/0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "plot() delay enforcement (L111-116)",
+                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L111-L116",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Timelock Contract",
+              "summary": "All governance actions execute through a timelock (Pause Proxy). The 24-hour delay gives users time to exit before changes take effect.",
+              "urls": [
+                {
+                  "name": "Pause Proxy (Etherscan)",
+                  "url": "https://etherscan.io/address/0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "exec() function (L124-136)",
+                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L124-L136",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "✅",
+          "notes": "All privileged roles trace back to SKY governance. A single \"Pause Proxy\" contract holds admin rights on all core contracts. Only governance-approved spells can act through it.",
+          "evidence": [
+            {
+              "name": "Core Contracts Controlled by Governance",
+              "summary": "The Pause Proxy holds admin rights on all key contracts. Verify by calling wards(0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB) on each contract — returns 1 if authorized.",
+              "urls": [
+                {
+                  "name": "Vat wards() — verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Vow wards() — verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "SKY wards() — verify Pause Proxy",
+                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Emergency Controls",
+              "summary": "\"Mom\" contracts can adjust parameters without the 24hr delay for emergencies. These are governance-controlled via the authority pattern.",
+              "urls": [
+                {
+                  "name": "Mom authority pattern (source)",
+                  "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L55",
+                  "type": "github"
+                },
+                {
+                  "name": "OSM_MOM — verify authority()",
+                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "✅",
+          "notes": "Core accounting contracts are immutable — their code cannot change. Newer stablecoin contracts (USDS, sUSDS) can be upgraded, but only through governance.",
+          "evidence": [
+            {
+              "name": "Immutable Core",
+              "summary": "Core accounting contracts have no upgrade mechanism. The deployed code is permanent.",
+              "urls": [
+                {
+                  "name": "Vat source code",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vat.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "SKY token source code",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Upgradeable Stablecoins",
+              "summary": "USDS and sUSDS use proxy contracts. Upgrades require governance approval through the standard voting process.",
+              "urls": [
+                {
+                  "name": "USDS upgrade authorization",
+                  "url": "https://github.com/sky-ecosystem/usds/blob/master/src/Usds.sol#L73",
+                  "type": "github"
+                },
+                {
+                  "name": "sUSDS source code",
+                  "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "✅",
+          "notes": "The SKY token cannot be upgraded. Its code is permanent with no admin backdoors.",
+          "evidence": [
+            {
+              "name": "Non-Upgradeable Token",
+              "summary": "Standard ERC-20 contract with no proxy pattern. The deployed code cannot be changed.",
+              "urls": [
+                {
+                  "name": "SKY Token Contract",
+                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "✅",
+          "notes": "Only governance can mint new SKY. The primary source is conversion from legacy MKR tokens at a fixed 24,000:1 ratio. Anyone can burn their own tokens.",
+          "evidence": [
+            {
+              "name": "Minting Restricted to Governance",
+              "summary": "The mint() function requires authorization. Only governance-controlled contracts can call it.",
+              "urls": [
+                {
+                  "name": "mint() function (L146-154)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L146-L154",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "MKR Conversion",
+              "summary": "Legacy MKR tokens convert to SKY at a fixed 24,000:1 ratio. The rate is immutable in the contract.",
+              "urls": [
+                {
+                  "name": "rate() returns 24000",
+                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Immutable rate declaration",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/MkrSky.sol#L36",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "✅",
+          "notes": "No admin can arbitrarily pause the protocol or restrict user access. Emergency shutdown exists but requires burning a significant amount of tokens.",
+          "evidence": [
+            {
+              "name": "Emergency Shutdown",
+              "summary": "The only way to \"pause\" the protocol is Emergency Shutdown, which requires burning tokens past a threshold. This is a nuclear option, not an admin switch.",
+              "urls": [
+                {
+                  "name": "ESM source code",
+                  "url": "https://github.com/sky-ecosystem/esm/blob/master/src/ESM.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "ESM contract on Etherscan",
+                  "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "No Arbitrary Pause",
+              "summary": "Core contracts have no pause function. Users can always interact with the protocol.",
+              "urls": []
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "✅",
+          "notes": "SKY has no blacklist, freeze, or admin-controlled transfer blocking. Tokens cannot be seized or frozen by anyone.",
+          "evidence": [
+            {
+              "name": "No Censorship Functions",
+              "summary": "The contract has no blacklist, freeze, or pause functions. Transfer functions are standard ERC-20 with no admin intervention points.",
+              "urls": [
+                {
+                  "name": "Transfer Functions (L96-135)",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L96-L135",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": [
+        "Metric 2"
+      ],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "Protocol revenue flows to SKY holders through automated buybacks. When the protocol earns fees, it uses them to buy SKY on the open market. All fee parameters are governance-controlled.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "✅",
+          "notes": "A portion of protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
+          "evidence": [
+            {
+              "name": "Smart Burn Engine",
+              "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, the Splitter routes fees to the Flapper, which purchases SKY on UniswapV2.",
+              "urls": [
+                {
+                  "name": "Splitter contract",
+                  "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Flapper (buyback executor)",
+                  "url": "https://etherscan.io/address/0x374D9c3d5134052Bc558F432Afa1df6575f07407#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Flapper source code",
+                  "url": "https://github.com/sky-ecosystem/dss-flappers/blob/master/src/FlapperUniV2.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "Smart Burn Engine Dashboard",
+                  "url": "https://info.sky.money/smart-burn-engine",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Revenue Flow",
+              "summary": "Protocol revenue flows: Stability Fees → Vow (surplus) → Splitter → Flapper → SKY buybacks.\n\nRevenue sources:\n- Interest on loans (stability fees)\n- Liquidation penalties\n- Stablecoin swap fees (PSM)",
+              "urls": [
+                {
+                  "name": "Stability fee accrual",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L122-L128",
+                  "type": "github"
+                },
+                {
+                  "name": "Surplus routing to flapper",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L148-L152",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "✅",
+          "notes": "All treasury assets are held onchain and controlled by governance. There is no offchain treasury or multi-sig.",
+          "evidence": [
+            {
+              "name": "Onchain Treasury",
+              "summary": "Protocol surplus is held in the Vow contract. Only governance can access these funds.",
+              "urls": [
+                {
+                  "name": "Treasury Contract",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "✅",
+          "notes": "Governance controls all fee rates and revenue parameters. SKY holders decide how much the protocol charges and how revenue is distributed.",
+          "evidence": [
+            {
+              "name": "Fee Rate Control",
+              "summary": "Governance sets stability fee rates via the Jug contract. Each collateral type has its own rate, updated through governance spells.",
+              "urls": [
+                {
+                  "name": "Jug fee configuration",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L107-L111",
+                  "type": "github"
+                },
+                {
+                  "name": "Jug contract",
+                  "url": "https://etherscan.io/address/0x19c0976f590D67707E62397C87829d896Dc0f1F1#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Surplus Buffer Control",
+              "summary": "The surplus buffer (\"hump\") determines when buybacks trigger. Governance can adjust this threshold to control the pace of buybacks.",
+              "urls": [
+                {
+                  "name": "Vow hump configuration",
+                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L96-L103",
+                  "type": "github"
+                },
+                {
+                  "name": "Vow contract — read hump",
+                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "tags": [
+            "Reference"
+          ],
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "TBD",
+          "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is an independent non-profit that does not distribute profits.",
+          "evidence": [
+            {
+              "name": "Foundation Independence",
+              "summary": "The DAI Foundation operates independently under Danish law. It holds trademarks but does not distribute value to tokenholders.",
+              "urls": [
+                {
+                  "name": "Foundation Mandate",
+                  "url": "https://daifoundation.org/mandate",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": [
+        "Metric 3"
+      ],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "All code is open source (AGPL-3.0) and verified on Etherscan. Anyone can audit the contracts.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "✅",
+          "notes": "SKY token source code is open source and verified on Etherscan. Anyone can audit the code.",
+          "evidence": [
+            {
+              "name": "Verified Source",
+              "summary": "Source code matches deployed bytecode. Licensed under AGPL-3.0.",
+              "urls": [
+                {
+                  "name": "Source Code",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "Verified on Etherscan",
+                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "✅",
+          "notes": "Every protocol contract is open source. A \"chainlog\" provides a registry of all deployed contract addresses.",
+          "evidence": [
+            {
+              "name": "Open Source Repositories",
+              "summary": "All protocol code is open source under AGPL-3.0. Core contracts, governance, and stablecoins all have public repositories.",
+              "urls": [
+                {
+                  "name": "Core Protocol",
+                  "url": "https://github.com/sky-ecosystem/dss",
+                  "type": "github"
+                },
+                {
+                  "name": "Contract Registry",
+                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": [
+        "Metric 4"
+      ],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "Aragon has not been able to verify the concentration of holdings.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "⚠️",
+          "notes": "Aragon has not been able to verify the concentration of holdings.",
+          "evidence": []
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "TBD",
+          "notes": "Vesting contracts exist but specific unlock schedules were not enumerated in this analysis.",
+          "evidence": [
+            {
+              "name": "Vesting Contracts",
+              "summary": "Vesting contracts exist for token distributions. Governance controls these schedules.",
+              "urls": [
+                {
+                  "name": "Vest Contract",
+                  "url": "https://etherscan.io/address/0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": [
+        "Reference"
+      ],
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "Maker and DAI trademarks are held by an independent foundation, not by SKY tokenholders. All code is open source (AGPL-3.0).",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "⚠️",
+          "notes": "Maker and DAI trademarks are held by the DAI Foundation, an independent Danish non-profit. This entity operates outside token governance.",
+          "evidence": [
+            {
+              "name": "DAI Foundation",
+              "summary": "Holds Maker and DAI trademarks since 2020. Operates under Danish law, independent of token governance.",
+              "urls": [
+                {
+                  "name": "Foundation Website",
+                  "url": "https://daifoundation.org",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "TBD",
+          "notes": "Domain ownership not verified. Open source frontends exist that anyone can deploy.",
+          "evidence": [
+            {
+              "name": "Open Source Frontends",
+              "summary": "Multiple open source frontends exist. Anyone can deploy their own interface.",
+              "urls": [
+                {
+                  "name": "Governance Portal Source",
+                  "url": "https://github.com/sky-ecosystem/governance-portal-v2",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "✅",
+          "notes": "All code is AGPL-3.0 licensed. Anyone can fork and deploy the protocol. The license requires source disclosure.",
+          "evidence": [
+            {
+              "name": "AGPL-3.0 License",
+              "summary": "Copyleft license. Anyone can fork and deploy, but must share source code of modifications.",
+              "urls": [
+                {
+                  "name": "License File",
+                  "url": "https://github.com/sky-ecosystem/sky/blob/master/LICENSE",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "uni": [
     {
       "id": "onchain-ctrl",
@@ -3203,570 +4411,6 @@
                   "name": "Curve Licensing Vesting",
                   "url": "https://etherscan.io/address/0x36e36D5D588D480A15A40C7668Be52D36eb206A8",
                   "type": "explorer"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "sky": [
-    {
-      "id": "onchain-ctrl",
-      "name": "Onchain Control",
-      "tags": [
-        "Metric 1"
-      ],
-      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "SKY holders exercise binding governance through an approval-based voting workflow with a 24-hour timelock before any changes take effect. The token is non-upgradeable with no censorship capabilities. All privileged roles trace back to governance.",
-      "criteria": [
-        {
-          "id": "onchain-ctrl__governance-workflow",
-          "name": "Onchain Governance Workflow",
-          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "✅",
-          "notes": "SKY holders vote to elect \"spells\" (upgrade contracts). The winning spell must wait 24 hours before it can execute changes. This creates binding, verifiable onchain governance.",
-          "evidence": [
-            {
-              "name": "Governance Workflow",
-              "summary": "How votes become protocol changes:\n\n1. Lock SKY tokens in voting contract\n2. Vote for a \"spell\" (upgrade contract)\n3. Winning spell schedules execution via plot()\n4. 24-hour delay enforced (eta >= now + 86400s)\n5. After delay, anyone can trigger exec()\n\nThe plot() function enforces the delay — no spell can execute without waiting.",
-              "urls": [
-                {
-                  "name": "Voting Contract",
-                  "url": "https://etherscan.io/address/0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "plot() delay enforcement (L111-116)",
-                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L111-L116",
-                  "type": "github"
-                }
-              ]
-            },
-            {
-              "name": "Timelock Contract",
-              "summary": "All governance actions execute through a timelock (Pause Proxy). The 24-hour delay gives users time to exit before changes take effect.",
-              "urls": [
-                {
-                  "name": "Pause Proxy (Etherscan)",
-                  "url": "https://etherscan.io/address/0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "exec() function (L124-136)",
-                  "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L124-L136",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__role-accountability",
-          "name": "Role Accountability",
-          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "✅",
-          "notes": "All privileged roles trace back to SKY governance. A single \"Pause Proxy\" contract holds admin rights on all core contracts. Only governance-approved spells can act through it.",
-          "evidence": [
-            {
-              "name": "Core Contracts Controlled by Governance",
-              "summary": "The Pause Proxy holds admin rights on all key contracts. Verify by calling wards(0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB) on each contract — returns 1 if authorized.",
-              "urls": [
-                {
-                  "name": "Vat wards() — verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract",
-                  "type": "explorer"
-                },
-                {
-                  "name": "Vow wards() — verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
-                  "type": "explorer"
-                },
-                {
-                  "name": "SKY wards() — verify Pause Proxy",
-                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract",
-                  "type": "explorer"
-                }
-              ]
-            },
-            {
-              "name": "Emergency Controls",
-              "summary": "\"Mom\" contracts can adjust parameters without the 24hr delay for emergencies. These are governance-controlled via the authority pattern.",
-              "urls": [
-                {
-                  "name": "Mom authority pattern (source)",
-                  "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L55",
-                  "type": "github"
-                },
-                {
-                  "name": "OSM_MOM — verify authority()",
-                  "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__protocol-upgrade",
-          "name": "Protocol Upgrade Authority",
-          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "✅",
-          "notes": "Core accounting contracts are immutable — their code cannot change. Newer stablecoin contracts (USDS, sUSDS) can be upgraded, but only through governance.",
-          "evidence": [
-            {
-              "name": "Immutable Core",
-              "summary": "Core accounting contracts have no upgrade mechanism. The deployed code is permanent.",
-              "urls": [
-                {
-                  "name": "Vat source code",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vat.sol",
-                  "type": "github"
-                },
-                {
-                  "name": "SKY token source code",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
-                  "type": "github"
-                }
-              ]
-            },
-            {
-              "name": "Upgradeable Stablecoins",
-              "summary": "USDS and sUSDS use proxy contracts. Upgrades require governance approval through the standard voting process.",
-              "urls": [
-                {
-                  "name": "USDS upgrade authorization",
-                  "url": "https://github.com/sky-ecosystem/usds/blob/master/src/Usds.sol#L73",
-                  "type": "github"
-                },
-                {
-                  "name": "sUSDS source code",
-                  "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__token-upgrade",
-          "name": "Token Upgrade Authority",
-          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "✅",
-          "notes": "The SKY token cannot be upgraded. Its code is permanent with no admin backdoors.",
-          "evidence": [
-            {
-              "name": "Non-Upgradeable Token",
-              "summary": "Standard ERC-20 contract with no proxy pattern. The deployed code cannot be changed.",
-              "urls": [
-                {
-                  "name": "SKY Token Contract",
-                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__supply",
-          "name": "Supply Control",
-          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "✅",
-          "notes": "Only governance can mint new SKY. The primary source is conversion from legacy MKR tokens at a fixed 24,000:1 ratio. Anyone can burn their own tokens.",
-          "evidence": [
-            {
-              "name": "Minting Restricted to Governance",
-              "summary": "The mint() function requires authorization. Only governance-controlled contracts can call it.",
-              "urls": [
-                {
-                  "name": "mint() function (L146-154)",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L146-L154",
-                  "type": "github"
-                }
-              ]
-            },
-            {
-              "name": "MKR Conversion",
-              "summary": "Legacy MKR tokens convert to SKY at a fixed 24,000:1 ratio. The rate is immutable in the contract.",
-              "urls": [
-                {
-                  "name": "rate() returns 24000",
-                  "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract",
-                  "type": "explorer"
-                },
-                {
-                  "name": "Immutable rate declaration",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/MkrSky.sol#L36",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__access-gating",
-          "name": "Privileged Access Gating",
-          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "✅",
-          "notes": "No admin can arbitrarily pause the protocol or restrict user access. Emergency shutdown exists but requires burning a significant amount of tokens.",
-          "evidence": [
-            {
-              "name": "Emergency Shutdown",
-              "summary": "The only way to \"pause\" the protocol is Emergency Shutdown, which requires burning tokens past a threshold. This is a nuclear option, not an admin switch.",
-              "urls": [
-                {
-                  "name": "ESM source code",
-                  "url": "https://github.com/sky-ecosystem/esm/blob/master/src/ESM.sol",
-                  "type": "github"
-                },
-                {
-                  "name": "ESM contract on Etherscan",
-                  "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
-                  "type": "explorer"
-                }
-              ]
-            },
-            {
-              "name": "No Arbitrary Pause",
-              "summary": "Core contracts have no pause function. Users can always interact with the protocol.",
-              "urls": []
-            }
-          ]
-        },
-        {
-          "id": "onchain-ctrl__censorship",
-          "name": "Token Censorship",
-          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "✅",
-          "notes": "SKY has no blacklist, freeze, or admin-controlled transfer blocking. Tokens cannot be seized or frozen by anyone.",
-          "evidence": [
-            {
-              "name": "No Censorship Functions",
-              "summary": "The contract has no blacklist, freeze, or pause functions. Transfer functions are standard ERC-20 with no admin intervention points.",
-              "urls": [
-                {
-                  "name": "Transfer Functions (L96-135)",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L96-L135",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "val-accrual",
-      "name": "Value Accrual",
-      "tags": [
-        "Metric 2"
-      ],
-      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "Protocol revenue flows to SKY holders through automated buybacks. When the protocol earns fees, it uses them to buy SKY on the open market. All fee parameters are governance-controlled.",
-      "criteria": [
-        {
-          "id": "val-accrual__active",
-          "name": "Accrual Active",
-          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "✅",
-          "notes": "A portion of protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
-          "evidence": [
-            {
-              "name": "Smart Burn Engine",
-              "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, the Splitter routes fees to the Flapper, which purchases SKY on UniswapV2.",
-              "urls": [
-                {
-                  "name": "Splitter contract",
-                  "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "Flapper (buyback executor)",
-                  "url": "https://etherscan.io/address/0x374D9c3d5134052Bc558F432Afa1df6575f07407#code",
-                  "type": "explorer"
-                },
-                {
-                  "name": "Flapper source code",
-                  "url": "https://github.com/sky-ecosystem/dss-flappers/blob/master/src/FlapperUniV2.sol",
-                  "type": "github"
-                },
-                {
-                  "name": "Smart Burn Engine Dashboard",
-                  "url": "https://info.sky.money/smart-burn-engine",
-                  "type": "docs"
-                }
-              ]
-            },
-            {
-              "name": "Revenue Flow",
-              "summary": "Protocol revenue flows: Stability Fees → Vow (surplus) → Splitter → Flapper → SKY buybacks.\n\nRevenue sources:\n- Interest on loans (stability fees)\n- Liquidation penalties\n- Stablecoin swap fees (PSM)",
-              "urls": [
-                {
-                  "name": "Stability fee accrual",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L122-L128",
-                  "type": "github"
-                },
-                {
-                  "name": "Surplus routing to flapper",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L148-L152",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "val-accrual__treasury",
-          "name": "Treasury Ownership",
-          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "✅",
-          "notes": "All treasury assets are held onchain and controlled by governance. There is no offchain treasury or multi-sig.",
-          "evidence": [
-            {
-              "name": "Onchain Treasury",
-              "summary": "Protocol surplus is held in the Vow contract. Only governance can access these funds.",
-              "urls": [
-                {
-                  "name": "Treasury Contract",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "val-accrual__mechanism",
-          "name": "Accrual Mechanism Control",
-          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "✅",
-          "notes": "Governance controls all fee rates and revenue parameters. SKY holders decide how much the protocol charges and how revenue is distributed.",
-          "evidence": [
-            {
-              "name": "Fee Rate Control",
-              "summary": "Governance sets stability fee rates via the Jug contract. Each collateral type has its own rate, updated through governance spells.",
-              "urls": [
-                {
-                  "name": "Jug fee configuration",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L107-L111",
-                  "type": "github"
-                },
-                {
-                  "name": "Jug contract",
-                  "url": "https://etherscan.io/address/0x19c0976f590D67707E62397C87829d896Dc0f1F1#code",
-                  "type": "explorer"
-                }
-              ]
-            },
-            {
-              "name": "Surplus Buffer Control",
-              "summary": "The surplus buffer (\"hump\") determines when buybacks trigger. Governance can adjust this threshold to control the pace of buybacks.",
-              "urls": [
-                {
-                  "name": "Vow hump configuration",
-                  "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L96-L103",
-                  "type": "github"
-                },
-                {
-                  "name": "Vow contract — read hump",
-                  "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "val-accrual__offchain",
-          "name": "Offchain Value Accrual",
-          "tags": [
-            "Reference"
-          ],
-          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
-          "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is an independent non-profit that does not distribute profits.",
-          "evidence": [
-            {
-              "name": "Foundation Independence",
-              "summary": "The DAI Foundation operates independently under Danish law. It holds trademarks but does not distribute value to tokenholders.",
-              "urls": [
-                {
-                  "name": "Foundation Mandate",
-                  "url": "https://daifoundation.org/mandate",
-                  "type": "docs"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "verifiability",
-      "name": "Verifiability",
-      "tags": [
-        "Metric 3"
-      ],
-      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-      "summary": "All code is open source (AGPL-3.0) and verified on Etherscan. Anyone can audit the contracts.",
-      "criteria": [
-        {
-          "id": "verifiability__token-source",
-          "name": "Token Contract Source Verification",
-          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "✅",
-          "notes": "SKY token source code is open source and verified on Etherscan. Anyone can audit the code.",
-          "evidence": [
-            {
-              "name": "Verified Source",
-              "summary": "Source code matches deployed bytecode. Licensed under AGPL-3.0.",
-              "urls": [
-                {
-                  "name": "Source Code",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
-                  "type": "github"
-                },
-                {
-                  "name": "Verified on Etherscan",
-                  "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "verifiability__protocol-source",
-          "name": "Protocol Component Source Verification",
-          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "✅",
-          "notes": "Every protocol contract is open source. A \"chainlog\" provides a registry of all deployed contract addresses.",
-          "evidence": [
-            {
-              "name": "Open Source Repositories",
-              "summary": "All protocol code is open source under AGPL-3.0. Core contracts, governance, and stablecoins all have public repositories.",
-              "urls": [
-                {
-                  "name": "Core Protocol",
-                  "url": "https://github.com/sky-ecosystem/dss",
-                  "type": "github"
-                },
-                {
-                  "name": "Contract Registry",
-                  "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "distribution",
-      "name": "Token Distribution",
-      "tags": [
-        "Metric 4"
-      ],
-      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
-      "summary": "Aragon has not been able to verify the concentration of holdings.",
-      "criteria": [
-        {
-          "id": "distribution__concentration",
-          "name": "Ownership Concentration",
-          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "⚠️",
-          "notes": "Aragon has not been able to verify the concentration of holdings.",
-          "evidence": []
-        },
-        {
-          "id": "distribution__supply-schedule",
-          "name": "Future Token Unlocks",
-          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
-          "notes": "Vesting contracts exist but specific unlock schedules were not enumerated in this analysis.",
-          "evidence": [
-            {
-              "name": "Vesting Contracts",
-              "summary": "Vesting contracts exist for token distributions. Governance controls these schedules.",
-              "urls": [
-                {
-                  "name": "Vest Contract",
-                  "url": "https://etherscan.io/address/0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6#code",
-                  "type": "explorer"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "offchain",
-      "name": "Offchain Dependencies",
-      "tags": [
-        "Reference"
-      ],
-      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Maker and DAI trademarks are held by an independent foundation, not by SKY tokenholders. All code is open source (AGPL-3.0).",
-      "criteria": [
-        {
-          "id": "offchain__trademark",
-          "name": "Trademark",
-          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "⚠️",
-          "notes": "Maker and DAI trademarks are held by the DAI Foundation, an independent Danish non-profit. This entity operates outside token governance.",
-          "evidence": [
-            {
-              "name": "DAI Foundation",
-              "summary": "Holds Maker and DAI trademarks since 2020. Operates under Danish law, independent of token governance.",
-              "urls": [
-                {
-                  "name": "Foundation Website",
-                  "url": "https://daifoundation.org",
-                  "type": "docs"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "offchain__distribution",
-          "name": "Distribution",
-          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
-          "notes": "Domain ownership not verified. Open source frontends exist that anyone can deploy.",
-          "evidence": [
-            {
-              "name": "Open Source Frontends",
-              "summary": "Multiple open source frontends exist. Anyone can deploy their own interface.",
-              "urls": [
-                {
-                  "name": "Governance Portal Source",
-                  "url": "https://github.com/sky-ecosystem/governance-portal-v2",
-                  "type": "github"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "offchain__licensing",
-          "name": "Licensing",
-          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "✅",
-          "notes": "All code is AGPL-3.0 licensed. Anyone can fork and deploy the protocol. The license requires source disclosure.",
-          "evidence": [
-            {
-              "name": "AGPL-3.0 License",
-              "summary": "Copyleft license. Anyone can fork and deploy, but must share source code of modifications.",
-              "urls": [
-                {
-                  "name": "License File",
-                  "url": "https://github.com/sky-ecosystem/sky/blob/master/LICENSE",
-                  "type": "github"
                 }
               ]
             }
