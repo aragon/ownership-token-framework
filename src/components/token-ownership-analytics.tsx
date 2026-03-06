@@ -17,6 +17,7 @@ import { useState } from "react"
 import { HeroHeader } from "@/components/hero-header"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { PageWrapper } from "@/components/page-wrapper"
+import { TestimonialsSection } from "@/components/testimonials-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Container } from "@/components/ui/container"
 import {
@@ -216,7 +217,7 @@ function TokenDataTable({ data }: { data: Token[] }) {
   })
 
   return (
-    <div className="space-y-4 pt-6 pb-10 md:pt-12 md:pb-20 grow">
+    <div className="space-y-4 grow pt-6 pb-6 md:pt-12 md:pb-10">
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
@@ -366,6 +367,8 @@ export default function TokenOwnershipAnalytics() {
           <TokenDataTable data={tokens} />
         </Container>
       </div>
+
+      <TestimonialsSection />
 
       <NewsletterSignup />
     </PageWrapper>
