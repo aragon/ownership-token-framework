@@ -2121,12 +2121,22 @@
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "⚠️",
-          "notes": "ONDO holders vote onchain via GovernorBravo with Timelock execution. However, governance scope is limited to **Flux Finance only**. Core Ondo products (OUSG, USDY, Global Markets, Ondo Chain) are not governed by ONDO tokenholders.",
+          "notes": "ONDO holders participate in a two-stage governance process: forum discussion followed by onchain voting via GovernorBravo. However, governance scope is limited to **Flux Finance only**. Core Ondo products (OUSG, USDY, Global Markets, Ondo Chain) are not governed by ONDO tokenholders.",
           "evidence": [
             {
-              "name": "Governance Parameters",
-              "summary": "Proposal threshold: 100M ONDO (1% of supply)\nQuorum: 1M ONDO (0.01% of supply)\nVoting period: ~3 days (21600 blocks)\nTimelock delay: 1 day (86400 seconds)",
+              "name": "Two-Stage Governance Process",
+              "summary": "1. **Forum Discussion**: Proposals posted on Flux Finance Governance Forum\n2. **Onchain Vote**: Submitted via Tally for binding votes\n\nParameters:\nProposal threshold: 100M ONDO (1% of supply)\nQuorum: 1M ONDO (0.01% of supply)\nVoting period: ~3 days (21600 blocks)\nTimelock delay: 1 day (86400 seconds)",
               "urls": [
+                {
+                  "name": "Flux Finance Governance Forum",
+                  "url": "https://forum.fluxfinance.com/",
+                  "type": "docs"
+                },
+                {
+                  "name": "Ondo DAO on Tally",
+                  "url": "https://www.tally.xyz/gov/ondo-dao",
+                  "type": "docs"
+                },
                 {
                   "name": "Governor",
                   "url": "https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A",
@@ -2136,11 +2146,6 @@
                   "name": "Timelock",
                   "url": "https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c",
                   "type": "explorer"
-                },
-                {
-                  "name": "Ondo DAO on Tally",
-                  "url": "https://www.tally.xyz/gov/ondo-dao",
-                  "type": "docs"
                 }
               ]
             },
@@ -2208,7 +2213,7 @@
             },
             {
               "name": "Team-Controlled Roles (Core Products)",
-              "summary": "OUSG DEFAULT_ADMIN_ROLE: Management Multisig\nUSDY ProxyAdmin owner: Team Multisig\nGMTokenManager/USDon DEFAULT_ADMIN_ROLE: Contract (see GMTokenManager link)\n\nMultichain deployments have separate multisigs with varying thresholds.",
+              "summary": "OUSG DEFAULT_ADMIN_ROLE: Management Multisig\nUSDY ProxyAdmin owner: Team Multisig\nGMTokenManager/USDon DEFAULT_ADMIN_ROLE: TimelockController (2-hour delay)\n\nMultichain deployments have separate multisigs with varying thresholds.",
               "urls": [
                 {
                   "name": "Management Multisig (OUSG)",
@@ -2218,6 +2223,32 @@
                 {
                   "name": "GMTokenManager",
                   "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Global Markets TimelockController Roles",
+              "summary": "PROPOSER_ROLE: Multisig (4-of-7)\nEXECUTOR_ROLE: Multisig (1-of-8) + EOA\nDEFAULT_ADMIN_ROLE: Multisig (5-of-9)\n\nAll roles held by team-controlled addresses, not the DAO.",
+              "urls": [
+                {
+                  "name": "PROPOSER_ROLE holder",
+                  "url": "https://etherscan.io/address/0x71A4d411b5f7941Dee020417fca30413712f1646",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EXECUTOR_ROLE holder (Multisig)",
+                  "url": "https://etherscan.io/address/0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC",
+                  "type": "explorer"
+                },
+                {
+                  "name": "DEFAULT_ADMIN_ROLE holder",
+                  "url": "https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f",
                   "type": "explorer"
                 }
               ]
@@ -2315,7 +2346,7 @@
           "evidence": [
             {
               "name": "Current Supply",
-              "summary": "Total supply: 10,000,000,000 ONDO (verified onchain)\nTeam Multisig balance: ~5.9B ONDO (~59% of supply)\n\nDocumentation states \"no scheduled or planned inflation\" but this is a policy statement, not code enforcement. The code allows minting via MINTER_ROLE.",
+              "summary": "Total supply: 10,000,000,000 ONDO (verified onchain)\nTeam Multisig balance: ~5.9B ONDO (~59% of supply)\n\nDocumentation states \"no scheduled or planned inflation\" but this is a policy statement, not code enforcement.",
               "urls": [
                 {
                   "name": "ONDO Token totalSupply",
@@ -2326,6 +2357,22 @@
                   "name": "Token Documentation",
                   "url": "https://docs.ondo.foundation/ondo-token",
                   "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Mint Function Exists",
+              "summary": "The deployed ONDO token includes a `mint()` function restricted to MINTER_ROLE holders. Team multisig holds MINTER_ROLE and can mint new tokens without DAO approval.",
+              "urls": [
+                {
+                  "name": "ONDO Token (verified source)",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Team Multisig (MINTER_ROLE holder)",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
                 }
               ]
             }
@@ -2375,9 +2422,14 @@
               "summary": "fToken transfers have sanctions checking via Chainalysis oracle. No user blocklist functionality. DAO can pause via governance.",
               "urls": [
                 {
-                  "name": "Flux Finance Docs",
-                  "url": "https://docs.fluxfinance.com/",
-                  "type": "docs"
+                  "name": "Sanctions checking (CTokenModified.sol)",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L97-L99",
+                  "type": "github"
+                },
+                {
+                  "name": "ISanctionsList interface",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/external/chainalysis/ISanctionsList.sol",
+                  "type": "github"
                 }
               ]
             }
@@ -2448,13 +2500,23 @@
               ]
             },
             {
-              "name": "OUSG/USDY Revenue",
-              "summary": "Revenue from OUSG and USDY (management fees, yield spreads) accrues to Ondo Finance Inc., not ONDO tokenholders. There is no programmatic distribution to tokenholders.",
+              "name": "USDY/OUSG Revenue Clarification",
+              "summary": "The ~$3-4M monthly \"fees\" shown on DefiLlama represents **yield distributed to USDY/OUSG product holders**, NOT to ONDO tokenholders.\n\nHow it works:\n1. USDY/OUSG backed by short-term US Treasuries\n2. Oracle updates NAV/price daily to reflect yield\n3. USDY/OUSG holders receive yield through increasing token price\n4. ONDO tokenholders receive ZERO from this yield",
               "urls": [
                 {
-                  "name": "Ondo Finance Docs",
-                  "url": "https://docs.ondo.finance/",
+                  "name": "DefiLlama Ondo Finance",
+                  "url": "https://defillama.com/protocol/ondo-finance",
                   "type": "docs"
+                },
+                {
+                  "name": "RWAOracleRateCheck.sol (price update)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "USDY Oracle",
+                  "url": "https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851",
+                  "type": "explorer"
                 }
               ]
             }
@@ -2494,17 +2556,32 @@
           "evidence": [
             {
               "name": "Fee Parameter Control",
-              "summary": "Comptroller admin = Timelock (DAO-controlled)\n`_setReserveFactor()` can be called by admin\nDAO can propose to set non-zero reserve factors\n\nHowever, even with non-zero reserve factors, there is no FeeDistributor contract to distribute collected fees to tokenholders. Reserves would accumulate in fToken contracts, not flow to ONDO holders.",
+              "summary": "Comptroller admin = Timelock (DAO-controlled)\n`_setReserveFactor()` can be called by admin\nDAO can propose to set non-zero reserve factors\n\nHowever, even with non-zero reserve factors, there is no FeeDistributor contract to distribute collected fees to tokenholders. Reserves would accumulate in fToken contracts via `totalReserves`, not flow to ONDO holders automatically.",
               "urls": [
                 {
-                  "name": "Comptroller",
+                  "name": "Comptroller admin check",
                   "url": "https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#readContract",
                   "type": "explorer"
                 },
                 {
-                  "name": "CTokenModified _setReserveFactor",
-                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1173",
+                  "name": "_setReserveFactor (public function)",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1147",
                   "type": "github"
+                },
+                {
+                  "name": "Admin check in _setReserveFactorFresh",
+                  "url": "https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1157-L1160",
+                  "type": "github"
+                },
+                {
+                  "name": "fUSDC _setReserveFactor",
+                  "url": "https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#writeProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Tally Ondo DAO (governance portal)",
+                  "url": "https://www.tally.xyz/gov/ondo-dao",
+                  "type": "docs"
                 }
               ]
             }
@@ -2521,18 +2598,28 @@
           "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG management fees and yield spreads. This value does not flow to ONDO tokenholders.",
           "evidence": [
             {
-              "name": "Company Revenue",
-              "summary": "USDY: Backed by short-term US Treasuries. Yield passed to holders. Ondo Finance retains the spread between treasury yields and USDY yield.\n\nOUSG: Similar structure with management fees retained by company.\n\nGlobal Markets: Tokenized stocks with fees and spreads accruing to company.\n\nNone of this revenue flows to ONDO tokenholders.",
+              "name": "Company Revenue Streams",
+              "summary": "**USDY**: Backed by short-term US Treasuries in bankruptcy-remote SPV. Yield passed to holders via daily NAV updates. Ondo retains spread.\n\n**OUSG**: Backed by BlackRock's SHV ETF. NAV updated via oracle.\n\n**Global Markets**: Tokenized stocks controlled by TimelockController.\n\nNone of this revenue flows to ONDO tokenholders.",
               "urls": [
                 {
-                  "name": "USDY Documentation",
-                  "url": "https://docs.ondo.finance/",
-                  "type": "docs"
+                  "name": "USDY Oracle (NAV updates)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol",
+                  "type": "github"
                 },
                 {
-                  "name": "OUSG Documentation",
-                  "url": "https://docs.ondo.finance/",
-                  "type": "docs"
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle",
+                  "url": "https://etherscan.io/address/0x78a9e536EBdA08b5b9EDbE5785C9D1D50fA3278C",
+                  "type": "explorer"
+                },
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c",
+                  "type": "explorer"
                 }
               ]
             }
