@@ -50,7 +50,7 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 | USDY_InstantManager | [`0xa42613C243b67BF6194Ac327795b926B4b491f15`](https://etherscan.io/address/0xa42613C243b67BF6194Ac327795b926B4b491f15#code) | USDY mint/redeem | No | Y | Y |
 | OndoIDRegistry | [`0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df`](https://etherscan.io/address/0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df#code) | KYC registry | Yes (proxy) | Y | N |
 | OndoOracle | [`0x9Cad45a8BF0Ed41Ff33074449B357C7a1fAb4094`](https://etherscan.io/address/0x9Cad45a8BF0Ed41Ff33074449B357C7a1fAb4094#code) | OUSG price oracle | No | N | Y |
-| Blocklist | [`0x72b5F7bA91BEA1F5E0e46a55E74C0d22D0135b1d`](https://etherscan.io/address/0x72b5F7bA91BEA1F5E0e46a55E74C0d22D0135b1d#code) | USDY blocklist | No | Y | N |
+| Blocklist | [`0xd8c8174691d936E2C80114EC449037b13421B0a8`](https://etherscan.io/address/0xd8c8174691d936E2C80114EC449037b13421B0a8#code) | USDY blocklist | No | Y | N |
 | GMTokenManager | [`0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c`](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code) | Global Markets manager | No | Y | Y |
 | USDon | [`0xAcE8E719899F6E91831B18AE746C9A965c2119F1`](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code) | Global Markets stable | Yes (proxy) | Y | Y |
 | USDonManager | [`0x05CCbB4b74854f8A067b83475E8c34f5a413D7e1`](https://etherscan.io/address/0x05CCbB4b74854f8A067b83475E8c34f5a413D7e1#code) | USDon operations | No | Y | Y |
@@ -107,189 +107,6 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 | [`0x4413073440A568790c1b2b06B47F7D0a443574d0`](https://polygonscan.com/address/0x4413073440A568790c1b2b06B47F7D0a443574d0) | Polygon OUSG Admin | 3-of-6 | Polygon |
 | [`0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3`](https://mantlescan.xyz/address/0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3) | Mantle USDY Admin | 4-of-7 | Mantle |
 | [`0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D`](https://arbiscan.io/address/0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D) | Arbitrum USDY Admin | 4-of-7 | Arbitrum |
-
----
-
-## Contract Ownership Verification
-
-### ONDO Token
-```
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "name()(string)" --rpc-url https://ethereum-rpc.publicnode.com
-→ "Ondo"
-
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "totalSupply()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 10000000000000000000000000000 [1e28] (10 billion ONDO)
-
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "transferAllowed()(bool)" --rpc-url https://ethereum-rpc.publicnode.com
-→ true (transfers enabled since Jan 2024)
-
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x0000000000000000000000000000000000000000000000000000000000000000 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://ethereum-rpc.publicnode.com
-→ true (Team Multisig has DEFAULT_ADMIN_ROLE)
-
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://ethereum-rpc.publicnode.com
-→ true (Team Multisig has MINTER_ROLE)
-
-cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "balanceOf(address)(uint256)" 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://ethereum-rpc.publicnode.com
-→ 5904207574154394239393946019 [5.904e27] (~59% of supply)
-```
-
-### Governor and Timelock
-```
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "timelock()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "comp()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 (ONDO token)
-
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "proposalThreshold()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 100000000000000000000000000 [1e26] (100M ONDO = 1% of supply)
-
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "quorumVotes()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 1000000000000000000000000 [1e24] (1M ONDO = 0.01% of supply)
-
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "votingPeriod()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 21600 blocks (~3 days at 12s/block)
-
-cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "admin()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x336505EC1BcC1A020EeDe459f57581725D23465A (Governor)
-
-cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "delay()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 86400 (1 day)
-```
-
-### Flux Finance Contracts
-```
-cast call 0x95Af143a021DF745bc78e845b54591C53a8B3A51 "admin()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock - DAO controlled)
-
-cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "admin()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-
-cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "reserveFactorMantissa()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0 (0% reserve factor)
-
-cast call 0xe2bA8693cE7474900A045757fe0efCa900F6530b "reserveFactorMantissa()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0 (fDAI 0% reserve factor)
-
-cast call 0x1dD7950c266fB1be96180a8FDb0591F70200E018 "reserveFactorMantissa()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0 (fOUSG 0% reserve factor)
-```
-
-### OUSG (Ethereum - Company-Controlled)
-```
-cast admin 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 --rpc-url https://ethereum-rpc.publicnode.com
-→ 0xba80aa44cc25e85cc30359150dfb1c7d041cf6d5 (ProxyAdmin)
-
-cast call 0xba80aa44cc25e85cc30359150dfb1c7d041cf6d5 "owner()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0xAEd4caF2E535D964165B4392342F71bac77e8367 (Management Multisig - NOT DAO)
-
-cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getThreshold()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 4 (4-of-7 multisig)
-
-cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getOwners()(address[])" --rpc-url https://ethereum-rpc.publicnode.com
-→ [0x74a4C329AA5a6BFa16bD32BAf37209f4C632173D, 0x189D409b807aC1949Fe82c143270992FE9457607, 0xECE6bC29F718085a30b7bC14162B0fad4737e5d0, 0x60F030d621a4Ab27DfF024a8e43eB36e2D95FB02, 0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e, 0x020679fF2Bc53758bEbAD1bBe0ab0CF7c1beD241, 0x6A95a204aD4a6842b2f0aE3BBb59f35E85594f46]
-```
-
-### USDY (Ethereum - Company-Controlled)
-```
-cast admin 0x96F6eF951840721AdBF46Ac996b59E0235CB985C --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x3ed61633057da0bc58f84b2b9002845e56f94c19 (ProxyAdmin)
-
-cast call 0x3ed61633057da0bc58f84b2b9002845e56f94c19 "owner()(address)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 (4-of-7 Multisig - NOT DAO)
-
-cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getThreshold()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 4
-
-cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getOwners()(address[])" --rpc-url https://ethereum-rpc.publicnode.com
-→ [0x58417F57F29c6b03114129e0EB59A174B1f41504, 0x189D409b807aC1949Fe82c143270992FE9457607, 0x60F030d621a4Ab27DfF024a8e43eB36e2D95FB02, 0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e, 0x74a4C329AA5a6BFa16bD32BAf37209f4C632173D, 0x020679fF2Bc53758bEbAD1bBe0ab0CF7c1beD241, 0x6A95a204aD4a6842b2f0aE3BBb59f35E85594f46]
-```
-
-### Global Markets (Ethereum)
-```
-cast call 0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c "getRoleMemberCount(bytes32)(uint256)" 0x0000000000000000000000000000000000000000000000000000000000000000 --rpc-url https://ethereum-rpc.publicnode.com
-→ 1
-
-cast call 0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 (Contract, not multisig)
-
-cast call 0xAcE8E719899F6E91831B18AE746C9A965c2119F1 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 (Same admin as GMTokenManager)
-```
-
-### USDY_InstantManager (Ethereum)
-```
-cast call 0xa42613C243b67BF6194Ac327795b926B4b491f15 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://ethereum-rpc.publicnode.com
-→ 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF
-
-cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getThreshold()(uint256)" --rpc-url https://ethereum-rpc.publicnode.com
-→ 3 (3-of-5 multisig)
-
-cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getOwners()(address[])" --rpc-url https://ethereum-rpc.publicnode.com
-→ [0x6264422fD4c54292d71F6d3BE7CbF8900573172B, 0x60F030d621a4Ab27DfF024a8e43eB36e2D95FB02, 0x6A95a204aD4a6842b2f0aE3BBb59f35E85594f46, 0x81961c315e38bAdC02C014A13Dd1d4b3dab81d15, 0x74a4C329AA5a6BFa16bD32BAf37209f4C632173D]
-```
-
----
-
-## Multichain Deployment Verification
-
-### Polygon OUSG
-```
-cast admin 0xbA11C5effA33c4D6F8f593CFA394241CfE925811 --rpc-url https://1rpc.io/matic
-→ 0xa4d0c86e1186088beebf1f72f2a4aaba92ade0e8 (ProxyAdmin)
-
-cast call 0xa4d0c86e1186088beebf1f72f2a4aaba92ade0e8 "owner()(address)" --rpc-url https://1rpc.io/matic
-→ 0x4413073440A568790c1b2b06B47F7D0a443574d0 (3-of-6 Multisig)
-
-cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getThreshold()(uint256)" --rpc-url https://1rpc.io/matic
-→ 3
-
-cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getOwners()(address[])" --rpc-url https://1rpc.io/matic
-→ [0x189D409b807aC1949Fe82c143270992FE9457607, 0xECE6bC29F718085a30b7bC14162B0fad4737e5d0, 0x74a4C329AA5a6BFa16bD32BAf37209f4C632173D, 0x6A95a204aD4a6842b2f0aE3BBb59f35E85594f46, 0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e, 0x020679fF2Bc53758bEbAD1bBe0ab0CF7c1beD241]
-```
-
-### Mantle USDY
-```
-cast admin 0x5bE26527e817998A7206475496fDE1E68957c5A6 --rpc-url https://rpc.mantle.xyz
-→ 0x201cdd34310a53915ee55b0a229b5a4eb18d1448 (ProxyAdmin)
-
-cast call 0x201cdd34310a53915ee55b0a229b5a4eb18d1448 "owner()(address)" --rpc-url https://rpc.mantle.xyz
-→ 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 (4-of-7 Multisig)
-
-cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getThreshold()(uint256)" --rpc-url https://rpc.mantle.xyz
-→ 4
-
-cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getOwners()(address[])" --rpc-url https://rpc.mantle.xyz
-→ [0x020679fF2Bc53758bEbAD1bBe0ab0CF7c1beD241, 0x189D409b807aC1949Fe82c143270992FE9457607, 0x60F030d621a4Ab27DfF024a8e43eB36e2D95FB02, 0x74a4C329AA5a6BFa16bD32BAf37209f4C632173D, 0xaA1E4eef723ceaDd137B3AD39ea540dA4B092f8e, 0x58417F57F29c6b03114129e0EB59A174B1f41504, 0x6A95a204aD4a6842b2f0aE3BBb59f35E85594f46]
-```
-
-### Arbitrum USDY
-```
-cast admin 0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D --rpc-url https://arbitrum-one.publicnode.com
-→ 0xb7bcc4af60fb5267946deff1fe373989995352b2 (ProxyAdmin)
-
-cast call 0xb7bcc4af60fb5267946deff1fe373989995352b2 "owner()(address)" --rpc-url https://arbitrum-one.publicnode.com
-→ 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D
-
-cast call 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D "getThreshold()(uint256)" --rpc-url https://arbitrum-one.publicnode.com
-→ 4 (4-of-? Multisig)
-```
-
-### BNB Chain Global Markets
-```
-cast admin 0x91f8Aff3738825e8eB16FC6f6b1A7A4647bDB299 --rpc-url https://bsc-dataseed.binance.org
-→ 0x0000000000000000000000000000000000000000 (Not a proxy)
-
-cast call 0x91f8Aff3738825e8eB16FC6f6b1A7A4647bDB299 "DEFAULT_ADMIN_ROLE()(bytes32)" --rpc-url https://bsc-dataseed.binance.org
-→ 0x0000000000000000000000000000000000000000000000000000000000000000 (Uses AccessControl)
-```
-
-### Solana Deployments
-
-Aragon has not been able to verify Solana contract ownership due to lack of EVM-compatible tooling. Per official docs:
-- OUSG: `i7u4r16TcsJTgq1kAG8opmVZyVnAKBwLKu6ZPMwzxNc`
-- USDY: `A1KLoBrKBde8Ty9qtNQUtq3C2ortoC3u7twggz7sEto6`
-- Global Markets Program: `XzTT4XB8m7sLD2xi6snefSasaswsKCxx5Tifjondogm`
 
 ---
 
@@ -383,7 +200,7 @@ uint public constant quorumVotes = 1_000_000e18; // 1 million Ondo
 **Flux Finance (DAO-Controlled):**
 - fToken contracts use delegator pattern ([cErc20ModifiedDelegator.sol](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cErc20ModifiedDelegator.sol))
 - Admin = [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) (`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`)
-- DAO can upgrade implementations via `_setImplementation()` ([Line 406](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cErc20ModifiedDelegator.sol#L406))
+- DAO can upgrade implementations via `_setImplementation()` ([Line 622](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cErc20ModifiedDelegator.sol#L622))
 - Verified: `cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "admin()(address)"` → `0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`
 
 **OUSG/USDY (Team-Controlled by Chain):**
@@ -567,31 +384,24 @@ Per the [DefiLlama methodology](https://github.com/DefiLlama/dimension-adapters/
 
 ---
 
-### 2.2 Treasury Ownership TBD
+### 2.2 Treasury Ownership ⚠️
 
-**Finding:** Aragon has not been able to identify a specific DAO treasury address receiving Flux Finance revenue or ONDO token allocations.
+**Finding:** Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists for Flux Finance or Ondo DAO.
 
-**Investigation:**
-- Flux Finance reserve factors are 0%—no reserves accumulate
-- The Timelock (`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`) holds no significant assets
-- No FeeDistributor or Treasury contract identified for ONDO governance
-
-**FeeDistributor Search Methodology:**
-1. Searched Flux Finance GitHub repo for "FeeDistributor", "fee", "revenue", "distribution" - no matching contracts found
-2. Reviewed Timelock transaction history on Etherscan - no interactions with any fee distribution contracts
-3. Checked Ondo DAO governance proposals on Tally - no proposals for fee distribution found
-4. Searched official Flux Finance docs - no mention of fee distribution mechanism
-
-**Conclusion:** No FeeDistributor contract exists for Flux Finance or ONDO DAO.
+**Evidence:**
+- Flux Finance reserve factors are 0%—no reserves accumulate ([fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readProxyContract): `reserveFactorMantissa = 0`)
+- The [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) holds no significant assets
+- No FeeDistributor contract exists in [Flux Finance GitHub](https://github.com/flux-finance/contracts)
+- No fee distribution proposals on [Tally](https://www.tally.xyz/gov/ondo-dao)
 
 **Token Allocations:**
-Per documentation, vested tokens include:
+Per [documentation](https://docs.ondo.foundation/ondo-token), vested tokens include:
 - Core Team: 5-year vesting
 - Seed Investors: <7%, 1-year cliff + 48-month release
 - Series A: <7%, 1-year cliff + 48-month release
 - CoinList: ~2% total
 
-Aragon has not been able to identify the specific addresses holding these vested allocations beyond the team multisig at `0x677fd4ed...` holding ~59% of supply.
+Aragon has not been able to identify the specific addresses holding these vested allocations beyond the team multisig at [`0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1`](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1) holding ~59% of supply.
 
 ---
 
@@ -629,9 +439,10 @@ Aragon has not been able to identify the specific addresses holding these vested
 - USDY is backed by short-term US Treasuries held in a bankruptcy-remote SPV
 - Yield is passed to USDY holders through daily NAV increases via oracle price updates
 - [RWAOracleRateCheck.sol](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol) - oracle code
-- Ondo Finance Inc. retains any spread between treasury yields and the rate reflected in NAV updates
-- This spread is **not** distributed to ONDO tokenholders
 - [USDY on Etherscan](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C)
+
+**Proof of Yield Spread Retention (USDY):**
+The oracle `setPrice()` function is rate-limited to max 1% change per 23 hours ([Line 81-90](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90)). There is no onchain mechanism that guarantees 100% of underlying treasury yield is passed to USDY holders. The rate reflected in NAV updates is set by SETTER_ROLE holders (controlled by Ondo), not by an automated oracle reading real treasury yields. Aragon has not been able to identify any onchain mechanism that enforces pass-through of full treasury yield to tokenholders. The spread between actual treasury yields and the rate set by the oracle accrues offchain to Ondo Finance Inc.
 
 **OUSG Revenue Model:**
 - Similar structure to USDY
@@ -639,13 +450,17 @@ Aragon has not been able to identify the specific addresses holding these vested
 - NAV updated via [OUSGOracle](https://etherscan.io/address/0x78a9e536EBdA08b5b9EDbE5785C9D1D50fA3278C)
 - [OUSG on Etherscan](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92)
 
+**Proof of Yield Spread Retention (OUSG):**
+Same mechanism as USDY - oracle price updates are controlled by SETTER_ROLE holders, not automated. No onchain enforcement of full yield pass-through.
+
 **Ondo Global Markets:**
 - Tokenized stocks with "on" suffix (e.g., TSLAon, COINon)
 - [GMTokenManager on Etherscan](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c)
 - [USDon on Etherscan](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1)
-- Fees and spreads accrue to company (via TimelockController at `0x3715B2...`), not to ONDO DAO
+- Controlled by TimelockController at [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) (owned by 5/9 multisig)
+- Fees and spreads accrue to company, not to ONDO DAO
 
-**Conclusion:** ONDO tokenholders have no claim to offchain revenue streams. All value from Ondo's RWA products accrues to Ondo Finance Inc. or the respective product holders (USDY/OUSG investors).
+**Conclusion:** ONDO tokenholders have no claim to offchain revenue streams. All value from Ondo's RWA products accrues to Ondo Finance Inc. or the respective product holders (USDY/OUSG investors). The proof is the absence of any onchain mechanism enforcing yield pass-through.
 
 ---
 
@@ -832,8 +647,8 @@ graph TD
 | [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92) | ProxyAdmin owner | [`0xAEd4caF2E535D964165B4392342F71bac77e8367`](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367) | Mgmt Multisig (4/7) | owner() call | 7 team signers |
 | [USDY](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C) | ProxyAdmin owner | [`0x1a694A09494E214a3Be3652e4B343B7B81A73ad7`](https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7) | Team Multisig (4/7) | owner() call | 7 team signers |
 | [USDY_InstantManager](https://etherscan.io/address/0xa42613C243b67BF6194Ac327795b926B4b491f15) | DEFAULT_ADMIN_ROLE | [`0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF`](https://etherscan.io/address/0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF) | Multisig (3/5) | getRoleMember() call | 5 signers |
-| [GMTokenManager](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c) | DEFAULT_ADMIN_ROLE | [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) | TimelockController (2h) | getRoleMember() call | See GM Timelock roles |
-| [USDon](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1) | DEFAULT_ADMIN_ROLE | [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) | TimelockController (2h) | getRoleMember() call | See GM Timelock roles |
+| [GMTokenManager](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c) | DEFAULT_ADMIN_ROLE | [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) | TimelockController (2h) | getRoleMember() call | [`0xcD35671d...`](https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f) (5/9 multisig) |
+| [USDon](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1) | DEFAULT_ADMIN_ROLE | [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) | TimelockController (2h) | getRoleMember() call | [`0xcD35671d...`](https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f) (5/9 multisig) |
 | [Polygon OUSG](https://polygonscan.com/address/0xbA11C5effA33c4D6F8f593CFA394241CfE925811) | ProxyAdmin owner | [`0x4413073440A568790c1b2b06B47F7D0a443574d0`](https://polygonscan.com/address/0x4413073440A568790c1b2b06B47F7D0a443574d0) | Multisig (3/6) | owner() call | 6 signers |
 | [Mantle USDY](https://mantlescan.xyz/address/0x5bE26527e817998A7206475496fDE1E68957c5A6) | ProxyAdmin owner | [`0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3`](https://mantlescan.xyz/address/0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3) | Multisig (4/7) | owner() call | 7 signers |
 | [Arbitrum USDY](https://arbiscan.io/address/0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D) | ProxyAdmin owner | [`0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D`](https://arbiscan.io/address/0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D) | Multisig (4/7) | owner() call | 7 signers |
@@ -970,3 +785,230 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 ### Governance
 - [Tally - Ondo DAO](https://www.tally.xyz/gov/ondo-dao)
 - [Flux Finance Governance Forum](https://forum.fluxfinance.com/)
+
+---
+
+## Appendix: Contract Ownership Verification
+
+All ownership and role claims in this report were verified on-chain using `cast call` commands. This appendix documents the verification methodology and raw results.
+
+### ONDO Token
+
+```
+# Check AccessControl interface support
+cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "supportsInterface(bytes4)(bool)" 0x7965db0b --rpc-url https://eth.llamarpc.com
+→ true
+
+# Check DEFAULT_ADMIN_ROLE holder
+cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x0000000000000000000000000000000000000000000000000000000000000000 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://eth.llamarpc.com
+→ true
+
+# Check MINTER_ROLE holder (keccak256("MINTER_ROLE") = 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6)
+cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://eth.llamarpc.com
+→ true
+
+# Verify team multisig config
+cast call 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 4
+
+cast call 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
+→ [7 addresses]
+
+# Check total supply
+cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "totalSupply()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 10000000000000000000000000000 (10B ONDO)
+
+# Check team multisig balance
+cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "balanceOf(address)(uint256)" 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://eth.llamarpc.com
+→ ~5,904,207,574,154,394,239,393,946,019 (~5.9B ONDO = 59%)
+```
+
+### Governor and Timelock
+
+```
+# Governor admin
+cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "admin()(address)" --rpc-url https://eth.llamarpc.com
+→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
+
+# Timelock admin
+cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "admin()(address)" --rpc-url https://eth.llamarpc.com
+→ 0x336505EC1BcC1A020EeDe459f57581725D23465A (Governor)
+
+# Timelock delay
+cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "delay()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 86400 (1 day)
+```
+
+### Flux Finance Contracts
+
+```
+# Comptroller admin
+cast call 0x95Af143a021DF745bc78e845b54591C53a8B3A51 "admin()(address)" --rpc-url https://eth.llamarpc.com
+→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
+
+# fUSDC admin
+cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "admin()(address)" --rpc-url https://eth.llamarpc.com
+→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
+
+# fUSDC reserve factor
+cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 0
+
+# fDAI reserve factor
+cast call 0xe2bA8693cE7474900A045757fe0efCa900F6530b "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 0
+```
+
+### OUSG (Ethereum)
+
+```
+# Check proxy admin via storage slot
+cast storage 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://eth.llamarpc.com
+→ ProxyAdmin address
+
+# OUSG DEFAULT_ADMIN_ROLE holder
+cast call 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 "hasRole(bytes32,address)(bool)" 0x0000000000000000000000000000000000000000000000000000000000000000 0xAEd4caF2E535D964165B4392342F71bac77e8367 --rpc-url https://eth.llamarpc.com
+→ true
+
+# Management multisig config
+cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 4
+
+cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
+→ [7 addresses]
+```
+
+### USDY (Ethereum)
+
+```
+# Check proxy admin via storage slot
+cast storage 0x96F6eF951840721AdBF46Ac996b59E0235CB985C 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://eth.llamarpc.com
+→ ProxyAdmin address
+
+# USDY multisig config
+cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 4
+
+cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
+→ [7 addresses]
+
+# Check blocklist address
+cast call 0x96F6eF951840721AdBF46Ac996b59E0235CB985C "blocklist()(address)" --rpc-url https://eth.llamarpc.com
+→ 0xd8c8174691d936E2C80114EC449037b13421B0a8
+```
+
+### Global Markets (TimelockController)
+
+```
+# GMTokenManager DEFAULT_ADMIN_ROLE holder
+cast call 0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://eth.llamarpc.com
+→ 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 (TimelockController)
+
+# TimelockController minimum delay
+cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getMinDelay()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 7200 (2 hours)
+
+# TimelockController PROPOSER_ROLE holder
+cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1 0 --rpc-url https://eth.llamarpc.com
+→ 0x71A4d411b5f7941Dee020417fca30413712f1646 (4/7 multisig)
+
+# TimelockController EXECUTOR_ROLE holders
+cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63 0 --rpc-url https://eth.llamarpc.com
+→ 0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC (1/8 multisig)
+
+cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63 1 --rpc-url https://eth.llamarpc.com
+→ 0xfF1621Ee754512B34a6Bd62A941Cc4d5E4d0b85B (EOA)
+
+# TimelockController DEFAULT_ADMIN_ROLE holder
+cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://eth.llamarpc.com
+→ 0xcD35671dCAb88d05EE29dC4D360181529390B17f (5/9 multisig)
+
+# Verify 5/9 multisig config
+cast call 0xcD35671dCAb88d05EE29dC4D360181529390B17f "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 5
+
+cast call 0xcD35671dCAb88d05EE29dC4D360181529390B17f "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
+→ [9 addresses]
+```
+
+### USDY_InstantManager
+
+```
+# DEFAULT_ADMIN_ROLE holder
+cast call 0xa42613C243b67BF6194Ac327795b926B4b491f15 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://eth.llamarpc.com
+→ 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF (3/5 multisig)
+
+# Verify 3/5 multisig config
+cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
+→ 3
+
+cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
+→ [5 addresses]
+```
+
+---
+
+## Appendix: Multichain Deployment Verification
+
+### Polygon OUSG
+
+```
+# Check ProxyAdmin via storage slot
+cast storage 0xbA11C5effA33c4D6F8f593CFA394241CfE925811 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://1rpc.io/matic
+→ ProxyAdmin address
+
+# Verify multisig config (3-of-6)
+cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getThreshold()(uint256)" --rpc-url https://1rpc.io/matic
+→ 3
+
+cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getOwners()(address[])" --rpc-url https://1rpc.io/matic
+→ [6 addresses]
+```
+
+### Mantle USDY
+
+```
+# Check ProxyAdmin via storage slot
+cast storage 0x5bE26527e817998A7206475496fDE1E68957c5A6 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://rpc.mantle.xyz
+→ ProxyAdmin address
+
+# Verify multisig config (4-of-7)
+cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getThreshold()(uint256)" --rpc-url https://rpc.mantle.xyz
+→ 4
+
+cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getOwners()(address[])" --rpc-url https://rpc.mantle.xyz
+→ [7 addresses]
+```
+
+### Arbitrum USDY
+
+```
+# Check ProxyAdmin via storage slot
+cast storage 0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://arbitrum-one.publicnode.com
+→ ProxyAdmin address
+
+# Verify multisig config (4-of-7)
+cast call 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D "getThreshold()(uint256)" --rpc-url https://arbitrum-one.publicnode.com
+→ 4
+
+cast call 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D "getOwners()(address[])" --rpc-url https://arbitrum-one.publicnode.com
+→ [7 addresses]
+```
+
+### BNB Chain Global Markets
+
+```
+# Check GMTokenManager for proxy pattern
+cast storage 0x91f8Aff3738825e8eB16FC6f6b1A7A4647bDB299 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://bsc-dataseed.binance.org
+→ 0x0 (not a proxy)
+```
+
+### Solana Deployments
+
+Ondo Global Markets and USDY are also deployed on Solana. Solana programs use different verification methods than EVM chains.
+
+**Known Solana Program Addresses:**
+- GlobalMarkets: Various token mint addresses per asset
+- USDY: Program address documented at docs.ondo.finance
+
+Aragon has not been able to verify Solana program upgrade authorities using the same `cast call` methodology as EVM chains. Solana verification would require Anchor/Solana CLI tooling.
