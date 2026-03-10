@@ -2526,16 +2526,21 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "TBD",
-          "notes": "Aragon has not been able to identify a specific DAO treasury address. Flux Finance reserve factors are 0%, so no reserves accumulate. The Timelock holds no significant assets. No FeeDistributor or Treasury contract identified.",
+          "status": "⚠️",
+          "notes": "Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists for Flux Finance or Ondo DAO.",
           "evidence": [
             {
               "name": "No Treasury Identified",
-              "summary": "The Timelock holds no significant assets. With 0% reserve factors, no reserves accumulate in fToken contracts.\n\nFeeDistributor search methodology:\n1. Searched Flux Finance GitHub for fee-related contracts: none found\n2. Reviewed Timelock transaction history: no fee distribution interactions\n3. Checked Ondo DAO proposals on Tally: no fee distribution proposals\n4. Searched official docs: no mention of fee distribution",
+              "summary": "The Timelock holds no significant assets. With 0% reserve factors, no reserves accumulate in fToken contracts (`reserveFactorMantissa = 0`). No FeeDistributor contract exists.",
               "urls": [
                 {
                   "name": "Timelock",
                   "url": "https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "fUSDC (reserveFactorMantissa = 0)",
+                  "url": "https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readProxyContract",
                   "type": "explorer"
                 },
                 {
@@ -2595,25 +2600,36 @@
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "⚠️",
-          "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG management fees and yield spreads. This value does not flow to ONDO tokenholders.",
+          "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG yield spreads. This value does not flow to ONDO tokenholders. Per DefiLlama methodology, \"No management fees on Ondo\"; revenue comes from the spread between what underlying treasuries earn and what is passed to tokenholders.",
           "evidence": [
             {
-              "name": "Company Revenue Streams",
-              "summary": "**USDY**: Backed by short-term US Treasuries in bankruptcy-remote SPV. Yield passed to holders via daily NAV updates. Ondo retains spread.\n\n**OUSG**: Backed by BlackRock's SHV ETF. NAV updated via oracle.\n\n**Global Markets**: Tokenized stocks controlled by TimelockController.\n\nNone of this revenue flows to ONDO tokenholders.",
+              "name": "Proof of Yield Spread Retention",
+              "summary": "The oracle `setPrice()` function is rate-limited to max 1% change per 23 hours. There is no onchain mechanism that guarantees 100% of underlying treasury yield is passed to USDY/OUSG holders. The rate reflected in NAV updates is set by SETTER_ROLE holders (controlled by Ondo), not by an automated oracle reading real treasury yields.\n\nAragon has not been able to identify any onchain mechanism that enforces pass-through of full treasury yield to tokenholders. The spread between actual treasury yields and the rate set by the oracle accrues offchain to Ondo Finance Inc.",
               "urls": [
                 {
-                  "name": "USDY Oracle (NAV updates)",
-                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol",
+                  "name": "RWAOracleRateCheck.sol (setPrice rate limit)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90",
                   "type": "github"
                 },
                 {
-                  "name": "USDY",
-                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+                  "name": "USDY Oracle",
+                  "url": "https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851",
                   "type": "explorer"
                 },
                 {
                   "name": "OUSG Oracle",
                   "url": "https://etherscan.io/address/0x78a9e536EBdA08b5b9EDbE5785C9D1D50fA3278C",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Company Revenue Streams",
+              "summary": "**USDY**: Backed by short-term US Treasuries in bankruptcy-remote SPV. Yield passed to holders via daily NAV updates.\n\n**OUSG**: Backed by BlackRock's SHV ETF. NAV updated via oracle.\n\n**Global Markets**: Tokenized stocks controlled by TimelockController (owned by 5/9 multisig).\n\nNone of this revenue flows to ONDO tokenholders.",
+              "urls": [
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
                   "type": "explorer"
                 },
                 {
