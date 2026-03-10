@@ -1189,8 +1189,8 @@
               "summary": "CRV inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^(1/4). Any unminted supply from a year is permanently lost.",
               "urls": [
                 {
-                  "name": "CRV Supply Schedule (Docs)",
-                  "url": "https://resources.curve.finance/crv-token/overview#supply-schedule",
+                  "name": "CRV Emission Schedule (Docs)",
+                  "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
                   "type": "docs"
                 },
                 {
@@ -1324,8 +1324,8 @@
             {
               "urls": [
                 {
-                  "name": "Earning-fees",
-                  "url": "https://resources.curve.finance/vecrv/overview#earning-fees",
+                  "name": "veCRV Revenue Share (Docs)",
+                  "url": "https://docs.curve.finance/user/vecrv/revenue",
                   "type": "docs"
                 }
               ]
@@ -1463,8 +1463,8 @@
             {
               "urls": [
                 {
-                  "name": "CRV Supply Schedule",
-                  "url": "https://resources.curve.finance/crv-token/overview#supply-schedule",
+                  "name": "CRV Emission Schedule (Docs)",
+                  "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
                   "type": "docs"
                 }
               ]
@@ -3710,18 +3710,29 @@
         "Reference"
       ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Maker and DAI trademarks are held by an independent foundation, not by SKY tokenholders. All code is open source (AGPL-3.0).",
+      "summary": "Current Sky branding is not controlled by SKY tokenholders. Skybase International's terms reserve trademarks, service marks, logos, and trade names associated with the Services, including the Sky name, to the service operator or its licensors, and the DAI Foundation independently holds the legacy Maker and DAI trademarks. All code is open source (AGPL-3.0).",
       "criteria": [
         {
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "⚠️",
-          "notes": "Maker and DAI trademarks are held by the DAI Foundation, an independent Danish non-profit. This entity operates outside token governance.",
+          "notes": "Official Skybase International terms state that trademarks, service marks, logos, and trade names associated with the Services are proprietary to Skybase International or its licensors, and explicitly include the Sky name. Aragon has not found evidence that current Sky / USDS branding is owned by a tokenholder-controlled legal entity. Separately, the DAI Foundation holds the legacy Maker and DAI trademarks outside token governance.",
           "evidence": [
             {
+              "name": "Skybase International Terms of Use",
+              "summary": "Skybase International's terms say trademarks, service marks, logos, and trade names associated with the Services are proprietary to Skybase International or its licensors, and explicitly include the Sky name.",
+              "urls": [
+                {
+                  "name": "Terms of Use",
+                  "url": "https://docs.sky.money/legal/skybase-international/terms-of-use",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
               "name": "DAI Foundation",
-              "summary": "Holds Maker and DAI trademarks since 2020. Operates under Danish law, independent of token governance.",
+              "summary": "Holds the legacy Maker and DAI trademarks. Operates under Danish law, independent of token governance.",
               "urls": [
                 {
                   "name": "Foundation Website",
