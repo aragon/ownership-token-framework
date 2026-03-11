@@ -11,6 +11,24 @@ import type { TokenInfo } from "./token-detail"
 import { Button } from "./ui/button"
 import { ExplorerIcon } from "./ui/explore-icon.tsx"
 
+function formatCurrency(value: number): string {
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: value < 1 ? 6 : 2,
+  })
+}
+
+function formatSupply(value: number, symbol: string): string {
+  if (value >= 1_000_000_000) {
+    return `${(value / 1_000_000_000).toFixed(1).replace(/\.0$/, "")}B ${symbol}`
+  }
+  if (value >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1).replace(/\.0$/, "")}M ${symbol}`
+  }
+  return `${value.toLocaleString("en-US", { maximumFractionDigits: 0 })} ${symbol}`
+}
+
 export default function InfoSidebar({ token }: { token: TokenInfo }) {
   const [hasCopied, setHasCopied] = useState(false)
 
@@ -32,6 +50,37 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
           {token.infoDescription}
         </p>
       </div>
+
+      {(token.marketCap != null ||
+        token.totalSupply != null ||
+        token.price != null) && (
+        <dl className="grid grid-cols-1 divide-y text-sm">
+          {token.marketCap != null && (
+            <div className="flex items-center justify-between py-3">
+              <dt className="text-muted-foreground">Market cap</dt>
+              <dd className="font-medium tabular-nums">
+                {formatCurrency(token.marketCap)}
+              </dd>
+            </div>
+          )}
+          {token.totalSupply != null && (
+            <div className="flex items-center justify-between py-3">
+              <dt className="text-muted-foreground">Total supply</dt>
+              <dd className="font-medium tabular-nums">
+                {formatSupply(token.totalSupply, token.symbol)}
+              </dd>
+            </div>
+          )}
+          {token.price != null && (
+            <div className="flex items-center justify-between py-3">
+              <dt className="text-muted-foreground">Token price</dt>
+              <dd className="font-medium tabular-nums">
+                {formatCurrency(token.price)}
+              </dd>
+            </div>
+          )}
+        </dl>
+      )}
 
       <div className="flex flex-wrap gap-x-3 gap-y-2">
         <Button
