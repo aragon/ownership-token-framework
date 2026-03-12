@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchMarketData } from "@/lib/coingecko"
+import { fetchMarketDataFn } from "@/routes/api.market-data"
 import type { Token } from "@/lib/token-data"
 
 export interface EnrichedToken extends Token {
@@ -23,7 +23,7 @@ export function useMarketData(tokens: Token[]): {
     error,
   } = useQuery({
     queryKey: ["market-data", ...coingeckoIds.sort()],
-    queryFn: () => fetchMarketData(coingeckoIds),
+    queryFn: () => fetchMarketDataFn({ data: { coingeckoIds } }),
     enabled: coingeckoIds.length > 0,
     staleTime: 10 * 60 * 1000, // 10 minutes
     gcTime: 30 * 60 * 1000, // 30 minutes

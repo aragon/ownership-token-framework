@@ -145,10 +145,6 @@ const columns: ColumnDef<EnrichedToken>[] = [
   },
   {
     accessorKey: "marketCap",
-    meta: {
-      headerClassName: "hidden md:table-cell",
-      cellClassName: "hidden md:table-cell",
-    },
     header: ({ column }) => (
       <button
         className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
@@ -167,6 +163,10 @@ const columns: ColumnDef<EnrichedToken>[] = [
   },
   {
     accessorKey: "lastUpdated",
+    meta: {
+      headerClassName: "hidden md:table-cell",
+      cellClassName: "hidden md:table-cell",
+    },
     header: ({ column }) => (
       <button
         className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
@@ -272,7 +272,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
             <NetworkIcon className="size-4 text-muted-foreground" />
             <SelectValue placeholder="All networks" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent alignItemWithTrigger={false}>
             <SelectItem value="">All networks</SelectItem>
             {networks.map((network) => {
               const label = network.charAt(0).toUpperCase() + network.slice(1)
