@@ -62,6 +62,7 @@ const tokenRoutes = [
   'aave',
   'aero',
   'crv',
+  'ethfi',
   'ldo',
   'uni',
   'sky',

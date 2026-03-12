@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
+import { useMarketData } from "@/hooks/use-market-data"
 import { trackExpandAllCriteria } from "@/lib/analytics"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
@@ -60,6 +61,9 @@ export interface TokenInfo {
     scan?: string
   }
   infoDescription: string
+  marketCap?: number
+  price?: number
+  totalSupply?: number
 }
 
 export type { Metric }
@@ -126,6 +130,8 @@ interface TokenDetailProps {
 export default function TokenDetail({ tokenId }: TokenDetailProps) {
   const token = getTokenById(tokenId)
   const metrics = getMetricsByTokenId(tokenId)
+  const { tokens: enrichedTokens } = useMarketData(token ? [token] : [])
+  const enrichedToken = enrichedTokens[0]
 
   const allCriteriaIds = useMemo(
     () => metrics.flatMap((metric) => metric.criteria.map((c) => c.id)),
@@ -175,39 +181,38 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
       {/* Gray background section - Content */}
       <div className="bg-muted/50 flex-1">
         <Container>
-          <div className="grid grid-cols-1 gap-6 pt-6 pb-10 md:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
-            {/* Left column - Tabs and metrics */}
+          {/* Mobile-only expand button above criteria */}
+          <div className="pt-6 lg:hidden">
+            <Button
+              className="w-full"
+              onClick={handleToggleAll}
+              variant="outline"
+            >
+              {allOpen ? "Close all criteria" : "Expand all criteria"}
+            </Button>
+          </div>
 
+          <div className="grid grid-cols-1 gap-4 pt-4 pb-10 lg:gap-6 lg:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
+            {/* Criteria metrics */}
             <AnalyticsContent
               metrics={metrics}
               onOpenCriteriaChange={setOpenCriteria}
               openCriteria={openCriteria}
             />
-            {/* <Tabs defaultValue="analytics">
-                <TabsList>
-                  <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                  <TabsTrigger value="version-log">Version log</TabsTrigger>
-                </TabsList>
-
-                <TabsContent className="mt-4" value="analytics">
-                  <AnalyticsContent metrics={metrics} />
-                </TabsContent>
-
-                <TabsContent className="mt-4" value="version-log">
-                  <div className="flex h-48 items-center justify-center rounded-lg border border-dashed bg-background">
-                    <span className="text-muted-foreground">
-                      Version log content
-                    </span>
-                  </div>
-                </TabsContent>
-              </Tabs> */}
 
             {/* Right column - Info sidebar */}
             <div>
-              <div className="sticky top-6 flex flex-col-reverse gap-6 lg:flex-col">
-                <InfoSidebar token={token} />
+              <div className="sticky top-6 flex flex-col gap-6">
+                <InfoSidebar
+                  token={{
+                    ...token,
+                    marketCap: enrichedToken?.marketCap,
+                    price: enrichedToken?.price,
+                    totalSupply: enrichedToken?.totalSupply,
+                  }}
+                />
                 <Button
-                  className="w-fit lg:w-full"
+                  className="hidden lg:block w-full"
                   onClick={handleToggleAll}
                   variant="outline"
                 >

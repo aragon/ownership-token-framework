@@ -1,4 +1,5 @@
 import { TanStackDevtools } from "@tanstack/react-devtools"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   createRootRoute,
   HeadContent,
@@ -39,15 +40,19 @@ export const Route = createRootRoute({
   notFoundComponent: () => <Navigate replace to="/" />,
 })
 
+const queryClient = new QueryClient()
+
 function RootComponent() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <SiteHeader />
-      <NewsletterBanner />
-      <Outlet />
-      <SiteFooter />
-      <GoogleAnalytics />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="min-h-screen flex flex-col">
+        <SiteHeader />
+        <NewsletterBanner />
+        <Outlet />
+        <SiteFooter />
+        <GoogleAnalytics />
+      </div>
+    </QueryClientProvider>
   )
 }
 

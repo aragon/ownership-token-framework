@@ -53,21 +53,6 @@ Apply the following effects using Sharp image processing library:
    - Compression level 9 for optimal web delivery
    - Expected file sizes: 26-54 KB
 
-## Scripts to Create
-
-Create two scripts in `scripts/` directory:
-
-1. **`generate-og-screenshots.mjs`** - Basic version without effects
-   - Pure screenshots at 1200x630
-   - No image processing required
-   - Faster generation
-
-2. **`generate-og-screenshots-enhanced.mjs`** - Enhanced version with effects
-   - Includes all visual effects listed above
-   - Uses Sharp for image compositing
-   - Saves to temp directory first, then applies effects
-   - Cleans up temp files after processing
-
 ## OpenGraph Metadata Updates
 
 Ensure all routes have proper OpenGraph metadata:
@@ -97,7 +82,6 @@ Provide a summary including:
 Add npm scripts to package.json for easy regeneration:
 ```json
 "og:generate": "node scripts/generate-og-screenshots.mjs",
-"og:generate-enhanced": "node scripts/generate-og-screenshots-enhanced.mjs"
 ```
 
 ## Customization

@@ -60,6 +60,8 @@ interface MetricCardProps {
 export default function MetricCard(props: MetricCardProps) {
   const { metric, openCriteria, onOpenCriteriaChange } = props
 
+  const metricCriteriaIds = new Set(metric.criteria.map((c) => c.id))
+
   const handleCriteriaChange = (newOpenCriteria: string[]) => {
     // Track newly opened criteria
     const previouslyOpen = new Set(openCriteria || [])
@@ -72,7 +74,11 @@ export default function MetricCard(props: MetricCardProps) {
       }
     })
 
-    onOpenCriteriaChange?.(newOpenCriteria)
+    // Merge: keep other metrics' criteria, replace only this metric's criteria
+    const otherCriteria = (openCriteria || []).filter(
+      (id) => !metricCriteriaIds.has(id)
+    )
+    onOpenCriteriaChange?.([...otherCriteria, ...newOpenCriteria])
   }
 
   return (
@@ -106,7 +112,7 @@ export default function MetricCard(props: MetricCardProps) {
         className="w-auto"
         multiple
         onValueChange={handleCriteriaChange}
-        value={openCriteria}
+        value={openCriteria?.filter((id) => metricCriteriaIds.has(id))}
       >
         {metric.criteria.map((criteria) => (
           <AccordionItem
