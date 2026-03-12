@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3000",
-    "build": "vite build",
+    "dev": "node scripts/sync-coingecko-ids.mjs --write && vite dev --port 3000",
+    "build": "node scripts/sync-coingecko-ids.mjs --write && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "format": "biome format",
