@@ -1,6 +1,6 @@
 import {
   IconCircleCheckFilled,
-  IconCircleDotFilled,
+  IconCircleX,
   // @ts-expect-error by default it imports from cjs build and triggers server-side error
 } from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import ReactMarkdown from "react-markdown"
@@ -14,10 +14,11 @@ import {
 import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
 import type { Evidence, Metric } from "@/lib/metrics-data"
+import { getMetricScore, getScoreStatus } from "@/lib/scoring"
 import { cn } from "../lib/utils.ts"
 import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
 import { type CriteriaStatus, mapStatus } from "./token-detail"
-import { Badge } from "./ui/badge.tsx"
+import { BadgeEvaluation } from "./ui/badge-evaluation.tsx"
 import { TitlePopover } from "./ui/title-popover.tsx"
 
 interface MarkdownComponentProps {
@@ -38,11 +39,11 @@ const StatusIcon = ({ status }: { status: CriteriaStatus }) => {
   const config = match(status)
     .with("positive", () => ({
       Icon: IconCircleCheckFilled,
-      iconColor: "text-green-500",
+      iconColor: "text-gray-600",
     }))
     .otherwise(() => ({
-      Icon: IconCircleDotFilled,
-      iconColor: "text-gray-500",
+      Icon: IconCircleX,
+      iconColor: "text-gray-600",
     }))
 
   return <config.Icon className={`size-6 ${config.iconColor}`} />
@@ -57,8 +58,33 @@ interface MetricCardProps {
   onOpenCriteriaChange?: (value: string[]) => void
 }
 
+const scoreColorMap = {
+  passing: {
+    border: "border-green-300",
+    headerBg: "bg-green-50",
+    titleColor: "text-green-900",
+    summaryColor: "text-green-700",
+  },
+  warning: {
+    border: "border-yellow-300",
+    headerBg: "bg-yellow-50",
+    titleColor: "text-yellow-900",
+    summaryColor: "text-yellow-700",
+  },
+  "not-evaluated": {
+    border: "border-gray-200",
+    headerBg: "bg-gray-50",
+    titleColor: "text-gray-900",
+    summaryColor: "text-gray-700",
+  },
+}
+
 export default function MetricCard(props: MetricCardProps) {
   const { metric, openCriteria, onOpenCriteriaChange } = props
+
+  const score = getMetricScore(metric)
+  const status = getScoreStatus(score.percentage, score.evaluated)
+  const colors = scoreColorMap[status]
 
   const metricCriteriaIds = new Set(metric.criteria.map((c) => c.id))
 
@@ -82,27 +108,34 @@ export default function MetricCard(props: MetricCardProps) {
   }
 
   return (
-    <div className="rounded-lg border bg-card gap-y-4 flex flex-col pb-0 md:pb-2">
+    <div
+      className={cn(
+        "rounded-xl border shadow-sm bg-card flex flex-col pb-0 md:pb-2 overflow-hidden",
+        colors.border
+      )}
+    >
       {/* Header */}
-      <div className="p-4 pb-0 md:p-6">
+      <div className={cn("p-4 md:px-6 md:py-6", colors.headerBg)}>
         <div className="flex items-center justify-between gap-3">
           <TitlePopover
             description={metric.about}
             learnMoreLink={getFrameworkUrl(metric.id)}
             title={metric.name}
+            titleClassName={colors.titleColor}
           />
-          <span className="flex gap-1 pr-0 md:pr-8">
-            {metric.tags?.map((tag) => (
-              <Badge
-                key={tag}
-                variant={metric.id === "offchain" ? "outline" : "secondary"}
-              >
-                {tag}
-              </Badge>
-            ))}
-          </span>
+          <BadgeEvaluation
+            className="shrink-0"
+            evaluated={score.evaluated}
+            passing={score.passing}
+            total={score.total}
+          />
         </div>
-        <p className={cn(summaryTextStyles, "pt-1.5 pr-0 md:pr-8")}>
+        <p
+          className={cn(
+            "text-base leading-6 tracking-normal pt-3",
+            colors.summaryColor
+          )}
+        >
           {metric.summary}
         </p>
       </div>

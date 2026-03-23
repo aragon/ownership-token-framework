@@ -23,7 +23,13 @@ import { NewsletterSignup } from "@/components/newsletter-signup"
 import { PageWrapper } from "@/components/page-wrapper"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { BadgeEvaluation } from "@/components/ui/badge-evaluation"
 import { Container } from "@/components/ui/container"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
 import { Input } from "@/components/ui/input"
 import {
   Select,
@@ -42,6 +48,7 @@ import {
 } from "@/components/ui/table"
 import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
+import { getTokenOwnershipScore } from "@/lib/scoring"
 import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
 function formatMarketCap(value?: number): string {
@@ -144,7 +151,68 @@ const columns: ColumnDef<EnrichedToken>[] = [
     ),
   },
   {
+    id: "ownershipScore",
+    meta: {
+      headerClassName: "w-0",
+      cellClassName: "w-0",
+    },
+    header: ({ column }) => (
+      <button
+        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        type="button"
+      >
+        Ownership score
+        <ChevronsUpDownIcon className="size-4" />
+      </button>
+    ),
+    accessorFn: (row) => {
+      const score = getTokenOwnershipScore(row.id)
+      return score.total > 0 ? score.percentage : -1
+    },
+    cell: ({ row }) => {
+      const score = getTokenOwnershipScore(row.original.id)
+      return (
+        <HoverCard>
+          <HoverCardTrigger
+            className="cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <BadgeEvaluation passing={score.passing} total={score.total} />
+          </HoverCardTrigger>
+          <HoverCardContent align="start" className="w-72 p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-medium">{row.original.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {truncateAddress(row.original.address)}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {score.metrics.map((m) => (
+                <div
+                  className="flex items-center justify-between"
+                  key={m.metricId}
+                >
+                  <span className="text-sm">{m.metricName}</span>
+                  <BadgeEvaluation
+                    evaluated={m.evaluated}
+                    passing={m.passing}
+                    total={m.total}
+                  />
+                </div>
+              ))}
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+      )
+    },
+  },
+  {
     accessorKey: "marketCap",
+    meta: {
+      headerClassName: "hidden md:table-cell",
+      cellClassName: "hidden md:table-cell",
+    },
     header: ({ column }) => (
       <button
         className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"

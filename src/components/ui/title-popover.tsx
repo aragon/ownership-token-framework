@@ -10,6 +10,7 @@ interface ITitlePopoverProps extends ComponentPropsWithoutRef<"div"> {
   description: string
   learnMoreLink?: string
   variant?: "h3" | "h4"
+  titleClassName?: string
 }
 
 const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
@@ -18,6 +19,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
     description,
     learnMoreLink,
     variant = "h3",
+    titleClassName,
     className,
     ...otherProps
   } = props
@@ -60,7 +62,8 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
             className={cn(
               "font-sans not-italic sm:underline sm:decoration-dotted underline-offset-4",
               variant === "h3" && "text-lg font-bold leading-7",
-              variant === "h4" && "text-base font-medium leading-6"
+              variant === "h4" && "text-base font-medium leading-6",
+              titleClassName
             )}
           >
             {title}
