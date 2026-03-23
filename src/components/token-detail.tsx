@@ -20,6 +20,7 @@ import { formatUnixTimestamp } from "@/lib/utils"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 import { NewsletterSignup } from "./newsletter-signup.tsx"
+import { OwnershipScoreCard } from "./ownership-score-card"
 
 // Types
 export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
@@ -193,12 +194,15 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
           </div>
 
           <div className="grid grid-cols-1 gap-4 pt-4 pb-10 lg:gap-6 lg:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
-            {/* Criteria metrics */}
-            <AnalyticsContent
-              metrics={metrics}
-              onOpenCriteriaChange={setOpenCriteria}
-              openCriteria={openCriteria}
-            />
+            {/* Ownership score + Criteria metrics */}
+            <div className="flex flex-col gap-4 lg:gap-6">
+              <OwnershipScoreCard tokenId={tokenId} />
+              <AnalyticsContent
+                metrics={metrics}
+                onOpenCriteriaChange={setOpenCriteria}
+                openCriteria={openCriteria}
+              />
+            </div>
 
             {/* Right column - Info sidebar */}
             <div>

@@ -22,28 +22,31 @@ export interface BadgeEvaluationProps
   extends React.HTMLAttributes<HTMLSpanElement>,
     Omit<VariantProps<typeof badgeEvaluationVariants>, "variant"> {
   passing: number
-  evaluated: number
+  total: number
+  evaluated?: boolean
   className?: string
 }
 
 function getVariant(
   passing: number,
-  evaluated: number
+  total: number,
+  evaluated: boolean
 ): "positive" | "negative" | "notEvaluated" {
-  if (evaluated === 0) return "notEvaluated"
-  if (passing / evaluated >= 0.75) return "positive"
+  if (!evaluated || total === 0) return "notEvaluated"
+  if (passing / total >= 0.75) return "positive"
   return "negative"
 }
 
 function BadgeEvaluation({
   passing,
-  evaluated,
+  total,
+  evaluated = true,
   className,
   ...props
 }: BadgeEvaluationProps) {
-  const variant = getVariant(passing, evaluated)
+  const variant = getVariant(passing, total, evaluated)
   const label =
-    variant === "notEvaluated" ? "Not evaluated" : `${passing} of ${evaluated}`
+    variant === "notEvaluated" ? "Not evaluated" : `${passing} of ${total}`
 
   return (
     <span
