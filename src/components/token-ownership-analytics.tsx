@@ -153,8 +153,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "ownershipScore",
     meta: {
-      headerClassName: "w-0",
-      cellClassName: "w-0",
+      headerClassName: "max-w-[240px] pr-8",
+      cellClassName: "max-w-[240px] pr-8",
     },
     header: ({ column }) => (
       <button
@@ -210,8 +210,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "marketCap",
     meta: {
-      headerClassName: "hidden md:table-cell",
-      cellClassName: "hidden md:table-cell",
+      headerClassName: "max-w-[240px]",
+      cellClassName: "max-w-[240px]",
     },
     header: ({ column }) => (
       <button
@@ -232,8 +232,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "lastUpdated",
     meta: {
-      headerClassName: "hidden md:table-cell",
-      cellClassName: "hidden md:table-cell",
+      headerClassName: "hidden md:table-cell max-w-[240px]",
+      cellClassName: "hidden md:table-cell max-w-[240px]",
     },
     header: ({ column }) => (
       <button
@@ -254,8 +254,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "actions",
     meta: {
-      headerClassName: "hidden lg:table-cell",
-      cellClassName: "hidden lg:table-cell",
+      headerClassName: "hidden lg:table-cell w-[50px] pl-6",
+      cellClassName: "hidden lg:table-cell w-[50px] pl-6",
     },
     cell: ({ row }) => (
       <div className="flex justify-end">
