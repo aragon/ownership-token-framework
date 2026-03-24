@@ -116,8 +116,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "name",
     meta: {
-      headerClassName: "w-full",
-      cellClassName: "w-full",
+      headerClassName: "w-[42%]",
+      cellClassName: "w-[42%]",
     },
     header: ({ column }) => (
       <div className="pl-12">
@@ -153,8 +153,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "ownershipScore",
     meta: {
-      headerClassName: "max-w-[240px] pr-8",
-      cellClassName: "max-w-[240px] pr-8",
+      headerClassName: "w-[20%]",
+      cellClassName: "w-[20%]",
     },
     header: ({ column }) => (
       <button
@@ -210,8 +210,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "marketCap",
     meta: {
-      headerClassName: "max-w-[240px]",
-      cellClassName: "max-w-[240px]",
+      headerClassName: "w-[12%]",
+      cellClassName: "w-[12%]",
     },
     header: ({ column }) => (
       <button
@@ -232,8 +232,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "lastUpdated",
     meta: {
-      headerClassName: "hidden md:table-cell max-w-[240px]",
-      cellClassName: "hidden md:table-cell max-w-[240px]",
+      headerClassName: "hidden md:table-cell w-[11%]",
+      cellClassName: "hidden md:table-cell w-[11%]",
     },
     header: ({ column }) => (
       <button
@@ -254,8 +254,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "actions",
     meta: {
-      headerClassName: "hidden lg:table-cell w-[50px] pl-6",
-      cellClassName: "hidden lg:table-cell w-[50px] pl-6",
+      headerClassName: "hidden lg:table-cell w-[11%]",
+      cellClassName: "hidden lg:table-cell w-[11%]",
     },
     cell: ({ row }) => (
       <div className="flex justify-end">
