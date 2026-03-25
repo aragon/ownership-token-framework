@@ -235,7 +235,7 @@ const columns: ColumnDef<EnrichedToken>[] = [
       const status = getCriteriaStatus(row.original.id, "val-accrual__active")
       const isActive = status === "✅"
       return isActive ? (
-        <IconCircleCheckFilled className="size-6 text-green-500" />
+        <IconCircleCheckFilled className="size-6 text-green-700" />
       ) : (
         <IconCircleX className="size-6 text-gray-600" />
       )
