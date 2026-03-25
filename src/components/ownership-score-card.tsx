@@ -18,7 +18,7 @@ export function OwnershipScoreCard({ tokenId }: OwnershipScoreCardProps) {
     <div className="rounded-xl border bg-card p-4 md:p-6">
       <div className="flex items-center justify-between gap-3">
         <Tooltip>
-          <TooltipTrigger className="inline-flex items-center gap-2 text-lg font-bold leading-7 cursor-help">
+          <TooltipTrigger className="inline-flex items-center gap-2 text-lg font-bold leading-7 cursor-help underline decoration-dotted underline-offset-4">
             Ownership score
             <CircleHelpIcon className="size-4 text-muted-foreground" />
           </TooltipTrigger>
