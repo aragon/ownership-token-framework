@@ -43,7 +43,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
       >
         <PreviewCardPrimitive.Trigger
           className={cn(
-            "group inline-flex sm:flex-row-reverse items-start text-foreground no-underline outline-none",
+            "group inline-flex flex-row-reverse items-start text-foreground no-underline outline-none",
             variant === "h3" ? "gap-2" : "gap-3"
           )}
         >
