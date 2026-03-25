@@ -185,7 +185,7 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
             <div className="flex flex-col gap-4 lg:gap-6">
               <OwnershipScoreCard tokenId={tokenId} />
               <Button
-                className="w-full"
+                className="w-full lg:hidden"
                 onClick={handleToggleAll}
                 variant="outline"
               >
