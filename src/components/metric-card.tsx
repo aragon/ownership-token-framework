@@ -147,9 +147,9 @@ export default function MetricCard(props: MetricCardProps) {
         onValueChange={handleCriteriaChange}
         value={openCriteria?.filter((id) => metricCriteriaIds.has(id))}
       >
-        {metric.criteria.map((criteria) => (
+        {metric.criteria.map((criteria, index) => (
           <AccordionItem
-            className="mx-4 p-0 md:mx-6"
+            className={cn("mx-4 p-0 md:mx-6", index === 0 && "first:border-t-0")}
             key={criteria.id}
             value={criteria.id}
           >

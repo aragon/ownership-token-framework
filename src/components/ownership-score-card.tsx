@@ -30,7 +30,7 @@ export function OwnershipScoreCard({ tokenId }: OwnershipScoreCardProps) {
         <BadgeEvaluation passing={score.passing} total={score.total} />
       </div>
 
-      <div className="mt-4 flex flex-col divide-y">
+      <div className="mt-4 flex flex-col divide-y border-t">
         {score.metrics.map((m) => (
           <div
             className="flex items-center justify-between py-3"
