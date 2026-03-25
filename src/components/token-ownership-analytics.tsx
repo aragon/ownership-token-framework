@@ -12,6 +12,11 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import {
+  IconCircleCheckFilled,
+  IconCircleX,
+  // @ts-expect-error by default it imports from cjs build and triggers server-side error
+} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
+import {
   ArrowRightIcon,
   ChevronsUpDownIcon,
   FilterIcon,
@@ -48,6 +53,7 @@ import {
 } from "@/components/ui/table"
 import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
+import { getCriteriaStatus } from "@/lib/metrics-data"
 import { getTokenOwnershipScore } from "@/lib/scoring"
 import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
@@ -58,6 +64,25 @@ function formatMarketCap(value?: number): string {
     currency: "USD",
     maximumFractionDigits: 0,
   })
+}
+
+function SortableHeader({
+  column,
+  label,
+}: {
+  column: { toggleSorting: (desc: boolean) => void; getIsSorted: () => false | "asc" | "desc" }
+  label: string
+}) {
+  return (
+    <button
+      className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      type="button"
+    >
+      {label}
+      <ChevronsUpDownIcon className="size-4" />
+    </button>
+  )
 }
 
 declare module "@tanstack/react-table" {
@@ -116,19 +141,12 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "name",
     meta: {
-      headerClassName: "w-[42%]",
-      cellClassName: "w-[42%]",
+      headerClassName: "w-[36%]",
+      cellClassName: "w-[36%]",
     },
     header: ({ column }) => (
       <div className="pl-12">
-        <button
-          className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          type="button"
-        >
-          Token name
-          <ChevronsUpDownIcon className="size-4" />
-        </button>
+        <SortableHeader column={column} label="Token name" />
       </div>
     ),
     cell: ({ row }) => (
@@ -153,18 +171,11 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "ownershipScore",
     meta: {
-      headerClassName: "w-[20%]",
-      cellClassName: "w-[20%]",
+      headerClassName: "w-[18%]",
+      cellClassName: "w-[18%]",
     },
     header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Ownership score
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
+      <SortableHeader column={column} label="Ownership score" />
     ),
     accessorFn: (row) => {
       const score = getTokenOwnershipScore(row.id)
@@ -208,20 +219,36 @@ const columns: ColumnDef<EnrichedToken>[] = [
     },
   },
   {
+    id: "accrualActive",
+    meta: {
+      headerClassName: "hidden md:table-cell w-[8%]",
+      cellClassName: "hidden md:table-cell w-[8%]",
+    },
+    accessorFn: (row) => {
+      const status = getCriteriaStatus(row.id, "val-accrual__active")
+      return status === "✅" ? 1 : 0
+    },
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Accrual Active" />
+    ),
+    cell: ({ row }) => {
+      const status = getCriteriaStatus(row.original.id, "val-accrual__active")
+      const isActive = status === "✅"
+      return isActive ? (
+        <IconCircleCheckFilled className="size-6 text-green-500" />
+      ) : (
+        <IconCircleX className="size-6 text-gray-600" />
+      )
+    },
+  },
+  {
     accessorKey: "marketCap",
     meta: {
       headerClassName: "w-[12%]",
       cellClassName: "w-[12%]",
     },
     header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Market Cap
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
+      <SortableHeader column={column} label="Market Cap" />
     ),
     cell: ({ row }) => (
       <span className="text-foreground tabular-nums">
@@ -236,14 +263,7 @@ const columns: ColumnDef<EnrichedToken>[] = [
       cellClassName: "hidden md:table-cell w-[11%]",
     },
     header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Report updated
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
+      <SortableHeader column={column} label="Report updated" />
     ),
     cell: ({ row }) => (
       <span className="text-muted-foreground">
