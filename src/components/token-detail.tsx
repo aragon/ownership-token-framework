@@ -182,21 +182,17 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
       {/* Gray background section - Content */}
       <div className="bg-muted/50 flex-1">
         <Container>
-          {/* Mobile-only expand button above criteria */}
-          <div className="pt-6 lg:hidden">
-            <Button
-              className="w-full"
-              onClick={handleToggleAll}
-              variant="outline"
-            >
-              {allOpen ? "Close all criteria" : "Expand all criteria"}
-            </Button>
-          </div>
-
           <div className="grid grid-cols-1 gap-4 pt-4 pb-10 lg:gap-6 lg:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
             {/* Ownership score + Criteria metrics */}
             <div className="flex flex-col gap-4 lg:gap-6">
               <OwnershipScoreCard tokenId={tokenId} />
+              <Button
+                className="w-full"
+                onClick={handleToggleAll}
+                variant="outline"
+              >
+                {allOpen ? "Close all criteria" : "Expand all criteria"}
+              </Button>
               <AnalyticsContent
                 metrics={metrics}
                 onOpenCriteriaChange={setOpenCriteria}
