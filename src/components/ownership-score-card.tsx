@@ -30,11 +30,18 @@ export function OwnershipScoreCard({ tokenId }: OwnershipScoreCardProps) {
         <BadgeEvaluation passing={score.passing} total={score.total} />
       </div>
 
-      <div className="mt-4 flex flex-col divide-y border-t">
+      <div className="mt-4 flex flex-col border-t">
         {score.metrics.map((m) => (
-          <div
-            className="flex items-center justify-between py-3"
+          <a
+            className="flex items-center justify-between py-3 cursor-pointer hover:font-medium not-last:border-b transition-colors"
+            href={`#${m.metricId}`}
             key={m.metricId}
+            onClick={(e) => {
+              e.preventDefault()
+              document
+                .getElementById(m.metricId)
+                ?.scrollIntoView({ behavior: "smooth" })
+            }}
           >
             <span className="text-base text-foreground">{m.metricName}</span>
             <BadgeEvaluation
@@ -42,7 +49,7 @@ export function OwnershipScoreCard({ tokenId }: OwnershipScoreCardProps) {
               passing={m.passing}
               total={m.total}
             />
-          </div>
+          </a>
         ))}
       </div>
     </div>

@@ -110,9 +110,10 @@ export default function MetricCard(props: MetricCardProps) {
   return (
     <div
       className={cn(
-        "rounded-xl border shadow-sm bg-card flex flex-col pb-0 md:pb-2 overflow-hidden",
+        "rounded-xl border shadow-sm bg-card flex flex-col pb-0 md:pb-2 overflow-hidden scroll-mt-6",
         colors.border
       )}
+      id={metric.id}
     >
       {/* Header */}
       <div className={cn("p-4 md:px-6 md:py-6", colors.headerBg)}>
@@ -149,7 +150,10 @@ export default function MetricCard(props: MetricCardProps) {
       >
         {metric.criteria.map((criteria, index) => (
           <AccordionItem
-            className={cn("mx-4 p-0 md:mx-6", index === 0 && "first:border-t-0")}
+            className={cn(
+              "mx-4 p-0 md:mx-6",
+              index === 0 && "first:border-t-0"
+            )}
             key={criteria.id}
             value={criteria.id}
           >
