@@ -98,25 +98,23 @@ function TokenHero({ token }: { token: TokenInfo }) {
       <p className="max-w-4xl text-muted-foreground">{token.description}</p>
 
       {/* Stats row */}
-      <div className="flex flex-wrap items-baseline text-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground">
-            Last updated: {formatUnixTimestamp(token.lastUpdated)} by
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-2 text-sm">
+        <span className="text-muted-foreground">
+          Last updated: {formatUnixTimestamp(token.lastUpdated)} by
+        </span>
+        <div className="flex gap-x-1 items-center">
+          <Avatar className="size-5">
+            <AvatarImage
+              className="rounded-full"
+              src={token.updatedBy.avatar}
+            />
+            <AvatarFallback className="text-xs">
+              {token.updatedBy.name.slice(0, 2)}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-foreground">
+            {token.updatedBy.name}
           </span>
-          <div className="flex gap-x-1 items-center">
-            <Avatar className="size-5">
-              <AvatarImage
-                className="rounded-full"
-                src={token.updatedBy.avatar}
-              />
-              <AvatarFallback className="text-xs">
-                {token.updatedBy.name.slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-medium text-foreground">
-              {token.updatedBy.name}
-            </span>
-          </div>
         </div>
       </div>
     </section>
