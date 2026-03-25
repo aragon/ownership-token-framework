@@ -131,14 +131,16 @@ export default function MetricCard(props: MetricCardProps) {
             total={score.total}
           />
         </div>
-        <p
-          className={cn(
-            "text-base leading-6 tracking-normal pt-3",
-            colors.summaryColor
-          )}
-        >
-          {metric.summary}
-        </p>
+        {metric.summary && (
+          <p
+            className={cn(
+              "text-base leading-6 tracking-normal pt-3",
+              colors.summaryColor
+            )}
+          >
+            {metric.summary}
+          </p>
+        )}
       </div>
 
       {/* Criteria list */}
