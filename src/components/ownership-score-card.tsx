@@ -47,6 +47,7 @@ export function OwnershipScoreCard({ tokenId }: OwnershipScoreCardProps) {
             <BadgeEvaluation
               evaluated={m.evaluated}
               passing={m.passing}
+              reference={m.reference}
               total={m.total}
             />
           </a>
