@@ -2897,7 +2897,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "unevaluated",
+          "status": "at_risk",
           "notes": "The **Ecosystem Reserve** is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside the vesting contracts. The DAO holds a small amount of YB directly.",
           "evidence": [
             {
