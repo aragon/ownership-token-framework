@@ -20,6 +20,7 @@ import { formatUnixTimestamp } from "@/lib/utils"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 import { NewsletterSignup } from "./newsletter-signup.tsx"
+import { OwnershipScoreCard } from "./ownership-score-card"
 
 // Types
 export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
@@ -97,25 +98,23 @@ function TokenHero({ token }: { token: TokenInfo }) {
       <p className="max-w-4xl text-muted-foreground">{token.description}</p>
 
       {/* Stats row */}
-      <div className="flex flex-wrap items-baseline text-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground">
-            Last updated: {formatUnixTimestamp(token.lastUpdated)} by
+      <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-2 text-sm">
+        <span className="text-muted-foreground">
+          Last updated: {formatUnixTimestamp(token.lastUpdated)} by
+        </span>
+        <div className="flex gap-x-1 items-center">
+          <Avatar className="size-5">
+            <AvatarImage
+              className="rounded-full"
+              src={token.updatedBy.avatar}
+            />
+            <AvatarFallback className="text-xs">
+              {token.updatedBy.name.slice(0, 2)}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-foreground">
+            {token.updatedBy.name}
           </span>
-          <div className="flex gap-x-1 items-center">
-            <Avatar className="size-5">
-              <AvatarImage
-                className="rounded-full"
-                src={token.updatedBy.avatar}
-              />
-              <AvatarFallback className="text-xs">
-                {token.updatedBy.name.slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
-            <span className="font-medium text-foreground">
-              {token.updatedBy.name}
-            </span>
-          </div>
         </div>
       </div>
     </section>
@@ -181,24 +180,23 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
       {/* Gray background section - Content */}
       <div className="bg-muted/50 flex-1">
         <Container>
-          {/* Mobile-only expand button above criteria */}
-          <div className="pt-6 lg:hidden">
-            <Button
-              className="w-full"
-              onClick={handleToggleAll}
-              variant="outline"
-            >
-              {allOpen ? "Close all criteria" : "Expand all criteria"}
-            </Button>
-          </div>
-
           <div className="grid grid-cols-1 gap-4 pt-4 pb-10 lg:gap-6 lg:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
-            {/* Criteria metrics */}
-            <AnalyticsContent
-              metrics={metrics}
-              onOpenCriteriaChange={setOpenCriteria}
-              openCriteria={openCriteria}
-            />
+            {/* Ownership score + Criteria metrics */}
+            <div className="flex flex-col gap-4 lg:gap-6">
+              <OwnershipScoreCard tokenId={tokenId} />
+              <Button
+                className="w-full lg:hidden"
+                onClick={handleToggleAll}
+                variant="outline"
+              >
+                {allOpen ? "Close all criteria" : "Expand all criteria"}
+              </Button>
+              <AnalyticsContent
+                metrics={metrics}
+                onOpenCriteriaChange={setOpenCriteria}
+                openCriteria={openCriteria}
+              />
+            </div>
 
             {/* Right column - Info sidebar */}
             <div>

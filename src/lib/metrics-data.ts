@@ -32,6 +32,20 @@ export interface Metric {
   criteria: Criteria[]
 }
 
+export function getCriteriaStatus(
+  tokenId: string,
+  criteriaId: string
+): string {
+  const metrics = metricsData[tokenId as keyof typeof metricsData]
+  if (!metrics) return ""
+  for (const m of metrics as Metric[]) {
+    for (const c of m.criteria) {
+      if (c.id === criteriaId) return c.status
+    }
+  }
+  return ""
+}
+
 export function getMetricsByTokenId(tokenId: string): Metric[] {
   const metrics = metricsData[tokenId as keyof typeof metricsData]
   if (!metrics) return []
