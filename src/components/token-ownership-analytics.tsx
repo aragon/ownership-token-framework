@@ -179,7 +179,10 @@ const columns: ColumnDef<EnrichedToken>[] = [
     ),
     accessorFn: (row) => {
       const score = getTokenOwnershipScore(row.id)
-      return score.total > 0 ? score.percentage : -1
+      const mcap = row.marketCap ?? 0
+      return score.total > 0
+        ? score.percentage * 1e15 + score.total * 1e12 + mcap
+        : -1
     },
     cell: ({ row }) => {
       const score = getTokenOwnershipScore(row.original.id)
