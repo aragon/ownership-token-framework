@@ -23,21 +23,11 @@ import { NewsletterSignup } from "./newsletter-signup.tsx"
 import { OwnershipScoreCard } from "./ownership-score-card"
 
 // Types
-export type CriteriaStatus = "positive" | "neutral" | "at_risk" | "tbd"
+export type {
+  CriteriaStatusValue as CriteriaStatus,
+} from "@/lib/metrics-data"
 
-// Map emoji status to internal status type
-export function mapStatus(status: string): CriteriaStatus {
-  switch (status) {
-    case "✅":
-      return "positive"
-    case "⚠️":
-      return "neutral"
-    case "❌":
-      return "at_risk"
-    default:
-      return "tbd"
-  }
-}
+export { normalizeCriteriaStatus as mapStatus } from "@/lib/metrics-data"
 
 export interface TokenInfo {
   id: string

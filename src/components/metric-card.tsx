@@ -35,18 +35,42 @@ const markdownComponents = {
   ),
 }
 
+function IconCircleEmpty({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-label="circle empty"
+      className={className}
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="12" cy="12" r="9" />
+    </svg>
+  )
+}
+
 const StatusIcon = ({ status }: { status: CriteriaStatus }) => {
   const config = match(status)
     .with("positive", () => ({
       Icon: IconCircleCheckFilled,
       iconColor: "text-gray-600",
     }))
+    .with("unevaluated", () => ({
+      Icon: IconCircleEmpty,
+      iconColor: "text-gray-400",
+    }))
     .otherwise(() => ({
       Icon: IconCircleX,
       iconColor: "text-gray-600",
     }))
 
-  return <config.Icon className={`size-6 ${config.iconColor}`} />
+  return <config.Icon className={cn("size-6", config.iconColor)} />
 }
 
 const summaryTextStyles =
@@ -128,6 +152,7 @@ export default function MetricCard(props: MetricCardProps) {
             className="shrink-0"
             evaluated={score.evaluated}
             passing={score.passing}
+            reference={score.reference}
             total={score.total}
           />
         </div>
@@ -167,7 +192,9 @@ export default function MetricCard(props: MetricCardProps) {
                   variant="h4"
                 />
               </div>
-              <StatusIcon status={mapStatus(criteria.status)} />
+              {!score.reference && (
+                <StatusIcon status={mapStatus(criteria.status)} />
+              )}
             </AccordionTrigger>
             <AccordionContent className="p-0 pb-4">
               <div className="flex flex-col gap-4">

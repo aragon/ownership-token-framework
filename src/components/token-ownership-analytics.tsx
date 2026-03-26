@@ -53,7 +53,7 @@ import {
 } from "@/components/ui/table"
 import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
-import { getCriteriaStatus } from "@/lib/metrics-data"
+import { CRITERIA_STATUS, getCriteriaStatus } from "@/lib/metrics-data"
 import { getTokenOwnershipScore } from "@/lib/scoring"
 import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
@@ -199,19 +199,21 @@ const columns: ColumnDef<EnrichedToken>[] = [
               </span>
             </div>
             <div className="flex flex-col gap-1.5">
-              {score.metrics.map((m) => (
-                <div
-                  className="flex items-center justify-between"
-                  key={m.metricId}
-                >
-                  <span className="text-sm">{m.metricName}</span>
-                  <BadgeEvaluation
-                    evaluated={m.evaluated}
-                    passing={m.passing}
-                    total={m.total}
-                  />
-                </div>
-              ))}
+              {score.metrics
+                .filter((m) => !m.reference)
+                .map((m) => (
+                  <div
+                    className="flex items-center justify-between"
+                    key={m.metricId}
+                  >
+                    <span className="text-sm">{m.metricName}</span>
+                    <BadgeEvaluation
+                      evaluated={m.evaluated}
+                      passing={m.passing}
+                      total={m.total}
+                    />
+                  </div>
+                ))}
             </div>
           </HoverCardContent>
         </HoverCard>
@@ -226,14 +228,14 @@ const columns: ColumnDef<EnrichedToken>[] = [
     },
     accessorFn: (row) => {
       const status = getCriteriaStatus(row.id, "val-accrual__active")
-      return status === "✅" ? 1 : 0
+      return status === CRITERIA_STATUS.POSITIVE ? 1 : 0
     },
     header: ({ column }) => (
       <SortableHeader column={column} label="Accrual Active" />
     ),
     cell: ({ row }) => {
       const status = getCriteriaStatus(row.original.id, "val-accrual__active")
-      const isActive = status === "✅"
+      const isActive = status === CRITERIA_STATUS.POSITIVE
       return isActive ? (
         <IconCircleCheckFilled className="size-6 text-green-700" />
       ) : (

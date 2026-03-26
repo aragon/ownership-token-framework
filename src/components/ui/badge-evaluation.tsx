@@ -24,6 +24,7 @@ export interface BadgeEvaluationProps
   passing: number
   total: number
   evaluated?: boolean
+  reference?: boolean
   className?: string
 }
 
@@ -41,12 +42,18 @@ function BadgeEvaluation({
   passing,
   total,
   evaluated = true,
+  reference = false,
   className,
   ...props
 }: BadgeEvaluationProps) {
-  const variant = getVariant(passing, total, evaluated)
-  const label =
-    variant === "notEvaluated" ? "Not evaluated" : `${passing} of ${total}`
+  const variant = reference
+    ? "notEvaluated"
+    : getVariant(passing, total, evaluated)
+  const label = reference
+    ? "Reference"
+    : variant === "notEvaluated"
+      ? "Not evaluated"
+      : `${passing} of ${total}`
 
   return (
     <span
