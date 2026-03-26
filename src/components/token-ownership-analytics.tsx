@@ -226,8 +226,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "accrualActive",
     meta: {
-      headerClassName: "hidden md:table-cell w-[8%]",
-      cellClassName: "hidden md:table-cell w-[8%]",
+      headerClassName: "w-[8%]",
+      cellClassName: "w-[8%]",
     },
     accessorFn: (row) => {
       const status = getCriteriaStatus(row.id, "val-accrual__active")
@@ -264,8 +264,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "lastUpdated",
     meta: {
-      headerClassName: "hidden md:table-cell w-[11%]",
-      cellClassName: "hidden md:table-cell w-[11%]",
+      headerClassName: "w-[11%]",
+      cellClassName: "w-[11%]",
     },
     header: ({ column }) => (
       <SortableHeader column={column} label="Report updated" />
@@ -279,8 +279,8 @@ const columns: ColumnDef<EnrichedToken>[] = [
   {
     id: "actions",
     meta: {
-      headerClassName: "hidden lg:table-cell w-[11%]",
-      cellClassName: "hidden lg:table-cell w-[11%]",
+      headerClassName: "w-[11%]",
+      cellClassName: "w-[11%]",
     },
     cell: ({ row }) => (
       <div className="flex justify-end">
