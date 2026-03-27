@@ -4,6 +4,7 @@ import {
   // @ts-expect-error by default it imports from cjs build and triggers server-side error
 } from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import ReactMarkdown from "react-markdown"
+import remarkBreaks from "remark-breaks"
 import { match, P } from "ts-pattern"
 import {
   Accordion,
@@ -207,7 +208,7 @@ export default function MetricCard(props: MetricCardProps) {
                         "prose pr-0 max-w-none md:pr-8"
                       )}
                     >
-                      <ReactMarkdown components={markdownComponents}>
+                      <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
                         {notes}
                       </ReactMarkdown>
                     </div>
