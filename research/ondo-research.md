@@ -46,7 +46,7 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 | KYCRegistry | [`0x56A5D911052323D688C731d516530878557463e7`](https://etherscan.io/address/0x56A5D911052323D688C731d516530878557463e7) | OUSG KYC registry | Yes (proxy) | Y | N |
 | OndoIDRegistry | [`0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df`](https://etherscan.io/address/0xcf6958D69d535FD03BD6Df3F4fe6CDcd127D97df#code) | KYC registry | Yes (proxy) | Y | N |
 | OUSG Oracle | [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe) | OUSG price oracle | No | N | Y |
-| USDY Oracle | [`0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851`](https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851) | USDY price oracle | No | N | Y |
+| USDY Oracle | [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0) | USDY redemption price oracle | No | N | Y |
 | Blocklist | [`0xd8c8174691d936E2C80114EC449037b13421B0a8`](https://etherscan.io/address/0xd8c8174691d936E2C80114EC449037b13421B0a8#code) | USDY blocklist | No | Y | N |
 | GMTokenManager | [`0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c`](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code) | Global Markets manager | No | Y | Y |
 | USDon | [`0xAcE8E719899F6E91831B18AE746C9A965c2119F1`](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code) | Global Markets stable | Yes (proxy) | Y | Y |
@@ -415,7 +415,7 @@ Per the [DefiLlama adapter methodology](https://github.com/DefiLlama/dimension-a
 
 **Oracle Price Update Mechanism:**
 - OUSG Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe) (RWAOracleExternalComparisonCheck)
-- USDY Oracle: [`0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851`](https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851)
+- USDY Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0) (Redemption Price Oracle)
 - `setPrice()` function updates NAV (restricted to SETTER_ROLE, rate-limited to max 1% change per 23 hours)
 - Source: [RWAOracleRateCheck.sol](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol)
 
@@ -505,7 +505,7 @@ Aragon has not been able to identify the specific addresses holding these vested
 **USDY Revenue Model:**
 - USDY is backed by short-term US Treasuries held in a bankruptcy-remote SPV
 - Yield is passed to USDY holders through daily NAV increases via oracle price updates
-- Oracle: [`0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851`](https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851)
+- Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0) (Redemption Price Oracle)
 - Source: [RWAOracleRateCheck.sol](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol)
 - [USDY on Etherscan](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C)
 
@@ -846,7 +846,7 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 - [Team Multisig](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1)
 - [Management Multisig](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367)
 - [OUSG Oracle](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe)
-- [USDY Oracle](https://etherscan.io/address/0x4c59d8Fbc5707C319A22936bB6F9b1C2a0e3C851)
+- [USDY Oracle](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0)
 
 ### Block Explorer Links (L2/Multichain)
 - [Polygon OUSG](https://polygonscan.com/address/0xbA11C5effA33c4D6F8f593CFA394241CfE925811)
