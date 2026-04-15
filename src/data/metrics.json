@@ -3873,6 +3873,16 @@
                   "type": "explorer"
                 },
                 {
+                  "name": "USDY Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x19c114B7c6Ff86482cEbFc6AE3cef894e6793Db8",
+                  "type": "explorer"
+                },
+                {
                   "name": "RWAOracleExternalComparisonCheck.sol (setPrice)",
                   "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleExternalComparisonCheck.sol#L147",
                   "type": "github"
