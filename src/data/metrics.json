@@ -3471,8 +3471,13 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "Management Multisig (OUSG)",
+                  "name": "Management Multisig (4-of-7)",
                   "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "rOUSG",
+                  "url": "https://etherscan.io/address/0x54043c656F0FAd0652D9Ae2603cDF347c5578d00",
                   "type": "explorer"
                 },
                 {
@@ -3481,8 +3486,13 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "USDY ProxyAdmin owner",
+                  "name": "Team Multisig (4-of-7)",
                   "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "rUSDY",
+                  "url": "https://etherscan.io/address/0xaf37c1167910ebC994e266949387d2c7C326b879",
                   "type": "explorer"
                 }
               ]
@@ -3502,12 +3512,22 @@
                   "type": "explorer"
                 },
                 {
-                  "name": "PROPOSER_ROLE holder",
+                  "name": "PROPOSER_ROLE holder (Multisig 4-of-7)",
                   "url": "https://etherscan.io/address/0x71A4d411b5f7941Dee020417fca30413712f1646",
                   "type": "explorer"
                 },
                 {
-                  "name": "DEFAULT_ADMIN_ROLE holder (5-of-9 multisig)",
+                  "name": "EXECUTOR_ROLE holder (Multisig 1-of-8)",
+                  "url": "https://etherscan.io/address/0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EXECUTOR_ROLE holder (EOA)",
+                  "url": "https://etherscan.io/address/0xfF1621Ee754512B34a6Bd62A941Cc4d5E4d0b85B",
+                  "type": "explorer"
+                },
+                {
+                  "name": "DEFAULT_ADMIN_ROLE holder (Multisig 5-of-9)",
                   "url": "https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f",
                   "type": "explorer"
                 }
@@ -3833,6 +3853,21 @@
                   "type": "explorer"
                 },
                 {
+                  "name": "OUSG Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x118919e891D0205A7492650AD32E727617FA9452",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x682d3d7cB33A9089C19b9B135a5DB3d2C5CF20C4",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #3",
+                  "url": "https://etherscan.io/address/0xeAEf4335c7Db4Cd1D1cc3368Fa43721E2798BeFE",
+                  "type": "explorer"
+                },
+                {
                   "name": "USDY Oracle",
                   "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
                   "type": "explorer"
@@ -3892,8 +3927,33 @@
                   "type": "explorer"
                 },
                 {
+                  "name": "OUSG Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x118919e891D0205A7492650AD32E727617FA9452",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x682d3d7cB33A9089C19b9B135a5DB3d2C5CF20C4",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #3",
+                  "url": "https://etherscan.io/address/0xeAEf4335c7Db4Cd1D1cc3368Fa43721E2798BeFE",
+                  "type": "explorer"
+                },
+                {
                   "name": "USDY Oracle",
                   "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x19c114B7c6Ff86482cEbFc6AE3cef894e6793Db8",
                   "type": "explorer"
                 },
                 {
