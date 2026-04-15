@@ -13,7 +13,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "AAVE, stkAAVE and aAAVE holders vote onchain with execution through Timelock.",
           "evidence": [
             {
@@ -31,7 +31,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The Governance Emergency Guardian is a 5/9 multisig elected by holders to protect the protocol from governance takeover attacks by vetoing onchain payloads.",
           "evidence": [
             {
@@ -55,7 +55,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Holders control implementation upgrades for all v3 market deployments.",
           "evidence": [
             {
@@ -101,7 +101,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The AAVE token is upgradeable but controlled by token holders.",
           "evidence": [
             {
@@ -131,7 +131,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Fixed 16m AAVE token supply. No mint() function or inflation pathway in the bytecode.",
           "evidence": [
             {
@@ -149,7 +149,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Roles can be broadly classified into **Core Protocol Roles** and **Delegated Steward Roles**. AAVE holders elect and revoke all these roles with their standard governance procedure.",
           "evidence": [
             {
@@ -216,7 +216,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "No Guardian or blacklist capabilities exist in the AAVE token contract.",
           "evidence": [
             {
@@ -245,7 +245,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Alongside the protocol fees going to the AAVE token-holder controlled treasury as an important source of value accrual, holders can stake their AAVE tokens as stkAAVE in Aave's Safety module, getting additional AAVE tokens as yield from the treasury for bearing the risk of slashing in case of protocol insolvency.\n\n**Caveat:** This Safety Module is in the transitional phase of being sunset in favour of aToken staking as part of the Umbrella release for automated bad debt coverage, which is live already.",
           "evidence": [
             {
@@ -273,7 +273,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "AAVE holders control treasury usage. Composed of reserve factor (borrower interest), liquidation fees, and flashloan premiums.",
           "evidence": [
             {
@@ -314,7 +314,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Token holders control fee levers (Reserve Factor, liquidation fees) via ACL-gated admin roles. Emergency actions are delegated, but economic controls are governance-owned through ACLManager.",
           "evidence": [
             {
@@ -342,7 +342,7 @@
             "Reference"
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not verified additional offchain value accrual flows to the AAVE token",
           "evidence": []
         }
@@ -361,7 +361,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The AAVE token contract source code is publicly available and verified on Etherscan.",
           "evidence": [
             {
@@ -384,7 +384,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Aave V3 protocol contracts are open source on GitHub and verified on Etherscan.",
           "evidence": [
             {
@@ -413,7 +413,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified if any 3rd party controls a majority share of the voting power of AAVE or derivatives.",
           "evidence": []
         },
@@ -421,7 +421,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified the supply schedule criteria for the AAVE token",
           "evidence": []
         }
@@ -440,7 +440,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "A US AAVE trademark filing lists Quantum Swan OU (Estonia) as the applicant/owner.",
           "evidence": [
             {
@@ -458,7 +458,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "The primary interface terms identify Aave Labs as the contracting party.",
           "evidence": [
             {
@@ -476,7 +476,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified all the licensing criteria associated with the AAVE token or the corresponding protocol and assets",
           "evidence": []
         }
@@ -497,7 +497,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veAERO holders control emissions through epoch-based gauge voting. An EmergencyCouncil exists for crisis handling with limited emergency powers.",
           "evidence": [
             {
@@ -543,7 +543,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.",
           "evidence": [
             {
@@ -568,7 +568,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Core Aerodrome protocol contracts are non-upgradeable and do not use proxy patterns.",
           "evidence": [
             {
@@ -586,7 +586,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The AERO token contract is immutable and does not use a proxy pattern. The Minter contract, which is authorized to mint AERO, is also non-upgradeable.",
           "evidence": [
             {
@@ -609,7 +609,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "AERO minting is fully programmatic and epoch-based (1 epoch = 1 week), enforced by the non-upgradeable Minter contract.",
           "evidence": [
             {
@@ -667,7 +667,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "The feeManager role exists which is controlled by a Safe multisig, not veAERO holders. This role can modify fee parameters across both pool types.",
           "evidence": [
             {
@@ -714,7 +714,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "TBD",
+          "status": "positive",
           "notes": "The AERO token has no blacklist, pause, or seizure mechanisms.",
           "evidence": [
             {
@@ -766,7 +766,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veAERO holders receive rewards from growth emissions and trading fees from staked LP positions.",
           "evidence": [
             {
@@ -853,7 +853,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "There is no protocol treasury. All trading fees from swapping pools are distributed to veAERO holders and LPs.",
           "evidence": []
         },
@@ -861,7 +861,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veAERO holders control:\n\n1. The AERO rewards they receive by locking AERO tokens in VotingEscrow\n\n2. The AERO emissions going into gauges by voting for them in Voter\n\n**Note:** Fee parameters are controlled by the feeManager (a Safe multisig), not by veAERO holders directly.",
           "evidence": [
             {
@@ -897,7 +897,7 @@
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not verified additional offchain value accrual flows to the AERO token",
           "evidence": []
         }
@@ -916,7 +916,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The AERO token contract source code (Aero.sol) is publicly available on GitHub and verified on Basescan.",
           "evidence": [
             {
@@ -939,7 +939,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Aerodrome protocol contracts (including Slipstream) are open source on GitHub.",
           "evidence": [
             {
@@ -973,7 +973,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Distribution of AERO and veAERO voting power outside of the core team has not been independently verified.",
           "evidence": []
         },
@@ -981,7 +981,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Future AERO unlocks are determined by the supply schedule and the veAERO system detailed above. Aragon is not aware of any significant vesting cliffs.",
           "evidence": []
         }
@@ -1000,7 +1000,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "A US AERODROME trademark filing lists Perpetual Cyclist Services LLC (Delaware) as the applicant/owner.",
           "evidence": [
             {
@@ -1018,7 +1018,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "The primary interface terms identify the Aerodrome Foundation as the contracting party.",
           "evidence": [
             {
@@ -1036,7 +1036,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified all the licensing criteria associated with the AERO token or the corresponding protocol and assets",
           "evidence": []
         }
@@ -1057,7 +1057,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Governance is enforced through Aragon v1's Voting Contract, which authorizes execution via the Agent contract. The Agent contract is set as the owner for all protocol-gated functions, ensuring veCRV holders control all operations.",
           "evidence": [
             {
@@ -1085,7 +1085,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All protocol roles are controlled by the Agent contract, ensuring veCRV holders maintain control over gauges, fees, and protocol expansion.",
           "evidence": [
             {
@@ -1116,7 +1116,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Core protocol and pool contracts are immutable. Governance contracts (Agent, Voting) are upgradeable only by veCRV holders.",
           "evidence": [
             {
@@ -1163,7 +1163,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The CRV token contract is immutable with no proxy patterns or upgrade mechanisms.",
           "evidence": [
             {
@@ -1181,7 +1181,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "CRV has a programmatic inflation schedule with yearly epochs and decreasing emission rate. All minting flows through the Minter contract based on gauge participation.",
           "evidence": [
             {
@@ -1189,8 +1189,8 @@
               "summary": "CRV inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^(1/4). Any unminted supply from a year is permanently lost.",
               "urls": [
                 {
-                  "name": "CRV Supply Schedule (Docs)",
-                  "url": "https://resources.curve.finance/crv-token/overview#supply-schedule",
+                  "name": "CRV Emission Schedule (Docs)",
+                  "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
                   "type": "docs"
                 },
                 {
@@ -1222,7 +1222,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.",
           "evidence": [
             {
@@ -1242,7 +1242,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The CRV token has no transfer restrictions, blacklist functionality, or pausable transfers. There's Admin set (Agent) on the CRV token, but it can only update token's name and symbol.",
           "evidence": [
             {
@@ -1276,7 +1276,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards, plus boosted CRV emissions for liquidity provision. They also receive 80% of the accrued interest from all crvUSD markets.",
           "evidence": [
             {
@@ -1318,14 +1318,14 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "50% of all trading fees are distributed to veCRV holders through crvUSD rewards, while the remaining 50% goes to the respective liquidity providers of the pools. Only veCRV holders can change this behaviour, hence Curve has no separate treasury. All revenue to the people.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "Earning-fees",
-                  "url": "https://resources.curve.finance/vecrv/overview#earning-fees",
+                  "name": "veCRV Revenue Share (Docs)",
+                  "url": "https://docs.curve.finance/user/vecrv/revenue",
                   "type": "docs"
                 }
               ]
@@ -1336,7 +1336,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.",
           "evidence": [
             {
@@ -1378,7 +1378,7 @@
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not verified additional offchain value accrual flows to the CRV token",
           "evidence": []
         }
@@ -1397,7 +1397,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The CRV token contract source code (ERC20CRV.vy) is publicly available on GitHub and verified on Etherscan.",
           "evidence": [
             {
@@ -1420,7 +1420,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Curve DAO protocol contracts are open source on GitHub.",
           "evidence": [
             {
@@ -1449,7 +1449,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified if the majority of veCRV voting power lies with a single party",
           "evidence": []
         },
@@ -1457,14 +1457,14 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Future CRV unlocks are determined by the programmatic supply schedule and veCRV system. Emissions decrease yearly by 2^(1/4). Aragon is not aware of any significant vesting cliffs.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "CRV Supply Schedule",
-                  "url": "https://resources.curve.finance/crv-token/overview#supply-schedule",
+                  "name": "CRV Emission Schedule (Docs)",
+                  "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
                   "type": "docs"
                 }
               ]
@@ -1486,7 +1486,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
           "evidence": [
             {
@@ -1504,7 +1504,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "The Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
           "evidence": [
             {
@@ -1522,7 +1522,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified all the licensing criteria associated with the CRV token or the corresponding protocol and assets",
           "evidence": []
         }
@@ -2820,7 +2820,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "LDO holders exercise control through multiple governance paths with stETH holder veto protection via Dual Governance.",
           "evidence": [
             {
@@ -2887,7 +2887,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.",
           "evidence": [
             {
@@ -2940,7 +2940,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Protocol contracts are upgradeable by LDO holders. Core governance contracts (DualGovernance, Executor, EmergencyProtectedTimeLock) are non-upgradeable.",
           "evidence": [
             {
@@ -2991,7 +2991,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "LDO token is immutable but **partially upgradeable** in practice due to its controller (TokenManager) being upgradeable via Aragon proxy.",
           "evidence": [
             {
@@ -3027,7 +3027,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "No supply cap exists, but all mints require LDO tokenholder approval through the Voting contract.",
           "evidence": [
             {
@@ -3047,7 +3047,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Deposits are operationally executed by Guardians (node operators + LDO dev team), but Guardians are fully accountable to LDO holders and cannot control protocol parameters.",
           "evidence": [
             {
@@ -3093,7 +3093,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Controller has burn and transfer-disable capabilities, but BURN_ROLE is currently unassigned. Enabling burning requires LDO governance approval.",
           "evidence": [
             {
@@ -3140,7 +3140,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "LDO token holders currently have no direct value accrual mechanism from protocol revenue. However, governance is exploring buyback mechanisms to return value to token holders, with proposals under consideration for liquid buyback execution using protocol treasury funds.",
           "evidence": [
             {
@@ -3158,7 +3158,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Treasury is the Agent contract, fully controlled by LDO holders. Treasury decisions are excluded from Governance 1 scope (stETH holders cannot challenge).",
           "evidence": [
             {
@@ -3189,7 +3189,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "To add a new staking module or update it with new fees, full governance flow required, hence controlled by LDO holders.",
           "evidence": [
             {
@@ -3207,7 +3207,7 @@
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not verified additional offchain value accrual flows to the LDO token",
           "evidence": []
         }
@@ -3226,7 +3226,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The LDO token contract source code is publicly available on GitHub (MiniMeToken) and verified on Etherscan.",
           "evidence": [
             {
@@ -3249,7 +3249,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Lido core protocol contracts are open source on GitHub.",
           "evidence": [
             {
@@ -3278,7 +3278,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified the distribution of LDO holders outside of the core team is greater than 50%",
           "evidence": []
         },
@@ -3286,7 +3286,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified the supply schedule criteria for the LDO token",
           "evidence": []
         }
@@ -3305,7 +3305,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
           "evidence": [
             {
@@ -3328,7 +3328,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
             {
@@ -3356,7 +3356,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
           "evidence": [
             {
@@ -3391,7 +3391,7 @@
         "Metric 1"
       ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "ONDO governance controls Flux Finance only (~$43M TVL, 1.2% of Ondo's total). Core products OUSG/USDY (~$3.5B TVL) are controlled by team multisigs. The ONDO token contract has team-held admin and minting roles. Supply is 10B with active mint capability.",
+      "summary": "Core products OUSG/USDY (~$3.5B TVL) are controlled by team multisigs. ONDO governance does control Flux Finance but it's only 1.2% of total TVL, hence insignificant. The ONDO token contract has team-held admin and minting roles. Supply is 10B with active mint capability.",
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
@@ -3402,7 +3402,7 @@
           "evidence": [
             {
               "name": "Two-Stage Governance Process",
-              "summary": "1. Forum Discussion: Proposals posted on Flux Finance Governance Forum.\n2. Onchain Vote: Submitted via Tally for binding votes.\n\nParameters:\n- Proposal threshold: 100M ONDO (1% of supply)\n- Quorum: 1M ONDO (0.01% of supply)\n- Voting period: ~3 days (21600 blocks)\n- Timelock delay: 1 day (86400 seconds)",
+              "summary": "1. Forum Discussion: Proposals posted on Flux Finance Governance Forum.\n\n2. Onchain Vote: Submitted via Tally for binding votes.\n\nParameters:\n\n- Proposal threshold: 100M ONDO (1% of supply)\n\n- Quorum: 1M ONDO (0.01% of supply)\n\n- Voting period: ~3 days (21600 blocks)\n\n- Timelock delay: 1 day (86400 seconds)",
               "urls": [
                 {
                   "name": "Flux Finance Governance Forum",
@@ -3541,7 +3541,7 @@
           "evidence": [
             {
               "name": "OUSG/USDY (Team-Controlled)",
-              "summary": "Ethereum OUSG ProxyAdmin owner: 4-of-7 Multisig.\nEthereum USDY ProxyAdmin owner: 4-of-7 Multisig.\nPolygon OUSG ProxyAdmin owner: 3-of-6 Multisig.\nMantle USDY ProxyAdmin owner: 4-of-7 Multisig.\nArbitrum USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nThe DAO has no upgrade authority over OUSG or USDY on any chain.",
+              "summary": "Ethereum OUSG ProxyAdmin owner: 4-of-7 Multisig.\n\nEthereum USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nPolygon OUSG ProxyAdmin owner: 3-of-6 Multisig.\n\nMantle USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nArbitrum USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nThe DAO has no upgrade authority over OUSG or USDY on any chain.",
               "urls": [
                 {
                   "name": "OUSG Proxy",
@@ -3771,7 +3771,7 @@
         "Metric 2"
       ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "No active value accrual for ONDO tokenholders. Flux Finance reserve factors are 0%. No DAO treasury identified. ONDO holders can set Flux fees via governance but no distribution mechanism exists. USDY/OUSG yield accrues to product holders and company, not ONDO holders.",
+      "summary": "No active value accrual for ONDO tokenholders. USDY/OUSG yield (~$3-4M monthly) accrues to product holders, not ONDO holders. ONDO holders have no control over OUSG/USDY oracle price updates (controlled by company SETTER_ROLE). No DAO treasury identified. Global Markets fees accrue to company via TimelockController.",
       "criteria": [
         {
           "id": "val-accrual__active",
@@ -3803,7 +3803,7 @@
             },
             {
               "name": "USDY/OUSG Revenue Clarification",
-              "summary": "The ~$3-4M monthly \"fees\" on DefiLlama is yield to USDY/OUSG product holders, not ONDO tokenholders.\n\n1. USDY/OUSG are backed by short-term US Treasuries.\n2. Oracle updates NAV/price daily to reflect yield.\n3. USDY/OUSG holders receive yield through increasing token price.\n4. ONDO tokenholders receive ZERO from this yield.",
+              "summary": "The ~$3-4M monthly \"fees\" on DefiLlama is yield to USDY/OUSG product holders, not ONDO tokenholders.\n\n1. USDY/OUSG are backed by short-term US Treasuries.\n\n2. Oracle updates NAV/price daily to reflect yield.\n\n3. USDY/OUSG holders receive yield through increasing token price.\n\n4. ONDO tokenholders receive ZERO from this yield.",
               "urls": [
                 {
                   "name": "DefiLlama Ondo Finance",
@@ -3957,7 +3957,7 @@
         "Metric 3"
       ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
-      "summary": "ONDO token is verified on Etherscan. Flux Finance contracts are verified and match public GitHub. OUSG/USDY contracts are verified. The deployed ONDO token differs from the public ondo-v1 repository.",
+      "summary": "ONDO token is verified on Etherscan. OUSG/USDY contracts are verified and match public GitHub. The deployed ONDO token uses AccessControl, which differs from the public ondo-v1 repository.",
       "criteria": [
         {
           "id": "verifiability__token-source",
@@ -4081,7 +4081,7 @@
           "evidence": [
             {
               "name": "Documented Schedule",
-              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, 18-month release.\nCoinList Tranche 2 (~1.7%): 1-year lock, 6-month release.\nSeed Investors (<7%): 1-year cliff, 48-month release.\nSeries A (<7%): 1-year cliff, 48-month release.\nCore Team: 5-year vesting.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
+              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, 18-month release.\n\nCoinList Tranche 2 (~1.7%): 1-year lock, 6-month release.\n\nSeed Investors (<7%): 1-year cliff, 48-month release.\n\nSeries A (<7%): 1-year cliff, 48-month release.\n\nCore Team: 5-year vesting.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
               "urls": [
                 {
                   "name": "Token Documentation",
@@ -4101,7 +4101,7 @@
         "Reference"
       ],
       "about": "Economically material assets and obligations often sit offchain, outside the custody and direct enforcement of a token, while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Aragon has not been able to verify trademark ownership for Ondo. Primary distribution channels are controlled by Ondo Finance Inc. Flux Finance code is open source (BSD-3-Clause); OUSG/USDY code is BUSL-1.1 licensed.",
+      "summary": "Aragon has not been able to verify trademark ownership for Ondo. Primary distribution channels (ondo.finance) are controlled by Ondo Finance Inc. OUSG/USDY code is BUSL-1.1 licensed.",
       "criteria": [
         {
           "id": "offchain__trademark",
@@ -4174,7 +4174,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "SKY holders vote to elect \"spells\" (upgrade contracts). The winning spell must wait 24 hours before it can execute changes. This creates binding, verifiable onchain governance.",
           "evidence": [
             {
@@ -4215,7 +4215,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All privileged roles trace back to SKY governance. A single \"Pause Proxy\" contract holds admin rights on all core contracts. Only governance-approved spells can act through it.",
           "evidence": [
             {
@@ -4261,7 +4261,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Core accounting contracts are immutable \u2014 their code cannot change. Newer stablecoin contracts (USDS, sUSDS) can be upgraded, but only through governance.",
           "evidence": [
             {
@@ -4302,7 +4302,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The SKY token cannot be upgraded. Its code is permanent with no admin backdoors.",
           "evidence": [
             {
@@ -4322,7 +4322,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Only governance can mint new SKY. The primary source is conversion from legacy MKR tokens at a fixed 24,000:1 ratio. Anyone can burn their own tokens.",
           "evidence": [
             {
@@ -4358,7 +4358,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "No admin can arbitrarily pause the protocol or restrict user access. Emergency shutdown exists but requires burning a significant amount of tokens.",
           "evidence": [
             {
@@ -4388,7 +4388,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "SKY has no blacklist, freeze, or admin-controlled transfer blocking. Tokens cannot be seized or frozen by anyone.",
           "evidence": [
             {
@@ -4419,7 +4419,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "A portion of protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
           "evidence": [
             {
@@ -4470,7 +4470,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All treasury assets are held onchain and controlled by governance. There is no offchain treasury or multi-sig.",
           "evidence": [
             {
@@ -4490,7 +4490,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Governance controls all fee rates and revenue parameters. SKY holders decide how much the protocol charges and how revenue is distributed.",
           "evidence": [
             {
@@ -4534,7 +4534,7 @@
             "Reference"
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is an independent non-profit that does not distribute profits.",
           "evidence": [
             {
@@ -4565,7 +4565,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "SKY token source code is open source and verified on Etherscan. Anyone can audit the code.",
           "evidence": [
             {
@@ -4590,7 +4590,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Every protocol contract is open source. A \"chainlog\" provides a registry of all deployed contract addresses.",
           "evidence": [
             {
@@ -4626,7 +4626,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "\u26a0\ufe0f",
+          "status": "unevaluated",
           "notes": "Aragon has not been able to verify the concentration of holdings.",
           "evidence": []
         },
@@ -4634,7 +4634,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Vesting contracts exist but specific unlock schedules were not enumerated in this analysis.",
           "evidence": [
             {
@@ -4659,18 +4659,29 @@
         "Reference"
       ],
       "about": "Economically material assets and obligations often sit offchain\u2014outside the custody and direct enforcement of a token\u2014while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Maker and DAI trademarks are held by an independent foundation, not by SKY tokenholders. All code is open source (AGPL-3.0).",
+      "summary": "Current Sky branding is not controlled by SKY tokenholders. Skybase International's terms reserve trademarks, service marks, logos, and trade names associated with the Services, including the Sky name, to the service operator or its licensors, and the DAI Foundation independently holds the legacy Maker and DAI trademarks. All code is open source (AGPL-3.0).",
       "criteria": [
         {
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
-          "notes": "Maker and DAI trademarks are held by the DAI Foundation, an independent Danish non-profit. This entity operates outside token governance.",
+          "status": "warning",
+          "notes": "Official Skybase International terms state that trademarks, service marks, logos, and trade names associated with the Services are proprietary to Skybase International or its licensors, and explicitly include the Sky name. Aragon has not found evidence that current Sky / USDS branding is owned by a tokenholder-controlled legal entity. Separately, the DAI Foundation holds the legacy Maker and DAI trademarks outside token governance.",
           "evidence": [
             {
+              "name": "Skybase International Terms of Use",
+              "summary": "Skybase International's terms say trademarks, service marks, logos, and trade names associated with the Services are proprietary to Skybase International or its licensors, and explicitly include the Sky name.",
+              "urls": [
+                {
+                  "name": "Terms of Use",
+                  "url": "https://docs.sky.money/legal/skybase-international/terms-of-use",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
               "name": "DAI Foundation",
-              "summary": "Holds Maker and DAI trademarks since 2020. Operates under Danish law, independent of token governance.",
+              "summary": "Holds the legacy Maker and DAI trademarks. Operates under Danish law, independent of token governance.",
               "urls": [
                 {
                   "name": "Foundation Website",
@@ -4685,7 +4696,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Domain ownership not verified. Open source frontends exist that anyone can deploy.",
           "evidence": [
             {
@@ -4705,7 +4716,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All code is AGPL-3.0 licensed. Anyone can fork and deploy the protocol. The license requires source disclosure.",
           "evidence": [
             {
@@ -4738,7 +4749,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "UNI holders vote onchain via GovernorBravoDelegator, with execution through Timelock after a time delay.",
           "evidence": [
             {
@@ -4761,7 +4772,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All critical roles flow through governance-controlled contracts, ensuring UNI holders maintain ultimate control.",
           "evidence": [
             {
@@ -4819,7 +4830,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All Uniswap protocol contracts (V2 Pairs, V3 Pools, V4 PoolManager, Timelock) are non-upgradeable. Only GovernorBravoDelegator is upgradeable, controlled by Timelock.",
           "evidence": [
             {
@@ -4860,7 +4871,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Token contract is immutable with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns.",
           "evidence": [
             {
@@ -4883,7 +4894,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "UNI has a hardcoded 2% annual inflation cap that cannot be changed. Minting is controlled by Timelock (hence UNI holders).",
           "evidence": [
             {
@@ -4919,7 +4930,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "No pause/freeze functions in V2 Pair, V3 Pool, or V4 PoolManager core contracts. No admin backdoors to steal funds. No emergency withdrawal or sweep functions.",
           "evidence": []
         },
@@ -4927,7 +4938,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "No blacklist, whitelist, or pause functions in UNI token contract. Transfers cannot be censored. Standard ERC20 with no admin controls over transfers.",
           "evidence": [
             {
@@ -4956,7 +4967,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - a burn can be initiated by anyone who chooses to burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
           "evidence": [
             {
@@ -5024,7 +5035,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
           "evidence": [
             {
@@ -5042,7 +5053,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Token holders control fee routing and burn threshold across all versions through Timelock-governed ownership.",
           "evidence": [
             {
@@ -5094,7 +5105,7 @@
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "DUNI (Decentralized Unincorporated Nonprofit Association) provides legal capacity for the DAO to engage in off-chain activities such as tax compliance, legal defense, and contract execution. At the time of writing, there are no specific offchain value accrual mechanisms explicitly defined.",
           "evidence": [
             {
@@ -5123,7 +5134,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The UNI token contract source code (Uni.sol) is publicly available on GitHub and verified on Etherscan.",
           "evidence": [
             {
@@ -5146,7 +5157,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Uniswap V2, V3, V4, and UniswapX protocol contracts are open source on GitHub.",
           "evidence": [
             {
@@ -5190,7 +5201,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not yet verified that 3rd parties do not hold more than 50% of voting power",
           "evidence": []
         },
@@ -5198,7 +5209,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "Four vesting contracts distributed UNI to the Governance Timelock over four years, ending in September 2024. There are no future unlocks.",
           "evidence": [
             {
@@ -5249,7 +5260,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Core trademark rights related to Uniswap Labs, including UNISWAP, UNI, and UNISWAP LABS, are held and enforceable by Universal Navigation Inc. d/b/a Uniswap Labs (\"Labs\").\n\nAfter the passing of the UNIfication proposal, in which Uniswap Labs entered into a service provider agreement with DUNI (formerly Uniswap Governance), Labs grants DUNI a non-exclusive, royalty-free, worldwide trademark license to use the UNISWAP mark solely in connection with DUNI's business, subject to Labs' trademark usage guidelines and limited to the term of the agreement.\n\nThe agreement does not transfer ownership of the UNISWAP mark or Labs' other trademarks to DUNI or token holders.\n\nAny broader assignment, or permanent or exclusive license, of Labs' trademarks to DUNI is explicitly deferred and would require a separate written agreement negotiated in the future.",
           "evidence": [
             {
@@ -5267,7 +5278,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Uniswap Labs operates a user interface and API, both of which are subject to Terms of Service. The permissionless nature of the Uniswap Protocol\u2019s smart contracts means that any person or firm can operate an interface or API.",
           "evidence": [
             {
@@ -5285,7 +5296,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Uniswap Labs retains ownership of its pre-existing IP and trademarks. DUNI holds a limited, non-exclusive license to use the UNISWAP trademark for DUNI-related purposes, and generally receives rights to new deliverables under open-source licenses. No transfer of core Labs' IP has occurred; any broader licensing or assignment would require a separate agreement.",
           "evidence": []
         }
@@ -5306,7 +5317,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veYB holders vote onchain via Aragon governance DAO. Proposals require **30% participation**, **55% support**, and a **7-day voting period**. Proposals can be executed before the full voting period concludes when mathematical certainty is achieved (thresholds met, remaining votes cannot change outcome). Minimum 1 veYB required to create proposals.",
           "evidence": [
             {
@@ -5341,7 +5352,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner (_yb.eth) can change transfer clearance rules. However, transfer restrictions do not constitute censorship\u2014users remain custodians of their locked YB and can always withdraw after lock expiry.",
           "evidence": [
             {
@@ -5387,7 +5398,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The DAO controls protocol upgrades through MigrationFactoryOwner. This constitutes ownership\u2014the indirection through governance is the standard mechanism for tokenholder control.",
           "evidence": [
             {
@@ -5417,7 +5428,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "YB token is a **non-upgradeable** Vyper contract. Ownership has been **renounced** (owner = 0x0). No proxy pattern. Only GaugeController (set before renouncement) can mint via emit().",
           "evidence": [
             {
@@ -5442,7 +5453,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "**1B max supply** with programmatic emission. Only GaugeController can mint. Emission rate determined by gauge staking levels: get_adjustment() returns sqrt(staked / totalSupply), so higher LP staking = higher emission rate (up to 100% of max rate).",
           "evidence": [
             {
@@ -5472,7 +5483,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "User exits are **permissionless**: veYB withdrawal after lock expiry, fee claims. Gauge killing is DAO-controlled and affects emissions, not user funds.",
           "evidence": [
             {
@@ -5497,7 +5508,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "**No blacklist, freeze, or seizure functions** in YB token. The veYB transfer clearance checker can restrict veNFT transfers, but this does not censor the underlying YB token\u2014users remain custodians and can withdraw after lock expiry.",
           "evidence": [
             {
@@ -5526,7 +5537,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "FeeDistributor is **actively distributing** yb-cbBTC, yb-WBTC, yb-tBTC, and yb-WETH LP tokens to veYB holders.\n\n**Important distinction:** Protocol revenue = LP fees + position rebalancing expenses. What veYB holders receive is the **protocol admin fee** (admin_fee)\u2014a subset of protocol revenue, not the total.\n\n**Fee flow:** LT vaults accrue admin fees \u2192 anyone calls withdraw_admin_fees() \u2192 mints LT to fee_receiver (FeeDistributor) \u2192 fill_epochs() distributes over 4 weeks \u2192 veYB holders claim pro-rata.\n\n**Data source:** [ValueVerse](https://yb.valueverse.ai)",
           "evidence": [
             {
@@ -5571,7 +5582,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "TBD",
+          "status": "at_risk",
           "notes": "The **Ecosystem Reserve** is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside the vesting contracts. The DAO holds a small amount of YB directly.",
           "evidence": [
             {
@@ -5601,7 +5612,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "veYB holders control both the **direction of automated value flows** and **emission routing**:\n\n**Fee direction:** DAO controls Factory.fee_receiver via MigrationFactoryOwner, determining where admin fees are routed.\n\n**Gauge voting = fee control by veYB:** veYB holders vote on gauge weights. Higher weight = more YB emissions to that pool's stakers, incentivizing LP staking which generates the admin fees distributed back to veYB holders. 10-day vote lock prevents manipulation.",
           "evidence": [
             {
@@ -5645,7 +5656,7 @@
             "Reference"
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not been able to verify whether YieldBasis AG (operating entity) provides any offchain value to YB token holders. No evidence of equity linkage, offchain revenue sharing, or legal commitments to tokenholders.",
           "evidence": []
         }
@@ -5664,7 +5675,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "YB token is **verified on Etherscan** (Vyper 0.4.3, AGPL v3.0 license). Source code available on GitHub with matching bytecode.",
           "evidence": [
             {
@@ -5687,7 +5698,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "All core contracts (Factory, veYB, GaugeController, FeeDistributor) are **verified on Etherscan**. **6 independent security audits** completed between March-August 2025.",
           "evidence": [
             {
@@ -5723,7 +5734,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "~77M veYB locked from ~722M minted YB (~10% participation). Post-cliff, **Team (250M) + Investors (121M) = 371M YB (37%)** could potentially influence governance if coordinated, given low current veYB participation.",
           "evidence": [
             {
@@ -5748,7 +5759,7 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "**24-month vesting** with **6-month cliff** ending ~March 15, 2026.\n\n**During cliff:** Cannot sell, but **can lock into veYB**. ~35M YB was locked by team and investors during the cliff, choosing protocol fees over liquidity.\n\n**At cliff end:** 25% unlocks (6/24 months).\n\n**Post-cliff:** Remaining 75% vests linearly over 18 months until September 2027.\n\n**Affected:** Team (250M) + Investors (121M) = 371M YB (37% of max supply). Tokens release gradually\u2014they cannot be instantly used to influence governance.",
           "evidence": [
             {
@@ -5779,7 +5790,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not been able to verify trademark ownership.",
           "evidence": []
         },
@@ -5787,7 +5798,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels.",
           "evidence": [
             {
@@ -5805,7 +5816,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "**Mixed licensing**: YB.vy, VotingEscrow.vy, GaugeController.vy use AGPL v3.0 (open source). **Factory.vy uses 'Copyright (c) 2025'** (proprietary).",
           "evidence": [
             {

@@ -21,7 +21,7 @@ const EFFECTS = {
   // Add padding and rounded corners
   padding: 40,
   borderRadius: 16,
-  
+
   // Shadow configuration
   shadow: {
     blur: 40,
@@ -29,17 +29,17 @@ const EFFECTS = {
     offsetY: 20,
     opacity: 0.15,
   },
-  
+
   // Background color (from your --background CSS variable)
   backgroundColor: '#ffffff',
-  
+
   // Gradient overlay (optional, set to null to disable)
   gradient: {
     enabled: true,
     color: 'rgba(72, 61, 179, 0.03)', // Subtle primary color overlay
     height: 100, // Height of gradient from top
   },
-  
+
   // Subtle noise texture
   noise: {
     enabled: true,
@@ -62,16 +62,18 @@ const tokenRoutes = [
   'aave',
   'aero',
   'crv',
+  'ethfi',
   'ldo',
   'uni',
   'sky',
   'yb',
+  'ena'
 ];
 
 async function captureScreenshot(page, url, outputPath) {
   try {
     console.log(`Capturing: ${url}`);
-    
+
     // Navigate to the page
     await page.goto(url, {
       waitUntil: 'networkidle',
@@ -83,7 +85,7 @@ async function captureScreenshot(page, url, outputPath) {
 
     // Create temp file path
     const tempPath = outputPath.replace(OUTPUT_DIR, TEMP_DIR);
-    
+
     // Take screenshot
     await page.screenshot({
       path: tempPath,
@@ -108,7 +110,7 @@ async function applyEffects(inputPath, outputPath) {
     const screenshot = await sharp(inputPath)
       .resize(SCREENSHOT_WIDTH, SCREENSHOT_HEIGHT, { fit: 'cover' })
       .toBuffer();
-    
+
     // Create rounded corners mask for the screenshot
     const roundedMask = Buffer.from(
       `<svg width="${SCREENSHOT_WIDTH}" height="${SCREENSHOT_HEIGHT}">
@@ -116,7 +118,7 @@ async function applyEffects(inputPath, outputPath) {
               rx="${EFFECTS.borderRadius}" ry="${EFFECTS.borderRadius}" fill="white"/>
       </svg>`
     );
-    
+
     // Apply rounded corners to screenshot
     const roundedScreenshot = await sharp(screenshot)
       .composite([{
@@ -125,7 +127,7 @@ async function applyEffects(inputPath, outputPath) {
       }])
       .png()
       .toBuffer();
-    
+
     // Create shadow as SVG (positioned where the screenshot will be)
     const shadowSvg = Buffer.from(
       `<svg width="${FINAL_WIDTH}" height="${FINAL_HEIGHT}">
@@ -144,7 +146,7 @@ async function applyEffects(inputPath, outputPath) {
               fill="black" filter="url(#shadow)"/>
       </svg>`
     );
-    
+
     // Build composite operations
     const compositeOps = [
       // Add shadow layer
@@ -160,7 +162,7 @@ async function applyEffects(inputPath, outputPath) {
         left: EFFECTS.padding,
       }
     ];
-    
+
     // If gradient is enabled, add it on top of the screenshot
     if (EFFECTS.gradient.enabled) {
       const gradientSvg = Buffer.from(
@@ -179,14 +181,14 @@ async function applyEffects(inputPath, outputPath) {
                 fill="url(#grad)" mask="url(#roundedMask)"/>
         </svg>`
       );
-      
+
       compositeOps.push({
         input: gradientSvg,
         top: EFFECTS.padding,
         left: EFFECTS.padding,
       });
     }
-    
+
     // Create final image: white background with shadow, rounded screenshot, and gradient
     await sharp({
       create: {
@@ -199,12 +201,12 @@ async function applyEffects(inputPath, outputPath) {
     .composite(compositeOps)
     .png({ quality: 95, compressionLevel: 9 })
     .toFile(outputPath);
-    
+
     // Clean up temp file
     if (fs.existsSync(inputPath)) {
       fs.unlinkSync(inputPath);
     }
-    
+
     return true;
   } catch (error) {
     console.error(`Failed to apply effects to ${inputPath}:`, error.message);
@@ -260,14 +262,14 @@ async function main() {
   for (const route of routes) {
     const outputFile = `${route.name}.png`;
     const outputPath = path.join(OUTPUT_DIR, outputFile);
-    
+
     // Skip if file already exists
     if (fs.existsSync(outputPath)) {
       console.log(`⏭ Skipping ${outputFile} (already exists)`);
       results.successful.push({ route: route.path, file: outputFile, skipped: true });
       continue;
     }
-    
+
     const url = `${BASE_URL}${route.path}`;
     const success = await captureScreenshot(page, url, outputPath);
     if (success) {
@@ -282,14 +284,14 @@ async function main() {
   for (const tokenId of tokenRoutes) {
     const outputFile = `tokens-${tokenId}.png`;
     const outputPath = path.join(OUTPUT_DIR, outputFile);
-    
+
     // Skip if file already exists
     if (fs.existsSync(outputPath)) {
       console.log(`⏭ Skipping ${outputFile} (already exists)`);
       results.successful.push({ route: `/tokens/${tokenId}`, file: outputFile, skipped: true });
       continue;
     }
-    
+
     const url = `${BASE_URL}/tokens/${tokenId}`;
     const success = await captureScreenshot(page, url, outputPath);
     if (success) {

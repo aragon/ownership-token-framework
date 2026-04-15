@@ -10,6 +10,7 @@ interface ITitlePopoverProps extends ComponentPropsWithoutRef<"div"> {
   description: string
   learnMoreLink?: string
   variant?: "h3" | "h4"
+  titleClassName?: string
 }
 
 const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
@@ -18,6 +19,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
     description,
     learnMoreLink,
     variant = "h3",
+    titleClassName,
     className,
     ...otherProps
   } = props
@@ -40,30 +42,28 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
         {...otherProps}
       >
         <PreviewCardPrimitive.Trigger
-          className={cn(
-            "group inline-flex sm:flex-row-reverse items-start text-foreground no-underline outline-none",
-            variant === "h3" ? "gap-2" : "gap-3"
-          )}
+          className="group text-foreground no-underline outline-none inline"
         >
-          <CircleHelpIcon
-            className={cn(
-              "size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-chart-3",
-              variant === "h3" ? "mt-1.5" : "mt-1"
-            )}
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              setOpen((prev) => !prev)
-            }}
-          />
           <TitleTag
             className={cn(
-              "font-sans not-italic sm:underline sm:decoration-dotted underline-offset-4",
+              "font-sans not-italic underline decoration-dotted underline-offset-4 inline",
               variant === "h3" && "text-lg font-bold leading-7",
-              variant === "h4" && "text-base font-medium leading-6"
+              variant === "h4" && "text-base font-medium leading-6",
+              titleClassName
             )}
           >
             {title}
+            <CircleHelpIcon
+              className={cn(
+                "size-4 text-muted-foreground transition-colors group-hover:text-chart-3 inline-block align-middle no-underline",
+                variant === "h3" ? "ml-2" : "ml-1.5"
+              )}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setOpen((prev) => !prev)
+              }}
+            />
           </TitleTag>
         </PreviewCardPrimitive.Trigger>
 

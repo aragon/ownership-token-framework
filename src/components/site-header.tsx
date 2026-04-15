@@ -137,7 +137,7 @@ export function SiteHeader() {
                       className="xl:hidden"
                       onClick={() => setSubmitDialogOpen(true)}
                     >
-                      Submit token
+                      Request token
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -231,7 +231,7 @@ export function SiteHeader() {
                 className="py-3"
                 onClick={() => setSubmitDialogOpen(true)}
               >
-                Submit token
+                Request token
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -318,12 +318,12 @@ export function SiteHeader() {
             variant="outline"
           >
             <PlusIcon className="size-4" />
-            Submit token
+            Request token
           </Button>
         </div>
       </Container>
 
-      {/* Submit Token Dialog */}
+      {/* Request token Dialog */}
       <SubmitTokenDialog
         onOpenChange={setSubmitDialogOpen}
         open={submitDialogOpen}

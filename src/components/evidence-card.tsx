@@ -1,5 +1,21 @@
+import ReactMarkdown from "react-markdown"
+import remarkBreaks from "remark-breaks"
 import type { Evidence, EvidenceUrl } from "@/lib/metrics-data"
 import { EvidenceLink } from "./ui/evidence-link.tsx"
+
+interface MarkdownComponentProps {
+  children?: React.ReactNode
+  href?: string
+}
+
+const markdownComponents = {
+  p: ({ children }: MarkdownComponentProps) => <p>{children}</p>,
+  a: ({ href, children }: MarkdownComponentProps) => (
+    <a href={href} rel="noopener noreferrer" target="_blank">
+      {children}
+    </a>
+  ),
+}
 
 export type FullEvidence = Evidence
 
@@ -26,9 +42,11 @@ export const EvidenceCard: React.FC<IEvidenceCardProps> = (props) => {
             </h4>
           )}
           {evidence.summary && (
-            <p className="text-base leading-6 tracking-normal text-muted-foreground">
-              {evidence.summary}
-            </p>
+            <div className="text-base leading-6 tracking-normal text-muted-foreground prose max-w-none">
+              <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+                {evidence.summary}
+              </ReactMarkdown>
+            </div>
           )}
         </div>
       )}

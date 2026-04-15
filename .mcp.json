@@ -1,14 +1,8 @@
 {
   "mcpServers": {
-    "shadcn": {
-      "command": "npx",
-      "args": [
-        "shadcn@latest",
-        "mcp"
-      ]
-    },
-    "TanStack Query Docs": {
-        "url": "https://tanstack.com/api/mcp"
+    "tanstack": {
+      "type": "http",
+      "url": "https://tanstack.com/api/mcp"
     }
   }
 }

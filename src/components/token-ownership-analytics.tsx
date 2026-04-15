@@ -3,7 +3,6 @@
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
-  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -12,14 +11,38 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowRightIcon, ChevronsUpDownIcon } from "lucide-react"
-import { useState } from "react"
+import {
+  IconCircleCheckFilled,
+  IconCircleX,
+  // @ts-expect-error by default it imports from cjs build and triggers server-side error
+} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
+import {
+  ArrowRightIcon,
+  ChevronsUpDownIcon,
+  FilterIcon,
+  NetworkIcon,
+} from "lucide-react"
+import { useMemo, useState } from "react"
 import { HeroHeader } from "@/components/hero-header"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { PageWrapper } from "@/components/page-wrapper"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { BadgeEvaluation } from "@/components/ui/badge-evaluation"
 import { Container } from "@/components/ui/container"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -28,19 +51,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
+import { CRITERIA_STATUS, getCriteriaStatus } from "@/lib/metrics-data"
+import { getTokenOwnershipScore } from "@/lib/scoring"
 import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
 
-// Types
-interface Token {
-  id: string
-  name: string
-  symbol: string
-  address: string
-  icon?: string
-  evidenceEntries: number
-  lastUpdated: number
-  network: string
+function formatMarketCap(value?: number): string {
+  if (value == null) return "—"
+  return value.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  })
+}
+
+function SortableHeader({
+  column,
+  label,
+}: {
+  column: { toggleSorting: (desc: boolean) => void; getIsSorted: () => false | "asc" | "desc" }
+  label: string
+}) {
+  return (
+    <button
+      className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      type="button"
+    >
+      {label}
+      <ChevronsUpDownIcon className="size-4" />
+    </button>
+  )
 }
 
 declare module "@tanstack/react-table" {
@@ -95,19 +137,16 @@ declare module "@tanstack/react-table" {
 // }
 
 // Column definitions
-const columns: ColumnDef<Token>[] = [
+const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "name",
+    meta: {
+      headerClassName: "w-[36%]",
+      cellClassName: "w-[36%]",
+    },
     header: ({ column }) => (
       <div className="pl-12">
-        <button
-          className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          type="button"
-        >
-          Token name
-          <ChevronsUpDownIcon className="size-4" />
-        </button>
+        <SortableHeader column={column} label="Token name" />
       </div>
     ),
     cell: ({ row }) => (
@@ -129,40 +168,107 @@ const columns: ColumnDef<Token>[] = [
       </div>
     ),
   },
-  // {
-  //   accessorKey: "evidenceEntries",
-  //   meta: {
-  //     headerClassName: "hidden md:table-cell",
-  //     cellClassName: "hidden md:table-cell",
-  //   },
-  //   header: ({ column }) => (
-  //     <button
-  //       className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       type="button"
-  //     >
-  //       Evidence entries
-  //       <ChevronsUpDownIcon className="size-4" />
-  //     </button>
-  //   ),
-  //   cell: ({ row }) => (
-  //     <MetricPill
-  //       icon={<IconBubble className="size-4" />}
-  //       value={row.original.evidenceEntries}
-  //     />
-  //   ),
-  // },
+  {
+    id: "ownershipScore",
+    meta: {
+      headerClassName: "w-[18%]",
+      cellClassName: "w-[18%]",
+    },
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Ownership score" />
+    ),
+    accessorFn: (row) => {
+      const score = getTokenOwnershipScore(row.id)
+      const mcap = row.marketCap ?? 0
+      return score.total > 0
+        ? score.percentage * 1e15 + score.total * 1e12 + mcap
+        : -1
+    },
+    cell: ({ row }) => {
+      const score = getTokenOwnershipScore(row.original.id)
+      return (
+        <HoverCard>
+          <HoverCardTrigger
+            className="cursor-default"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <BadgeEvaluation passing={score.passing} total={score.total} />
+          </HoverCardTrigger>
+          <HoverCardContent align="start" className="w-72 p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-medium">{row.original.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {truncateAddress(row.original.address)}
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              {score.metrics
+                .filter((m) => !m.reference)
+                .map((m) => (
+                  <div
+                    className="flex items-center justify-between"
+                    key={m.metricId}
+                  >
+                    <span className="text-sm">{m.metricName}</span>
+                    <BadgeEvaluation
+                      evaluated={m.evaluated}
+                      passing={m.passing}
+                      total={m.total}
+                    />
+                  </div>
+                ))}
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+      )
+    },
+  },
+  {
+    id: "accrualActive",
+    meta: {
+      headerClassName: "hidden md:table-cell w-[8%]",
+      cellClassName: "hidden md:table-cell w-[8%]",
+    },
+    accessorFn: (row) => {
+      const status = getCriteriaStatus(row.id, "val-accrual__active")
+      return status === CRITERIA_STATUS.POSITIVE ? 1 : 0
+    },
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Accrual Active" />
+    ),
+    cell: ({ row }) => {
+      const status = getCriteriaStatus(row.original.id, "val-accrual__active")
+      const isActive = status === CRITERIA_STATUS.POSITIVE
+      return isActive ? (
+        <IconCircleCheckFilled className="size-6 text-green-700" />
+      ) : (
+        <IconCircleX className="size-6 text-gray-600" />
+      )
+    },
+  },
+  {
+    accessorKey: "marketCap",
+    meta: {
+      headerClassName: "w-[12%]",
+      cellClassName: "w-[12%]",
+    },
+    header: ({ column }) => (
+      <SortableHeader column={column} label="Market Cap" />
+    ),
+    cell: ({ row }) => (
+      <span className="text-foreground tabular-nums">
+        {formatMarketCap(row.original.marketCap)}
+      </span>
+    ),
+  },
   {
     accessorKey: "lastUpdated",
+    meta: {
+      headerClassName: "hidden md:table-cell w-[11%]",
+      cellClassName: "hidden md:table-cell w-[11%]",
+    },
     header: ({ column }) => (
-      <button
-        className="inline-flex items-center gap-2.5 font-medium text-sm hover:text-foreground/80"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        type="button"
-      >
-        Last updated
-        <ChevronsUpDownIcon className="size-4" />
-      </button>
+      <SortableHeader column={column} label="Report updated" />
     ),
     cell: ({ row }) => (
       <span className="text-muted-foreground">
@@ -173,8 +279,8 @@ const columns: ColumnDef<Token>[] = [
   {
     id: "actions",
     meta: {
-      headerClassName: "hidden lg:table-cell",
-      cellClassName: "hidden lg:table-cell",
+      headerClassName: "hidden lg:table-cell w-[11%]",
+      cellClassName: "hidden lg:table-cell w-[11%]",
     },
     cell: ({ row }) => (
       <div className="flex justify-end">
@@ -190,26 +296,49 @@ const columns: ColumnDef<Token>[] = [
   },
 ]
 
-function TokenDataTable({ data }: { data: Token[] }) {
+function TokenDataTable({ data }: { data: EnrichedToken[] }) {
   const navigate = useNavigate()
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "marketCap", desc: true },
+  ])
+  const [globalFilter, setGlobalFilter] = useState("")
+  const [networkFilter, setNetworkFilter] = useState<string>("")
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   })
 
+  const networks = useMemo(() => {
+    const set = new Set(data.map((t) => t.network))
+    return Array.from(set).sort()
+  }, [data])
+
+  const filteredData = useMemo(() => {
+    if (!networkFilter) return data
+    return data.filter(
+      (t) => t.network.toLowerCase() === networkFilter.toLowerCase()
+    )
+  }, [data, networkFilter])
+
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     state: {
       sorting,
-      columnFilters,
+      globalFilter,
       pagination,
     },
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     onPaginationChange: setPagination,
+    globalFilterFn: (row, _columnId, filterValue: string) => {
+      const search = filterValue.toLowerCase()
+      const { name, symbol } = row.original
+      return (
+        name.toLowerCase().includes(search) ||
+        symbol.toLowerCase().includes(search)
+      )
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -218,6 +347,37 @@ function TokenDataTable({ data }: { data: Token[] }) {
 
   return (
     <div className="space-y-4 grow pt-6 pb-6 md:pt-12 md:pb-10">
+      <div className="flex items-center justify-between gap-3">
+        <div className="relative max-w-xs w-full">
+          <FilterIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            className="pl-9"
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Filter by tokens"
+            value={globalFilter}
+          />
+        </div>
+        <Select
+          onValueChange={(value) => setNetworkFilter(value as string)}
+          value={networkFilter}
+        >
+          <SelectTrigger>
+            <NetworkIcon className="size-4 text-muted-foreground" />
+            <SelectValue placeholder="All networks" />
+          </SelectTrigger>
+          <SelectContent alignItemWithTrigger={false}>
+            <SelectItem value="">All networks</SelectItem>
+            {networks.map((network) => {
+              const label = network.charAt(0).toUpperCase() + network.slice(1)
+              return (
+                <SelectItem key={network} value={label}>
+                  {label}
+                </SelectItem>
+              )
+            })}
+          </SelectContent>
+        </Select>
+      </div>
       <div className="overflow-hidden rounded-lg border bg-background">
         <Table>
           <TableHeader className="bg-muted/50">
@@ -355,7 +515,8 @@ function TokenDataTable({ data }: { data: Token[] }) {
 
 // Main Component
 export default function TokenOwnershipAnalytics() {
-  const tokens = useTokens() as Token[]
+  const rawTokens = useTokens()
+  const { tokens } = useMarketData(rawTokens)
   return (
     <PageWrapper className="flex flex-col">
       {/* White background section with Hero Header */}
