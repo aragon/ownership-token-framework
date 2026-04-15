@@ -1,0 +1,510 @@
+[
+  {
+    "id": "onchain-ctrl",
+    "name": "Onchain Control",
+    "tags": ["Metric 1"],
+    "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+    "summary": "veYB (vote-escrowed YB, locked tokens for governance power) holders control the protocol through Aragon OSx governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (deployer._yb.eth) can change transfer clearance rules, but this does not constitute censorship.",
+    "criteria": [
+      {
+        "id": "onchain-ctrl__governance-workflow",
+        "name": "Onchain Governance Workflow",
+        "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+        "status": "✅",
+        "notes": "veYB holders vote onchain via Aragon OSx DAO. Proposals require **30% participation**, **55% support**, and **7-day voting period**. Proposals can be executed before the full voting period concludes when mathematical certainty is achieved (thresholds met, remaining votes cannot change outcome). Minimum 1 veYB required to create proposals.",
+        "evidence": [
+          {
+            "name": "Governance System",
+            "summary": "Aragon OSx DAO with TokenVoting Plugin. veYB implements standard voting interface for Aragon compatibility.",
+            "urls": [
+              {
+                "name": "DAO Contract",
+                "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
+                "type": "explorer"
+              },
+              {
+                "name": "TokenVoting Plugin",
+                "url": "https://etherscan.io/address/0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78",
+                "type": "explorer"
+              },
+              {
+                "name": "Governance Documentation",
+                "url": "https://docs.yieldbasis.com/user/governance",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__role-accountability",
+        "name": "Role Accountability",
+        "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+        "status": "✅",
+        "notes": "**DAO-controlled:** GaugeController, FeeDistributor, MigrationFactoryOwner (ADMIN immutable = DAO).\n\n**EOA-controlled:** veYB owner (deployer._yb.eth) can change transfer clearance rules. However, transfer restrictions do not constitute censorship—users remain custodians of their locked YB and can always withdraw after lock expiry.",
+        "evidence": [
+          {
+            "name": "DAO-Controlled Contracts",
+            "summary": "GaugeController.owner() = DAO. FeeDistributor.owner() = DAO. MigrationFactoryOwner.ADMIN = DAO (immutable).",
+            "urls": [
+              {
+                "name": "GaugeController",
+                "url": "https://etherscan.io/address/0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21",
+                "type": "explorer"
+              },
+              {
+                "name": "FeeDistributor",
+                "url": "https://etherscan.io/address/0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90",
+                "type": "explorer"
+              },
+              {
+                "name": "MigrationFactoryOwner",
+                "url": "https://etherscan.io/address/0xa68343ed4d517a277cfa1f2fc2b51f7a6794b6ad",
+                "type": "explorer"
+              }
+            ]
+          },
+          {
+            "name": "veYB Owner (deployer._yb.eth)",
+            "summary": "Can call set_transfer_clearance_checker() to change veYB transfer rules. This restricts veNFT transfers, NOT custody—users remain owners of their locked YB.",
+            "urls": [
+              {
+                "name": "veYB Contract",
+                "url": "https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211",
+                "type": "explorer"
+              },
+              {
+                "name": "set_transfer_clearance_checker",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L640-L647",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__protocol-upgrade",
+        "name": "Protocol Upgrade Authority",
+        "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+        "status": "✅",
+        "notes": "The DAO controls protocol upgrades through MigrationFactoryOwner. This constitutes ownership—the indirection through governance is the standard mechanism for tokenholder control.",
+        "evidence": [
+          {
+            "name": "Upgrade Path",
+            "summary": "Factory.set_implementations() requires Factory admin = MigrationFactoryOwner. MigrationFactoryOwner requires ADMIN (immutable) = DAO.",
+            "urls": [
+              {
+                "name": "Factory Contract",
+                "url": "https://etherscan.io/address/0x370a449FeBb9411c95bf897021377fe0B7D100c0",
+                "type": "explorer"
+              },
+              {
+                "name": "Factory.set_implementations",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L389-L410",
+                "type": "github"
+              },
+              {
+                "name": "MigrationFactoryOwner ADMIN immutable",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L47",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__token-upgrade",
+        "name": "Token Upgrade Authority",
+        "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+        "status": "✅",
+        "notes": "YB token is a **non-upgradeable** Vyper contract. Ownership has been **renounced** (owner = 0x0). No proxy pattern. Only GaugeController (set before renouncement) can mint via emit().",
+        "evidence": [
+          {
+            "name": "Token Ownership",
+            "summary": "owner() returns 0x0. Token uses standard ERC-20 implementation with renounced ownership at deployment.",
+            "urls": [
+              {
+                "name": "YB Token Contract",
+                "url": "https://etherscan.io/address/0x01791F726B4103694969820be083196cC7c045fF#code",
+                "type": "explorer"
+              },
+              {
+                "name": "renounce_ownership",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L90-L100",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__supply",
+        "name": "Supply Control",
+        "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+        "status": "✅",
+        "notes": "**1B max supply** with programmatic emission. Only GaugeController can mint. Emission rate determined by gauge staking levels: get_adjustment() returns sqrt(staked / totalSupply), so higher LP staking = higher emission rate.",
+        "evidence": [
+          {
+            "name": "Emission Mechanism",
+            "summary": "GaugeController calls YB.emit() with rate_factor based on LP staking levels. No discretionary minting possible.",
+            "urls": [
+              {
+                "name": "get_adjustment (minting rate)",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/LiquidityGauge.vy#L135-L142",
+                "type": "github"
+              },
+              {
+                "name": "YB.emit function",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L103-L122",
+                "type": "github"
+              },
+              {
+                "name": "Tokenomics",
+                "url": "https://docs.yieldbasis.com/user/tokenomics",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__access-gating",
+        "name": "Privileged Access Gating",
+        "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+        "status": "✅",
+        "notes": "User exits are **permissionless**: veYB withdrawal after lock expiry, fee claims. Gauge killing is DAO-controlled and affects emissions, not user funds.",
+        "evidence": [
+          {
+            "name": "Exit Paths",
+            "summary": "VotingEscrow.withdraw() permissionless after lock expiry. FeeDistributor.claim() has no admin check.",
+            "urls": [
+              {
+                "name": "VotingEscrow.withdraw",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L428-L457",
+                "type": "github"
+              },
+              {
+                "name": "FeeDistributor.claim",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L269-L277",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "onchain-ctrl__censorship",
+        "name": "Token Censorship",
+        "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+        "status": "✅",
+        "notes": "**No blacklist, freeze, or seizure functions** in YB token. The veYB transfer clearance checker can restrict veNFT transfers, but this does not censor the underlying YB token—users remain custodians and can withdraw after lock expiry.",
+        "evidence": [
+          {
+            "urls": [
+              {
+                "name": "YB.vy full source",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "val-accrual",
+    "name": "Value Accrual",
+    "tags": ["Metric 2"],
+    "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+    "summary": "veYB holders receive protocol admin fees via FeeDistributor (programmatic). Fees originate from LT vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction and gauge voting controls emissions. Ecosystem Reserve is EOA-controlled, not DAO.",
+    "criteria": [
+      {
+        "id": "val-accrual__active",
+        "name": "Accrual Active",
+        "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+        "status": "✅",
+        "notes": "FeeDistributor is **actively distributing** yb-cbBTC, yb-WBTC, yb-tBTC, and yb-WETH LP tokens to veYB holders.\n\n**Fee flow:** LT vaults accrue admin fees → anyone calls withdraw_admin_fees() → mints LT to fee_receiver (FeeDistributor) → fill_epochs() distributes over 4 weeks → veYB holders claim pro-rata.",
+        "evidence": [
+          {
+            "name": "Fee Flow",
+            "summary": "Admin fees from LT vaults flow to FeeDistributor via Factory.fee_receiver. Distribution is automatic and weekly.",
+            "urls": [
+              {
+                "name": "LT.withdraw_admin_fees",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/LT.vy#L866-L896",
+                "type": "github"
+              },
+              {
+                "name": "Factory.fee_receiver",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L98",
+                "type": "github"
+              },
+              {
+                "name": "FeeDistributor._fill_epochs",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L86-L107",
+                "type": "github"
+              },
+              {
+                "name": "FeeDistributor Contract",
+                "url": "https://etherscan.io/address/0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90",
+                "type": "explorer"
+              },
+              {
+                "name": "veYB Documentation",
+                "url": "https://docs.yieldbasis.com/user/veyb",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "val-accrual__treasury",
+        "name": "Treasury Ownership",
+        "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+        "status": "TBD",
+        "notes": "**Treasury Ownership** refers to non-automated revenues requiring discrete transactions to distribute—distinct from programmatic fee flows like FeeDistributor.\n\nThe primary YB reserve (Ecosystem Reserve) is controlled by an EOA, not the DAO. The DAO holds a small amount of YB directly.",
+        "evidence": [
+          {
+            "name": "Ecosystem Reserve",
+            "summary": "Ecosystem Reserve is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside vesting contracts.",
+            "urls": [
+              {
+                "name": "Ecosystem Reserve (EOA-controlled)",
+                "url": "https://etherscan.io/address/0x7aC5922776034132D9ff5c7889d612d98e052Cf2",
+                "type": "explorer"
+              },
+              {
+                "name": "DAO Contract",
+                "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
+                "type": "explorer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "val-accrual__mechanism",
+        "name": "Accrual Mechanism Control",
+        "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+        "status": "✅",
+        "notes": "veYB holders control both the **direction of automated value flows** and **emission routing**:\n\n**Fee direction:** DAO controls Factory.fee_receiver via MigrationFactoryOwner, determining where admin fees are routed.\n\n**Gauge voting:** veYB holders vote on gauge weights. Higher weight = more YB emissions to that pool's stakers, incentivizing LP staking which generates admin fees. 10-day vote lock prevents manipulation.",
+        "evidence": [
+          {
+            "name": "Fee Flow Direction",
+            "summary": "DAO controls Factory.fee_receiver via MigrationFactoryOwner.set_fee_receiver(). This determines where admin fees are routed.",
+            "urls": [
+              {
+                "name": "MigrationFactoryOwner.set_fee_receiver",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145",
+                "type": "github"
+              },
+              {
+                "name": "Factory.set_fee_receiver",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364",
+                "type": "github"
+              }
+            ]
+          },
+          {
+            "name": "Gauge Voting",
+            "summary": "veYB holders vote on gauge weights to direct YB emissions. This indirectly controls fee generation by incentivizing LP staking.",
+            "urls": [
+              {
+                "name": "vote_for_gauge_weights",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/GaugeController.vy#L206-L287",
+                "type": "github"
+              },
+              {
+                "name": "GaugeController Contract",
+                "url": "https://etherscan.io/address/0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21",
+                "type": "explorer"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "val-accrual__offchain",
+        "name": "Offchain Value Accrual",
+        "tags": ["Reference"],
+        "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+        "status": "TBD",
+        "notes": "Aragon has not been able to verify whether YieldBasis AG (operating entity) provides any offchain value to YB token holders. No evidence of equity linkage, offchain revenue sharing, or legal commitments to tokenholders.",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "verifiability",
+    "name": "Verifiability",
+    "tags": ["Metric 3"],
+    "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+    "summary": "All core contracts are verified on Etherscan with matching GitHub source (Vyper 0.4.3). Protocol has undergone 6 independent security audits (Statemind, Chainsecurity, Quantstamp, Mixbytes, Electisec, Pashov).",
+    "criteria": [
+      {
+        "id": "verifiability__token-source",
+        "name": "Token Contract Source Verification",
+        "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+        "status": "✅",
+        "notes": "YB token is **verified on Etherscan** (Vyper 0.4.3, AGPL v3.0 license). Source code available on GitHub with matching bytecode.",
+        "evidence": [
+          {
+            "urls": [
+              {
+                "name": "YB Token Verified on Etherscan",
+                "url": "https://etherscan.io/address/0x01791F726B4103694969820be083196cC7c045fF#code",
+                "type": "explorer"
+              },
+              {
+                "name": "YB.vy Source",
+                "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy",
+                "type": "github"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "verifiability__protocol-source",
+        "name": "Protocol Component Source Verification",
+        "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+        "status": "✅",
+        "notes": "All core contracts (Factory, veYB, GaugeController, FeeDistributor) are **verified on Etherscan**. **6 independent security audits** completed between March-August 2025.",
+        "evidence": [
+          {
+            "name": "Verification and Audits",
+            "summary": "Audited by Statemind (Feb-May 2025), Chainsecurity (Jul 2025), Quantstamp (Apr 2025), Mixbytes (Aug 2025), Electisec (Aug 2025), and Pashov (Mar-Apr 2025).",
+            "urls": [
+              {
+                "name": "yb-core GitHub Repository",
+                "url": "https://github.com/yield-basis/yb-core",
+                "type": "github"
+              },
+              {
+                "name": "Audit Reports",
+                "url": "https://docs.yieldbasis.com/user/audits-bug-bounties",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "distribution",
+    "name": "Token Distribution",
+    "tags": ["Metric 4"],
+    "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+    "summary": "~71M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) have vesting with 6-month cliff ending March 2026. Post-cliff coordination could affect governance given low current participation.",
+    "criteria": [
+      {
+        "id": "distribution__concentration",
+        "name": "Ownership Concentration",
+        "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+        "status": "⚠️",
+        "notes": "~71M veYB locked from ~721M minted YB (~10% participation). Post-cliff, **Team (250M) + Investors (121M) = 371M YB (37%)** could potentially influence governance if coordinated, given low current veYB participation.",
+        "evidence": [
+          {
+            "name": "veYB Supply",
+            "summary": "veYB supply ~70.8M tokens locked. Low participation rate means large token holders have outsized influence.",
+            "urls": [
+              {
+                "name": "veYB Contract",
+                "url": "https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211",
+                "type": "explorer"
+              },
+              {
+                "name": "Tokenomics",
+                "url": "https://docs.yieldbasis.com/user/tokenomics",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "distribution__supply-schedule",
+        "name": "Future Token Unlocks",
+        "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+        "status": "⚠️",
+        "notes": "**6-month cliff ending ~March 15, 2026** (imminent). 371M YB (37% of supply) begins linear 24-month vesting. Team and Investor allocations affected.",
+        "evidence": [
+          {
+            "name": "Vesting Schedule",
+            "summary": "Start: Sept 15, 2025. Cliff: 6 months = March 15, 2026. Duration: 24 months linear. Affected: Team (250M) + Investors (121M).",
+            "urls": [
+              {
+                "name": "Tokenomics",
+                "url": "https://docs.yieldbasis.com/user/tokenomics",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "offchain",
+    "name": "Offchain Dependencies",
+    "tags": ["Reference"],
+    "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+    "summary": "Trademark and domain likely controlled by YieldBasis AG (team entity, not tokenholder-controlled). DAO contracts use AGPL v3.0 (open source), but Factory uses proprietary license. 7.5% of supply allocated to Curve licensing fee indicates technology dependency.",
+    "criteria": [
+      {
+        "id": "offchain__trademark",
+        "name": "Trademark",
+        "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "TBD",
+        "notes": "Aragon has not been able to verify YieldBasis trademark registration status. The trademark is likely owned by YieldBasis AG (Swiss company), which is team-controlled, not tokenholder-controlled.",
+        "evidence": []
+      },
+      {
+        "id": "offchain__distribution",
+        "name": "Distribution",
+        "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "yieldbasis.com and app.yieldbasis.com are controlled by the team. No evidence of DAO control over primary distribution channels. Smart contracts remain permissionless.",
+        "evidence": [
+          {
+            "urls": [
+              {
+                "name": "YieldBasis Website",
+                "url": "https://yieldbasis.com/",
+                "type": "docs"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "offchain__licensing",
+        "name": "Licensing",
+        "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+        "status": "⚠️",
+        "notes": "**Mixed licensing**: YB.vy, VotingEscrow.vy, GaugeController.vy use AGPL v3.0 (open source). **Factory.vy uses 'Copyright (c) 2025'** (proprietary). 75M YB (7.5%) allocated to Curve licensing indicates technology dependency.",
+        "evidence": [
+          {
+            "name": "License Analysis",
+            "summary": "DAO contracts (YB, veYB, GaugeController, FeeDistributor): AGPL v3.0. Factory, MigrationFactoryOwner: 'Copyright (c) 2025' (proprietary).",
+            "urls": [
+              {
+                "name": "yb-core contracts directory",
+                "url": "https://github.com/yield-basis/yb-core/tree/41137e5837e411c9d60be8705ca74304b082fa92/contracts",
+                "type": "github"
+              },
+              {
+                "name": "Curve Licensing Vesting",
+                "url": "https://etherscan.io/address/0x36e36D5D588D480A15A40C7668Be52D36eb206A8",
+                "type": "explorer"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
