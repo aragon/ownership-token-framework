@@ -5,26 +5,26 @@
 **Token:** ONDO (Ondo Governance Token)
 **Address:** `0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3`
 **Network:** Ethereum Mainnet (with multichain deployments)
-**Date:** 2026-03-10 (Updated 2026-04-13)
+**Date:** 2026-03-10 (Updated 2026-04-15)
 **Analyst:** Researcher Agent
 
 ---
 
 ## Executive Summary
 
-**Protocol Description:** Ondo Finance is a tokenized real-world asset (RWA) protocol with ~$3.56B TVL across OUSG (tokenized US Treasuries), USDY (yield-bearing stablecoin), and Global Markets (tokenized equities). The ONDO token is the governance token for Ondo DAO, which governs only Flux Finance—a small Compound V2 fork with ~$43M TVL (~1.2% of Ondo's total TVL).
+**Protocol Description:** Ondo Finance is a tokenized real-world asset (RWA) protocol with ~$3.56B TVL across OUSG (tokenized US Treasuries), USDY (yield-bearing stablecoin), and Global Markets (tokenized equities). The ONDO token is a governance token, but ONDO governance does **NOT** control any of Ondo's core products—OUSG, USDY, and Global Markets are entirely controlled by company multisigs.
 
 This analysis evaluates ONDO against the Aragon Ownership Token Framework to answer three core questions:
 
-1. **What do I own?** ONDO tokenholders control governance over Flux Finance only—a minor DeFi lending protocol representing 1.2% of Ondo's TVL. ONDO governance does **NOT** control Ondo's core RWA products (OUSG, USDY, Ondo Global Markets, or the upcoming Ondo Chain). The ONDO token itself has AccessControl with DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO.
+1. **What do I own?** ONDO tokenholders have **no control** over Ondo's core RWA products (OUSG, USDY, Ondo Global Markets, or the upcoming Ondo Chain). These products (~$3.5B TVL) are controlled by company multisigs. The ONDO token itself has AccessControl with DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO. ONDO governance only controls Flux Finance (~$43M TVL, 1.2% of total), which is a minor lending protocol.
 
-2. **Why should it have value?** There is **no active value accrual mechanism** for ONDO tokenholders. Flux Finance reserve factors are 0% across all markets—no protocol fees are collected. USDY/OUSG revenue (~$3-4M monthly yield) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders. There is no fee distribution, staking rewards, or buyback program.
+2. **Why should it have value?** There is **no active value accrual mechanism** for ONDO tokenholders. USDY/OUSG revenue (~$3-4M monthly yield) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders. There is no fee distribution, staking rewards, or buyback program.
 
-3. **What threatens that value?** Critical governance scope limitation (controls only Flux Finance, not core products), high token concentration (~59% in team multisig), team control over the ONDO token contract itself (MINTER_ROLE), and absence of binding value accrual.
+3. **What threatens that value?** Core products entirely outside tokenholder control, high token concentration (~59% in team multisig), team control over the ONDO token contract itself (MINTER_ROLE), and absence of binding value accrual.
 
 **TVL Context:**
 - **OUSG/USDY/Global Markets:** ~$3.56B TVL (company-controlled)
-- **Flux Finance:** ~$43M TVL (DAO-controlled via ONDO governance)
+- **Flux Finance:** ~$43M TVL (DAO-controlled, 1.2% of total)
 
 **Overall Assessment:** 4 positive (✅), 5 neutral (TBD), 9 at-risk (⚠️)
 
@@ -32,7 +32,7 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 
 ## Contract Index Table
 
-### Ethereum Mainnet — Core Products (Company-Controlled)
+### Ethereum Mainnet — Core Products (Company-Controlled, ~$3.5B TVL)
 
 | Contract | Address | What it does | Upgradeable? | Ownership-relevant? | Value-accrual-relevant? |
 |----------|---------|--------------|--------------|---------------------|-------------------------|
@@ -58,19 +58,8 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 | Contract | Address | What it does | Upgradeable? | Ownership-relevant? | Value-accrual-relevant? |
 |----------|---------|--------------|--------------|---------------------|-------------------------|
 | ONDO Token | [`0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3`](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3) | Governance token with AccessControl | No | Y | N |
-| Governor (Ondo DAO) | [`0x336505EC1BcC1A020EeDe459f57581725D23465A`](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A) | GovernorBravo for Flux Finance | No | Y | N |
+| Governor (Ondo DAO) | [`0x336505EC1BcC1A020EeDe459f57581725D23465A`](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A) | GovernorBravo (Flux Finance only) | No | Y | N |
 | Timelock | [`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | 1-day execution delay | No | Y | N |
-
-### Ethereum Mainnet — Flux Finance (DAO-Controlled, ~$43M TVL)
-
-| Contract | Address | What it does | Upgradeable? | Ownership-relevant? | Value-accrual-relevant? |
-|----------|---------|--------------|--------------|---------------------|-------------------------|
-| Comptroller | [`0x95Af143a021DF745bc78e845b54591C53a8B3A51`](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51) | Flux Finance accounting/risk | No | Y | Y |
-| fUSDC | [`0x465a5a630482f3abD6d3b84B39B29b07214d19e5`](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5) | Flux lending market | Yes (delegator) | Y | Y |
-| fDAI | [`0xe2bA8693cE7474900A045757fe0efCa900F6530b`](https://etherscan.io/address/0xe2bA8693cE7474900A045757fe0efCa900F6530b) | Flux lending market | Yes (delegator) | Y | Y |
-| fUSDT | [`0x81994b9607e06ab3d5cF3AffF9a67374f05F27d7`](https://etherscan.io/address/0x81994b9607e06ab3d5cF3AffF9a67374f05F27d7) | Flux lending market | Yes (delegator) | Y | Y |
-| fFRAX | [`0x1C9A2d6b33B4826757273D47ebEe0e2DddcD978B`](https://etherscan.io/address/0x1C9A2d6b33B4826757273D47ebEe0e2DddcD978B) | Flux lending market | Yes (delegator) | Y | Y |
-| fOUSG | [`0x1dD7950c266fB1be96180a8FDb0591F70200E018`](https://etherscan.io/address/0x1dD7950c266fB1be96180a8FDb0591F70200E018) | OUSG lending market | Yes (delegator) | Y | Y |
 
 ### Ondo Bridge (OFT Adapters)
 
@@ -142,41 +131,37 @@ This analysis evaluates ONDO against the Aragon Ownership Token Framework to ans
 
 ### 1.1 Onchain Governance Workflow ⚠️
 
-**Finding:** ONDO tokenholders control governance over Flux Finance (~$43M TVL) through a two-stage process: forum discussion followed by on-chain voting. However, governance scope is **severely limited** to Flux Finance only—representing just 1.2% of Ondo's total TVL. The DAO has **no control** over Ondo's core products (OUSG, USDY, Global Markets) which represent 98.8% of protocol value.
+**Finding:** ONDO tokenholders have **no governance control** over Ondo's core products (OUSG, USDY, Global Markets). These products, representing ~$3.5B TVL (98.8% of Ondo's total), are controlled by company multisigs. The DAO's governance scope is limited to Flux Finance (~$43M TVL, 1.2% of total), which is insignificant relative to the core business.
 
-**Two-Stage Governance Process:**
-1. **Forum Discussion:** Proposals are first posted on the [Flux Finance Governance Forum](https://forum.fluxfinance.com/) for community feedback
-2. **On-Chain Vote:** After forum discussion, proposals are submitted on-chain via [Tally](https://www.tally.xyz/gov/ondo-dao) for binding votes
+**OUSG/USDY/Global Markets Governance (Company-Controlled):**
 
-**Governance Parameters:**
-- Proposal Threshold: 100M ONDO (1% of supply)
-- Quorum: 1M ONDO (0.01% of supply)
-- Voting Period: ~3 days (21600 blocks)
-- Timelock Delay: 1 day (86400 seconds)
+All core products are controlled by company multisigs with no tokenholder involvement:
 
-**Source Code:**
-- GovernorBravoDelegate: [flux-finance/contracts/.../GovernorBravoDelegate.sol](https://github.com/flux-finance/contracts/blob/main/contracts/lending/compound/governance/GovernorBravoDelegate.sol)
-- Quorum hardcoded at 1M ONDO: [Line 32](https://github.com/flux-finance/contracts/blob/main/contracts/lending/compound/governance/GovernorBravoDelegate.sol#L32)
-```solidity
-/// @notice The number of votes in support of a proposal required in order for a quorum to be reached and for a vote to succeed
-uint public constant quorumVotes = 1_000_000e18; // 1 million Ondo
-```
+1. **OUSG:** Management Multisig ([`0xAEd4caF2E535D964165B4392342F71bac77e8367`](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367)) holds DEFAULT_ADMIN_ROLE and ProxyAdmin ownership
+2. **USDY:** Team Multisig ([`0x1a694A09494E214a3Be3652e4B343B7B81A73ad7`](https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7)) holds ProxyAdmin ownership
+3. **Global Markets:** TimelockController ([`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1)) with 2-hour delay, controlled by company multisigs
+
+**Governance Workflow for OUSG/USDY/Global Markets:**
+- No forum discussion required
+- No on-chain tokenholder vote
+- Changes proposed and executed by company multisig signers
+- 2-hour timelock delay for Global Markets only
 
 **Evidence:**
-- [Governor on Etherscan](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A#code)
-- [Timelock on Etherscan](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c#code)
-- [Tally Governance Dashboard](https://www.tally.xyz/gov/ondo-dao)
-- [Flux Finance Governance Forum](https://forum.fluxfinance.com/)
+- [OUSG on Etherscan](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code)
+- [USDY on Etherscan](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code)
+- [GMTokenManager on Etherscan](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code)
+- Verified: `cast call 0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0` → `0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`
 
-**Critical Issue:** Governance scope is limited to Flux Finance (~$43M TVL). Core Ondo products (~$3.5B TVL) are controlled by company multisigs, not the DAO.
+**Note on Flux Finance:** ONDO governance does control Flux Finance (~$43M TVL) through a two-stage process (forum discussion on [forum.fluxfinance.com](https://forum.fluxfinance.com/) followed by on-chain vote on [Tally](https://www.tally.xyz/gov/ondo-dao)). However, this represents only 1.2% of Ondo's total TVL and is not material to the overall governance assessment.
 
 ---
 
 ### 1.2 Role Accountability ⚠️
 
-**Finding:** OUSG, USDY, and Global Markets are controlled by team multisigs. The ONDO token itself has DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO. Only Flux Finance (~$43M TVL) is DAO-controlled.
+**Finding:** OUSG, USDY, and Global Markets are entirely controlled by company multisigs. The ONDO token itself has DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO.
 
-**Team-Controlled (Core Products — ~$3.5B TVL):**
+**Team-Controlled (Core Products, ~$3.5B TVL):**
 | Contract | Role | Holder | Type |
 |----------|------|--------|------|
 | [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92) | DEFAULT_ADMIN_ROLE | [`0xAEd4caF2E535D964165B4392342F71bac77e8367`](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367) | ⚠️ Management Multisig (4/7) |
@@ -193,12 +178,6 @@ uint public constant quorumVotes = 1_000_000e18; // 1 million Ondo
 | [ONDO Token](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3) | DEFAULT_ADMIN_ROLE | [`0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1`](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1) | ⚠️ Team Multisig (4/7) |
 | [ONDO Token](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3) | MINTER_ROLE | [`0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1`](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1) | ⚠️ Team Multisig (4/7) |
 
-**DAO-Controlled (Flux Finance — ~$43M TVL):**
-| Contract | Role | Holder | Type |
-|----------|------|--------|------|
-| [Comptroller](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51) | admin | [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | ✅ DAO |
-| [fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5)/[fDAI](https://etherscan.io/address/0xe2bA8693cE7474900A045757fe0efCa900F6530b)/[fUSDT](https://etherscan.io/address/0x81994b9607e06ab3d5cF3AffF9a67374f05F27d7)/[fFRAX](https://etherscan.io/address/0x1C9A2d6b33B4826757273D47ebEe0e2DddcD978B)/[fOUSG](https://etherscan.io/address/0x1dD7950c266fB1be96180a8FDb0591F70200E018) | admin | [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | ✅ DAO |
-
 **Global Markets TimelockController (`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`) Role Holders:**
 | Role | Holder | Type |
 |------|--------|------|
@@ -211,7 +190,7 @@ uint public constant quorumVotes = 1_000_000e18; // 1 million Ondo
 
 ### 1.3 Protocol Upgrade Authority ⚠️
 
-**Finding:** OUSG and USDY are upgradeable proxies controlled by team multisigs on all chains. Flux Finance upgrades are DAO-controlled via Timelock, but represent only 1.2% of Ondo's TVL.
+**Finding:** OUSG, USDY, and Global Markets are upgradeable contracts controlled by team multisigs on all chains. ONDO tokenholders have **no upgrade control** over any core products.
 
 **OUSG/USDY (Team-Controlled, ~$3.5B TVL):**
 
@@ -223,13 +202,9 @@ uint public constant quorumVotes = 1_000_000e18; // 1 million Ondo
 | Mantle | [USDY](https://mantlescan.xyz/address/0x5bE26527e817998A7206475496fDE1E68957c5A6) | [`0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3`](https://mantlescan.xyz/address/0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3) (4-of-7) |
 | Arbitrum | [USDY](https://arbiscan.io/address/0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D) | [`0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D`](https://arbiscan.io/address/0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D) (4-of-7) |
 
-DAO has **no upgrade control** over OUSG/USDY on any chain.
-
-**Flux Finance (DAO-Controlled, ~$43M TVL):**
-- fToken contracts use delegator pattern ([cErc20ModifiedDelegator.sol](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cErc20ModifiedDelegator.sol))
-- Admin = [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) (`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`)
-- DAO can upgrade implementations via `_setImplementation()` ([Line 622](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cErc20ModifiedDelegator.sol#L622))
-- Verified: `cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "admin()(address)"` → `0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`
+**Global Markets (Team-Controlled via TimelockController):**
+- USDon upgrade authority: TimelockController at [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1)
+- Controlled by company multisigs (see Role Accountability section)
 
 ---
 
@@ -397,7 +372,7 @@ modifier whenTransferAllowed() {
 
 ### 2.1 Accrual Active ⚠️
 
-**Finding:** There is **NO active value accrual mechanism** for ONDO tokenholders. USDY/OUSG yield (~$3-4M monthly) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders. Flux Finance (~$43M TVL) has 0% reserve factors—no fees collected.
+**Finding:** There is **NO active value accrual mechanism** for ONDO tokenholders. USDY/OUSG yield (~$3-4M monthly) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders.
 
 **USDY/OUSG Revenue (~$3.5B TVL, Company-Controlled):**
 
@@ -415,52 +390,24 @@ Per the [DefiLlama adapter methodology](https://github.com/DefiLlama/dimension-a
 4. This yield goes to USDY/OUSG holders, **not** to ONDO tokenholders
 
 **Oracle Price Update Mechanism:**
-- OUSG Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe) (RWAOracleExternalComparisonCheck)
-- USDY Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0) (Redemption Price Oracle)
-- `setPrice()` function updates NAV (restricted to SETTER_ROLE, rate-limited to max 1% change per 23 hours)
-- Source: [RWAOracleRateCheck.sol](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol)
+- OUSG Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe)
+  - Verified: `cast call 0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe "getPriceData()(uint256,uint256)"` → `114921270000000000000, 1776198875` (price ~$114.92, timestamp April 14, 2026)
+  - rOUSG uses this oracle: `cast call 0x54043c656F0FAd0652D9Ae2603cDF347c5578d00 "oracle()(address)"` → `0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`
+- USDY Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0)
+  - Verified: `cast call 0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0 "getPriceData()(uint256,uint256)"` → `1129637140000000000, 1776247931` (price ~$1.129, timestamp April 15, 2026)
 
 **Conclusion:** ONDO tokenholders receive **zero** value from USDY/OUSG yield. The ~$48M cumulative "fees" tracked by DefiLlama went entirely to USDY/OUSG product holders.
 
 ---
 
-**Flux Finance Revenue (~$43M TVL, DAO-Controlled):**
-
-Reserve factors are **0% across all markets**—no protocol fees are collected.
-
-**Proof of 0% Reserve Factors:**
-```
-cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0 (fUSDC)
-
-cast call 0xe2bA8693cE7474900A045757fe0efCa900F6530b "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0 (fDAI)
-
-cast call 0x81994b9607e06ab3d5cF3AffF9a67374f05F27d7 "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0 (fUSDT)
-
-cast call 0x1C9A2d6b33B4826757273D47ebEe0e2DddcD978B "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0 (fFRAX)
-```
-
-**Source Code Reference:**
-The public `_setReserveFactor()` function can set reserve factors:
-- [CTokenModified.sol:1141-1147](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1147)
-- [fUSDC on Etherscan](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readProxyContract) (view `reserveFactorMantissa`)
-
-Currently set to 0, meaning 100% of interest goes to lenders, 0% to protocol.
-
----
-
 ### 2.2 Treasury Ownership ⚠️
 
-**Finding:** Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists for Flux Finance or Ondo DAO.
+**Finding:** Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists for ONDO DAO.
 
 **Evidence:**
-- Flux Finance reserve factors are 0%—no reserves accumulate ([fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#readProxyContract): `reserveFactorMantissa = 0`)
-- The [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) holds no significant assets
-- No FeeDistributor contract exists in [Flux Finance GitHub](https://github.com/flux-finance/contracts)
-- No fee distribution proposals on [Tally](https://www.tally.xyz/gov/ondo-dao)
+- No DAO treasury contract identified
+- No fee distribution mechanism exists for OUSG/USDY revenue
+- No governance proposals for treasury creation found on [Tally](https://www.tally.xyz/gov/ondo-dao)
 
 **Token Allocations:**
 Per [documentation](https://docs.ondo.foundation/ondo-token), vested tokens include:
@@ -485,7 +432,6 @@ The price oracles that determine OUSG/USDY NAV (and thus yield distribution) are
    - The `setPrice()` function is restricted to SETTER_ROLE holders
    - Source: [RWAOracleExternalComparisonCheck.sol:147](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleExternalComparisonCheck.sol#L147)
    - [OUSG Oracle on Etherscan](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe)
-   - Verified price data: `cast call 0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe "getPriceData()(uint256,uint256)"` → `114921270000000000000, 1776198875`
 
 2. **USDY Oracle (`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`):**
    - Same SETTER_ROLE restriction
@@ -509,31 +455,28 @@ The price oracles that determine OUSG/USDY NAV (and thus yield distribution) are
 **USDY Revenue Model:**
 - USDY is backed by short-term US Treasuries held in a bankruptcy-remote SPV
 - Yield is passed to USDY holders through daily NAV increases via oracle price updates
-- Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0) (Redemption Price Oracle)
+- Oracle: [`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0)
 - Source: [RWAOracleRateCheck.sol](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol)
 - [USDY on Etherscan](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C)
 
-**Proof of Yield Spread Retention (USDY):**
-The oracle `setPrice()` function is rate-limited to max 1% change per 23 hours ([Line 81-90](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90)). There is no onchain mechanism that guarantees 100% of underlying treasury yield is passed to USDY holders. The rate reflected in NAV updates is set by SETTER_ROLE holders (controlled by Ondo), not by an automated oracle reading real treasury yields. The spread between actual treasury yields and the rate set by the oracle accrues offchain to Ondo Finance Inc.
+**Proof of Yield Spread Retention:**
+The oracle `setPrice()` function is rate-limited to max 1% change per 23 hours ([Line 81-90](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90)). The rate reflected in NAV updates is set by SETTER_ROLE holders (controlled by Ondo), not by an automated oracle reading real treasury yields. The absence of onchain enforcement of 100% yield pass-through means any spread between actual treasury yields and the reflected rate accrues offchain.
 
 **OUSG Revenue Model:**
 - Similar structure to USDY
 - Backed by BlackRock's SHV ETF (short-term treasuries)
-- Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe) (RWAOracleExternalComparisonCheck)
+- Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe)
+- rOUSG uses this oracle: `cast call 0x54043c656F0FAd0652D9Ae2603cDF347c5578d00 "oracle()(address)"` → `0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`
 - [OUSG on Etherscan](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92)
-- The rOUSG contract confirms this oracle: `cast call 0x54043c656F0FAd0652D9Ae2603cDF347c5578d00 "oracle()(address)"` → `0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`
-
-**Proof of Yield Spread Retention (OUSG):**
-The OUSG oracle's `setPrice()` function is controlled by SETTER_ROLE holders, not automated. The oracle has price data (verified via `getPriceData()`), but price updates are discretionary. No onchain enforcement of full yield pass-through exists.
 
 **Ondo Global Markets:**
 - Tokenized stocks with "on" suffix (e.g., TSLAon, COINon)
 - [GMTokenManager on Etherscan](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c)
 - [USDon on Etherscan](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1)
-- Controlled by TimelockController at [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1) (owned by 5/9 multisig)
+- Controlled by TimelockController at [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1)
 - Fees and spreads accrue to company, not to ONDO DAO
 
-**Conclusion:** ONDO tokenholders have no claim to offchain revenue streams. All value from Ondo's RWA products accrues to Ondo Finance Inc. or the respective product holders (USDY/OUSG investors). The proof is the absence of any onchain mechanism enforcing yield pass-through.
+**Conclusion:** ONDO tokenholders have no claim to offchain revenue streams. All value from Ondo's RWA products accrues to Ondo Finance Inc. or the respective product holders (USDY/OUSG investors).
 
 ---
 
@@ -561,15 +504,15 @@ The OUSG oracle's `setPrice()` function is controlled by SETTER_ROLE holders, no
 **OUSG/USDY (Primary Products):**
 - [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code)
 - [USDY](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code)
+- [rOUSG](https://etherscan.io/address/0x54043c656F0FAd0652D9Ae2603cDF347c5578d00#code)
+- [rUSDY](https://etherscan.io/address/0xaf37c1167910ebC994e266949387d2c7C326b879#code)
 - GitHub: [ondoprotocol/usdy](https://github.com/ondoprotocol/usdy)
 - Audit code: [code-423n4/2024-03-ondo-finance](https://github.com/code-423n4/2024-03-ondo-finance)
 
-**Flux Finance:**
-- [Comptroller](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#code)
-- [fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#code)
-- [Governor](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A#code)
-- [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c#code)
-- GitHub: [flux-finance/contracts](https://github.com/flux-finance/contracts)
+**Global Markets:**
+- [GMTokenManager](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code)
+- [USDon](https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code)
+- [USDonManager](https://etherscan.io/address/0x05CCbB4b74854f8A067b83475E8c34f5a413D7e1#code)
 
 ---
 
@@ -624,21 +567,21 @@ cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "balanceOf(address)(uint256
 
 ### 5.2 Distribution ⚠️
 
-**Finding:** Ondo Finance Inc. controls primary distribution channels.
+**Finding:** Ondo Finance Inc. controls primary distribution channels for all products.
 
 **Evidence:**
-- ondo.finance and fluxfinance.com operated by company
+- ondo.finance operated by company
 - Terms of Service identify Ondo Finance Inc. as contracting party
 - No DAO control over frontend access
+- OUSG/USDY access requires KYC approval controlled by company
 
 ---
 
-### 5.3 Licensing TBD
+### 5.3 Licensing ⚠️
 
-**Finding:** Flux Finance code is open source (Compound V2 fork with BSD-3-Clause license). OUSG/USDY code is BUSL-1.1 licensed.
+**Finding:** OUSG/USDY code is BUSL-1.1 licensed (Business Source License). This is a restrictive license that limits commercial use until a change date.
 
 **Source:**
-- Flux Finance: [LICENSE](https://github.com/flux-finance/contracts/blob/main/LICENSE) - BSD-3-Clause
 - USDY: [SPDX-License-Identifier: BUSL-1.1](https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L1)
 
 ---
@@ -651,22 +594,11 @@ graph TD
         ONDO[ONDO Token]
     end
 
-    subgraph "Flux Finance Governance — DAO Controlled (~$43M TVL)"
-        GOV[Governor Bravo<br/>0x336505EC...]
-        TL[Timelock<br/>0x2c5898da...<br/>1 day delay]
-        COMP[Comptroller<br/>0x95Af143a...]
-        FUSDC[fUSDC]
-        FDAI[fDAI]
-        FUSDT[fUSDT]
-        FFRAX[fFRAX]
-        FOUSG[fOUSG]
-    end
-
     subgraph "Team Controlled — NOT DAO"
         TEAM_MS[Team Multisig<br/>0x677fd4ed...<br/>4-of-7]
         MGMT_MS[Management Multisig<br/>0xAEd4caF2...<br/>4-of-7]
         USDY_MS[USDY Multisig<br/>0x1a694A...<br/>4-of-7]
-        GM_ADMIN[Global Markets Admin<br/>0x3715B2...<br/>Contract]
+        GM_ADMIN[Global Markets Admin<br/>0x3715B2...<br/>TimelockController]
     end
 
     subgraph "Core RWA Products — Company Controlled (~$3.5B TVL)"
@@ -683,15 +615,6 @@ graph TD
         ARB_USDY[Arbitrum USDY<br/>4-of-7 Multisig]
     end
 
-    ONDO --> |votes| GOV
-    GOV --> |execute| TL
-    TL --> |admin| COMP
-    TL --> |admin| FUSDC
-    TL --> |admin| FDAI
-    TL --> |admin| FUSDT
-    TL --> |admin| FFRAX
-    TL --> |admin| FOUSG
-
     TEAM_MS --> |DEFAULT_ADMIN_ROLE| ONDO
     TEAM_MS --> |MINTER_ROLE| ONDO
     TEAM_MS --> |59% token supply| ONDO
@@ -704,6 +627,10 @@ graph TD
     USDY_MS --> |ProxyAdmin owner| RUSDY
 
     GM_ADMIN --> |DEFAULT_ADMIN_ROLE| GM
+
+    ONDO -.-> |NO control| OUSG
+    ONDO -.-> |NO control| USDY
+    ONDO -.-> |NO control| GM
 ```
 
 ---
@@ -714,10 +641,6 @@ graph TD
 |----------|------|----------------|-------------|--------------|---------------------|
 | [ONDO Token](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3) | DEFAULT_ADMIN_ROLE | [`0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1`](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1) | Team Multisig (4/7) | hasRole() call | 7 team signers |
 | [ONDO Token](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3) | MINTER_ROLE | [`0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1`](https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1) | Team Multisig (4/7) | hasRole() call | 7 team signers |
-| [Governor](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A) | admin | [`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | Timelock | admin() call | DAO (via Governor) |
-| [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | admin | [`0x336505EC1BcC1A020EeDe459f57581725D23465A`](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A) | Governor | admin() call | ONDO holders |
-| [Comptroller](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51) | admin | [`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | Timelock | admin() call | DAO |
-| [fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5) | admin | [`0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c`](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c) | Timelock | admin() call | DAO |
 | [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92) | DEFAULT_ADMIN_ROLE | [`0xAEd4caF2E535D964165B4392342F71bac77e8367`](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367) | Mgmt Multisig (4/7) | hasRole() call | 7 team signers |
 | [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92) | ProxyAdmin owner | [`0xAEd4caF2E535D964165B4392342F71bac77e8367`](https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367) | Mgmt Multisig (4/7) | owner() call | 7 team signers |
 | [USDY](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C) | ProxyAdmin owner | [`0x1a694A09494E214a3Be3652e4B343B7B81A73ad7`](https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7) | Team Multisig (4/7) | owner() call | 7 team signers |
@@ -763,41 +686,36 @@ graph TD
 
 ### Critical Risks
 
-1. **Governance Scope Limitation:** ONDO governance controls only Flux Finance (~$43M TVL, 1.2% of total). OUSG, USDY (~$3.5B TVL), Global Markets, and Ondo Chain are entirely outside tokenholder control.
+1. **Governance Scope Limitation:** ONDO governance has **no control** over OUSG, USDY (~$3.5B TVL), Global Markets, or Ondo Chain. These represent 98.8% of Ondo's total value and are entirely controlled by company multisigs.
 
-2. **Token Concentration:** ~59% of supply held by team multisig. This gives the team unilateral control over governance outcomes.
+2. **Token Concentration:** ~59% of supply held by team multisig. This gives the team unilateral control over any governance outcomes.
 
 3. **Team Control of Token Contract:** DEFAULT_ADMIN_ROLE and MINTER_ROLE are held by team multisig, not DAO. The team can mint new tokens without tokenholder approval.
 
-4. **No Value Accrual:** Reserve factors are 0% across all Flux Finance markets. No fee distribution mechanism exists. USDY/OUSG revenue accrues to product holders and company.
+4. **No Value Accrual:** No fee distribution mechanism exists. USDY/OUSG revenue accrues to product holders and company, not to ONDO tokenholders.
 
 ### Moderate Risks
 
-5. **Low Quorum:** 1M ONDO quorum (0.01% of supply) makes governance susceptible to low-participation outcomes.
+5. **Upgradeable Core Products:** OUSG and USDY are upgradeable proxies controlled by team multisigs on all chains.
 
-6. **Upgradeable Core Products:** OUSG and USDY are upgradeable proxies controlled by team multisigs on all chains.
+6. **KYC Gates on Core Products:** OUSG and USDY transfers require KYC approval controlled by company.
 
-7. **KYC Gates on Core Products:** OUSG and USDY transfers require KYC approval controlled by company.
-
-8. **Multichain Admin Fragmentation:** Different multisigs control products on different chains with varying thresholds (3-of-6 to 4-of-7).
+7. **Multichain Admin Fragmentation:** Different multisigs control products on different chains with varying thresholds (3-of-6 to 4-of-7).
 
 ### Positive Findings
 
-9. **ONDO Token Not Censurable:** No blocklist, freeze, or seizure functions. Transfers are permissionless.
+8. **ONDO Token Not Censurable:** No blocklist, freeze, or seizure functions. Transfers are permissionless.
 
-10. **Flux Finance DAO-Controlled:** Comptroller and fToken admin roles point to Timelock controlled by Governor.
-
-11. **Verified Contracts:** All key contracts are verified on Etherscan.
+9. **Verified Contracts:** All key contracts are verified on Etherscan.
 
 ---
 
 ## Conclusion
 
-The ONDO token provides **limited ownership** over Ondo Finance's ecosystem:
+The ONDO token provides **minimal ownership** over Ondo Finance's ecosystem:
 
 **What ONDO tokenholders control:**
-- Flux Finance governance (~$43M TVL, a Compound V2 fork for permissioned lending)
-- Ability to set reserve factors and protocol parameters for Flux
+- Nothing of material value. Flux Finance governance (~$43M TVL, 1.2% of total) is the only DAO-controlled product.
 
 **What ONDO tokenholders do NOT control:**
 - The ONDO token contract itself (team holds admin roles)
@@ -808,12 +726,12 @@ The ONDO token provides **limited ownership** over Ondo Finance's ecosystem:
 - Any revenue or value accrual mechanism
 
 **Value Proposition:**
-ONDO has **no binding value accrual mechanism**. Reserve factors are 0%, meaning no protocol fees are collected. USDY/OUSG revenue (~$3-4M monthly) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders.
+ONDO has **no binding value accrual mechanism**. USDY/OUSG revenue (~$3-4M monthly) accrues to product holders (USDY/OUSG investors), not to ONDO tokenholders.
 
 **Concentration:**
 With ~59% of supply in a team multisig, governance is effectively centralized. The team can pass or block any proposal.
 
-**Assessment:** ONDO is a governance token for a small lending protocol (Flux Finance, ~$43M TVL) within a larger company (Ondo Finance, ~$3.5B TVL). The token does not provide meaningful ownership or control over Ondo's core business (RWA tokenization). Future value depends entirely on the team's discretion to expand governance scope or implement value accrual—neither of which is enforced in code.
+**Assessment:** ONDO is a governance token that does not provide meaningful governance over Ondo Finance's core business. The token provides no control over OUSG, USDY, Global Markets, or Ondo Chain. Future value depends entirely on the team's discretion to expand governance scope or implement value accrual—neither of which is enforced in code.
 
 ---
 
@@ -823,12 +741,10 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 - [Ondo Foundation Docs](https://docs.ondo.foundation/)
 - [Ondo Finance Docs](https://docs.ondo.finance/)
 - [Ondo Finance Addresses](https://docs.ondo.finance/addresses)
-- [Flux Finance Docs](https://docs.fluxfinance.com/)
 - [Ondo DAO Governance Process](https://docs.ondo.foundation/ondo-dao#governance-process)
 - [ONDO Token Documentation](https://docs.ondo.foundation/ondo-token)
 
 ### GitHub Repositories
-- [flux-finance/contracts](https://github.com/flux-finance/contracts)
 - [ondoprotocol/usdy](https://github.com/ondoprotocol/usdy)
 - [ondoprotocol/ondo-v1](https://github.com/ondoprotocol/ondo-v1)
 - [code-423n4/2024-03-ondo-finance](https://github.com/code-423n4/2024-03-ondo-finance)
@@ -837,10 +753,6 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 - [ONDO Token](https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3)
 - [Governor](https://etherscan.io/address/0x336505EC1BcC1A020EeDe459f57581725D23465A)
 - [Timelock](https://etherscan.io/address/0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c)
-- [Comptroller](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51)
-- [fUSDC](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5)
-- [fDAI](https://etherscan.io/address/0xe2bA8693cE7474900A045757fe0efCa900F6530b)
-- [fOUSG](https://etherscan.io/address/0x1dD7950c266fB1be96180a8FDb0591F70200E018)
 - [OUSG](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92)
 - [rOUSG](https://etherscan.io/address/0x54043c656F0FAd0652D9Ae2603cDF347c5578d00)
 - [USDY](https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C)
@@ -861,7 +773,6 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 
 ### Analytics
 - [DefiLlama - Ondo Finance](https://defillama.com/protocol/ondo-finance)
-- [DefiLlama - Flux Finance](https://defillama.com/protocol/flux-finance)
 
 ### Governance
 - [Tally - Ondo DAO](https://www.tally.xyz/gov/ondo-dao)
@@ -871,7 +782,7 @@ With ~59% of supply in a team multisig, governance is effectively centralized. T
 
 ## Appendix: Contract Ownership Verification
 
-All ownership and role claims in this report were verified on-chain using `cast call` commands. This appendix documents the verification methodology and raw results.
+All ownership and role claims in this report were verified on-chain using `cast call` commands. This appendix documents key verification commands.
 
 ### ONDO Token
 
@@ -884,16 +795,13 @@ cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "supportsInterface(bytes4)(
 cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x0000000000000000000000000000000000000000000000000000000000000000 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://eth.llamarpc.com
 → true
 
-# Check MINTER_ROLE holder (keccak256("MINTER_ROLE") = 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6)
+# Check MINTER_ROLE holder
 cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "hasRole(bytes32,address)(bool)" 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 --rpc-url https://eth.llamarpc.com
 → true
 
 # Verify team multisig config
 cast call 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
 → 4
-
-cast call 0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
-→ [7 addresses]
 
 # Check total supply
 cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "totalSupply()(uint256)" --rpc-url https://eth.llamarpc.com
@@ -904,49 +812,9 @@ cast call 0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3 "balanceOf(address)(uint256
 → ~5,904,207,574,154,394,239,393,946,019 (~5.9B ONDO = 59%)
 ```
 
-### Governor and Timelock
+### OUSG/USDY
 
 ```
-# Governor admin
-cast call 0x336505EC1BcC1A020EeDe459f57581725D23465A "admin()(address)" --rpc-url https://eth.llamarpc.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-
-# Timelock admin
-cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "admin()(address)" --rpc-url https://eth.llamarpc.com
-→ 0x336505EC1BcC1A020EeDe459f57581725D23465A (Governor)
-
-# Timelock delay
-cast call 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c "delay()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 86400 (1 day)
-```
-
-### Flux Finance Contracts
-
-```
-# Comptroller admin
-cast call 0x95Af143a021DF745bc78e845b54591C53a8B3A51 "admin()(address)" --rpc-url https://eth.llamarpc.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-
-# fUSDC admin
-cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "admin()(address)" --rpc-url https://eth.llamarpc.com
-→ 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-
-# fUSDC reserve factor
-cast call 0x465a5a630482f3abD6d3b84B39B29b07214d19e5 "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0
-
-# fDAI reserve factor
-cast call 0xe2bA8693cE7474900A045757fe0efCa900F6530b "reserveFactorMantissa()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 0
-```
-
-### OUSG (Ethereum)
-
-```
-# Check proxy admin via storage slot
-cast storage 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://eth.llamarpc.com
-→ ProxyAdmin address
-
 # OUSG DEFAULT_ADMIN_ROLE holder
 cast call 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 "hasRole(bytes32,address)(bool)" 0x0000000000000000000000000000000000000000000000000000000000000000 0xAEd4caF2E535D964165B4392342F71bac77e8367 --rpc-url https://eth.llamarpc.com
 → true
@@ -955,34 +823,24 @@ cast call 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 "hasRole(bytes32,address)(b
 cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
 → 4
 
-cast call 0xAEd4caF2E535D964165B4392342F71bac77e8367 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
-→ [7 addresses]
-
 # OUSG KYC Registry
 cast storage 0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92 0 --rpc-url https://eth.llamarpc.com
 → 0x56A5D911052323D688C731d516530878557463e7
+
+# rOUSG oracle address
+cast call 0x54043c656F0FAd0652D9Ae2603cDF347c5578d00 "oracle()(address)" --rpc-url https://eth.llamarpc.com
+→ 0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe
+
+# OUSG Oracle price data
+cast call 0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe "getPriceData()(uint256,uint256)" --rpc-url https://eth.llamarpc.com
+→ 114921270000000000000, 1776198875
+
+# USDY Oracle price data
+cast call 0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0 "getPriceData()(uint256,uint256)" --rpc-url https://eth.llamarpc.com
+→ 1129637140000000000, 1776247931
 ```
 
-### USDY (Ethereum)
-
-```
-# Check proxy admin via storage slot
-cast storage 0x96F6eF951840721AdBF46Ac996b59E0235CB985C 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://eth.llamarpc.com
-→ ProxyAdmin address
-
-# USDY multisig config
-cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 4
-
-cast call 0x1a694A09494E214a3Be3652e4B343B7B81A73ad7 "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
-→ [7 addresses]
-
-# Check blocklist address
-cast call 0x96F6eF951840721AdBF46Ac996b59E0235CB985C "blocklist()(address)" --rpc-url https://eth.llamarpc.com
-→ 0xd8c8174691d936E2C80114EC449037b13421B0a8
-```
-
-### Global Markets (TimelockController)
+### Global Markets
 
 ```
 # GMTokenManager DEFAULT_ADMIN_ROLE holder
@@ -993,107 +851,23 @@ cast call 0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c "getRoleMember(bytes32,uint
 cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getMinDelay()(uint256)" --rpc-url https://eth.llamarpc.com
 → 7200 (2 hours)
 
-# TimelockController PROPOSER_ROLE holder
-cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1 0 --rpc-url https://eth.llamarpc.com
-→ 0x71A4d411b5f7941Dee020417fca30413712f1646 (4/7 multisig)
-
-# TimelockController EXECUTOR_ROLE holders
-cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63 0 --rpc-url https://eth.llamarpc.com
-→ 0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC (1/8 multisig)
-
-cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63 1 --rpc-url https://eth.llamarpc.com
-→ 0xfF1621Ee754512B34a6Bd62A941Cc4d5E4d0b85B (EOA)
-
 # TimelockController DEFAULT_ADMIN_ROLE holder
 cast call 0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://eth.llamarpc.com
 → 0xcD35671dCAb88d05EE29dC4D360181529390B17f (5/9 multisig)
-
-# Verify 5/9 multisig config
-cast call 0xcD35671dCAb88d05EE29dC4D360181529390B17f "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 5
-
-cast call 0xcD35671dCAb88d05EE29dC4D360181529390B17f "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
-→ [9 addresses]
 ```
 
-### USDY_InstantManager
+### Multichain Deployments
 
 ```
-# DEFAULT_ADMIN_ROLE holder
-cast call 0xa42613C243b67BF6194Ac327795b926B4b491f15 "getRoleMember(bytes32,uint256)(address)" 0x0000000000000000000000000000000000000000000000000000000000000000 0 --rpc-url https://eth.llamarpc.com
-→ 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF (3/5 multisig)
+# Polygon OUSG ProxyAdmin owner
+cast call 0xbA11C5effA33c4D6F8f593CFA394241CfE925811 "owner()(address)" --rpc-url https://polygon-rpc.com
+→ [ProxyAdmin address]
 
-# Verify 3/5 multisig config
-cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getThreshold()(uint256)" --rpc-url https://eth.llamarpc.com
-→ 3
-
-cast call 0x5AE21c99FC5f1584D8Cb09a298CFFd92B5d178eF "getOwners()(address[])" --rpc-url https://eth.llamarpc.com
-→ [5 addresses]
-```
-
----
-
-## Appendix: Multichain Deployment Verification
-
-### Polygon OUSG
-
-```
-# Check ProxyAdmin via storage slot
-cast storage 0xbA11C5effA33c4D6F8f593CFA394241CfE925811 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://1rpc.io/matic
-→ ProxyAdmin address
-
-# Verify multisig config (3-of-6)
-cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getThreshold()(uint256)" --rpc-url https://1rpc.io/matic
-→ 3
-
-cast call 0x4413073440A568790c1b2b06B47F7D0a443574d0 "getOwners()(address[])" --rpc-url https://1rpc.io/matic
-→ [6 addresses]
-```
-
-### Mantle USDY
-
-```
-# Check ProxyAdmin via storage slot
+# Mantle USDY admin
 cast storage 0x5bE26527e817998A7206475496fDE1E68957c5A6 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://rpc.mantle.xyz
-→ ProxyAdmin address
+→ [ProxyAdmin address]
 
-# Verify multisig config (4-of-7)
-cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getThreshold()(uint256)" --rpc-url https://rpc.mantle.xyz
-→ 4
-
-cast call 0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3 "getOwners()(address[])" --rpc-url https://rpc.mantle.xyz
-→ [7 addresses]
+# Arbitrum USDY admin
+cast storage 0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://arb1.arbitrum.io/rpc
+→ [ProxyAdmin address]
 ```
-
-### Arbitrum USDY
-
-```
-# Check ProxyAdmin via storage slot
-cast storage 0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://arbitrum-one.publicnode.com
-→ ProxyAdmin address
-
-# Verify multisig config (4-of-7)
-cast call 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D "getThreshold()(uint256)" --rpc-url https://arbitrum-one.publicnode.com
-→ 4
-
-cast call 0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D "getOwners()(address[])" --rpc-url https://arbitrum-one.publicnode.com
-→ [7 addresses]
-```
-
-### BNB Chain Global Markets
-
-```
-# Check GMTokenManager for proxy pattern
-cast storage 0x91f8Aff3738825e8eB16FC6f6b1A7A4647bDB299 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103 --rpc-url https://bsc-dataseed.binance.org
-→ 0x0 (not a proxy)
-```
-
-### Solana Deployments
-
-Ondo Global Markets and USDY are also deployed on Solana. Solana programs use different verification methods than EVM chains.
-
-**Known Solana Program Addresses:**
-- GlobalMarkets: Various token mint addresses per asset
-- USDY: Program address documented at docs.ondo.finance
-
-Aragon has not been able to verify Solana program upgrade authorities using the same `cast call` methodology as EVM chains. Solana verification would require Anchor/Solana CLI tooling.
