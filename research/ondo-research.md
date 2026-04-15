@@ -324,7 +324,8 @@ function _beforeTokenTransfer(
 ```
 
 The `_getKYCStatus()` function calls the KYCRegistry:
-- Source: [KYCRegistryClientUpgradeable.sol:100-102](https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/kyc/KYCRegistryClientUpgradeable.sol#L100-L102)
+- Source: [KYCRegistryClient.sol:64-66](https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/kyc/KYCRegistryClient.sol#L64-L66)
+- Note: The deployed OUSG contract uses `KYCRegistryClientInitializable` (from Flux repo), not the `KYCRegistryClientUpgradeable` shown in the C4 audit repo. The C4 audit code notes this modification. The onchain function is identical.
 
 ```solidity
 function _getKYCStatus(address account) internal view returns (bool) {
@@ -472,29 +473,32 @@ Aragon has not been able to identify the specific addresses holding these vested
 
 ---
 
-### 2.3 Accrual Mechanism Control ✅
+### 2.3 Accrual Mechanism Control ⚠️
 
-**Finding:** ONDO holders **can** change Flux Finance fee parameters via governance—but the current setting is 0% and Flux Finance represents only 1.2% of Ondo's total TVL.
+**Finding:** ONDO holders have **no control** over revenue parameters for Ondo's core products (OUSG, USDY, Global Markets). All value accrual mechanisms are controlled by company multisigs.
 
-**Evidence:**
+**OUSG/USDY Price Oracles (Company-Controlled):**
 
-1. **Comptroller admin = Timelock:**
-   ```
-   cast call 0x95Af143a021DF745bc78e845b54591C53a8B3A51 "admin()(address)" --rpc-url https://eth.llamarpc.com
-   → 0x2c5898da4DF1d45EAb2B7B192a361C3b9EB18d9c (Timelock)
-   ```
-   - [Comptroller on Etherscan](https://etherscan.io/address/0x95Af143a021DF745bc78e845b54591C53a8B3A51#readContract)
+The price oracles that determine OUSG/USDY NAV (and thus yield distribution) are controlled by company-held SETTER_ROLE:
 
-2. **`_setReserveFactor()` can be called by admin:**
-   - [CTokenModified.sol:1141-1147](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1141-L1147) - public function
-   - [CTokenModified.sol:1157-1160](https://github.com/flux-finance/contracts/blob/main/contracts/lending/tokens/cToken/CTokenModified.sol#L1157-L1160) - admin check
-   - [fUSDC on Etherscan](https://etherscan.io/address/0x465a5a630482f3abD6d3b84B39B29b07214d19e5#writeProxyContract) - `_setReserveFactor` function
+1. **OUSG Oracle (`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`):**
+   - The `setPrice()` function is restricted to SETTER_ROLE holders
+   - Source: [RWAOracleExternalComparisonCheck.sol:147](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleExternalComparisonCheck.sol#L147)
+   - [OUSG Oracle on Etherscan](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe)
+   - Verified price data: `cast call 0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe "getPriceData()(uint256,uint256)"` → `114921270000000000000, 1776198875`
 
-3. **DAO can propose to set non-zero reserve factors:**
-   - [Tally Ondo DAO](https://www.tally.xyz/gov/ondo-dao) - governance portal
-   - Any holder with 100M ONDO can create proposal
+2. **USDY Oracle (`0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0`):**
+   - Same SETTER_ROLE restriction
+   - Source: [RWAOracleRateCheck.sol:81-90](https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90)
+   - [USDY Oracle on Etherscan](https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0)
 
-**However:** Even with non-zero reserve factors, there is no FeeDistributor contract to distribute collected fees to tokenholders. Reserves would accumulate in fToken contracts via `totalReserves`, not flow to ONDO holders automatically. The DAO would need to deploy a distribution mechanism and propose withdrawing reserves.
+**Global Markets (Company-Controlled via TimelockController):**
+
+- GMTokenManager admin: TimelockController at [`0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1`](https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1)
+- TimelockController controlled by 5-of-9 multisig ([`0xcD35671d...`](https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f))
+- [GMTokenManager on Etherscan](https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c)
+
+**Conclusion:** ONDO tokenholders cannot change fee rates, yield spreads, or distribution parameters for any of Ondo's core products. All value accrual control resides with company multisigs.
 
 ---
 
@@ -517,9 +521,10 @@ The oracle `setPrice()` function is rate-limited to max 1% change per 23 hours (
 - Backed by BlackRock's SHV ETF (short-term treasuries)
 - Oracle: [`0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`](https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe) (RWAOracleExternalComparisonCheck)
 - [OUSG on Etherscan](https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92)
+- The rOUSG contract confirms this oracle: `cast call 0x54043c656F0FAd0652D9Ae2603cDF347c5578d00 "oracle()(address)"` → `0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe`
 
 **Proof of Yield Spread Retention (OUSG):**
-Same mechanism as USDY - oracle price updates are controlled by SETTER_ROLE holders, not automated. No onchain enforcement of full yield pass-through.
+The OUSG oracle's `setPrice()` function is controlled by SETTER_ROLE holders, not automated. The oracle has price data (verified via `getPriceData()`), but price updates are discretionary. No onchain enforcement of full yield pass-through exists.
 
 **Ondo Global Markets:**
 - Tokenized stocks with "on" suffix (e.g., TSLAon, COINon)
