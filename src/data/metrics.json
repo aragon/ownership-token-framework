@@ -4979,7 +4979,7 @@
           "id": "onchain-ctrl__governance-workflow",
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "ONDO tokenholders have no governance control over Ondo's core products (OUSG, USDY, Global Markets). These products represent ~$3.5B TVL (98.8% of total) and are controlled by company multisigs.",
           "evidence": [
             {
@@ -5024,7 +5024,7 @@
           "id": "onchain-ctrl__role-accountability",
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "OUSG, USDY, and Global Markets are entirely controlled by company multisigs. The ONDO token itself has DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO.",
           "evidence": [
             {
@@ -5121,7 +5121,7 @@
           "id": "onchain-ctrl__protocol-upgrade",
           "name": "Protocol Upgrade Authority",
           "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "OUSG, USDY, and Global Markets are upgradeable contracts controlled by team multisigs on all chains. ONDO tokenholders have no upgrade control over any core products.",
           "evidence": [
             {
@@ -5187,7 +5187,7 @@
           "id": "onchain-ctrl__token-upgrade",
           "name": "Token Upgrade Authority",
           "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
-          "status": "\u26a0\ufe0f",
+          "status": "positive",
           "notes": "The ONDO token is not upgradeable (no proxy pattern). It uses AccessControl with DEFAULT_ADMIN_ROLE and MINTER_ROLE held by a team multisig, not the DAO.",
           "evidence": [
             {
@@ -5223,7 +5223,7 @@
           "id": "onchain-ctrl__supply",
           "name": "Supply Control",
           "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "ONDO has a total supply of 10B tokens. MINTER_ROLE exists and is held by a team multisig. The supply is not immutably fixed.",
           "evidence": [
             {
@@ -5264,7 +5264,7 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "OUSG and USDY have extensive transfer restrictions (KYC requirements, blocklists, sanctions checks) enforced by Ondo Finance, not the DAO. The company controls who can hold these products.",
           "evidence": [
             {
@@ -5310,7 +5310,7 @@
           "id": "onchain-ctrl__censorship",
           "name": "Token Censorship",
           "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The ONDO token has no blocklist, freeze, or seizure functions. Transfers are permissionless. Transfers were enabled in January 2024.",
           "evidence": [
             {
@@ -5344,7 +5344,7 @@
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "No active value accrual mechanism for ONDO tokenholders. USDY/OUSG yield accrues to product holders, not ONDO holders. No fee distribution, staking rewards, or buyback program exists.",
           "evidence": [
             {
@@ -5400,7 +5400,7 @@
           "id": "val-accrual__treasury",
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists.",
           "evidence": [
             {
@@ -5420,7 +5420,7 @@
           "id": "val-accrual__mechanism",
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "ONDO holders have no control over revenue parameters for Ondo's core products. OUSG/USDY oracle price updates (which determine yield distribution) are controlled by company-held SETTER_ROLE. Global Markets fees are controlled by TimelockController owned by company multisigs.",
           "evidence": [
             {
@@ -5504,7 +5504,7 @@
             "Reference"
           ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG/Global Markets operations. This value does not flow to ONDO tokenholders.",
           "evidence": [
             {
@@ -5594,7 +5594,7 @@
           "id": "verifiability__token-source",
           "name": "Token Contract Source Verification",
           "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "The ONDO token contract is verified on Etherscan. The deployed contract uses AccessControl, which differs from the simpler Ownable-based contract in the public ondo-v1 repository.",
           "evidence": [
             {
@@ -5617,7 +5617,7 @@
           "id": "verifiability__protocol-source",
           "name": "Protocol Component Source Verification",
           "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
-          "status": "\u2705",
+          "status": "positive",
           "notes": "OUSG, USDY, and Global Markets contracts are verified on Etherscan. Public GitHub repositories and audit code available.",
           "evidence": [
             {
@@ -5680,7 +5680,7 @@
           "id": "distribution__concentration",
           "name": "Ownership Concentration",
           "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
-          "status": "\u26a0\ufe0f",
+          "status": "at_risk",
           "notes": "~59% of ONDO supply is held by a single team multisig. This gives the team unilateral control over governance. The team can pass any proposal and block any proposal.",
           "evidence": [
             {
@@ -5705,16 +5705,21 @@
           "id": "distribution__supply-schedule",
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
-          "status": "\u26a0\ufe0f",
-          "notes": "Per documentation, unlock schedules exist for team and investors. Aragon has not been able to verify specific vesting contract addresses from onchain data.",
+          "status": "warning",
+          "notes": "Per documentation, unlock schedules exist for team and investors with unclear start dates, but the token being transferrable from Jan 2024 allows an educated guess of many unlocks yet to pan out. Aragon has not been able to verify specific vesting contract addresses from onchain data.",
           "evidence": [
             {
               "name": "Documented Schedule",
-              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, 18-month release.\n\nCoinList Tranche 2 (~1.7%): 1-year lock, 6-month release.\n\nSeed Investors (<7%): 1-year cliff, 48-month release.\n\nSeries A (<7%): 1-year cliff, 48-month release.\n\nCore Team: 5-year vesting.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
+              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, then 18-month linear release. \n\nCoinList Tranche 2 (~1.7%): 1-year lock, then 6-month linear release. \n\nSeed Investors (<7%): 1-year cliff, then 48-month release. \n\nSeries A (<7%): 1-year cliff, then 48-month release. \n\nCore Team: 5-year extended lock-up from the transfer unlock.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
               "urls": [
                 {
                   "name": "Token Documentation",
                   "url": "https://docs.ondo.foundation/ondo-token",
+                  "type": "docs"
+                },
+                {
+                  "name": "CoinList - ONDO Community Sale",
+                  "url": "https://coinlist.co/ondo",
                   "type": "docs"
                 }
               ]
@@ -5736,7 +5741,7 @@
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "Aragon has not been able to verify USPTO registration for \"Ondo\" or \"Ondo Finance\" trademark.",
           "evidence": []
         },
@@ -5744,7 +5749,7 @@
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "\u26a0\ufe0f",
+          "status": "warning",
           "notes": "Ondo Finance Inc. controls primary distribution channels. ondo.finance is operated by the company. OUSG/USDY access requires KYC approval controlled by company. No DAO control over frontend access.",
           "evidence": [
             {
@@ -5767,7 +5772,7 @@
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "TBD",
+          "status": "unevaluated",
           "notes": "OUSG/USDY code is BUSL-1.1 licensed. This is a restrictive license that limits commercial use. Aragon has not verified if license holder is tokenholder-controlled.",
           "evidence": [
             {
