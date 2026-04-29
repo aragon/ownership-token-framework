@@ -2588,6 +2588,11 @@
                   "type": "docs"
                 },
                 {
+                  "name": "stETH/LDO Buyback Snapshot Vote",
+                  "url": "https://snapshot.box/#/s:lido-snapshot.eth/proposal/0x43be9ee8ce820d444f706e9dd763a223ebabf37be27931cc056888e6c2e48814",
+                  "type": "vote"
+                },
+                {
                   "name": "NEST",
                   "url": "https://research.lido.fi/t/nest-network-economic-support-tokenomics/10648",
                   "type": "docs"
