@@ -2555,17 +2555,48 @@
       "name": "Value Accrual",
       "tags": ["Metric 2"],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
-      "summary": "LDO holders currently have no direct value accrual mechanism from protocol revenue. Governance is exploring buyback mechanisms. The treasury is controlled by LDO holders, and offchain IP is held by DAO-controlled BORG foundations.",
+      "summary": "Protocol revenue flows to the LDO-controlled DAO treasury, and a newly approved manual buyback program (up to 10,000 stETH, held by the treasury) creates net buy pressure on LDO, though not a direct distribution. Treasury is controlled by LDO holders; offchain IP is held by DAO-controlled BORG foundations.",
       "criteria": [
         {
           "id": "val-accrual__active",
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
-          "status": "warning",
-          "notes": "LDO token holders currently have no direct value accrual mechanism from protocol revenue. However, governance is exploring buyback mechanisms to return value to token holders, with proposals under consideration for liquid buyback execution using protocol treasury funds.",
+          "status": "positive",
+          "notes": "**Protocol fee flow to treasury:**\n- Lido charges a 10% protocol fee on all ETH staking rewards, split onchain by the StakingRouter into a module fee (to node operators) and a treasury fee (to the LDO-controlled DAO Agent).\n- Calling `getStakingFeeAggregateDistribution()` on the StakingRouter currently returns an aggregated treasury fee of ~6.15% and module fees of ~3.85% (basePrecision = 100), meaning ~6.15% of all ETH staking rewards accrue to the DAO treasury on every oracle report.\n\n**Buyback program:**\n- Governance has authorized the Lido Growth Committee to buy back LDO using up to 10,000 stETH (from the accumulated fee described above), in 1,000 stETH batches via Easy Track motions (3-day objection window for LDO holders, 3% max slippage) while a favorable LDO/stETH ratio persists. Execution spans onchain (CoW, 1inch, Uniswap) and offchain venues (Binance, Bybit, OKX, Gate, Bitget).\n- This is independent of the anticipated automated NEST buybacks in Q2 2026. Value accrues to the LDO-controlled DAO treasury (buyback-and-hold), but is not directly distributed to LDO holders.",
           "evidence": [
             {
+              "name": "Treasury Fee Flow",
               "urls": [
+                {
+                  "name": "StakingRouter (read contract)",
+                  "url": "https://etherscan.io/address/0xFdDf38947aFB03C621C71b06C9C70bce73f12999#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "StakingRouter.sol#L1051 (getStakingFeeAggregateDistribution)",
+                  "url": "https://github.com/lidofinance/core/blob/master/contracts/0.8.9/StakingRouter.sol#L1051",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Buyback Program",
+              "urls": [
+                {
+                  "name": "stETH/LDO Buyback Proposal",
+                  "url": "https://research.lido.fi/t/utilizing-market-opportunities-steth-ldo-trade/11358",
+                  "type": "docs"
+                },
+                {
+                  "name": "stETH/LDO Buyback Snapshot Vote",
+                  "url": "https://snapshot.box/#/s:lido-snapshot.eth/proposal/0x43be9ee8ce820d444f706e9dd763a223ebabf37be27931cc056888e6c2e48814",
+                  "type": "vote"
+                },
+                {
+                  "name": "NEST",
+                  "url": "https://research.lido.fi/t/nest-network-economic-support-tokenomics/10648",
+                  "type": "docs"
+                },
                 {
                   "name": "Liquid buybacks research",
                   "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894",
