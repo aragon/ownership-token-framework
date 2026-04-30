@@ -3141,31 +3141,91 @@
       "name": "Offchain Dependencies",
       "tags": ["Reference"],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
-      "summary": "Offchain dependencies (trademark ownership, frontend/domain control, and software licensing) have not yet been evaluated for LQTY. Because the core protocol is immutable and governance-free, offchain levers cannot affect onchain economics, but interface and brand control remain unverified.",
+      "summary": "Offchain dependencies for LQTY (trademark/brand, primary domain, and core software licensing) are controlled by Liquity AG, a Swiss company. LQTY tokenholders have no governance rights or control over Liquity AG. The core V1 protocol is immutable and governance-free, but brand, distribution, and V2 IP rights remain with the company.",
       "criteria": [
         {
           "id": "offchain__trademark",
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "unevaluated",
-          "notes": "",
-          "evidence": []
+          "status": "fail",
+          "notes": "The Liquity brand and related trademarks are owned and controlled by Liquity AG (Swiss company). No tokenholder-controlled legal entity is involved.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity AG - Crunchbase Company Profile",
+                  "url": "https://www.crunchbase.com/organization/liquity-1d3e",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity - Tracxn Company Profile",
+                  "url": "https://tracxn.com/d/companies/liquity/__jQEYCp-QRDCuYvGmSSmUBbFIO6piP9rk6HEjxXEsrH0",
+                  "type": "website"
+                },
+                {
+                  "name": "Team Page - Liquity.org",
+                  "url": "https://www.liquity.org/team",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "offchain__distribution",
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "unevaluated",
-          "notes": "",
-          "evidence": []
+          "status": "partial",
+          "notes": "Liquity AG controls the primary domain liquity.org and the frontend registry. However, the company explicitly does not run any user-facing frontend. All frontends are operated by independent third parties. No tokenholder-controlled entity controls distribution.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity Runs on Decentralized Frontends - Official Blog",
+                  "url": "https://www.liquity.org/blog/liquity-runs-on-decentralized-frontends",
+                  "type": "website"
+                },
+                {
+                  "name": "Frontend Operators Page",
+                  "url": "https://www.liquity.org/frontend-operators",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity Launch Details (AG does not run frontend)",
+                  "url": "https://www.liquity.org/blog/liquity-launch-details",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "offchain__licensing",
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
-          "status": "unevaluated",
-          "notes": "",
-          "evidence": []
+          "status": "fail",
+          "notes": "Core protocol software and IP (V2) is owned by Liquity AG and released under a multi-year Business Source License (BUSL). Commercial deployments before ~September 2027 require approval from Liquity AG.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Licensing Liquity V2 - Official Blog",
+                  "url": "https://www.liquity.org/blog/licensing-liquity-v2-may-the-fork-be-with-you",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity V2 Core LICENSE File (GitHub)",
+                  "url": "https://github.com/liquity/bold/blob/main/contracts/LICENSE",
+                  "type": "github"
+                },
+                {
+                  "name": "What's New in Liquity V2 - Bankless",
+                  "url": "https://www.bankless.com/read/whats-new-in-liquity-v2",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
