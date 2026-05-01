@@ -67,7 +67,8 @@ const tokenRoutes = [
   'uni',
   'sky',
   'yb',
-  'ena'
+  'ena',
+  'lqty'
 ];
 
 async function captureScreenshot(page, url, outputPath) {
