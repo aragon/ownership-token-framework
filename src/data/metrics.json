@@ -2804,7 +2804,7 @@
       "name": "Onchain Control",
       "tags": ["Metric 1"],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
-      "summary": "Liquity is governance-free at the core: protocol and token contracts are immutable with no admin keys, upgrade paths, or privileged roles. Token supply is fixed at 100M LQTY with no mint or censorship capabilities. LQTY holders' only onchain power is voting on V2 Protocol Incentivized Liquidity (PIL) emissions.",
+      "summary": "LQTY holders' onchain power is voting on V2 Protocol Incentivized Liquidity (PIL) emissions. The rest of the protocol is described as \"Governance Free\" with immutable contracts and no admin keys, upgrade paths, or privileged roles.",
       "criteria": [
         {
           "id": "onchain-ctrl__governance-workflow",
@@ -3036,7 +3036,7 @@
           "tags": ["Reference"],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
-          "notes": "",
+          "notes": "The protocol is entirely onchain — Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
           "evidence": []
         }
       ]
