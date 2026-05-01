@@ -164,7 +164,9 @@ export default function MetricCard(props: MetricCardProps) {
               colors.summaryColor
             )}
           >
-            {metric.summary}
+            <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+              {metric.summary}
+            </ReactMarkdown>
           </p>
         )}
       </div>
