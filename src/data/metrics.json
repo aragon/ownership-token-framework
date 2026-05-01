@@ -2829,6 +2829,438 @@
       ]
     }
   ],
+  "lqty": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "LQTY holders' onchain power is voting on V2 Protocol Incentivized Liquidity (PIL) emissions. The rest of the protocol is described as \"Governance Free\" with immutable contracts and no admin keys, upgrade paths, or privileged roles.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "positive",
+          "notes": "Neither LQTY holders nor the protocol team can influence core protocol execution — all core protocol parameters are immutable after launch. LQTY holders' onchain governance role is limited to voting on Protocol Incentivized Liquidity (PIL) emissions, directing a portion of V2 revenue to community-chosen liquidity initiatives.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity — Governance-Free",
+                  "url": "https://www.liquity.org/features/governance-free",
+                  "type": "docs"
+                },
+                {
+                  "name": "Directing Protocol Incentivized Liquidity with LQTY",
+                  "url": "https://www.liquity.org/blog/directing-protocol-incentivized-liquidity-with-lqty",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "positive",
+          "notes": "There are no privileged roles in the core protocol. All core protocol contracts are immutable after launch with no admin functions, owners, or upgrade keys.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity — Governance-Free",
+                  "url": "https://www.liquity.org/features/governance-free",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "positive",
+          "notes": "Core Liquity protocol contracts are non-upgradeable and do not use proxy patterns.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity v2 Technical Docs and Audits",
+                  "url": "https://docs.liquity.org/v2-documentation/technical-docs-and-audits",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "The LQTY token contract is immutable with no proxy patterns or upgrade mechanisms.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "LQTY Token Source",
+                  "url": "https://etherscan.io/token/0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "positive",
+          "notes": "Fixed 100M LQTY token supply. No mint() function or inflation pathway in the bytecode.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "The only LQTY token minting transactions ever, amounting to 100M LQTY tokens",
+                  "url": "https://etherscan.io/advanced-filter?tkn=0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d&txntype=2&fadd=0x0000000000000000000000000000000000000000",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Access Gating",
+          "about": "Evaluates whether privileged roles can selectively restrict user access to the protocol.",
+          "status": "positive",
+          "notes": "No privileged roles. The only thing LQTY holders can do is vote for PIL emissions.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity — Governance-Free",
+                  "url": "https://www.liquity.org/features/governance-free",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "positive",
+          "notes": "No Guardian or blacklist capabilities exist in the LQTY token contract.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "LQTY token's implementation code",
+                  "url": "https://etherscan.io/address/0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "Stakers earn two live onchain streams: V1 protocol fees (ETH redemption fees + LUSD borrowing fees) routed directly to LQTYStaking, and V2 bribes paid pro-rata to voters who allocate their voting power to initiatives. There is no protocol treasury - V2 sends 100% of revenue straight to users. Fee parameters and revenue routing are immutable and cannot be modified by governance or the team.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "positive",
+          "notes": "LQTY holders receive two live, onchain value streams.\n\nLiquity V1 — protocol revenue to stakers. Staked LQTY earns fees routed directly to the V1 LQTYStaking contract: redemption fees (paid in ETH) are forwarded by TroveManager, and borrowing fees (paid in LUSD) are forwarded by BorrowerOperations. Every staker accrues a pro-rata share via the F_ETH and F_LUSD accumulators — no voting required.\n\nLiquity V2 — bribes to voters. V2 governance is built on top of V1 staking, so V2 participants automatically receive the V1 fee streams above. Stakers who additionally allocate their voting power to an initiative can claim a pro-rata share of bribes (BOLD plus an initiative-specific token) deposited by external parties for that epoch.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "TroveManager.sol — V1 redemption fee → increaseF_ETH",
+                  "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/TroveManager.sol#L1011-L1012",
+                  "type": "github"
+                },
+                {
+                  "name": "BorrowerOperations.sol — V1 borrowing fee → increaseF_LUSD",
+                  "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/BorrowerOperations.sol#L370",
+                  "type": "github"
+                },
+                {
+                  "name": "Liquity docs — LQTY staking (V1 revenue + V2 bribes)",
+                  "url": "https://docs.liquity.org/v2-faq/lqty-staking",
+                  "type": "docs"
+                },
+                {
+                  "name": "V2-gov Governance.sol — depositLQTY (V2 deposit stakes into V1)",
+                  "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L162",
+                  "type": "github"
+                },
+                {
+                  "name": "V2-gov Governance.sol — allocateLQTY (vote on initiatives)",
+                  "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L584",
+                  "type": "github"
+                },
+                {
+                  "name": "V2-gov BribeInitiative.sol — depositBribe / claimBribes",
+                  "url": "https://github.com/liquity/V2-gov/blob/main/src/BribeInitiative.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "There is no protocol treasury. Liquity V2 skips the concept of a centralized treasury and sends 100% of its revenue straight to its users.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity V2 Docs",
+                  "url": "https://www.liquity.org/blog/liquity-v2-is-live",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "positive",
+          "notes": "The V1 fee accrual mechanism is immutable — neither the core team nor LQTY holders can change the fee parameters or the routing of fees to the LQTYStaking contract, since the core protocol contracts are non-upgradeable and expose no admin or governance hooks over these parameters. V2 governance (PIL + bribes) lets LQTY voters direct a separate slice of V2 revenue to liquidity initiatives, but explicitly has no control over core protocol parameters, which are immutable after launch.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity v2 Technical Docs and Audits",
+                  "url": "https://docs.liquity.org/v2-documentation/technical-docs-and-audits",
+                  "type": "docs"
+                },
+                {
+                  "name": "Directing Protocol Incentivized Liquidity with LQTY",
+                  "url": "https://www.liquity.org/blog/directing-protocol-incentivized-liquidity-with-lqty",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "tags": ["Reference"],
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "unevaluated",
+          "notes": "The protocol is entirely onchain — Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "Both the LQTY token and core Liquity protocol contracts (V1 and V2) are open source on GitHub and source-verified against their onchain deployments - no closed-source components or unverified bytecode.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "positive",
+          "notes": "The LQTY token contract source code (LQTYToken.sol) is publicly available on GitHub and verified on Etherscan.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "LQTY Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0x6DEa81C8171D0bA574754EF6F8b412F2Ed88c54D#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "LQTYToken.sol Source (GitHub)",
+                  "url": "https://github.com/liquity/dev/blob/main/packages/contracts/contracts/LQTY/LQTYToken.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "positive",
+          "notes": "Liquity protocol contracts are open source on GitHub.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity V2 Core (GitHub)",
+                  "url": "https://github.com/liquity/bold",
+                  "type": "github"
+                },
+                {
+                  "name": "Liquity V2 Governance (GitHub)",
+                  "url": "https://github.com/liquity/V2-gov",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "LQTY supply is fully circulating - team and investor lockups ended in 2022, leaving only the immutable Stability Pool emission schedule for V1 depositors. Concentration among third parties has not yet been independently verified.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "unevaluated",
+          "notes": "Aragon has not yet verified that 3rd parties do not hold more than 50% of voting power",
+          "evidence": []
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "positive",
+          "notes": "It's all circulating — vesting ended in 2022, which can be verified by looking at the events emitted by the `LockupContractFactory`. The only remaining non-circulating LQTY is what the contract releases on an immutable schedule to Stability Pool depositors in V1.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "LockupContractFactory (Etherscan)",
+                  "url": "https://etherscan.io/address/0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "CommunityIssuance (Etherscan)",
+                  "url": "https://etherscan.io/address/0xD8c9D9071123a059C6E0A945cF0e0c82b508d816#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": ["Reference"],
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "Offchain dependencies for LQTY (trademark/brand, primary domain, and core software licensing) are controlled by Liquity AG, a Swiss company. LQTY tokenholders have no governance rights or control over Liquity AG. The core V1 protocol is immutable and governance-free, but brand, distribution, and V2 IP rights remain with the company.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "fail",
+          "notes": "The Liquity brand and related trademarks are owned and controlled by Liquity AG (Swiss company). No tokenholder-controlled legal entity is involved.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity AG - Crunchbase Company Profile",
+                  "url": "https://www.crunchbase.com/organization/liquity-1d3e",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity - Tracxn Company Profile",
+                  "url": "https://tracxn.com/d/companies/liquity/__jQEYCp-QRDCuYvGmSSmUBbFIO6piP9rk6HEjxXEsrH0",
+                  "type": "website"
+                },
+                {
+                  "name": "Team Page - Liquity.org",
+                  "url": "https://www.liquity.org/team",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "partial",
+          "notes": "Liquity AG controls the primary domain liquity.org and the frontend registry. However, the company explicitly does not run any user-facing frontend. All frontends are operated by independent third parties. No tokenholder-controlled entity controls distribution.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Liquity Runs on Decentralized Frontends - Official Blog",
+                  "url": "https://www.liquity.org/blog/liquity-runs-on-decentralized-frontends",
+                  "type": "website"
+                },
+                {
+                  "name": "Frontend Operators Page",
+                  "url": "https://www.liquity.org/frontend-operators",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity Launch Details (AG does not run frontend)",
+                  "url": "https://www.liquity.org/blog/liquity-launch-details",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "fail",
+          "notes": "Core protocol software and IP (V2) is owned by Liquity AG and released under a multi-year Business Source License (BUSL). Commercial deployments before ~September 2027 require approval from Liquity AG.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Licensing Liquity V2 - Official Blog",
+                  "url": "https://www.liquity.org/blog/licensing-liquity-v2-may-the-fork-be-with-you",
+                  "type": "website"
+                },
+                {
+                  "name": "Liquity V2 Core LICENSE File (GitHub)",
+                  "url": "https://github.com/liquity/bold/blob/main/contracts/LICENSE",
+                  "type": "github"
+                },
+                {
+                  "name": "What's New in Liquity V2 - Bankless",
+                  "url": "https://www.bankless.com/read/whats-new-in-liquity-v2",
+                  "type": "website"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "uni": [
     {
       "id": "onchain-ctrl",
