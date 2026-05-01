@@ -2811,12 +2811,12 @@
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "positive",
-          "notes": "Neither LQTY holders nor the protocol team can influence core protocol execution — all core protocol parameters are immutable after launch. LQTY holders' onchain governance role is limited to voting on Protocol Incentivized Liquidity (PIL) emissions, directing a portion of V2 revenue to community-chosen liquidity initiatives.",
+          "notes": "Neither LQTY holders nor the protocol team can influence core protocol execution - all core protocol parameters are immutable after launch. LQTY holders' onchain governance role is limited to voting on Protocol Incentivized Liquidity (PIL) emissions, directing a portion of V2 revenue to community-chosen liquidity initiatives.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "Liquity — Governance-Free",
+                  "name": "Liquity - Governance-Free",
                   "url": "https://www.liquity.org/features/governance-free",
                   "type": "docs"
                 },
@@ -2839,7 +2839,7 @@
             {
               "urls": [
                 {
-                  "name": "Liquity — Governance-Free",
+                  "name": "Liquity - Governance-Free",
                   "url": "https://www.liquity.org/features/governance-free",
                   "type": "docs"
                 }
@@ -2911,7 +2911,7 @@
             {
               "urls": [
                 {
-                  "name": "Liquity — Governance-Free",
+                  "name": "Liquity - Governance-Free",
                   "url": "https://www.liquity.org/features/governance-free",
                   "type": "docs"
                 }
@@ -2951,37 +2951,37 @@
           "name": "Accrual Active",
           "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
           "status": "positive",
-          "notes": "LQTY holders receive two live, onchain value streams.\n\nLiquity V1 — protocol revenue to stakers. Staked LQTY earns fees routed directly to the V1 LQTYStaking contract: redemption fees (paid in ETH) are forwarded by TroveManager, and borrowing fees (paid in LUSD) are forwarded by BorrowerOperations. Every staker accrues a pro-rata share via the F_ETH and F_LUSD accumulators — no voting required.\n\nLiquity V2 — bribes to voters. V2 governance is built on top of V1 staking, so V2 participants automatically receive the V1 fee streams above. Stakers who additionally allocate their voting power to an initiative can claim a pro-rata share of bribes (BOLD plus an initiative-specific token) deposited by external parties for that epoch.",
+          "notes": "LQTY holders receive two live, onchain value streams.\n\nLiquity V1 - protocol revenue to stakers. Staked LQTY earns fees routed directly to the V1 LQTYStaking contract: redemption fees (paid in ETH) are forwarded by TroveManager, and borrowing fees (paid in LUSD) are forwarded by BorrowerOperations. Every staker accrues a pro-rata share via the F_ETH and F_LUSD accumulators - no voting required.\n\nLiquity V2 - bribes to voters. V2 governance is built on top of V1 staking, so V2 participants automatically receive the V1 fee streams above. Stakers who additionally allocate their voting power to an initiative can claim a pro-rata share of bribes (BOLD plus an initiative-specific token) deposited by external parties for that epoch.",
           "evidence": [
             {
               "urls": [
                 {
-                  "name": "TroveManager.sol — V1 redemption fee → increaseF_ETH",
+                  "name": "TroveManager.sol - V1 redemption fee → increaseF_ETH",
                   "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/TroveManager.sol#L1011-L1012",
                   "type": "github"
                 },
                 {
-                  "name": "BorrowerOperations.sol — V1 borrowing fee → increaseF_LUSD",
+                  "name": "BorrowerOperations.sol - V1 borrowing fee → increaseF_LUSD",
                   "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/BorrowerOperations.sol#L370",
                   "type": "github"
                 },
                 {
-                  "name": "Liquity docs — LQTY staking (V1 revenue + V2 bribes)",
+                  "name": "Liquity docs - LQTY staking (V1 revenue + V2 bribes)",
                   "url": "https://docs.liquity.org/v2-faq/lqty-staking",
                   "type": "docs"
                 },
                 {
-                  "name": "V2-gov Governance.sol — depositLQTY (V2 deposit stakes into V1)",
+                  "name": "V2-gov Governance.sol - depositLQTY (V2 deposit stakes into V1)",
                   "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L162",
                   "type": "github"
                 },
                 {
-                  "name": "V2-gov Governance.sol — allocateLQTY (vote on initiatives)",
+                  "name": "V2-gov Governance.sol - allocateLQTY (vote on initiatives)",
                   "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L584",
                   "type": "github"
                 },
                 {
-                  "name": "V2-gov BribeInitiative.sol — depositBribe / claimBribes",
+                  "name": "V2-gov BribeInitiative.sol - depositBribe / claimBribes",
                   "url": "https://github.com/liquity/V2-gov/blob/main/src/BribeInitiative.sol",
                   "type": "github"
                 }
@@ -3012,7 +3012,7 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "positive",
-          "notes": "The V1 fee accrual mechanism is immutable — neither the core team nor LQTY holders can change the fee parameters or the routing of fees to the LQTYStaking contract, since the core protocol contracts are non-upgradeable and expose no admin or governance hooks over these parameters. V2 governance (PIL + bribes) lets LQTY voters direct a separate slice of V2 revenue to liquidity initiatives, but explicitly has no control over core protocol parameters, which are immutable after launch.",
+          "notes": "The V1 fee accrual mechanism is immutable - neither the core team nor LQTY holders can change the fee parameters or the routing of fees to the LQTYStaking contract, since the core protocol contracts are non-upgradeable and expose no admin or governance hooks over these parameters. V2 governance (PIL + bribes) lets LQTY voters direct a separate slice of V2 revenue to liquidity initiatives, but explicitly has no control over core protocol parameters, which are immutable after launch.",
           "evidence": [
             {
               "urls": [
@@ -3036,7 +3036,7 @@
           "tags": ["Reference"],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
-          "notes": "The protocol is entirely onchain — Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
+          "notes": "The protocol is entirely onchain - Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
           "evidence": []
         }
       ]
@@ -3116,7 +3116,7 @@
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
           "status": "positive",
-          "notes": "It's all circulating — vesting ended in 2022, which can be verified by looking at the events emitted by the `LockupContractFactory`. The only remaining non-circulating LQTY is what the contract releases on an immutable schedule to Stability Pool depositors in V1.",
+          "notes": "It's all circulating - vesting ended in 2022, which can be verified by looking at the events emitted by the `LockupContractFactory`. The only remaining non-circulating LQTY is what the contract releases on an immutable schedule to Stability Pool depositors in V1.",
           "evidence": [
             {
               "urls": [
