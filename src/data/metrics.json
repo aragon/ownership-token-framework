@@ -6124,7 +6124,7 @@
           "name": "Trademark",
           "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "warning",
-          "notes": "Ondo's Terms of Service state that Ondo names, logos, and marks used on the site or services are owned by Ondo, its affiliates, Covered Entities, or applicable licensors. Aragon has not verified that these trademark rights are owned or controlled by a tokenholder-controlled legal entity.",
+          "notes": "Ondo's Terms of Service state that Ondo names, logos, and marks used on the site or services are owned by Ondo, its affiliates, Covered Entities, or applicable licensors.",
           "evidence": [
             {
               "name": "Ondo Terms of Service - Proprietary Rights",
@@ -6144,7 +6144,7 @@
           "name": "Distribution",
           "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
           "status": "warning",
-          "notes": "Ondo Finance Inc. controls the primary website, documentation, APIs, dashboards, and technical interfaces. The Terms of Service identify Ondo Finance Inc. as the contracting party for those interface services, while product issuance and economic terms are governed separately by Covered Entity terms. No DAO control over primary interface access was identified.",
+          "notes": "Ondo Finance Inc. controls the primary website, documentation, APIs, dashboards, and technical interfaces. The Terms of Service identify Ondo Finance Inc. as the contracting party for those interface services, while product issuance and economic terms are governed separately by Covered Entity terms.",
           "evidence": [
             {
               "name": "Ondo Terms of Service - Interface Services",
@@ -6164,7 +6164,7 @@
           "name": "Licensing",
           "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
           "status": "unevaluated",
-          "notes": "Certain USDY/rOUSG source files use SPDX-License-Identifier: BUSL-1.1. BUSL-1.1 is not an open-source license and restricts production/commercial use until the applicable change date or open-source conversion. Aragon has not identified a repo-level license file or verified that licensing rights are controlled by tokenholders.",
+          "notes": "Certain USDY/rOUSG source files use SPDX-License-Identifier: BUSL-1.1. BUSL-1.1 is not an open-source license and restricts production/commercial use until the applicable change date or open-source conversion.",
           "evidence": [
             {
               "name": "BUSL-1.1 Source Headers",
