@@ -5429,5 +5429,832 @@
         }
       ]
     }
+  ],
+  "ondo": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "Core products OUSG/USDY (~$3.5B TVL) are controlled by team multisigs. ONDO governance does control Flux Finance but it's only 1.2% of total TVL, hence insignificant. The ONDO token contract has team-held admin and minting roles. Supply is 10B with active mint capability.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "at_risk",
+          "notes": "ONDO tokenholders have no governance control over Ondo's core products (OUSG, USDY, Global Markets). These products represent ~$3.5B TVL (98.8% of total) and are controlled by company multisigs.",
+          "evidence": [
+            {
+              "name": "OUSG/USDY/Global Markets Governance (Company-Controlled)",
+              "summary": "All core products are controlled by company multisigs with no tokenholder involvement:\n\n1. OUSG: Management Multisig holds DEFAULT_ADMIN_ROLE and ProxyAdmin ownership.\n\n2. USDY: Team Multisig holds ProxyAdmin ownership.\n\n3. Global Markets: TimelockController with 2-hour delay, controlled by company multisigs.\n\nNo forum discussion required. No onchain tokenholder vote. Changes proposed and executed by multisig signers.",
+              "urls": [
+                {
+                  "name": "OUSG",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Management Multisig (OUSG admin)",
+                  "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY ProxyAdmin owner",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "at_risk",
+          "notes": "OUSG, USDY, and Global Markets are entirely controlled by company multisigs. The ONDO token itself has DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO.",
+          "evidence": [
+            {
+              "name": "Team-Controlled Roles (ONDO Token)",
+              "summary": "DEFAULT_ADMIN_ROLE: Team Multisig (4-of-7).\n\nMINTER_ROLE: Team Multisig (4-of-7).\n\nThe team can grant/revoke roles and mint new ONDO tokens without DAO approval.",
+              "urls": [
+                {
+                  "name": "Team Multisig",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Team-Controlled Roles (OUSG/USDY)",
+              "summary": "OUSG DEFAULT_ADMIN_ROLE: Management Multisig (4-of-7).\n\nOUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nrOUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nUSDY ProxyAdmin owner: Team Multisig (4-of-7).\n\nrUSDY ProxyAdmin owner: Team Multisig (4-of-7).",
+              "urls": [
+                {
+                  "name": "OUSG",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Management Multisig (4-of-7)",
+                  "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "rOUSG",
+                  "url": "https://etherscan.io/address/0x54043c656F0FAd0652D9Ae2603cDF347c5578d00",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Team Multisig (4-of-7)",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "rUSDY",
+                  "url": "https://etherscan.io/address/0xaf37c1167910ebC994e266949387d2c7C326b879",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Team-Controlled Roles (Global Markets)",
+              "summary": "GMTokenManager/USDon DEFAULT_ADMIN_ROLE: TimelockController (2-hour delay).\n\nTimelockController PROPOSER_ROLE: Multisig (4-of-7).\n\nTimelockController EXECUTOR_ROLE: Multisig (1-of-8) + EOA.\n\nTimelockController DEFAULT_ADMIN_ROLE: Multisig (5-of-9).",
+              "urls": [
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "PROPOSER_ROLE holder (Multisig 4-of-7)",
+                  "url": "https://etherscan.io/address/0x71A4d411b5f7941Dee020417fca30413712f1646",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EXECUTOR_ROLE holder (Multisig 1-of-8)",
+                  "url": "https://etherscan.io/address/0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EXECUTOR_ROLE holder (EOA)",
+                  "url": "https://etherscan.io/address/0xfF1621Ee754512B34a6Bd62A941Cc4d5E4d0b85B",
+                  "type": "explorer"
+                },
+                {
+                  "name": "DEFAULT_ADMIN_ROLE holder (Multisig 5-of-9)",
+                  "url": "https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "at_risk",
+          "notes": "OUSG, USDY, and Global Markets are upgradeable contracts controlled by team multisigs on all chains. ONDO tokenholders have no upgrade control over any core products.",
+          "evidence": [
+            {
+              "name": "OUSG/USDY (Team-Controlled)",
+              "summary": "Ethereum OUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nEthereum USDY ProxyAdmin owner: Team Multisig (4-of-7).\n\nPolygon OUSG ProxyAdmin owner: 3-of-6 Multisig.\n\nMantle USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nArbitrum USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nThe DAO has no upgrade authority over OUSG or USDY on any chain.",
+              "urls": [
+                {
+                  "name": "OUSG Proxy",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG ProxyAdmin Owner (Ethereum)",
+                  "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Proxy",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY ProxyAdmin Owner (Ethereum)",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Polygon OUSG ProxyAdmin Owner",
+                  "url": "https://polygonscan.com/address/0x4413073440A568790c1b2b06B47F7D0a443574d0",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Mantle USDY ProxyAdmin Owner",
+                  "url": "https://mantlescan.xyz/address/0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Arbitrum USDY ProxyAdmin Owner",
+                  "url": "https://arbiscan.io/address/0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Global Markets (Team-Controlled via TimelockController)",
+              "summary": "USDon is an upgradeable proxy. Upgrade authority resides with TimelockController (2-hour delay) which is controlled by company multisigs. ONDO tokenholders have no upgrade control.",
+              "urls": [
+                {
+                  "name": "USDon",
+                  "url": "https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "The ONDO token is not upgradeable (no proxy pattern). It uses AccessControl with DEFAULT_ADMIN_ROLE and MINTER_ROLE held by a team multisig, not the DAO.",
+          "evidence": [
+            {
+              "name": "ONDO Token Roles",
+              "summary": "DEFAULT_ADMIN_ROLE holder: Team Multisig.\nMINTER_ROLE holder: Team Multisig.\n\nThe team can grant/revoke roles and mint new tokens. The DAO has no control over these roles.",
+              "urls": [
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Team Multisig",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Contract Source Note",
+              "summary": "The deployed ONDO token uses AccessControl. The public ondo-v1 repository shows a simpler Ownable-based contract, indicating the deployed contract differs from the public repo.",
+              "urls": [
+                {
+                  "name": "Public ondo-v1 repo (differs from deployed)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "at_risk",
+          "notes": "ONDO has a total supply of 10B tokens. MINTER_ROLE exists and is held by a team multisig. The supply is not immutably fixed.",
+          "evidence": [
+            {
+              "name": "Current Supply",
+              "summary": "Total supply: 10,000,000,000 ONDO (verified onchain).\nTeam Multisig balance: ~5.9B ONDO (~59% of supply).\n\nDocumentation states \"no scheduled or planned inflation\" but this is a policy statement, not code enforcement.",
+              "urls": [
+                {
+                  "name": "ONDO Token totalSupply",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Token Documentation",
+                  "url": "https://docs.ondo.foundation/ondo-token",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Mint Function Exists",
+              "summary": "The deployed ONDO token includes a `mint()` function restricted to MINTER_ROLE holders. Team multisig holds MINTER_ROLE and can mint new tokens without DAO approval.",
+              "urls": [
+                {
+                  "name": "ONDO Token (verified source)",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Team Multisig (MINTER_ROLE holder)",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "at_risk",
+          "notes": "OUSG and USDY have extensive transfer restrictions (KYC requirements, blocklists, sanctions checks) enforced by Ondo Finance, not the DAO. The company controls who can hold these products.",
+          "evidence": [
+            {
+              "name": "OUSG Transfer Restrictions",
+              "summary": "KYC required via KYCRegistry. The `_beforeTokenTransfer` hook enforces three-way checks: sender, receiver, and msg.sender must all be KYC-approved. The DAO does not control the KYC registry.",
+              "urls": [
+                {
+                  "name": "OUSG Contract (KYC enforcement)",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG KYC check (source)",
+                  "url": "https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/ousg/ousg.sol#L62-L89",
+                  "type": "github"
+                },
+                {
+                  "name": "KYCRegistry",
+                  "url": "https://etherscan.io/address/0x56A5D911052323D688C731d516530878557463e7",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "USDY Transfer Restrictions",
+              "summary": "USDY has blocklist, allowlist, and sanctions list checks. Transfers require passing all three checks. These are controlled by the company, not the DAO.",
+              "urls": [
+                {
+                  "name": "USDY restrictions (source)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L84-L115",
+                  "type": "github"
+                },
+                {
+                  "name": "USDY Contract",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "positive",
+          "notes": "The ONDO token has no blocklist, freeze, or seizure functions. Transfers are permissionless. Transfers were enabled in January 2024.",
+          "evidence": [
+            {
+              "name": "No Censorship Capability",
+              "summary": "`transferAllowed = true` (verified onchain, enabled January 2024).\nNo blacklist mapping.\nNo pause function for transfers.\nNo force transfer or seize functions.\n\nThe token contract has a `whenTransferAllowed` modifier but transfers are permanently enabled.",
+              "urls": [
+                {
+                  "name": "ONDO Token",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Source code (ondo-v1)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "No active value accrual for ONDO tokenholders. USDY/OUSG yield (~$3-4M monthly) accrues to product holders, not ONDO holders. All value accrual mechanisms are company-controlled: OUSG/USDY oracles by SETTER_ROLE, Global Markets by TimelockController. No DAO treasury identified.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "at_risk",
+          "notes": "No active value accrual mechanism for ONDO tokenholders. USDY/OUSG yield accrues to product holders, not ONDO holders. No fee distribution, staking rewards, or buyback program exists.",
+          "evidence": [
+            {
+              "name": "USDY/OUSG Revenue Clarification",
+              "summary": "The ~$3-4M monthly \"fees\" on DefiLlama is yield to USDY/OUSG product holders, not ONDO tokenholders.\n\n1. USDY/OUSG are backed by short-term US Treasuries.\n\n2. Oracle updates NAV/price daily to reflect yield.\n\n3. USDY/OUSG holders receive yield through increasing token price.\n\n4. ONDO tokenholders receive ZERO from this yield.",
+              "urls": [
+                {
+                  "name": "DefiLlama Ondo Finance",
+                  "url": "https://defillama.com/protocol/ondo-finance",
+                  "type": "docs"
+                },
+                {
+                  "name": "OUSG Oracle",
+                  "url": "https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle",
+                  "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
+                  "type": "explorer"
+                },
+                {
+                  "name": "RWAOracleRateCheck.sol (price update)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "No Value Flow to ONDO Holders",
+              "summary": "There is no onchain mechanism directing any revenue to ONDO tokenholders. No fee distribution contract. No staking rewards. No buyback program. All USDY/OUSG/Global Markets revenue accrues to Ondo Finance Inc. or to product holders.",
+              "urls": [
+                {
+                  "name": "OUSG",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+                  "type": "explorer"
+                },
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "at_risk",
+          "notes": "Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists.",
+          "evidence": [
+            {
+              "name": "No Treasury Identified",
+              "summary": "No DAO treasury contract identified. No fee distribution mechanism exists for OUSG/USDY/Global Markets revenue. No governance proposals for treasury creation found on Tally.",
+              "urls": [
+                {
+                  "name": "Ondo DAO Proposals",
+                  "url": "https://www.tally.xyz/gov/ondo-dao",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "at_risk",
+          "notes": "ONDO holders have no control over revenue parameters for Ondo's core products. OUSG/USDY oracle price updates (which determine yield distribution) are controlled by company-held SETTER_ROLE. Global Markets fees are controlled by TimelockController owned by company multisigs.",
+          "evidence": [
+            {
+              "name": "OUSG/USDY Price Oracles (Company-Controlled)",
+              "summary": "The price oracles that determine OUSG/USDY NAV (and thus yield distribution) are controlled by company-held SETTER_ROLE:\n\n1. OUSG Oracle: `setPrice()` restricted to SETTER_ROLE holders.\n\n2. USDY Oracle: Same SETTER_ROLE restriction.\n\nONDO tokenholders cannot change fee rates, yield spreads, or distribution parameters.",
+              "urls": [
+                {
+                  "name": "OUSG Oracle",
+                  "url": "https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x118919e891D0205A7492650AD32E727617FA9452",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x682d3d7cB33A9089C19b9B135a5DB3d2C5CF20C4",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #3",
+                  "url": "https://etherscan.io/address/0xeAEf4335c7Db4Cd1D1cc3368Fa43721E2798BeFE",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle",
+                  "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x19c114B7c6Ff86482cEbFc6AE3cef894e6793Db8",
+                  "type": "explorer"
+                },
+                {
+                  "name": "RWAOracleExternalComparisonCheck.sol (setPrice)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleExternalComparisonCheck.sol#L147",
+                  "type": "github"
+                },
+                {
+                  "name": "RWAOracleRateCheck.sol (setPrice rate limit)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Global Markets (Company-Controlled via TimelockController)",
+              "summary": "GMTokenManager admin is TimelockController (2-hour delay). TimelockController is controlled by 5-of-9 multisig. ONDO tokenholders have no control over Global Markets fee parameters.",
+              "urls": [
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "TimelockController DEFAULT_ADMIN_ROLE holder (5-of-9 multisig)",
+                  "url": "https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "tags": [
+            "Reference"
+          ],
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "warning",
+          "notes": "Significant value accrues to Ondo Finance Inc. offchain through USDY/OUSG/Global Markets operations. This value does not flow to ONDO tokenholders.",
+          "evidence": [
+            {
+              "name": "USDY/OUSG Revenue Model",
+              "summary": "USDY: Backed by short-term US Treasuries in bankruptcy-remote SPV. Yield passed to holders via daily NAV updates.\n\nOUSG: Backed by BlackRock's SHV ETF. NAV updated via oracle.\n\nOracle price updates controlled by SETTER_ROLE (company-controlled). No onchain mechanism guarantees 100% yield pass-through.",
+              "urls": [
+                {
+                  "name": "OUSG Oracle",
+                  "url": "https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x118919e891D0205A7492650AD32E727617FA9452",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x682d3d7cB33A9089C19b9B135a5DB3d2C5CF20C4",
+                  "type": "explorer"
+                },
+                {
+                  "name": "OUSG Oracle SETTER_ROLE holder #3",
+                  "url": "https://etherscan.io/address/0xeAEf4335c7Db4Cd1D1cc3368Fa43721E2798BeFE",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle",
+                  "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #1",
+                  "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY Oracle SETTER_ROLE holder #2",
+                  "url": "https://etherscan.io/address/0x19c114B7c6Ff86482cEbFc6AE3cef894e6793Db8",
+                  "type": "explorer"
+                },
+                {
+                  "name": "RWAOracleRateCheck.sol (setPrice rate limit)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90",
+                  "type": "github"
+                },
+                {
+                  "name": "DefiLlama Ondo Finance",
+                  "url": "https://defillama.com/protocol/ondo-finance",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Global Markets Revenue",
+              "summary": "Tokenized stocks with \"on\" suffix (TSLAon, COINon). Controlled by TimelockController (owned by 5-of-9 multisig). Fees and spreads accrue to company, not to ONDO tokenholders.",
+              "urls": [
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDon",
+                  "url": "https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Global Markets TimelockController",
+                  "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "ONDO token is verified on Etherscan. OUSG/USDY/Global Markets contracts are verified with public GitHub and audit code available. The deployed ONDO token uses AccessControl, which differs from the public ondo-v1 repository.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "positive",
+          "notes": "The ONDO token contract is verified on Etherscan. The deployed contract uses AccessControl, which differs from the simpler Ownable-based contract in the public ondo-v1 repository.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "ONDO Token (Etherscan verified)",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Public ondo-v1 repo (differs from deployed)",
+                  "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "positive",
+          "notes": "OUSG, USDY, and Global Markets contracts are verified on Etherscan. Public GitHub repositories and audit code available.",
+          "evidence": [
+            {
+              "name": "OUSG/USDY",
+              "urls": [
+                {
+                  "name": "OUSG",
+                  "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY",
+                  "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDY GitHub",
+                  "url": "https://github.com/ondoprotocol/usdy",
+                  "type": "github"
+                },
+                {
+                  "name": "Audit code (Code4rena)",
+                  "url": "https://github.com/code-423n4/2024-03-ondo-finance",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Global Markets",
+              "urls": [
+                {
+                  "name": "GMTokenManager",
+                  "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDon",
+                  "url": "https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "USDonManager",
+                  "url": "https://etherscan.io/address/0x05CCbB4b74854f8A067b83475E8c34f5a413D7e1#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "~59% of ONDO supply is held by a single team multisig, giving effective governance control. Vesting schedules exist per documentation but specific addresses are not publicly verifiable onchain.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "at_risk",
+          "notes": "~59% of ONDO supply is held by a single team multisig. This gives the team unilateral control over governance. The team can pass any proposal and block any proposal.",
+          "evidence": [
+            {
+              "name": "Team Holdings",
+              "summary": "Team Multisig balance: ~5.9B ONDO (~59% of supply).\nTotal supply: 10B ONDO.\nMultisig config: 4-of-7.\n\nThis multisig also holds DEFAULT_ADMIN_ROLE and MINTER_ROLE on the ONDO token. \"Decentralized governance\" is effectively team governance.",
+              "urls": [
+                {
+                  "name": "Team Multisig holdings",
+                  "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+                  "type": "explorer"
+                },
+                {
+                  "name": "ONDO Token totalSupply",
+                  "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "warning",
+          "notes": "Per documentation, unlock schedules exist for team and investors with unclear start dates, but the token being transferrable from Jan 2024 allows an educated guess of many unlocks yet to pan out. Aragon has not been able to verify specific vesting contract addresses from onchain data.",
+          "evidence": [
+            {
+              "name": "Documented Schedule",
+              "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, then 18-month linear release. \n\nCoinList Tranche 2 (~1.7%): 1-year lock, then 6-month linear release. \n\nSeed Investors (<7%): 1-year cliff, then 48-month release. \n\nSeries A (<7%): 1-year cliff, then 48-month release. \n\nCore Team: 5-year extended lock-up from the transfer unlock.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
+              "urls": [
+                {
+                  "name": "Token Documentation",
+                  "url": "https://docs.ondo.foundation/ondo-token",
+                  "type": "docs"
+                },
+                {
+                  "name": "CoinList - ONDO Community Sale",
+                  "url": "https://coinlist.co/ondo",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": [
+        "Reference"
+      ],
+      "about": "Economically material assets and obligations often sit offchain, outside the custody and direct enforcement of a token, while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "Aragon has not been able to verify trademark ownership for Ondo. Primary distribution channels are controlled by Ondo Finance Inc. OUSG/USDY access requires company-controlled KYC. Code is BUSL-1.1 licensed.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "unevaluated",
+          "notes": "Aragon has not been able to verify USPTO registration for \"Ondo\" or \"Ondo Finance\" trademark.",
+          "evidence": []
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "warning",
+          "notes": "Ondo Finance Inc. controls primary distribution channels. ondo.finance is operated by the company. OUSG/USDY access requires KYC approval controlled by company. No DAO control over frontend access.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Ondo Finance",
+                  "url": "https://ondo.finance/",
+                  "type": "docs"
+                },
+                {
+                  "name": "Ondo Documentation",
+                  "url": "https://docs.ondo.finance/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "unevaluated",
+          "notes": "OUSG/USDY code is BUSL-1.1 licensed. This is a restrictive license that limits commercial use. Aragon has not verified if license holder is tokenholder-controlled.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "USDY License Header (BUSL-1.1)",
+                  "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L1",
+                  "type": "github"
+                },
+                {
+                  "name": "USDY GitHub",
+                  "url": "https://github.com/ondoprotocol/usdy",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
