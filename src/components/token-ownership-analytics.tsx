@@ -305,7 +305,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
   const [networkFilter, setNetworkFilter] = useState<string>("")
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 100,
   })
 
   const networks = useMemo(() => {
