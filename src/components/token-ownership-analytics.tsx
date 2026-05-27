@@ -18,6 +18,10 @@ import {
 } from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import {
   ArrowRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
   ChevronsUpDownIcon,
   FilterIcon,
   NetworkIcon,
@@ -29,6 +33,7 @@ import { PageWrapper } from "@/components/page-wrapper"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { BadgeEvaluation } from "@/components/ui/badge-evaluation"
+import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 import {
   HoverCard,
@@ -70,7 +75,10 @@ function SortableHeader({
   column,
   label,
 }: {
-  column: { toggleSorting: (desc: boolean) => void; getIsSorted: () => false | "asc" | "desc" }
+  column: {
+    toggleSorting: (desc: boolean) => void
+    getIsSorted: () => false | "asc" | "desc"
+  }
   label: string
 }) {
   return (
@@ -86,7 +94,6 @@ function SortableHeader({
 }
 
 declare module "@tanstack/react-table" {
-  // biome-ignore lint/correctness/noUnusedVariables: Type parameters required by @tanstack/react-table
   interface ColumnMeta<TData, TValue> {
     headerClassName?: string
     cellClassName?: string
@@ -305,7 +312,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
   const [networkFilter, setNetworkFilter] = useState<string>("")
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 100,
   })
 
   const networks = useMemo(() => {
@@ -440,7 +447,6 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
         </Table>
       </div>
 
-      {/* Pagination
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Rows per page</span>
@@ -454,7 +460,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[50, 100, 200].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>
@@ -508,7 +514,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
             </Button>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
