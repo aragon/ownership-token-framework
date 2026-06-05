@@ -1,0 +1,20 @@
+{
+  "status": "unevaluated",
+  "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is an independent non-profit that does not distribute profits.",
+  "tags": [
+    "Reference"
+  ],
+  "evidence": [
+    {
+      "name": "Foundation Independence",
+      "summary": "The DAI Foundation operates independently under Danish law. It holds trademarks but does not distribute value to tokenholders.",
+      "urls": [
+        {
+          "name": "Foundation Mandate",
+          "url": "https://daifoundation.org/mandate",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

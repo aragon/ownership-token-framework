@@ -1,0 +1,27 @@
+{
+  "status": "unevaluated",
+  "notes": "Certain USDY/rOUSG source files use SPDX-License-Identifier: BUSL-1.1. BUSL-1.1 is not an open-source license and restricts production/commercial use until the applicable change date or open-source conversion.",
+  "evidence": [
+    {
+      "name": "BUSL-1.1 Source Headers",
+      "summary": "USDY and rOUSG source files include BUSL-1.1 SPDX headers. No repo-level license file or tokenholder-controlled license holder was identified.",
+      "urls": [
+        {
+          "name": "USDY source SPDX header",
+          "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L1",
+          "type": "github"
+        },
+        {
+          "name": "rOUSG source SPDX header",
+          "url": "https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/ousg/rOUSG.sol#L1",
+          "type": "github"
+        },
+        {
+          "name": "BUSL-1.1 license text",
+          "url": "https://spdx.org/licenses/BUSL-1.1.html",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

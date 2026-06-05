@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The AERO token contract source code (Aero.sol) is publicly available on GitHub and verified on Basescan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "AERO Token (Basescan)",
+          "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Aero.sol Source (GitHub)",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Aero.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

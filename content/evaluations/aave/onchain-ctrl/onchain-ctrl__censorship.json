@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "No Guardian or blacklist capabilities exist in the AAVE token contract.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "AAVE token's implementation code",
+          "url": "https://etherscan.io/address/0x5d4aa78b08bc7c530e21bf7447988b1be7991322#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

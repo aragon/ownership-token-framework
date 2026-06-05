@@ -1,8 +1,9 @@
-import tokensData from "@/data/tokens.json"
+import indexData from "@/data/generated/index.json"
+import type { IndexRow } from "@/lib/schemas"
 
-export type Token = (typeof tokensData.tokens)[number]
+export type Token = IndexRow
 
-const rawTokens = tokensData.tokens as Token[]
+const rawTokens = indexData.tokens as Token[]
 
 function normalizeTokenSymbol(value: string): string {
   return value.trim().toUpperCase()

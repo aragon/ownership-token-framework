@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The LQTY token contract source code (LQTYToken.sol) is publicly available on GitHub and verified on Etherscan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "LQTY Token (Etherscan)",
+          "url": "https://etherscan.io/address/0x6DEa81C8171D0bA574754EF6F8b412F2Ed88c54D#code",
+          "type": "explorer"
+        },
+        {
+          "name": "LQTYToken.sol Source (GitHub)",
+          "url": "https://github.com/liquity/dev/blob/main/packages/contracts/contracts/LQTY/LQTYToken.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

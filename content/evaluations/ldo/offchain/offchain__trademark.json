@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "UK IPO Trademark Journal",
+          "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html",
+          "type": "docs"
+        },
+        {
+          "name": "Lido Logo",
+          "url": "https://euipo.europa.eu/eSearch/#details/trademarks/019182074",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

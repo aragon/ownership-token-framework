@@ -1,0 +1,43 @@
+{
+  "status": "warning",
+  "notes": "The protocol uses a two-timelock system. The Upgrade Timelock owns the RoleRegistry and controls protocol upgrades. The Operating Timelock handles day-to-day operations.\n\nTokenholders do not elect or control the multisig signers. Team-controlled multisigs propose all timelock operations.",
+  "evidence": [
+    {
+      "name": "RoleRegistry Owner (Upgrade Timelock)",
+      "summary": "The RoleRegistry is owned by the Upgrade Timelock (72h delay). Role changes require timelock approval.",
+      "urls": [
+        {
+          "name": "RoleRegistry Contract",
+          "url": "https://etherscan.io/address/0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+          "type": "explorer"
+        },
+        {
+          "name": "Upgrade Timelock (72h)",
+          "url": "https://etherscan.io/address/0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Two-Timelock System",
+      "summary": "Upgrade Timelock (72h delay, 4-of-7 proposer) for upgrades. Operating Timelock (8h delay, 3-of-5 proposer) for routine operations.",
+      "urls": [
+        {
+          "name": "Upgrade Admin (4-of-7)",
+          "url": "https://etherscan.io/address/0xcdd57d11476c22d265722f68390b036f3da48c21",
+          "type": "explorer"
+        },
+        {
+          "name": "Operating Timelock (8h)",
+          "url": "https://etherscan.io/address/0xcD425f44758a08BaAB3C4908f3e3dE5776e45d7a",
+          "type": "explorer"
+        },
+        {
+          "name": "Operating Admin (3-of-5)",
+          "url": "https://etherscan.io/address/0x2aCA71020De61bb532008049e1Bd41E451AE8AdC",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

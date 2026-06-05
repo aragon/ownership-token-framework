@@ -1,0 +1,51 @@
+{
+  "status": "warning",
+  "notes": "Ondo product economics may accrue through product-holder yield, issuer/operator fees, spreads, expenses, or service revenue, but no documented offchain value-accrual flow to ONDO holders was identified.",
+  "tags": [
+    "Reference"
+  ],
+  "evidence": [
+    {
+      "name": "Ondo Product Economics",
+      "summary": "Ondo products have documented product-level economics, including yield, fees, expenses, and spreads. These mechanics describe product economics, not ONDO-holder accrual. No onchain mechanism guarantees that residual issuer/operator economics flow to ONDO holders.",
+      "urls": [
+        {
+          "name": "OUSG Fees",
+          "url": "https://docs.ondo.finance/qualified-access-products/ousg/fees-and-taxes",
+          "type": "docs"
+        },
+        {
+          "name": "OUSG Yield",
+          "url": "https://docs.ondo.finance/qualified-access-products/ousg/yield",
+          "type": "docs"
+        },
+        {
+          "name": "USDY Product Economics",
+          "url": "https://docs.ondo.finance/general-access-products/usdy/comparison-stablecoins",
+          "type": "docs"
+        },
+        {
+          "name": "USDY Issuer / Ondo Finance Relationship",
+          "url": "https://docs.ondo.finance/general-access-products/usdy/important-notes",
+          "type": "docs"
+        },
+        {
+          "name": "Global Markets Fees",
+          "url": "https://docs.ondo.finance/ondo-global-markets/fees-and-taxes",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Global Markets Revenue",
+      "summary": "Global Markets documentation describes fees and quote spreads retained by Ondo Global Markets. Aragon did not identify a mechanism routing those fees or spreads to ONDO holders or an ONDO-controlled treasury.",
+      "urls": [
+        {
+          "name": "Global Markets Fees",
+          "url": "https://docs.ondo.finance/ondo-global-markets/fees-and-taxes",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

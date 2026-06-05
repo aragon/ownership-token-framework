@@ -1,0 +1,25 @@
+{
+  "status": "positive",
+  "notes": "Alongside the protocol fees going to the AAVE token-holder controlled treasury as an important source of value accrual, holders can stake their AAVE tokens as stkAAVE in Aave's Safety module, getting additional AAVE tokens as yield from the treasury for bearing the risk of slashing in case of protocol insolvency.\n\n**Caveat:** This Safety Module is in the transitional phase of being sunset in favour of aToken staking as part of the Umbrella release for automated bad debt coverage, which is live already.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Safety Module - Incentives",
+          "url": "https://aave.com/docs/aave-v3/concepts/incentives#safety-module",
+          "type": "docs"
+        },
+        {
+          "name": "Umbrella Transition",
+          "url": "https://aave.com/help/umbrella/stake",
+          "type": "docs"
+        },
+        {
+          "name": "Umbrella Activation Proposal",
+          "url": "https://vote.onaave.com/proposal/?proposalId=320",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

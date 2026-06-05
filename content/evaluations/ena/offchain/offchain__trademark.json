@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "Trademarks and brand assets are owned by **Ethena (BVI) Limited** (Registration number 2127704), a British Virgin Islands entity. Per Terms of Service: \"The Company's name, trademarks and logos... are trademarks of the Company or its affiliates.\" This entity is NOT controlled by ENA tokenholders.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Ethena Terms of Service",
+          "url": "https://docs.ethena.fi/resources/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

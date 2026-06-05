@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Fixed 100M LQTY token supply. No mint() function or inflation pathway in the bytecode.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "The only LQTY token minting transactions ever, amounting to 100M LQTY tokens",
+          "url": "https://etherscan.io/advanced-filter?tkn=0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d&txntype=2&fadd=0x0000000000000000000000000000000000000000",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

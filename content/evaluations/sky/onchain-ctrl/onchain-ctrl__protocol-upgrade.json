@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "Core accounting contracts are immutable — their code cannot change. Newer stablecoin contracts (USDS, sUSDS) can be upgraded, but only through governance.",
+  "evidence": [
+    {
+      "name": "Immutable Core",
+      "summary": "Core accounting contracts have no upgrade mechanism. The deployed code is permanent.",
+      "urls": [
+        {
+          "name": "Vat source code",
+          "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vat.sol",
+          "type": "github"
+        },
+        {
+          "name": "SKY token source code",
+          "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Upgradeable Stablecoins",
+      "summary": "USDS and sUSDS use proxy contracts. Upgrades require governance approval through the standard voting process.",
+      "urls": [
+        {
+          "name": "USDS upgrade authorization",
+          "url": "https://github.com/sky-ecosystem/usds/blob/master/src/Usds.sol#L73",
+          "type": "github"
+        },
+        {
+          "name": "sUSDS source code",
+          "url": "https://github.com/sky-ecosystem/stusds/blob/master/src/StUsds.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

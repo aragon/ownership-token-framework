@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "To add a new staking module or update it with new fees, full governance flow required, hence controlled by LDO holders.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "StakingRouter add/update",
+          "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

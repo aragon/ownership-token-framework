@@ -1,0 +1,21 @@
+{
+  "status": "warning",
+  "notes": "Continuous unlocks from team and investor allocations occur according to published vesting schedules. Core Contributors have 3-year vesting with a 1-year cliff, while Investors have 2-year vesting with a 1-year cliff. Full vesting completion is expected by end of 2030.",
+  "evidence": [
+    {
+      "name": "Vesting Schedule",
+      "urls": [
+        {
+          "name": "ETHFI Allocations",
+          "url": "https://etherfi.gitbook.io/gov/ethfi-allocations",
+          "type": "docs"
+        },
+        {
+          "name": "DefiLlama Unlocks",
+          "url": "https://defillama.com/unlocks/ether.fi",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

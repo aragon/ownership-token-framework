@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "The primary interface terms identify the Aerodrome Foundation as the contracting party.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Aerodrome Legal",
+          "url": "https://aero.drome.eth.link/legal",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

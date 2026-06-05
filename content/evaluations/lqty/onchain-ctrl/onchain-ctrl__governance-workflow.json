@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "Neither LQTY holders nor the protocol team can influence core protocol execution - all core protocol parameters are immutable after launch. LQTY holders' onchain governance role is limited to voting on Protocol Incentivized Liquidity (PIL) emissions, directing a portion of V2 revenue to community-chosen liquidity initiatives.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity - Governance-Free",
+          "url": "https://www.liquity.org/features/governance-free",
+          "type": "docs"
+        },
+        {
+          "name": "Directing Protocol Incentivized Liquidity with LQTY",
+          "url": "https://www.liquity.org/blog/directing-protocol-incentivized-liquidity-with-lqty",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

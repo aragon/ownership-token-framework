@@ -1,0 +1,43 @@
+{
+  "status": "at_risk",
+  "notes": "OUSG and USDY have extensive transfer restrictions (KYC requirements, blocklists, sanctions checks) enforced by Ondo Finance, not the DAO. The company controls who can hold these products.",
+  "evidence": [
+    {
+      "name": "OUSG Transfer Restrictions",
+      "summary": "KYC required via KYCRegistry. The `_beforeTokenTransfer` hook enforces three-way checks: sender, receiver, and msg.sender must all be KYC-approved. The DAO does not control the KYC registry.",
+      "urls": [
+        {
+          "name": "OUSG Contract (KYC enforcement)",
+          "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+          "type": "explorer"
+        },
+        {
+          "name": "OUSG KYC check (source)",
+          "url": "https://github.com/code-423n4/2024-03-ondo-finance/blob/main/contracts/ousg/ousg.sol#L62-L89",
+          "type": "github"
+        },
+        {
+          "name": "KYCRegistry",
+          "url": "https://etherscan.io/address/0x56A5D911052323D688C731d516530878557463e7",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "USDY Transfer Restrictions",
+      "summary": "USDY has blocklist, allowlist, and sanctions list checks. Transfers require passing all three checks. These are controlled by the company, not the DAO.",
+      "urls": [
+        {
+          "name": "USDY restrictions (source)",
+          "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/usdy/USDY.sol#L84-L115",
+          "type": "github"
+        },
+        {
+          "name": "USDY Contract",
+          "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

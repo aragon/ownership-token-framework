@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "No blacklist, whitelist, or pause functions in UNI token contract. Transfers cannot be censored. Standard ERC20 with no admin controls over transfers.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Uni.sol",
+          "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

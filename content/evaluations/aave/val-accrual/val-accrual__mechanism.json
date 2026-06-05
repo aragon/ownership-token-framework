@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "Token holders control fee levers (Reserve Factor, liquidation fees) via ACL-gated admin roles. Emergency actions are delegated, but economic controls are governance-owned through ACLManager.",
+  "evidence": [
+    {
+      "name": "ACL Control",
+      "summary": "ACLManager gates admin roles (POOL_ADMIN, RISK_ADMIN) which control fee parameters. ACLManager itself is controlled by governance.",
+      "urls": [
+        {
+          "name": "POOL_ADMIN role",
+          "url": "https://aave.com/docs/aave-v3/smart-contracts/acl-manager#roles-pool-admin",
+          "type": "docs"
+        },
+        {
+          "name": "ACLManager",
+          "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/configuration/ACLManager.sol#L45",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

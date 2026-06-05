@@ -1,0 +1,38 @@
+{
+  "status": "warning",
+  "notes": "Core protocol contracts (LiquidityPool, eETH, weETH, EtherFiAdmin) are owned by the Upgrade Timelock, which enforces a delay before upgrades execute.\n\nBoring Vaults (sETHFI, eUSD, weETHs, weETHk) use a different pattern: they are non-upgradeable but controlled via RolesAuthority contracts owned by multisigs. L2 ETHFI tokens can be upgraded instantly by multisigs with no timelock.",
+  "evidence": [
+    {
+      "name": "Upgrade Path",
+      "summary": "Core contracts are owned by the Upgrade Timelock (72h delay). Boring Vaults are non-upgradeable but controlled via RolesAuthority.",
+      "urls": [
+        {
+          "name": "RoleRegistry Upgrade Check",
+          "url": "https://github.com/etherfi-protocol/smart-contracts/blob/master/src/RoleRegistry.sol#L76-L78",
+          "type": "github"
+        },
+        {
+          "name": "LiquidityPool Upgrade Authorization",
+          "url": "https://github.com/etherfi-protocol/smart-contracts/blob/master/src/LiquidityPool.sol#L529-L531",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "RoleRegistry Owner",
+      "summary": "The RoleRegistry is owned by the Upgrade Timelock. Core contract upgrades require a 72-hour delay.",
+      "urls": [
+        {
+          "name": "RoleRegistry Contract",
+          "url": "https://etherscan.io/address/0x62247D29B4B9BECf4BB73E0c722cf6445cfC7cE9",
+          "type": "explorer"
+        },
+        {
+          "name": "Upgrade Timelock",
+          "url": "https://etherscan.io/address/0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

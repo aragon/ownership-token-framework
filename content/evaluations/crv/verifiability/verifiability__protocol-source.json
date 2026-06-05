@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Curve DAO protocol contracts are open source on GitHub.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Curve DAO Contracts (GitHub)",
+          "url": "https://github.com/curvefi/curve-dao-contracts",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

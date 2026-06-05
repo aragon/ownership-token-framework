@@ -1,0 +1,6 @@
+{
+  "summary": "The ETHFI token contract is verified on Etherscan but not published to a public GitHub repository. All core protocol contracts are verified and open source under MIT license with multiple security audits and formal verification through Certora.",
+  "tags": [
+    "Metric 3"
+  ]
+}

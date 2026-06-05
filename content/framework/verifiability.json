@@ -1,0 +1,19 @@
+{
+  "id": "verifiability",
+  "name": "Metric 3: Verifiability",
+  "displayName": "Verifiability",
+  "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances. In practice, it answers: what code is running, where it is deployed, and whether the deployed bytecode can be credibly matched to publicly available source (including proxy implementations and build inputs where relevant).",
+  "anchor": "#metric-3-verifiability",
+  "criteria": [
+    {
+      "id": "verifiability__token-source",
+      "name": "Token Contract Source Verification",
+      "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode."
+    },
+    {
+      "id": "verifiability__protocol-source",
+      "name": "Protocol Component Source Verification",
+      "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments."
+    }
+  ]
+}

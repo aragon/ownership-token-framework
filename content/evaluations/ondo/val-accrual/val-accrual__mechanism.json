@@ -1,0 +1,48 @@
+{
+  "status": "at_risk",
+  "notes": "ONDO holders have no identified control over revenue routing for Ondo's core products. Core product parameters are controlled by company-held roles and multisigs. Flux is ONDO-governed but represents a small share of Ondo TVL.",
+  "evidence": [
+    {
+      "name": "OUSG/USDY Price Oracles (Company-Controlled)",
+      "summary": "The price oracles that determine OUSG/USDY NAV are controlled by SETTER_ROLE-restricted `setPrice()` functions. ONDO tokenholders cannot control these oracle price-update roles.",
+      "urls": [
+        {
+          "name": "OUSG Oracle",
+          "url": "https://etherscan.io/address/0x0502c5ae08E7CD64fe1AEDA7D6e229413eCC6abe",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY Oracle",
+          "url": "https://etherscan.io/address/0xA0219AA5B31e65Bc920B5b6DFb8EdF0988121De0",
+          "type": "explorer"
+        },
+        {
+          "name": "RWAOracleExternalComparisonCheck.sol (setPrice)",
+          "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleExternalComparisonCheck.sol#L147",
+          "type": "github"
+        },
+        {
+          "name": "RWAOracleRateCheck.sol (setPrice rate limit)",
+          "url": "https://github.com/ondoprotocol/usdy/blob/main/contracts/rwaOracles/RWAOracleRateCheck.sol#L81-L90",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Global Markets (Company-Controlled via TimelockController)",
+      "summary": "GMTokenManager admin is TimelockController (2-hour delay). ONDO tokenholders have no control over Global Markets fee parameters.",
+      "urls": [
+        {
+          "name": "GMTokenManager",
+          "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c",
+          "type": "explorer"
+        },
+        {
+          "name": "Global Markets TimelockController",
+          "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

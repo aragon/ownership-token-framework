@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "veAERO holders indirectly control AERO emissions through epoch-based gauge voting executed by the Voter and Minter.",
+  "evidence": [
+    {
+      "name": "Emergency Council",
+      "summary": "Exists but is not elected by veAERO holders. It holds limited emergency powers, including killing or reviving gauges and managing pool metadata. This role exists explicitly for crisis handling and sits outside direct tokenholder election.",
+      "urls": [
+        {
+          "name": "Voter: emergencyCouncil",
+          "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "EmergencyCouncil",
+          "url": "https://basescan.org/address/0x99249b10593fCa1Ae9DAE6D4819F1A6dae5C013D#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

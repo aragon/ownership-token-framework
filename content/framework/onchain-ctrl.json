@@ -1,0 +1,44 @@
+{
+  "id": "onchain-ctrl",
+  "name": "Metric 1: Onchain Control",
+  "displayName": "Onchain Control",
+  "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit. Concretely, it maps who can upgrade core logic, change parameters, invoke emergency actions, modify token behavior or supply, freeze/blacklist/seize/force-transfer assets, or limit protocol actions and exit paths.",
+  "anchor": "#metric-1-onchain-control",
+  "criteria": [
+    {
+      "id": "onchain-ctrl__governance-workflow",
+      "name": "Onchain Governance Workflow",
+      "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions."
+    },
+    {
+      "id": "onchain-ctrl__role-accountability",
+      "name": "Role Accountability",
+      "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders."
+    },
+    {
+      "id": "onchain-ctrl__protocol-upgrade",
+      "name": "Protocol Upgrade Authority",
+      "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders."
+    },
+    {
+      "id": "onchain-ctrl__token-upgrade",
+      "name": "Token Upgrade Authority",
+      "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance."
+    },
+    {
+      "id": "onchain-ctrl__supply",
+      "name": "Supply Control",
+      "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes."
+    },
+    {
+      "id": "onchain-ctrl__access-gating",
+      "name": "Privileged Access Gating",
+      "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users."
+    },
+    {
+      "id": "onchain-ctrl__censorship",
+      "name": "Token Censorship",
+      "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers."
+    }
+  ]
+}

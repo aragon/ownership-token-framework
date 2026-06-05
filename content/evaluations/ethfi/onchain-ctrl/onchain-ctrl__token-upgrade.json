@@ -1,0 +1,43 @@
+{
+  "status": "warning",
+  "notes": "The Ethereum mainnet ETHFI token is not upgradeable. L2 ETHFI tokens on Arbitrum and Base are upgradeable by multisigs with no timelock protection.\n\nL2 token holders face higher risk due to the ability to instantly upgrade the token contract.",
+  "evidence": [
+    {
+      "name": "Mainnet Token (Not Upgradeable)",
+      "summary": "The Ethereum mainnet ETHFI token is not upgradeable. No EIP-1967 implementation slot exists.",
+      "urls": [
+        {
+          "name": "ETHFI Token Contract",
+          "url": "https://etherscan.io/address/0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "L2 Tokens (Upgradeable, No Timelock)",
+      "summary": "L2 ETHFI tokens are upgradeable proxies owned by 3-of-6 multisigs. No timelock protects L2 upgrades.",
+      "urls": [
+        {
+          "name": "Arbitrum ETHFI",
+          "url": "https://arbiscan.io/address/0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+          "type": "explorer"
+        },
+        {
+          "name": "Arbitrum Admin (3-of-6)",
+          "url": "https://arbiscan.io/address/0x0c6ca434756eedf928a55ebeaf0019364b279732",
+          "type": "explorer"
+        },
+        {
+          "name": "Base ETHFI",
+          "url": "https://basescan.org/address/0x6C240DDA6b5c336DF09A4D011139beAAa1eA2Aa2",
+          "type": "explorer"
+        },
+        {
+          "name": "Base Admin (3-of-6)",
+          "url": "https://basescan.org/address/0x7a00657a45420044bc526b90ad667affaee0a868",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

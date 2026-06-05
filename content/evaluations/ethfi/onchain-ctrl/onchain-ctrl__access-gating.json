@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "Protocol contracts can be paused by addresses holding the PROTOCOL_PAUSER role, which is assigned via the RoleRegistry (owned by Upgrade Timelock). The ETHFI token itself has no pause function.\n\neETH holders could be temporarily blocked from withdrawing to ETH if LiquidityPool is paused.",
+  "evidence": [
+    {
+      "name": "Pause Authority",
+      "summary": "The EtherFiAdmin contract can pause protocol operations including the oracle, staking manager, auction manager, nodes manager, liquidity pool, and membership manager.",
+      "urls": [
+        {
+          "name": "EtherFiAdmin Pause Function",
+          "url": "https://github.com/etherfi-protocol/smart-contracts/blob/master/src/EtherFiAdmin.sol#L102-L127",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

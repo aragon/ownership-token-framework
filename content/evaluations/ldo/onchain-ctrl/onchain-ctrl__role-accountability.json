@@ -1,0 +1,50 @@
+{
+  "status": "positive",
+  "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.",
+  "evidence": [
+    {
+      "name": "Voting",
+      "summary": "CREATE_VOTES_ROLE allows proposing votes. All LDO holders can vote on proposals. The Voting contract controls the Agent via Governance 1A flow.",
+      "urls": [
+        {
+          "name": "Voting",
+          "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Agent",
+      "summary": "EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by Governance 1A, which is controlled by Voting contract.",
+      "urls": [
+        {
+          "name": "Agent",
+          "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "TokenManager",
+      "summary": "MINT_ROLE is given to Voting contract. BURN_ROLE is given to no one, but its permission manager is Voting contract.",
+      "urls": [
+        {
+          "name": "TokenManager (Aragon App V1 proxy)",
+          "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "StakingRouter",
+      "summary": "STAKING_MODULE_MANAGE_ROLE is given to Agent contract. Since Agent is only callable by Governance 1, all operations are controlled by LDO holders.",
+      "urls": [
+        {
+          "name": "StakingRouter",
+          "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

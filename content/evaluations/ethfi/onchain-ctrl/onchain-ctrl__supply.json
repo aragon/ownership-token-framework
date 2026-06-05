@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "ETHFI has a fixed supply of 1 billion tokens with no mint function. All tokens were minted at deployment. Supply can only decrease through the ERC20Burnable function. Approximately 1.46M tokens have been burned.",
+  "evidence": [
+    {
+      "name": "Fixed Supply",
+      "summary": "No mint function exists in the contract. Holders can burn their own tokens via ERC20Burnable.",
+      "urls": [
+        {
+          "name": "ETHFI Allocations",
+          "url": "https://etherfi.gitbook.io/gov/ethfi-allocations",
+          "type": "docs"
+        },
+        {
+          "name": "Token Contract",
+          "url": "https://etherscan.io/address/0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

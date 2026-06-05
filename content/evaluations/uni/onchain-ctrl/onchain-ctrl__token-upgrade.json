@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "Token contract is immutable with no proxy patterns, no delegatecall, no EIP-1967/UUPS patterns.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Uni.sol Source",
+          "url": "https://github.com/Uniswap/governance/blob/master/contracts/Uni.sol#L6",
+          "type": "github"
+        },
+        {
+          "name": "Etherscan",
+          "url": "https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

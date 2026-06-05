@@ -1,0 +1,59 @@
+{
+  "status": "warning",
+  "notes": "**sUSDe holders receive USDe yield; sENA/ENA holders do NOT.** sENA holders receive only ecosystem airdrops from Ethena Network protocols. rsENA (~5.2M supply) earns Symbiotic restaking rewards via Mellow Finance. Fee switch (which would share protocol revenue with sENA) received positive forum signals but awaits Snapshot vote and execution.",
+  "evidence": [
+    {
+      "name": "Fee Switch Status",
+      "summary": "Forum posts received positive signals in November 2024. USDe supply ~5.98B (the $6B threshold has **not** been met). Cumulative revenue $500M+ as of Sept 2025. Activation requires Risk Committee sign-off + Snapshot vote + multisig execution.",
+      "urls": [
+        {
+          "name": "Fee Switch Parameters Proposal",
+          "url": "https://gov.ethenafoundation.com/t/ena-fee-switch-parameters/396",
+          "type": "docs"
+        },
+        {
+          "name": "USDe Token (verify totalSupply)",
+          "url": "https://etherscan.io/address/0x4c9edd5852cd905f086c759e8383e09bff1e68b3#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "DefiLlama - Ethena Fees",
+          "url": "https://defillama.com/protocol/ethena",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Ethena Network Airdrops",
+      "summary": "Protocols in the Ethena Network commit portions of their token supply to sENA holders. Example: Ethereal committed 15% of tokens to sENA holders.",
+      "urls": [
+        {
+          "name": "Ethena Network Documentation",
+          "url": "https://docs.ethena.fi/ethena-network",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "rsENA (Restaked ENA via Symbiotic)",
+      "summary": "rsENA (~5.2M supply) provides economic security for USDe cross-chain transfers using LayerZero DVN messaging via Symbiotic partnership. rsENA holders receive rewards in **ENA and USDe** per docs. Available via **Mellow Finance vault**.",
+      "urls": [
+        {
+          "name": "rsENA Contract",
+          "url": "https://etherscan.io/address/0xc65433845ecd16688eda196497fa9130d6c47bd8#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "ENA Staking Documentation",
+          "url": "https://docs.ethena.fi/ena",
+          "type": "docs"
+        },
+        {
+          "name": "Mellow Finance rsENA Vault",
+          "url": "https://app.mellow.finance/vaults/ethereum-rsena",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

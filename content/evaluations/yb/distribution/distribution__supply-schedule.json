@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "**24-month vesting** with **6-month cliff** ending ~March 15, 2026.\n\n**During cliff:** Cannot sell, but **can lock into veYB**. ~35M YB was locked by team and investors during the cliff, choosing protocol fees over liquidity.\n\n**At cliff end:** 25% unlocks (6/24 months).\n\n**Post-cliff:** Remaining 75% vests linearly over 18 months until September 2027.\n\n**Affected:** Team (250M) + Investors (121M) = 371M YB (37% of max supply). Tokens release gradually—they cannot be instantly used to influence governance.",
+  "evidence": [
+    {
+      "name": "Vesting Schedule",
+      "summary": "Start: Sept 15, 2025. Cliff: 6 months = March 15, 2026 (25% unlocks). Linear vesting: 18 months post-cliff (75% remaining). Full vest: Sept 15, 2027.",
+      "urls": [
+        {
+          "name": "Tokenomics",
+          "url": "https://docs.yieldbasis.com/user/tokenomics",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

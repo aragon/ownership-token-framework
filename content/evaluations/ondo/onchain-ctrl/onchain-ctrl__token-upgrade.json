@@ -1,0 +1,33 @@
+{
+  "status": "positive",
+  "notes": "The ONDO token is not upgradeable (no proxy pattern). It uses AccessControl with DEFAULT_ADMIN_ROLE and MINTER_ROLE held by a team multisig, not the DAO.",
+  "evidence": [
+    {
+      "name": "ONDO Token Roles",
+      "summary": "DEFAULT_ADMIN_ROLE holder: Team Multisig.\nMINTER_ROLE holder: Team Multisig.\n\nThe team can grant/revoke roles and mint new tokens. The DAO has no control over these roles.",
+      "urls": [
+        {
+          "name": "ONDO Token",
+          "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Team Multisig",
+          "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Contract Source Note",
+      "summary": "The deployed ONDO token uses AccessControl. The public ondo-v1 repository shows a simpler Ownable-based contract, indicating the deployed contract differs from the public repo.",
+      "urls": [
+        {
+          "name": "Public ondo-v1 repo (differs from deployed)",
+          "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

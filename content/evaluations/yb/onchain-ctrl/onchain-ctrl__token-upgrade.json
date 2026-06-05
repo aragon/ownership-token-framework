@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "YB token is a **non-upgradeable** Vyper contract. Ownership has been **renounced** (owner = 0x0). No proxy pattern. Only GaugeController (set before renouncement) can mint via emit().",
+  "evidence": [
+    {
+      "name": "Token Ownership",
+      "summary": "owner() returns 0x0. Token uses standard ERC-20 implementation with renounced ownership at deployment.",
+      "urls": [
+        {
+          "name": "YB Token Contract",
+          "url": "https://etherscan.io/address/0x01791F726B4103694969820be083196cC7c045fF#code",
+          "type": "explorer"
+        },
+        {
+          "name": "renounce_ownership",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L90-L100",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

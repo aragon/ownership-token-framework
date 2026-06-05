@@ -1,0 +1,55 @@
+{
+  "status": "positive",
+  "notes": "AERO minting is fully programmatic and epoch-based (1 epoch = 1 week), enforced by the non-upgradeable Minter contract.",
+  "evidence": [
+    {
+      "name": "Minter Contract",
+      "summary": "The non-upgradeable Minter contract enforces programmatic emission rules.",
+      "urls": [
+        {
+          "name": "Minter",
+          "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Emission Rate",
+      "summary": "Can be increased/decreased by governance but only in fixed, small, weekly increments of +/-0.01%.",
+      "urls": [
+        {
+          "name": "Minter Emission Increase (Epochs 1-14)",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L182",
+          "type": "github"
+        },
+        {
+          "name": "Minter Emission Decay",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L184",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Growth Emissions",
+      "summary": "Mints growth emissions for veAERO holders using the formula: weeklyEmissions * (1 - veAERO.totalSupply / AERO.totalSupply)^2 * 0.5. This creates a counter-cyclical incentive where veAERO rewards decrease as more AERO is locked.",
+      "urls": [
+        {
+          "name": "Growth Emissions Formula",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L135",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Team Emission Rate",
+      "summary": "Currently set to 0% of total weekly emissions.",
+      "urls": [
+        {
+          "name": "Team Emission Rate",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L192",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

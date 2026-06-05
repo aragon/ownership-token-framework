@@ -1,0 +1,20 @@
+{
+  "status": "warning",
+  "notes": "Smart contract code is licensed under GPL-3.0, making it open source. However, per Terms of Service: \"the Company and/or its licensors own all right, title and interest in and to the Services.\" Copyright belongs to Ethena Labs. ENA holders do NOT control IP or licensing rights.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Ethena GitHub License",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/ENA.sol",
+          "type": "github"
+        },
+        {
+          "name": "Ethena Terms of Service",
+          "url": "https://docs.ethena.fi/resources/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "The Uniswap Governance Timelock, often referred to as the Treasury, is entirely controlled by token holders. At the time of writing, it held approximately 264m UNI tokens. Funds held in Timelock require UNI governance proposals to execute transfers, ensuring tokenholder control.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Timelock",
+          "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

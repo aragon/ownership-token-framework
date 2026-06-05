@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "AAVE, stkAAVE and aAAVE holders vote onchain with execution through Timelock.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Governance Documentation",
+          "url": "https://aave.com/docs/ecosystem/governance",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

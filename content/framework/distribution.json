@@ -1,0 +1,19 @@
+{
+  "id": "distribution",
+  "name": "Metric 4: Token Distribution",
+  "displayName": "Token Distribution",
+  "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed. It measures whether any single actor or coordinated group under common control can form a controlling block large enough to determine or constrain tokenholder-governed outcomes.",
+  "anchor": "#metric-4-token-distribution",
+  "criteria": [
+    {
+      "id": "distribution__concentration",
+      "name": "Ownership Concentration",
+      "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply."
+    },
+    {
+      "id": "distribution__supply-schedule",
+      "name": "Future Token Unlocks",
+      "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?"
+    }
+  ]
+}

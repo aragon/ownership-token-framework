@@ -1,0 +1,30 @@
+{
+  "status": "positive",
+  "notes": "Uniswap V2, V3, V4, and UniswapX protocol contracts are open source on GitHub.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Uniswap V2 Core (GitHub)",
+          "url": "https://github.com/Uniswap/v2-core",
+          "type": "github"
+        },
+        {
+          "name": "Uniswap V3 Core (GitHub)",
+          "url": "https://github.com/Uniswap/v3-core",
+          "type": "github"
+        },
+        {
+          "name": "Uniswap V4 Core (GitHub)",
+          "url": "https://github.com/Uniswap/v4-core",
+          "type": "github"
+        },
+        {
+          "name": "UniswapX (GitHub)",
+          "url": "https://github.com/Uniswap/UniswapX",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "positive",
+  "notes": "All protocol roles are controlled by the Agent contract, ensuring veCRV holders maintain control over gauges, fees, and protocol expansion.",
+  "evidence": [
+    {
+      "name": "Gauge Addition",
+      "summary": "Only the Agent can add new gauges via add_gauge on GaugeController.",
+      "urls": [
+        {
+          "name": "GaugeController: admin is Agent",
+          "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Pool Factory Ownership",
+      "summary": "New pools are deployed by Factory contracts controlled by OwnerProxy. Agent is responsible for adding new pools, giving veCRV holders control over protocol expansion.",
+      "urls": [
+        {
+          "name": "Curve Pool Factory: admin is OwnerProxy",
+          "url": "https://etherscan.io/address/0xB9fc157394Af804a3578134A6585C0dC9cc990d4#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

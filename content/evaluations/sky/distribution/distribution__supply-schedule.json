@@ -1,0 +1,17 @@
+{
+  "status": "unevaluated",
+  "notes": "Vesting contracts exist but specific unlock schedules were not enumerated in this analysis.",
+  "evidence": [
+    {
+      "name": "Vesting Contracts",
+      "summary": "Vesting contracts exist for token distributions. Governance controls these schedules.",
+      "urls": [
+        {
+          "name": "Vest Contract",
+          "url": "https://etherscan.io/address/0x67eaDb3288cceDe034cE95b0511DCc65cf630bB6#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "Aerodrome protocol contracts (including Slipstream) are open source on GitHub.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Aerodrome Contracts (GitHub)",
+          "url": "https://github.com/aerodrome-finance/contracts",
+          "type": "github"
+        },
+        {
+          "name": "Aerodrome Slipstream (GitHub)",
+          "url": "https://github.com/aerodrome-finance/slipstream",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

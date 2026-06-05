@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "UNI holders vote onchain via GovernorBravoDelegator, with execution through Timelock after a time delay.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "GovernorBravoDelegator",
+          "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Timelock",
+          "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

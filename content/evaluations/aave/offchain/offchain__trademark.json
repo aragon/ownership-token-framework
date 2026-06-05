@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "A US AAVE trademark filing lists Quantum Swan OU (Estonia) as the applicant/owner.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Trademark filing",
+          "url": "https://tsdr.uspto.gov/#caseNumber=79251290&caseSearchType=US_APPLICATION&caseType=DEFAULT&searchType=statusSearch",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

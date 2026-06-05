@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "The ONDO token has no blocklist, freeze, or seizure functions. Transfers are permissionless. Transfers were enabled in January 2024.",
+  "evidence": [
+    {
+      "name": "No Censorship Capability",
+      "summary": "`transferAllowed = true` (verified onchain, enabled January 2024).\nNo blacklist mapping.\nNo pause function for transfers.\nNo force transfer or seize functions.\n\nThe token contract has a `whenTransferAllowed` modifier but transfers are permanently enabled.",
+      "urls": [
+        {
+          "name": "ONDO Token",
+          "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Source code (ondo-v1)",
+          "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

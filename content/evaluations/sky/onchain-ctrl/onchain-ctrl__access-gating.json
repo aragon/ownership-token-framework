@@ -1,0 +1,27 @@
+{
+  "status": "positive",
+  "notes": "No admin can arbitrarily pause the protocol or restrict user access. Emergency shutdown exists but requires burning a significant amount of tokens.",
+  "evidence": [
+    {
+      "name": "Emergency Shutdown",
+      "summary": "The only way to \"pause\" the protocol is Emergency Shutdown, which requires burning tokens past a threshold. This is a nuclear option, not an admin switch.",
+      "urls": [
+        {
+          "name": "ESM source code",
+          "url": "https://github.com/sky-ecosystem/esm/blob/master/src/ESM.sol",
+          "type": "github"
+        },
+        {
+          "name": "ESM contract on Etherscan",
+          "url": "https://etherscan.io/address/0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "No Arbitrary Pause",
+      "summary": "Core contracts have no pause function. Users can always interact with the protocol.",
+      "urls": []
+    }
+  ]
+}

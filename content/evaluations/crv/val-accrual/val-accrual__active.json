@@ -1,0 +1,39 @@
+{
+  "status": "positive",
+  "notes": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards, plus boosted CRV emissions for liquidity provision. They also receive 80% of the accrued interest from all crvUSD markets.",
+  "evidence": [
+    {
+      "name": "CRV Emissions Rewards",
+      "summary": "Liquidity Providers deposit LP tokens into Gauge Contracts. Once the gauge receives CRV emissions, LPs can claim proportional rewards. LPs can boost rewards up to 2.5x by locking CRV for veCRV.",
+      "urls": [
+        {
+          "name": "working_balance reward calculation",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L210",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Pool Rewards in crvUSD",
+      "summary": "Pools have swap fees with an admin portion collected by StableSwapProxy. Fees flow through burner contracts to FeeCollector, which converts all tokens to crvUSD via CowSwapBurner and sends to FeeDistributor for veCRV holders to claim.",
+      "urls": [
+        {
+          "name": "FeeDistributor",
+          "url": "https://etherscan.io/address/0xD16d5eC345Dd86Fb63C6a9C43c517210F1027914",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Borrow Rewards in crvUSD",
+      "summary": "Borrowing interest (paid in crvUSD) from controllers are sent to FeeSplitter. FeeCollector receives proportional crvUSD and sends to FeeDistributor for veCRV holders.",
+      "urls": [
+        {
+          "name": "FeeSplitter",
+          "url": "https://etherscan.io/address/0x2dfd89449faff8a532790667bab21cf733c064f2",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

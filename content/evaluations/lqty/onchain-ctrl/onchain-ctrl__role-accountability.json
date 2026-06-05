@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "There are no privileged roles in the core protocol. All core protocol contracts are immutable after launch with no admin functions, owners, or upgrade keys.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity - Governance-Free",
+          "url": "https://www.liquity.org/features/governance-free",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

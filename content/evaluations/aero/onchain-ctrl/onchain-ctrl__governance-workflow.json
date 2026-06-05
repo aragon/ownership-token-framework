@@ -1,0 +1,43 @@
+{
+  "status": "positive",
+  "notes": "veAERO holders control emissions through epoch-based gauge voting. An EmergencyCouncil exists for crisis handling with limited emergency powers.",
+  "evidence": [
+    {
+      "name": "Voting System",
+      "summary": "AERO holders lock AERO in VotingEscrow to receive veAERO. veAERO holders vote each epoch on gauge weights via the Voter contract, and the Minter distributes emissions proportionally.",
+      "urls": [
+        {
+          "name": "AERO Token",
+          "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code",
+          "type": "explorer"
+        },
+        {
+          "name": "VotingEscrow",
+          "url": "https://basescan.org/address/0xeBf418Fe2512e7E6bd9b87a8F0f294aCDC67e6B4#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Voter",
+          "url": "https://basescan.org/address/0x16613524e02ad97eDfeF371bC883F2F5d6C480A5#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Minter",
+          "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Emergency Council",
+      "summary": "Exists to handle contingencies. It can kill or revive gauges, update pool name and symbol metadata, and rotate the EmergencyCouncil itself.",
+      "urls": [
+        {
+          "name": "EmergencyCouncil",
+          "url": "https://aerodrome.limited/pages/security.html",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

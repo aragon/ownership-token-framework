@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Fixed 16m AAVE token supply. No mint() function or inflation pathway in the bytecode.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "The only AAVE token minting transactions ever, amounting to 16m AAVE tokens",
+          "url": "https://etherscan.io/advanced-filter?tkn=0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9&txntype=2&fadd=0x0000000000000000000000000000000000000000",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

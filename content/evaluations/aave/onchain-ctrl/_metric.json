@@ -1,0 +1,6 @@
+{
+  "summary": "AAVE, stkAAVE and aAAVE holders control the protocol through onchain governance with Timelock execution. The token has fixed 16M supply with no mint function. Delegated steward roles exist but are elected and revocable by governance.",
+  "tags": [
+    "Metric 1"
+  ]
+}

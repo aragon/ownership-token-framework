@@ -1,0 +1,17 @@
+{
+  "status": "positive",
+  "notes": "No supply cap exists, but all mints require LDO tokenholder approval through the Voting contract.",
+  "evidence": [
+    {
+      "name": "Minting Path",
+      "summary": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\nMinting path: Voting (LDO holders) → TokenManager → Token.generateTokens()",
+      "urls": [
+        {
+          "name": "MiniMeToken.generateTokens",
+          "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

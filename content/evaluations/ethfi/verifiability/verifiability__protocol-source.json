@@ -1,0 +1,21 @@
+{
+  "status": "positive",
+  "notes": "All core protocol contracts are verified on Etherscan and match the public GitHub repository. The code is MIT licensed with formal verification via Certora and multiple audits available.",
+  "evidence": [
+    {
+      "name": "Protocol Source & Audits",
+      "urls": [
+        {
+          "name": "etherfi-protocol/smart-contracts",
+          "url": "https://github.com/etherfi-protocol/smart-contracts",
+          "type": "github"
+        },
+        {
+          "name": "Audit Reports",
+          "url": "https://github.com/etherfi-protocol/smart-contracts/tree/master/audits",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "The primary interface domain (ethena.fi) and Terms of Service identify **Ethena (BVI) Limited** as the contracting party, governed by British Virgin Islands law. ENA holders have no legal claim or control over the primary interface.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Ethena Terms of Service",
+          "url": "https://docs.ethena.fi/resources/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

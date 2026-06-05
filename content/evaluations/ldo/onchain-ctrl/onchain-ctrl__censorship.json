@@ -1,0 +1,33 @@
+{
+  "status": "positive",
+  "notes": "Controller has burn and transfer-disable capabilities, but BURN_ROLE is currently unassigned. Enabling burning requires LDO governance approval.",
+  "evidence": [
+    {
+      "name": "Burn Capability",
+      "summary": "Controller can burn tokens from any address via destroyTokens. Currently, BURN_ROLE on TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1B to call setPermission on ACL.",
+      "urls": [
+        {
+          "name": "MiniMeToken.destroyTokens",
+          "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
+          "type": "github"
+        },
+        {
+          "name": "Aragon ACL",
+          "url": "https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Transfer Control",
+      "summary": "Controller can enable/disable transfers globally via enableTransfers function.",
+      "urls": [
+        {
+          "name": "MiniMeToken.enableTransfers",
+          "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

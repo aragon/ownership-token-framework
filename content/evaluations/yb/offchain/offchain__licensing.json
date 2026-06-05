@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "**Mixed licensing**: YB.vy, VotingEscrow.vy, GaugeController.vy use AGPL v3.0 (open source). **Factory.vy uses 'Copyright (c) 2025'** (proprietary).",
+  "evidence": [
+    {
+      "name": "License Analysis",
+      "summary": "DAO contracts (YB, veYB, GaugeController, FeeDistributor): AGPL v3.0. Factory, MigrationFactoryOwner: 'Copyright (c) 2025' (proprietary).",
+      "urls": [
+        {
+          "name": "yb-core contracts directory",
+          "url": "https://github.com/yield-basis/yb-core/tree/41137e5837e411c9d60be8705ca74304b082fa92/contracts",
+          "type": "github"
+        },
+        {
+          "name": "Curve Licensing Vesting",
+          "url": "https://etherscan.io/address/0x36e36D5D588D480A15A40C7668Be52D36eb206A8",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

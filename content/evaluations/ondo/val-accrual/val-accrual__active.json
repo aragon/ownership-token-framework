@@ -1,0 +1,32 @@
+{
+  "status": "at_risk",
+  "notes": "No active value accrual mechanism for ONDO tokenholders was identified. Ondo products have documented product-level economics, but Aragon did not identify a fee distributor, staking reward, buyback program, DAO treasury, or other mechanism routing product economics to ONDO holders.",
+  "evidence": [
+    {
+      "name": "Product Economics vs ONDO Holder Accrual",
+      "summary": "Ondo has products with documented product-level economics, including yield, fees, expenses, and spreads. Those mechanics do not identify an ONDO-holder accrual mechanism.",
+      "urls": [
+        {
+          "name": "OUSG Fees",
+          "url": "https://docs.ondo.finance/qualified-access-products/ousg/fees-and-taxes",
+          "type": "docs"
+        },
+        {
+          "name": "OUSG Yield",
+          "url": "https://docs.ondo.finance/qualified-access-products/ousg/yield",
+          "type": "docs"
+        },
+        {
+          "name": "USDY Product Economics",
+          "url": "https://docs.ondo.finance/general-access-products/usdy/comparison-stablecoins",
+          "type": "docs"
+        },
+        {
+          "name": "Global Markets Fees",
+          "url": "https://docs.ondo.finance/ondo-global-markets/fees-and-taxes",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "positive",
+  "notes": "veYB holders vote onchain via Aragon governance DAO. Proposals require **30% participation**, **55% support**, and a **7-day voting period**. Proposals can be executed before the full voting period concludes when mathematical certainty is achieved (thresholds met, remaining votes cannot change outcome). Minimum 1 veYB required to create proposals.",
+  "evidence": [
+    {
+      "name": "Governance System",
+      "summary": "Aragon governance DAO with TokenVoting Plugin. veYB implements standard IVotes interface for Aragon compatibility.",
+      "urls": [
+        {
+          "name": "DAO Contract",
+          "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
+          "type": "explorer"
+        },
+        {
+          "name": "veYB (VotingEscrow)",
+          "url": "https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211",
+          "type": "explorer"
+        },
+        {
+          "name": "TokenVoting Plugin",
+          "url": "https://etherscan.io/address/0x2be6670DE1cCEC715bDBBa2e3A6C1A05E496ec78",
+          "type": "explorer"
+        },
+        {
+          "name": "Governance Documentation",
+          "url": "https://docs.yieldbasis.com/user/governance",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

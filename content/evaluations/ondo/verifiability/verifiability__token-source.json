@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The ONDO token contract is verified on Etherscan. The deployed contract uses AccessControl, which differs from the simpler Ownable-based contract in the public ondo-v1 repository.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "ONDO Token (Etherscan verified)",
+          "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Public ondo-v1 repo (differs from deployed)",
+          "url": "https://github.com/ondoprotocol/ondo-v1/blob/main/contracts/tokens/Ondo.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

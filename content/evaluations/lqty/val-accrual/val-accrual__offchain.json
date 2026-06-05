@@ -1,0 +1,8 @@
+{
+  "status": "unevaluated",
+  "notes": "The protocol is entirely onchain - Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
+  "tags": [
+    "Reference"
+  ],
+  "evidence": []
+}

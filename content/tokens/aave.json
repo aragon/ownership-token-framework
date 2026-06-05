@@ -1,0 +1,21 @@
+{
+  "id": "aave",
+  "coingeckoId": "aave",
+  "name": "AAVE",
+  "symbol": "AAVE",
+  "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+  "icon": "https://assets.coingecko.com/coins/images/12645/standard/aave-token-round.png",
+  "description": "AAVE is the native token of Aave, the largest lending protocol in DeFi.",
+  "network": "ethereum",
+  "lastUpdated": 1775651992,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://aave.com/",
+    "twitter": "https://twitter.com/aave",
+    "scan": "https://etherscan.io/token/0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+  },
+  "infoDescription": "Aave is an Open Source Protocol to create Non-Custodial Liquidity Markets to earn interest on supplying and borrowing assets with a variable interest rate."
+}

@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "Ondo's Terms of Service state that Ondo names, logos, and marks used on the site or services are owned by Ondo, its affiliates, Covered Entities, or applicable licensors.",
+  "evidence": [
+    {
+      "name": "Ondo Terms of Service - Proprietary Rights",
+      "summary": "The Terms reserve Ondo names, logos, and marks to Ondo, its affiliates, Covered Entities, or applicable licensors, and do not grant users rights in those trademarks.",
+      "urls": [
+        {
+          "name": "Terms of Service",
+          "url": "https://docs.ondo.finance/legal/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

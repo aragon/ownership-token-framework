@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "It's all circulating - vesting ended in 2022, which can be verified by looking at the events emitted by the `LockupContractFactory`. The only remaining non-circulating LQTY is what the contract releases on an immutable schedule to Stability Pool depositors in V1.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "LockupContractFactory (Etherscan)",
+          "url": "https://etherscan.io/address/0x2eBeF24dA09489218Ba2BECb01867F6DaAeDcD4B#code",
+          "type": "explorer"
+        },
+        {
+          "name": "CommunityIssuance (Etherscan)",
+          "url": "https://etherscan.io/address/0xD8c9D9071123a059C6E0A945cF0e0c82b508d816#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

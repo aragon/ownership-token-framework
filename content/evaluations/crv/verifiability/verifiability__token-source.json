@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The CRV token contract source code (ERC20CRV.vy) is publicly available on GitHub and verified on Etherscan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "CRV Token (Etherscan)",
+          "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code",
+          "type": "explorer"
+        },
+        {
+          "name": "ERC20CRV.vy Source (GitHub)",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

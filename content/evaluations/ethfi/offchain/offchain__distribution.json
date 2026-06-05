@@ -1,0 +1,16 @@
+{
+  "status": "warning",
+  "notes": "The ether.fi domain and platform are operated by Ether.Fi SEZC, a Cayman Islands Special Economic Zone Company. There is no documented relationship between the company and DAO, and the company operates with unilateral control over terms and services.",
+  "evidence": [
+    {
+      "name": "Legal Entity",
+      "urls": [
+        {
+          "name": "Terms of Use",
+          "url": "https://etherfi.gitbook.io/etherfi/ether.fi-legal/terms-of-use",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

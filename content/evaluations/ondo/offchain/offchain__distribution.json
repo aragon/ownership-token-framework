@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "Ondo Finance Inc. controls the primary website, documentation, APIs, dashboards, and technical interfaces. The Terms of Service identify Ondo Finance Inc. as the contracting party for those interface services, while product issuance and economic terms are governed separately by Covered Entity terms.",
+  "evidence": [
+    {
+      "name": "Ondo Terms of Service - Interface Services",
+      "summary": "Ondo Finance Inc. operates the site and interface services. The Terms also state that Covered Entities are separate legal entities providing their own services under their own terms.",
+      "urls": [
+        {
+          "name": "Terms of Service",
+          "url": "https://docs.ondo.finance/legal/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

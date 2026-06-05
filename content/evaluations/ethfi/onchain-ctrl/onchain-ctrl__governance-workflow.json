@@ -1,0 +1,27 @@
+{
+  "status": "at_risk",
+  "notes": "No onchain Governor contract deployed. Governance uses offchain voting with a 4-day voting period and 1M ETHFI quorum. Execution is handled by multisig, meaning tokenholders can signal preference but cannot force execution.\n\nThe protocol has published a multi-stage decentralisation roadmap and is currently in Phase 0, which focuses on launching the token and establishing the initial voter base. Phase 1 targets full Governor deployment with treasury access.",
+  "evidence": [
+    {
+      "name": "Governance Structure",
+      "summary": "Phase 0 focuses on launching the token and establishing the initial voter base. Phase 1 targets full Governor deployment with treasury access.",
+      "urls": [
+        {
+          "name": "Governance Info",
+          "url": "https://vote.ether.fi/info",
+          "type": "docs"
+        },
+        {
+          "name": "Governance Resources",
+          "url": "https://governance.ether.fi/t/ether-fi-governance-official-resources/2140",
+          "type": "docs"
+        },
+        {
+          "name": "Governance Roadmap",
+          "url": "https://etherfi.gitbook.io/gov/governance-roadmap",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

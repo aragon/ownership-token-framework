@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "YB token is **verified on Etherscan** (Vyper 0.4.3, AGPL v3.0 license). Source code available on GitHub with matching bytecode.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "YB Token Verified on Etherscan",
+          "url": "https://etherscan.io/address/0x01791F726B4103694969820be083196cC7c045fF#code",
+          "type": "explorer"
+        },
+        {
+          "name": "YB.vy Source",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

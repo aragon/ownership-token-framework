@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 
 /**
- * Sync CoinGecko IDs for tokens in tokens.json
+ * Sync CoinGecko IDs for the token registry atoms in content/tokens/
  *
  * Uses CoinGecko's /coins/{platform}/contract/{address} endpoint
  * to resolve the canonical CoinGecko ID from contract address + network.
  *
  * Usage:
  *   node scripts/sync-coingecko-ids.mjs           # dry-run, skips tokens with existing IDs
- *   node scripts/sync-coingecko-ids.mjs --write    # writes back to tokens.json
+ *   node scripts/sync-coingecko-ids.mjs --write    # writes back to content/tokens/<id>.json
  *   node scripts/sync-coingecko-ids.mjs --force    # re-verify all tokens (ignores cached IDs)
  */
 
-import { readFileSync, writeFileSync } from "node:fs"
-import { resolve, dirname } from "node:path"
+import { readdirSync, readFileSync, writeFileSync } from "node:fs"
+import { dirname, join, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const TOKENS_PATH = resolve(__dirname, "../src/data/tokens.json")
+const TOKENS_DIR = resolve(__dirname, "../content/tokens")
 
 // CoinGecko platform IDs mapped from our network names
 const NETWORK_TO_PLATFORM = {
@@ -68,10 +68,14 @@ async function lookupCoingeckoId(address, network) {
 
 async function main() {
   const writeMode = process.argv.includes("--write")
-  const tokensFile = JSON.parse(readFileSync(TOKENS_PATH, "utf-8"))
-  const tokens = tokensFile.tokens
+  const tokenFiles = readdirSync(TOKENS_DIR).filter((f) => f.endsWith(".json"))
+  const tokens = tokenFiles.map((file) => ({
+    file: join(TOKENS_DIR, file),
+    ...JSON.parse(readFileSync(join(TOKENS_DIR, file), "utf-8")),
+  }))
 
   let changes = 0
+  const changedFiles = new Set()
 
   console.log(`\n${c.cyan}${c.bold}  🦎 CoinGecko Sync${c.reset}`)
   console.log(`${c.dim}  ─────────────────────────────${c.reset}\n`)
@@ -100,10 +104,12 @@ async function main() {
       console.log(`${c.green}+ ${result.id}${c.reset}`)
       token.coingeckoId = result.id
       changes++
+      changedFiles.add(token.file)
     } else if (token.coingeckoId !== result.id) {
       console.log(`${c.yellow}≠ ${token.coingeckoId} → ${result.id}${c.reset}`)
       token.coingeckoId = result.id
       changes++
+      changedFiles.add(token.file)
     } else {
       console.log(`${c.green}✓ ${result.id}${c.reset}`)
     }
@@ -113,8 +119,12 @@ async function main() {
 
   console.log()
   if (changes > 0 && writeMode) {
-    writeFileSync(TOKENS_PATH, JSON.stringify(tokensFile, null, 2) + "\n")
-    console.log(`  ${c.green}✓${c.reset} Written ${c.bold}${changes}${c.reset} update(s) to tokens.json\n`)
+    for (const token of tokens) {
+      if (!changedFiles.has(token.file)) continue
+      const { file, ...atom } = token
+      writeFileSync(file, JSON.stringify(atom, null, 2) + "\n")
+    }
+    console.log(`  ${c.green}✓${c.reset} Written ${c.bold}${changes}${c.reset} update(s) to content/tokens/\n`)
   } else if (changes > 0) {
     console.log(`  ${c.yellow}${changes}${c.reset} update(s) pending ${c.dim}· run with --write to save${c.reset}\n`)
   } else {

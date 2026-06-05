@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Core Aerodrome protocol contracts are non-upgradeable and do not use proxy patterns.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Aerodrome Contract Addresses",
+          "url": "https://aerodrome.finance/security",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

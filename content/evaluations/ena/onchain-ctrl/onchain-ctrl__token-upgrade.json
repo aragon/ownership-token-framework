@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "The ENA token itself is **NOT upgradeable**. It uses Ownable2Step, not a proxy pattern. Token behavior is immutable. However, the owner (Dev Multisig) retains mint authority subject to rate limits.",
+  "evidence": [
+    {
+      "name": "ENA Non-Upgradeability Verification",
+      "summary": "The ENA token inherits Ownable2Step, ERC20Burnable, ERC20Permit. No upgrade mechanism exists in the contract.",
+      "urls": [
+        {
+          "name": "ENA.sol Source",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/ENA.sol",
+          "type": "github"
+        },
+        {
+          "name": "ENA Token (Etherscan)",
+          "url": "https://etherscan.io/address/0x57e114B691Db790C35207b2e685D4A43181e6061#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

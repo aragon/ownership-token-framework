@@ -1,0 +1,42 @@
+{
+  "status": "at_risk",
+  "notes": "ONDO tokenholders have no governance control over Ondo's core products (OUSG, USDY, Global Markets). These products represent ~$3.5B TVL (98.8% of total) and are controlled by company multisigs.",
+  "evidence": [
+    {
+      "name": "OUSG/USDY/Global Markets Governance (Company-Controlled)",
+      "summary": "All core products are controlled by company multisigs with no tokenholder involvement:\n\n1. OUSG: Management Multisig holds DEFAULT_ADMIN_ROLE and ProxyAdmin ownership.\n\n2. USDY: Team Multisig holds ProxyAdmin ownership.\n\n3. Global Markets: TimelockController with 2-hour delay, controlled by company multisigs.\n\nNo forum discussion required. No onchain tokenholder vote. Changes proposed and executed by multisig signers.",
+      "urls": [
+        {
+          "name": "OUSG",
+          "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY",
+          "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+          "type": "explorer"
+        },
+        {
+          "name": "GMTokenManager",
+          "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Management Multisig (OUSG admin)",
+          "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY ProxyAdmin owner",
+          "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+          "type": "explorer"
+        },
+        {
+          "name": "Global Markets TimelockController",
+          "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

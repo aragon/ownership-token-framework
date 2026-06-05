@@ -1,0 +1,65 @@
+{
+  "status": "positive",
+  "notes": "Protocol fees across all Uniswap versions flow to governance-controlled destinations (TokenJar). Value accrual is via burn mechanism - a burn can be initiated by anyone who chooses to burn 4,000 UNI to claim accumulated protocol fees from TokenJar via FirePit.",
+  "evidence": [
+    {
+      "name": "V2 Fees",
+      "summary": "All V2 pools are active. Fees go to FeeTo address which is set to TokenJar.",
+      "urls": [
+        {
+          "name": "UniswapV2Pool: feeTo",
+          "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "UniswapV2Pool: Fee Destination",
+          "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L90",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "V3 Fees",
+      "summary": "V3FeeAdapter collects protocol fees by calling collectProtocol and sends them to TokenJar. The 4,000 UNI threshold can be changed by governance via Timelock in FirePit. Only select V3 pools are currently active.",
+      "urls": [
+        {
+          "name": "V3FeeAdapter",
+          "url": "https://etherscan.io/address/0x5E74C9f42EEd283bFf3744fBD1889d398d40867d#code",
+          "type": "explorer"
+        },
+        {
+          "name": "UniswapV3Pool: collectProtocol",
+          "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L848",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "V4 Fees",
+      "summary": "V4 fees have not been activated yet, but in the future fees can be activated via governance process as described in Onchain Governance Workflow. To activate fees, Timelock will set the PoolManager's ProtocolFeeController address to a V4FeeAdapter contract which contains logic for fee collection and distribution.",
+      "urls": [
+        {
+          "name": "V4 PoolManager",
+          "url": "https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90#code",
+          "type": "explorer"
+        },
+        {
+          "name": "V4 PoolManager: CollectProtocolFees",
+          "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L48",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Burn Mechanism",
+      "summary": "The 4,000 UNI threshold can be changed by governance via Timelock in FirePit.",
+      "urls": [
+        {
+          "name": "FirePit 4000 UNI Requirement",
+          "url": "https://github.com/Uniswap/protocol-fees/blob/8604e4b9aed88bdd6be3a322e19722c40f94be2c/src/releasers/ExchangeReleaser.sol#L35",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "status": "warning",
+  "notes": "ENA governance is **offchain Snapshot signaling only**. Votes do not trigger onchain transactions. The Dev Multisig decides whether to execute proposals, making tokenholder votes advisory rather than binding. There is no timelock on multisig actions.",
+  "evidence": [
+    {
+      "name": "Snapshot Governance",
+      "summary": "ENA holders vote via Snapshot at ethenagovernance.eth. All passed votes require manual multisig execution. Per docs: \"fully on-chain governance is not a practical or viable option at present.\"",
+      "urls": [
+        {
+          "name": "Snapshot Space",
+          "url": "https://snapshot.org/#/ethenagovernance.eth",
+          "type": "docs"
+        },
+        {
+          "name": "Governance Documentation",
+          "url": "https://docs.ethena.fi/solution-overview/governance",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Multisig Execution",
+      "summary": "The Dev Multisig owns all core contracts. Verified onchain: `getThreshold()` returns 5, `getOwners()` returns 11 addresses. Documentation claims 4/8, but onchain reality is 5/11.",
+      "urls": [
+        {
+          "name": "Dev Multisig",
+          "url": "https://etherscan.io/address/0x3b0aaf6e6fcd4a7ceef8c92c32dfea9e64dc1862",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

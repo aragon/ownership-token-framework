@@ -1,0 +1,25 @@
+{
+  "status": "fail",
+  "notes": "Core protocol software and IP (V2) is owned by Liquity AG and released under a multi-year Business Source License (BUSL). Commercial deployments before ~September 2027 require approval from Liquity AG.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Licensing Liquity V2 - Official Blog",
+          "url": "https://www.liquity.org/blog/licensing-liquity-v2-may-the-fork-be-with-you",
+          "type": "website"
+        },
+        {
+          "name": "Liquity V2 Core LICENSE File (GitHub)",
+          "url": "https://github.com/liquity/bold/blob/main/contracts/LICENSE",
+          "type": "github"
+        },
+        {
+          "name": "What's New in Liquity V2 - Bankless",
+          "url": "https://www.bankless.com/read/whats-new-in-liquity-v2",
+          "type": "website"
+        }
+      ]
+    }
+  ]
+}

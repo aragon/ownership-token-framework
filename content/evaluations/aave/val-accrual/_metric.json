@@ -1,0 +1,6 @@
+{
+  "summary": "Protocol fees flow to a governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
+  "tags": [
+    "Metric 2"
+  ]
+}

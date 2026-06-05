@@ -1,0 +1,43 @@
+{
+  "status": "warning",
+  "notes": "Protocol revenue flows through multisig-controlled wallets. **Treasury is NOT tokenholder-controlled.** Revenue flows: Hot Swap → sUSDe Payout → StakingRewardsDistributor → sUSDe stakers. ENA tokenholders do NOT control treasury flows.",
+  "evidence": [
+    {
+      "name": "Revenue Flow",
+      "summary": "Protocol Operations (delta-neutral strategies)\n→ **Hot Swap Multisig** (receives revenue, converts to USDe)\n→ **sUSDe Payout Multisig**\n→ **StakingRewardsDistributor**\n→ sUSDe Stakers\n\nENA/sENA holders are NOT in this flow unless fee switch activates.",
+      "urls": [
+        {
+          "name": "Key Addresses Documentation",
+          "url": "https://docs.ethena.fi/solution-design/key-addresses",
+          "type": "docs"
+        },
+        {
+          "name": "Hot Swap Multisig (revenue receiver)",
+          "url": "https://etherscan.io/address/0x4423198f26764a8ce9ac8f1683c476854c885d9d",
+          "type": "explorer"
+        },
+        {
+          "name": "sUSDe Payout Multisig",
+          "url": "https://etherscan.io/address/0x71e4f98e8f20c88112489de3dded4489802a3a87",
+          "type": "explorer"
+        },
+        {
+          "name": "StakingRewardsDistributor",
+          "url": "https://etherscan.io/address/0xf2fa332bd83149c66b09b45670bce64746c6b439#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Reserve Fund (Negative Funding Backup)",
+      "summary": "Separate from revenue treasury. Used only for negative funding emergencies. NOT tokenholder-controlled.",
+      "urls": [
+        {
+          "name": "Reserve Fund Multisig",
+          "url": "https://etherscan.io/address/0x2b5ab59163a6e93b4486f6055d33ca4a115dd4d5",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

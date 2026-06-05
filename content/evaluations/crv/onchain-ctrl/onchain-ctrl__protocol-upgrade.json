@@ -1,0 +1,44 @@
+{
+  "status": "positive",
+  "notes": "Core protocol and pool contracts are immutable. Governance contracts (Agent, Voting) are upgradeable only by veCRV holders.",
+  "evidence": [
+    {
+      "name": "Core Contracts",
+      "summary": "Core protocol and pool contracts are immutable. The CRV Token and GaugeController have admin set to Agent but cannot be upgraded.",
+      "urls": [
+        {
+          "name": "CRV Token (Admin: Agent)",
+          "url": "https://etherscan.io/address/0xd533a949740bb3306d119cc777fa900ba034cd52",
+          "type": "explorer"
+        },
+        {
+          "name": "GaugeController (Admin: Agent)",
+          "url": "https://etherscan.io/address/0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB#readContract",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Agent Contract",
+      "summary": "Can be upgraded by calling setApp(Agent, ...) on the Kernel contract, which is only allowed by the Agent itself. Only veCRV holders can upgrade the Agent contract through governance voting.",
+      "urls": [
+        {
+          "name": "Agent",
+          "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Voting Contract",
+      "summary": "Can be upgraded by calling setApp(Voting, ...) on the Kernel contract, which is only allowed by the Agent itself. Only veCRV holders can upgrade the Voting contract through governance voting.",
+      "urls": [
+        {
+          "name": "Voting",
+          "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "status": "positive",
+  "notes": "Protocol contracts are upgradeable by LDO holders. Core governance contracts (DualGovernance, Executor, EmergencyProtectedTimeLock) are non-upgradeable.",
+  "evidence": [
+    {
+      "name": "Upgradeable Contracts",
+      "summary": "StakingRouter: proxy_getAdmin is set to Agent.\n\nAgent: Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, ...) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself).",
+      "urls": [
+        {
+          "name": "StakingRouter",
+          "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Agent",
+          "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "type": "explorer"
+        },
+        {
+          "name": "Kernel",
+          "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Non-upgradeable Contracts",
+      "summary": "DualGovernance, Executor, and EmergencyProtectedTimeLock are immutable contracts that cannot be upgraded.",
+      "urls": [
+        {
+          "name": "DualGovernance",
+          "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Executor",
+          "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code",
+          "type": "explorer"
+        },
+        {
+          "name": "EmergencyProtectedTimeLock",
+          "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

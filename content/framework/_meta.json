@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://github.com/aragon/ownership-token-framework/blob/development/README.md",
+  "order": [
+    "onchain-ctrl",
+    "val-accrual",
+    "verifiability",
+    "distribution",
+    "offchain"
+  ]
+}

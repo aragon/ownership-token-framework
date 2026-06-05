@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "The Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Curve Legal",
+          "url": "https://www.curve.finance/dex/ethereum/legal",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

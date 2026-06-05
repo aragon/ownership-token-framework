@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The V1 fee accrual mechanism is immutable - neither the core team nor LQTY holders can change the fee parameters or the routing of fees to the LQTYStaking contract, since the core protocol contracts are non-upgradeable and expose no admin or governance hooks over these parameters. V2 governance (PIL + bribes) lets LQTY voters direct a separate slice of V2 revenue to liquidity initiatives, but explicitly has no control over core protocol parameters, which are immutable after launch.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity v2 Technical Docs and Audits",
+          "url": "https://docs.liquity.org/v2-documentation/technical-docs-and-audits",
+          "type": "docs"
+        },
+        {
+          "name": "Directing Protocol Incentivized Liquidity with LQTY",
+          "url": "https://www.liquity.org/blog/directing-protocol-incentivized-liquidity-with-lqty",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

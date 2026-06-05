@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "YieldBasis Website",
+          "url": "https://yieldbasis.com/",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "ONDO token is verified on Etherscan. OUSG/USDY/Global Markets contracts are verified with public GitHub and audit code available. The deployed ONDO token uses AccessControl, which differs from the public ondo-v1 repository.",
+  "tags": [
+    "Metric 3"
+  ]
+}

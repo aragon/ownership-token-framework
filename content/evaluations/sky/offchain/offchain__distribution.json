@@ -1,0 +1,17 @@
+{
+  "status": "unevaluated",
+  "notes": "Domain ownership not verified. Open source frontends exist that anyone can deploy.",
+  "evidence": [
+    {
+      "name": "Open Source Frontends",
+      "summary": "Multiple open source frontends exist. Anyone can deploy their own interface.",
+      "urls": [
+        {
+          "name": "Governance Portal Source",
+          "url": "https://github.com/sky-ecosystem/governance-portal-v2",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

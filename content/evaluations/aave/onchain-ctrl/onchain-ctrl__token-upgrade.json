@@ -1,0 +1,27 @@
+{
+  "status": "positive",
+  "notes": "The AAVE token is upgradeable but controlled by token holders.",
+  "evidence": [
+    {
+      "name": "Ownership Chain",
+      "summary": "ERC-1967 Transparent proxy owned by ProxyAdmin, controlled by token holders.\n\nAAVE (Proxy) → ProxyAdmin → Executor → PayloadsController → Token Holders",
+      "urls": [
+        {
+          "name": "AAVE Proxy",
+          "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract",
+          "type": "explorer"
+        },
+        {
+          "name": "ProxyAdmin",
+          "url": "https://etherscan.io/address/0x86c3FfEE349A7cFf7cA88C449717B1b133bfb517#code",
+          "type": "explorer"
+        },
+        {
+          "name": "PayloadsController",
+          "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#readProxyContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

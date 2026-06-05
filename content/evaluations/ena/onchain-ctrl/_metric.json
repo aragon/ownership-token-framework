@@ -1,0 +1,6 @@
+{
+  "summary": "ENA governance is advisory only. Tokenholders vote via Snapshot, but the Dev Multisig executes all decisions. There is no onchain governance workflow, no timelock, and ENA holders cannot elect or remove multisig signers. The ENA token itself is non-upgradeable, but sENA and rsENA are upgradeable proxies controlled by separate multisigs. Staking contracts include blacklist capabilities with seizure powers.",
+  "tags": [
+    "Metric 1"
+  ]
+}

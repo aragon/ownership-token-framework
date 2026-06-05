@@ -1,0 +1,17 @@
+{
+  "status": "at_risk",
+  "notes": "Aragon has not been able to identify a DAO treasury address for ONDO governance. No FeeDistributor or Treasury contract exists.",
+  "evidence": [
+    {
+      "name": "No Treasury Identified",
+      "summary": "No DAO treasury contract identified. No fee distribution mechanism was identified for Ondo product economics. No governance proposals for treasury creation were identified.",
+      "urls": [
+        {
+          "name": "Ondo DAO Proposals",
+          "url": "https://www.tally.xyz/gov/ondo-dao",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

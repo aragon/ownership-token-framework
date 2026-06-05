@@ -1,0 +1,27 @@
+{
+  "status": "positive",
+  "notes": "**1B max supply** with programmatic emission. Only GaugeController can mint. Emission rate determined by gauge staking levels: get_adjustment() returns sqrt(staked / totalSupply), so higher LP staking = higher emission rate (up to 100% of max rate).",
+  "evidence": [
+    {
+      "name": "Emission Mechanism",
+      "summary": "GaugeController calls YB.emit() with rate_factor based on LP staking levels. No discretionary minting possible.",
+      "urls": [
+        {
+          "name": "get_adjustment (minting rate)",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/LiquidityGauge.vy#L133-L142",
+          "type": "github"
+        },
+        {
+          "name": "YB.emit function",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy#L103-L122",
+          "type": "github"
+        },
+        {
+          "name": "Tokenomics",
+          "url": "https://docs.yieldbasis.com/user/tokenomics",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

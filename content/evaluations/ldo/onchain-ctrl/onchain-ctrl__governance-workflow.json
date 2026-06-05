@@ -1,0 +1,64 @@
+{
+  "status": "positive",
+  "notes": "LDO holders exercise control through multiple governance paths with stETH holder veto protection via Dual Governance.",
+  "evidence": [
+    {
+      "name": "Governance 1A",
+      "summary": "Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts.",
+      "urls": [
+        {
+          "name": "Voting",
+          "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+          "type": "explorer"
+        },
+        {
+          "name": "DualGovernance",
+          "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code",
+          "type": "explorer"
+        },
+        {
+          "name": "EmergencyProtectedTimeLock",
+          "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Executor",
+          "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Agent",
+          "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Governance 1B",
+      "summary": "Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts.",
+      "urls": [
+        {
+          "name": "Voting",
+          "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Easy Track",
+      "summary": "An optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. Used for granting, treasury operations, and staking module management. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote.",
+      "urls": [
+        {
+          "name": "Easy Track Interface",
+          "url": "https://easytrack.lido.fi/",
+          "type": "docs"
+        },
+        {
+          "name": "Easy Track Guide",
+          "url": "https://docs.lido.fi/guides/easy-track-guide",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

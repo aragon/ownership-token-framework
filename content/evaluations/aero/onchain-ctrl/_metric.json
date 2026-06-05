@@ -1,0 +1,6 @@
+{
+  "summary": "Aerodrome's core contracts are largely immutable with control of emissions given to veAERO holders via the gauge voting system. There are some minor areas in which privileged parties can control specific areas of the protocol, which are detailed below.",
+  "tags": [
+    "Metric 1"
+  ]
+}

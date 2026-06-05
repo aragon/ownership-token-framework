@@ -1,0 +1,33 @@
+{
+  "status": "positive",
+  "notes": "UNI has a hardcoded 2% annual inflation cap that cannot be changed. Minting is controlled by Timelock (hence UNI holders).",
+  "evidence": [
+    {
+      "name": "Inflation Cap",
+      "summary": "Mint can be called once per year, minting maximum 2% of total supply. mintCap is constant and cannot be changed.",
+      "urls": [
+        {
+          "name": "Mint once per year logic",
+          "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L116",
+          "type": "github"
+        },
+        {
+          "name": "2% mint cap",
+          "url": "https://github.com/Uniswap/governance/blob/eabd8c71ad01f61fb54ed6945162021ee419998e/contracts/Uni.sol#L120",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Minting Control",
+      "summary": "Minter is set to Timelock, governed by UNI token holders through GovernorBravoDelegator.",
+      "urls": [
+        {
+          "name": "Timelock",
+          "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

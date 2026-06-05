@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "SKY holders vote to elect \"spells\" (upgrade contracts). The winning spell must wait 24 hours before it can execute changes. This creates binding, verifiable onchain governance.",
+  "evidence": [
+    {
+      "name": "Governance Workflow",
+      "summary": "How votes become protocol changes:\n\n1. Lock SKY tokens in voting contract\n2. Vote for a \"spell\" (upgrade contract)\n3. Winning spell schedules execution via plot()\n4. 24-hour delay enforced (eta >= now + 86400s)\n5. After delay, anyone can trigger exec()\n\nThe plot() function enforces the delay — no spell can execute without waiting.",
+      "urls": [
+        {
+          "name": "Voting Contract",
+          "url": "https://etherscan.io/address/0x929d9A1435662357F54AdcF64DcEE4d6b867a6f9#code",
+          "type": "explorer"
+        },
+        {
+          "name": "plot() delay enforcement (L111-116)",
+          "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L111-L116",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Timelock Contract",
+      "summary": "All governance actions execute through a timelock (Pause Proxy). The 24-hour delay gives users time to exit before changes take effect.",
+      "urls": [
+        {
+          "name": "Pause Proxy (Etherscan)",
+          "url": "https://etherscan.io/address/0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB#code",
+          "type": "explorer"
+        },
+        {
+          "name": "exec() function (L124-136)",
+          "url": "https://github.com/sky-ecosystem/ds-pause/blob/master/src/pause.sol#L124-L136",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

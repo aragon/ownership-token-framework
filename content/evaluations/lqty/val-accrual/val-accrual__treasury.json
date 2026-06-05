@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "There is no protocol treasury. Liquity V2 skips the concept of a centralized treasury and sends 100% of its revenue straight to its users.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity V2 Docs",
+          "url": "https://www.liquity.org/blog/liquity-v2-is-live",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

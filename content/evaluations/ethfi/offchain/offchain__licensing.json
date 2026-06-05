@@ -1,0 +1,21 @@
+{
+  "status": "warning",
+  "notes": "Smart contracts are MIT licensed, allowing unrestricted use and modification. However, non-contract IP including website content, documentation, and brand assets is restricted. Users receive only a non-transferable, non-sublicensable, non-exclusive, revocable license for personal use.",
+  "evidence": [
+    {
+      "name": "License",
+      "urls": [
+        {
+          "name": "GitHub Repository",
+          "url": "https://github.com/etherfi-protocol/smart-contracts",
+          "type": "github"
+        },
+        {
+          "name": "Terms of Use (Non-Contract IP)",
+          "url": "https://etherfi.gitbook.io/etherfi/ether.fi-legal/terms-of-use",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

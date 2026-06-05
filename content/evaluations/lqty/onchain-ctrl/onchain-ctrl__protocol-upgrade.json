@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Core Liquity protocol contracts are non-upgradeable and do not use proxy patterns.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity v2 Technical Docs and Audits",
+          "url": "https://docs.liquity.org/v2-documentation/technical-docs-and-audits",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

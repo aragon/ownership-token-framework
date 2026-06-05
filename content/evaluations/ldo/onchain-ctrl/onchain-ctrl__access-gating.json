@@ -1,0 +1,43 @@
+{
+  "status": "positive",
+  "notes": "Deposits are operationally executed by Guardians (node operators + LDO dev team), but Guardians are fully accountable to LDO holders and cannot control protocol parameters.",
+  "evidence": [
+    {
+      "name": "Guardian Role",
+      "summary": "User funds deposited into Lido are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule, controlled by Guardians. Guardians use automated software for deposit operations.",
+      "urls": [
+        {
+          "name": "DepositSecurityModule",
+          "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Lido.sol deposit logic",
+          "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641",
+          "type": "github"
+        },
+        {
+          "name": "Guardians use automated software",
+          "url": "https://docs.lido.fi/guides/deposit-security-manual/#tldr",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Guardian Accountability",
+      "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through onchain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
+      "urls": [
+        {
+          "name": "Guardian Committee Membership",
+          "url": "https://docs.lido.fi/guides/deposit-security-manual#committee-membership",
+          "type": "docs"
+        },
+        {
+          "name": "Guardians cannot control stake allocation",
+          "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L647",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

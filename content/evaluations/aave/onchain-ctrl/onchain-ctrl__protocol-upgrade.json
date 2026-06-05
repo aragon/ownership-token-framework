@@ -1,0 +1,43 @@
+{
+  "status": "positive",
+  "notes": "Holders control implementation upgrades for all v3 market deployments.",
+  "evidence": [
+    {
+      "name": "Upgrade Documentation",
+      "summary": "Pool (upgradeable proxy) → Admin is PoolAddressProvider → onlyOwner is Executor → owner is PayloadsController → controlled by Governance.",
+      "urls": [
+        {
+          "name": "Upgradability per contract",
+          "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Ownership Chain",
+      "summary": "Pool → PoolAddressProvider → Executor → PayloadsController → Governance.\n\nFor PayloadsController to call Executor, MESSAGE_ORIGINATOR must equal Governance.",
+      "urls": [
+        {
+          "name": "Pool",
+          "url": "https://etherscan.io/address/0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Executor",
+          "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code",
+          "type": "explorer"
+        },
+        {
+          "name": "PayloadsController",
+          "url": "https://etherscan.io/address/0xdAbad81aF85554E9ae636395611C58F7eC1aAEc5#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Governance",
+          "url": "https://etherscan.io/address/0x9AEE0B04504CeF83A65AC3f0e838D0593BCb2BC7#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

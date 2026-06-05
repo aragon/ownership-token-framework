@@ -1,0 +1,68 @@
+{
+  "status": "warning",
+  "notes": "**sENA is upgradeable** via proxy controlled by Dev Multisig. **rsENA is also upgradeable** but controlled by a different multisig. Neither upgrade path involves tokenholder approval. ENA, USDe, sUSDe, and EthenaMinting are non-upgradeable.",
+  "evidence": [
+    {
+      "name": "Non-Upgradeable Contracts",
+      "summary": "ENA, USDe, sUSDe, and EthenaMinting V2 are not proxy contracts.",
+      "urls": [
+        {
+          "name": "ENA Token",
+          "url": "https://etherscan.io/address/0x57e114B691Db790C35207b2e685D4A43181e6061#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDe Token",
+          "url": "https://etherscan.io/address/0x4c9edd5852cd905f086c759e8383e09bff1e68b3#code",
+          "type": "explorer"
+        },
+        {
+          "name": "sUSDe Token",
+          "url": "https://etherscan.io/address/0x9d39a5de30e57443bff2a8307a4256c8797a3497#code",
+          "type": "explorer"
+        },
+        {
+          "name": "EthenaMinting V2",
+          "url": "https://etherscan.io/address/0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Upgradeable Contracts (sENA and rsENA)",
+      "summary": "**sENA:** Uses EIP-1967 proxy. Dev Multisig can upgrade without tokenholder approval. No timelock.\n\n**rsENA:** Uses EIP-1967 proxy with a different upgrade controller. Controlled by a separate multisig with signers not publicly identified. No timelock.",
+      "urls": [
+        {
+          "name": "sENA Proxy",
+          "url": "https://etherscan.io/address/0x8bE3460A480c80728a8C4D7a5D5303c85ba7B3b9#code",
+          "type": "explorer"
+        },
+        {
+          "name": "sENA Implementation",
+          "url": "https://etherscan.io/address/0x7fd57b46ae1a7b14f6940508381877ee03e1018b#code",
+          "type": "explorer"
+        },
+        {
+          "name": "sENA ProxyAdmin",
+          "url": "https://etherscan.io/address/0xf849d7792ff9b30a57656ee10a2776bcb49f4fe4#code",
+          "type": "explorer"
+        },
+        {
+          "name": "rsENA Proxy",
+          "url": "https://etherscan.io/address/0xc65433845ecd16688eda196497fa9130d6c47bd8#code",
+          "type": "explorer"
+        },
+        {
+          "name": "rsENA Implementation",
+          "url": "https://etherscan.io/address/0x09bba67c316e59840699124a8dc0bbda6a2a9d59#code",
+          "type": "explorer"
+        },
+        {
+          "name": "rsENA ProxyAdmin",
+          "url": "https://etherscan.io/address/0xa59b36aca119a30c527eddaa386eb130bcf1939f",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "ETHFI tokenholders do not have binding onchain control. Governance uses offchain voting with multisig execution.\n\nThe protocol uses a two-timelock system for upgrades and operations. A multisig controls the Upgrade Timelock, which owns the RoleRegistry and authorizes protocol upgrades.\n\nThe mainnet token is not upgradeable. L2 tokens on Arbitrum and Base are upgradeable by multisigs with no timelock.",
+  "tags": [
+    "Metric 1"
+  ]
+}

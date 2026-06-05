@@ -1,0 +1,27 @@
+{
+  "status": "warning",
+  "notes": "The ENA base token has no blacklist capability. However, sENA and sUSDe staking contracts include BLACKLIST_MANAGER_ROLE with freeze and seizure powers. FULL_RESTRICTED addresses cannot transfer tokens, and `redistributeLockedAmount()` allows admin to seize frozen assets.",
+  "evidence": [
+    {
+      "name": "sENA/sUSDe Blacklist Capabilities",
+      "summary": "StakedUSDe.sol defines three restriction roles:\n\n**SOFT_RESTRICTED_STAKER_ROLE:** Cannot stake/unstake\n\n**FULL_RESTRICTED_STAKER_ROLE:** Cannot transfer at all (frozen)\n\n**BLACKLIST_MANAGER_ROLE:** Can assign restrictions\n\nThe `redistributeLockedAmount()` function allows admin to seize and redistribute frozen assets.",
+      "urls": [
+        {
+          "name": "StakedUSDe.sol blacklist roles (lines 26-32)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/StakedUSDe.sol#L26-L32",
+          "type": "github"
+        },
+        {
+          "name": "`redistributeLockedAmount()` (lines 106-127)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/StakedUSDe.sol#L106-L127",
+          "type": "github"
+        },
+        {
+          "name": "sUSDe Token",
+          "url": "https://etherscan.io/address/0x9d39a5de30e57443bff2a8307a4256c8797a3497#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

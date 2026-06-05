@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The AERO token contract is immutable and does not use a proxy pattern. The Minter contract, which is authorized to mint AERO, is also non-upgradeable.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "AERO Token",
+          "url": "https://basescan.org/address/0x940181a94A35A4569E4529A3CDfB74e38FD98631#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Minter",
+          "url": "https://basescan.org/address/0xeB018363F0a9Af8f91F06FEe6613a751b2A33FE5#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

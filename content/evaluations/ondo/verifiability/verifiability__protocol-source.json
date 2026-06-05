@@ -1,0 +1,51 @@
+{
+  "status": "positive",
+  "notes": "OUSG, USDY, and Global Markets contracts are verified on Etherscan. Public GitHub repositories and audit code available.",
+  "evidence": [
+    {
+      "name": "OUSG/USDY",
+      "urls": [
+        {
+          "name": "OUSG",
+          "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY",
+          "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY GitHub",
+          "url": "https://github.com/ondoprotocol/usdy",
+          "type": "github"
+        },
+        {
+          "name": "Audit code (Code4rena)",
+          "url": "https://github.com/code-423n4/2024-03-ondo-finance",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Global Markets",
+      "urls": [
+        {
+          "name": "GMTokenManager",
+          "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDon",
+          "url": "https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDonManager",
+          "url": "https://etherscan.io/address/0x05CCbB4b74854f8A067b83475E8c34f5a413D7e1#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

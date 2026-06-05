@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "Per documentation, unlock schedules exist for team and investors with unclear start dates, but the token being transferrable from Jan 2024 allows an educated guess of many unlocks yet to pan out. Aragon has not been able to verify specific vesting contract addresses from onchain data.",
+  "evidence": [
+    {
+      "name": "Documented Schedule",
+      "summary": "CoinList Tranche 1 (~0.3%): 1-year lock, then 18-month linear release. \n\nCoinList Tranche 2 (~1.7%): 1-year lock, then 6-month linear release. \n\nSeed Investors (<7%): 1-year cliff, then 48-month release. \n\nSeries A (<7%): 1-year cliff, then 48-month release. \n\nCore Team: 5-year extended lock-up from the transfer unlock.\n\nAragon has not been able to verify specific vesting contract addresses or unlock schedules from onchain data.",
+      "urls": [
+        {
+          "name": "Token Documentation",
+          "url": "https://docs.ondo.foundation/ondo-token",
+          "type": "docs"
+        },
+        {
+          "name": "CoinList - ONDO Community Sale",
+          "url": "https://coinlist.co/ondo",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

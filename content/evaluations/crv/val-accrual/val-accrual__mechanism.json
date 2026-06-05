@@ -1,0 +1,39 @@
+{
+  "status": "positive",
+  "notes": "Gauge weights are determined programmatically by veCRV votes, not discretionary decisions.",
+  "evidence": [
+    {
+      "name": "Pool Fee Control",
+      "summary": "Pool fee changes are executed via commit_new_fee, which can only be called by the pool owner (StableSwapProxy) which in turn is restricted to parameter_admin (Agent contract).",
+      "urls": [
+        {
+          "name": "DAI/USDC/USDT Pool: commit_new_fee",
+          "url": "https://etherscan.io/address/0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Burner Attachment",
+      "summary": "set_burner on StableSwapProxy is gated by ownership_admin (Agent contract).",
+      "urls": [
+        {
+          "name": "StableSwapProxy: set_burner",
+          "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Burn Execution",
+      "summary": "The burn function invokes each coin's attached burner contract. Can be disabled by either the Agent contract or the emergency Safe multisig.",
+      "urls": [
+        {
+          "name": "StableSwapProxy: burn",
+          "url": "https://etherscan.io/address/0xeCb456EA5365865EbAb8a2661B0c503410e9B347#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

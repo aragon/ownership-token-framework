@@ -1,0 +1,42 @@
+{
+  "status": "positive",
+  "notes": "FeeDistributor is **actively distributing** yb-cbBTC, yb-WBTC, yb-tBTC, and yb-WETH LP tokens to veYB holders.\n\n**Important distinction:** Protocol revenue = LP fees + position rebalancing expenses. What veYB holders receive is the **protocol admin fee** (admin_fee)—a subset of protocol revenue, not the total.\n\n**Fee flow:** LT vaults accrue admin fees → anyone calls withdraw_admin_fees() → mints LT to fee_receiver (FeeDistributor) → fill_epochs() distributes over 4 weeks → veYB holders claim pro-rata.\n\n**Data source:** [ValueVerse](https://yb.valueverse.ai)",
+  "evidence": [
+    {
+      "name": "Fee Flow",
+      "summary": "Admin fees from LT vaults flow to FeeDistributor via Factory.fee_receiver. Distribution is automatic and weekly over 4 epochs.",
+      "urls": [
+        {
+          "name": "LT.withdraw_admin_fees",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/LT.vy#L866-L896",
+          "type": "github"
+        },
+        {
+          "name": "Factory.fee_receiver",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L98",
+          "type": "github"
+        },
+        {
+          "name": "FeeDistributor._fill_epochs (OVER_WEEKS=4)",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L86-L107",
+          "type": "github"
+        },
+        {
+          "name": "FeeDistributor Contract",
+          "url": "https://etherscan.io/address/0xD11b416573EbC59b6B2387DA0D2c0D1b3b1F7A90",
+          "type": "explorer"
+        },
+        {
+          "name": "veYB Documentation",
+          "url": "https://docs.yieldbasis.com/user/veyb",
+          "type": "docs"
+        },
+        {
+          "name": "Fee Data (ValueVerse)",
+          "url": "https://yb.valueverse.ai",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

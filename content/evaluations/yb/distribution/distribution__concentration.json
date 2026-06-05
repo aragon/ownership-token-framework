@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "~77M veYB locked from ~722M minted YB (~10% participation). Post-cliff, **Team (250M) + Investors (121M) = 371M YB (37%)** could potentially influence governance if coordinated, given low current veYB participation.",
+  "evidence": [
+    {
+      "name": "veYB Supply",
+      "summary": "veYB supply ~77M tokens locked. Low participation rate means large token holders have outsized influence.",
+      "urls": [
+        {
+          "name": "veYB Contract",
+          "url": "https://etherscan.io/address/0x8235c179E9e84688FBd8B12295EfC26834dAC211",
+          "type": "explorer"
+        },
+        {
+          "name": "Tokenomics",
+          "url": "https://docs.yieldbasis.com/user/tokenomics",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

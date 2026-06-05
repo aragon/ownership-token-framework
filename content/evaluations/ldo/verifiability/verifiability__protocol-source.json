@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Lido core protocol contracts are open source on GitHub.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Lido Core Contracts (GitHub)",
+          "url": "https://github.com/lidofinance/core",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The CRV token has no transfer restrictions, blacklist functionality, or pausable transfers. There's Admin set (Agent) on the CRV token, but it can only update token's name and symbol.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "ERC20CRV.vy Standard Transfer",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L272",
+          "type": "github"
+        },
+        {
+          "name": "ERC20CRV.vy Metadata Logic",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L365",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

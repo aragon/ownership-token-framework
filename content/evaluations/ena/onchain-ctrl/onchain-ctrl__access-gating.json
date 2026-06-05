@@ -1,0 +1,43 @@
+{
+  "status": "warning",
+  "notes": "Gatekeepers can disable USDe minting/redemption globally. Only the Owner can re-enable. The StakingRewardsDistributor operator (a single EOA) controls when rewards are distributed to sUSDe stakers.",
+  "evidence": [
+    {
+      "name": "Privileged Roles (per Multisig Matrix)",
+      "summary": "**Owner (EthenaMinting):** Can set max mint/redeem limits for USDe, add/remove collateral assets and custodians.\n\n**Admin (EthenaMinting):** Can grant/revoke Minter, Redeemer, Gatekeeper roles.\n\n**Gatekeeper:** Can call `disableMintRedeem()` to halt USDe operations globally.\n\n**Operator (StakingRewardsDistributor):** Single EOA that controls `transferInRewards()` to distribute USDe to sUSDe stakers.",
+      "urls": [
+        {
+          "name": "Multisig Matrix Documentation",
+          "url": "https://docs.ethena.fi/solution-design/key-trust-assumptions/matrix-of-multisig-and-timelocks",
+          "type": "docs"
+        },
+        {
+          "name": "EthenaMinting V2",
+          "url": "https://etherscan.io/address/0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Gatekeeper Powers",
+      "summary": "Gatekeepers can halt but **only the Owner can re-enable**. This creates asymmetric power.",
+      "urls": [
+        {
+          "name": "`disableMintRedeem()` (line 278)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/EthenaMinting.sol#L278",
+          "type": "github"
+        },
+        {
+          "name": "`removeMinterRole()` (line 339)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/EthenaMinting.sol#L339",
+          "type": "github"
+        },
+        {
+          "name": "`removeRedeemerRole()` (line 345)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/EthenaMinting.sol#L345",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "positive",
+  "notes": "An ETHFI buyback program is operational, distributing purchased tokens to sETHFI holders. Buybacks are funded by eETH withdrawal fees weekly, and any additional contribution from broader protocol revenue is currently Foundation-discretionary.\n\nBuyback execution is controlled by a multisig where any single signer can execute. Distribution is announced via Foundation communications, not enforced by smart contract.",
+  "evidence": [
+    {
+      "name": "Buyback Program",
+      "summary": "Buybacks documented in governance materials. The buyback wallet is a 1-of-5 multisig (any single signer can execute).",
+      "urls": [
+        {
+          "name": "ETHFI Buyback Program",
+          "url": "https://etherfi.gitbook.io/gov/ethfi-buyback-program",
+          "type": "docs"
+        },
+        {
+          "name": "Buyback History (Dune)",
+          "url": "https://dune.com/ether_fi/ethfi-buybacks-and-protocol-revenue-sources",
+          "type": "docs"
+        },
+        {
+          "name": "sETHFI Staking",
+          "url": "https://www.ether.fi/app/ethfi",
+          "type": "docs"
+        },
+        {
+          "name": "Buyback Wallet (1-of-5)",
+          "url": "https://etherscan.io/address/0x2f5301a3D59388c509C65f8698f521377D41Fd0F",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

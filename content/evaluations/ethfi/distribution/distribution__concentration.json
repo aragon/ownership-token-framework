@@ -1,0 +1,16 @@
+{
+  "status": "warning",
+  "notes": "Token allocation includes Investors at 33.74% (2-year vest, 1-year cliff), Treasury at 21.62%, Core Contributors at 21.47% (3-year vest, 1-year cliff), User Airdrops at 19.27%, and Partnerships at 3.9%. Vesting mitigates immediate concentration, and schedules are transparently documented.",
+  "evidence": [
+    {
+      "name": "Token Allocation",
+      "urls": [
+        {
+          "name": "ETHFI Allocations",
+          "url": "https://etherfi.gitbook.io/gov/ethfi-allocations",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "positive",
+  "notes": "Core protocol functions are either permissionless or gated by Agent contract (hence veCRV holders). For gate control related to fees/revenues, see accrual section.",
+  "evidence": [
+    {
+      "name": "Add/Kill Gauge",
+      "summary": "To add a new gauge in GaugeController, veCRV holders must vote in majority. The admin on GaugeController is set to the Aragon Agent Contract, which sits as the final step in the governance process. Governance starts with the Aragon Voting contract that uses veCRV token for voting. veCRV holders can also kill a gauge, permanently setting its rewards to 0.",
+      "urls": [
+        {
+          "name": "Gauge Kill Implementation",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/gauges/LiquidityGaugeV5.vy#L731",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

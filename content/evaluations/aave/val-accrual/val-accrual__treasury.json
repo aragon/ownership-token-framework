@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "AAVE holders control treasury usage. Composed of reserve factor (borrower interest), liquidation fees, and flashloan premiums.",
+  "evidence": [
+    {
+      "name": "Treasury Control",
+      "summary": "Token holders direct treasury via governance.",
+      "urls": [
+        {
+          "name": "Treasury docs",
+          "url": "https://aave.com/docs/aave-v3/concepts/incentives#incentives",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Fee Sources",
+      "summary": "Reserve factor (interest), liquidation fees, flashloan premiums all route to treasury via mintToTreasury().",
+      "urls": [
+        {
+          "name": "mintToTreasury (PoolLogic)",
+          "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/PoolLogic.sol#L105",
+          "type": "github"
+        },
+        {
+          "name": "Flashloan premium",
+          "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/pool/Pool.sol#L653",
+          "type": "github"
+        },
+        {
+          "name": "Liquidation fee",
+          "url": "https://github.com/aave-dao/aave-v3-origin/blob/main/src/contracts/protocol/libraries/logic/LiquidationLogic.sol#L392",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

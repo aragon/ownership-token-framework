@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "The CRV token contract is immutable with no proxy patterns or upgrade mechanisms.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "ERC20CRV.vy Source",
+          "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

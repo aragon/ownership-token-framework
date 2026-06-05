@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "50% of all trading fees are distributed to veCRV holders through crvUSD rewards, while the remaining 50% goes to the respective liquidity providers of the pools. Only veCRV holders can change this behaviour, hence Curve has no separate treasury. All revenue to the people.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "veCRV Revenue Share (Docs)",
+          "url": "https://docs.curve.finance/user/vecrv/revenue",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

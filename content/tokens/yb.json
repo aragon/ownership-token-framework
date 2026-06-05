@@ -1,0 +1,21 @@
+{
+  "id": "yb",
+  "coingeckoId": "yield-basis",
+  "name": "YB",
+  "symbol": "YB",
+  "address": "0x01791F726B4103694969820be083196cC7c045fF",
+  "icon": "https://coin-images.coingecko.com/coins/images/54871/small/yieldbasis_400x400.png",
+  "description": "YB is the token of YieldBasis. veYB holders control protocol governance through Aragon, direct YB emissions via gauge voting, and receive protocol admin fees.",
+  "network": "ethereum",
+  "lastUpdated": 1774549304,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://yieldbasis.com/",
+    "twitter": "https://x.com/yieldbasis",
+    "scan": "https://etherscan.io/token/0x01791F726B4103694969820be083196cC7c045fF"
+  },
+  "infoDescription": "Yield Basis is the liquidity protocol designed to eliminate Impermanent Loss (IL) in AMMs using constantly-maintained 2x leveraged liquidity provision."
+}

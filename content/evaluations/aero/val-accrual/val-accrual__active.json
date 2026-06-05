@@ -1,0 +1,84 @@
+{
+  "status": "positive",
+  "notes": "veAERO holders receive rewards from growth emissions and trading fees from staked LP positions.",
+  "evidence": [
+    {
+      "name": "Growth Emissions",
+      "summary": "veAERO holders receive rewards from growth emissions transferred to RewardDistributor, claimable in proportion to ve balance.",
+      "urls": [
+        {
+          "name": "Growth Transfer to RewardDistributor",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Minter.sol#L201",
+          "type": "github"
+        },
+        {
+          "name": "RewardsDistributor Claim",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/RewardsDistributor.sol#L126",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Non-Slipstream Trading Fees",
+      "summary": "For normal pools, swap fees from LPs who have staked their LP tokens in gauges go to veAERO holders.",
+      "urls": [
+        {
+          "name": "Gauge Deposit Logic",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/gauges/Gauge.sol#L155",
+          "type": "github"
+        },
+        {
+          "name": "Swap Fee Accrued",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L378",
+          "type": "github"
+        },
+        {
+          "name": "Swap Fee Claimed",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Pool.sol#L143",
+          "type": "github"
+        },
+        {
+          "name": "Voter calling Gauge to claim fees",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/Voter.sol#L492",
+          "type": "github"
+        },
+        {
+          "name": "Swap Fee Claimed by Gauge on PoolFees",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/gauges/Gauge.sol#L82",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Slipstream Trading Fees",
+      "summary": "For Slipstream (CL) pools, swap fees from staked LP positions go to veAERO holders.",
+      "urls": [
+        {
+          "name": "Fees Split",
+          "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844",
+          "type": "github"
+        },
+        {
+          "name": "Gauge Fees calculated separately",
+          "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L844C37-L844C46",
+          "type": "github"
+        },
+        {
+          "name": "Non Staked LP Fees collected",
+          "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/core/CLPool.sol#L483",
+          "type": "github"
+        },
+        {
+          "name": "Gauge Fees to feesVotingReward",
+          "url": "https://github.com/aerodrome-finance/slipstream/blob/7844368af8f83459b5056ff5f3334ff041232382/contracts/gauge/CLGauge.sol#L340",
+          "type": "github"
+        },
+        {
+          "name": "veAERO voters claim fees",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/1ba30815bba620f7e9faa34769ffd00c214c9b82/contracts/rewards/Reward.sol#L225",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

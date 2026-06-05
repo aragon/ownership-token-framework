@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "All Uniswap protocol contracts (V2 Pairs, V3 Pools, V4 PoolManager, Timelock) are non-upgradeable. Only GovernorBravoDelegator is upgradeable, controlled by Timelock.",
+  "evidence": [
+    {
+      "name": "Non-upgradeable Protocol Contracts",
+      "summary": "V2 Pairs use Create2 deployment. V3 Pools use NoDelegateCall protection. V4 PoolManager uses Singleton design. All are immutable once deployed.",
+      "urls": [
+        {
+          "name": "V2 Factory Create2",
+          "url": "https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Factory.sol#L28-L31",
+          "type": "github"
+        },
+        {
+          "name": "V3 Pool Protection",
+          "url": "https://github.com/Uniswap/v3-core/blob/main/contracts/UniswapV3Pool.sol#L30",
+          "type": "github"
+        },
+        {
+          "name": "V4 PoolManager: Singleton",
+          "url": "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol#L93",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Upgradeable Governance Contract",
+      "summary": "GovernorBravoDelegator is upgradeable, with the Admin role held by the Timelock. Any upgrade would require a governance vote by UNI holders.",
+      "urls": [
+        {
+          "name": "GovernorBravoDelegator",
+          "url": "https://etherscan.io/address/0x408ed6354d4973f66138c91495f2f2fcbd8724c3#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

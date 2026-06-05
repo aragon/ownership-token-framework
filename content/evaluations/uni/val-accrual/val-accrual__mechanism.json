@@ -1,0 +1,49 @@
+{
+  "status": "positive",
+  "notes": "Token holders control fee routing and burn threshold across all versions through Timelock-governed ownership.",
+  "evidence": [
+    {
+      "name": "V2 Fee Control",
+      "summary": "feeToSetter is set to Timelock on UniswapV2Factory. Only feeToSetter can call setFeeTo to change the fee destination. Protocol fees can only be enabled or disabled, not adjusted. Protocol fees on V2 pools cannot be adjusted on a per pool basis.",
+      "urls": [
+        {
+          "name": "Timelock",
+          "url": "https://etherscan.io/address/0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
+          "type": "explorer"
+        },
+        {
+          "name": "UniswapV2Factory",
+          "url": "https://etherscan.io/address/0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "V3 Fee Control",
+      "summary": "Owner of UniswapV3Factory is V3FeeAdapter, whose owner is Timelock. V3FeeAdapter's owner can call setOwner on V3FeeAdapter, which passes the call through to UniswapV3Factory. Using this method, V3FeeAdapter's owner can change the owner of the UniswapV3Factory to a new V3FeeAdapter. The pools collecting protocol fees as well as the protocol fee percentage per pool can be changed by the pool owner via setFeeProtocol",
+      "urls": [
+        {
+          "name": "UniswapV3Factory",
+          "url": "https://etherscan.io/address/0x1f98431c8ad98523631ae4a59f267346ea31f984",
+          "type": "explorer"
+        },
+        {
+          "name": "UniswapV3Pool: setFeeProtocol",
+          "url": "https://github.com/Uniswap/v3-core/blob/d8b1c635c275d2a9450bd6a78f3fa2484fef73eb/contracts/UniswapV3Pool.sol#L837",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "V4 Fee Control",
+      "summary": "Owner of V4PoolManager is set to Timelock. Only owner can call setProtocolFeeController to change the fee controller. Protocol fees can be modified by the ProtocolFeeController through setProtocolFee.",
+      "urls": [
+        {
+          "name": "PoolManager(V4): setProtocolFee",
+          "url": "https://github.com/Uniswap/v4-core/blob/d153b048868a60c2403a3ef5b2301bb247884d46/src/ProtocolFees.sol#L35",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

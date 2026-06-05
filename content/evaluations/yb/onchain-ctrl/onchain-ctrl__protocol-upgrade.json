@@ -1,0 +1,27 @@
+{
+  "status": "positive",
+  "notes": "The DAO controls protocol upgrades through MigrationFactoryOwner. This constitutes ownership—the indirection through governance is the standard mechanism for tokenholder control.",
+  "evidence": [
+    {
+      "name": "Upgrade Path",
+      "summary": "Factory.set_implementations() requires Factory admin = MigrationFactoryOwner. MigrationFactoryOwner requires ADMIN (immutable) = DAO.",
+      "urls": [
+        {
+          "name": "Factory Contract",
+          "url": "https://etherscan.io/address/0x370a449FeBb9411c95bf897021377fe0B7D100c0",
+          "type": "explorer"
+        },
+        {
+          "name": "Factory.set_implementations",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L389-L410",
+          "type": "github"
+        },
+        {
+          "name": "MigrationFactoryOwner ADMIN immutable",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L47",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

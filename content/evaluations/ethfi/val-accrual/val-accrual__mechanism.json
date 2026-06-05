@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "The percentage of protocol revenue allocated to buybacks is stated in documentation only — it is not hardcoded in any contract or set by an on-chain parameter. The Foundation has full discretion over actual buyback amounts and timing.\n\nFee recipients are set by admin roles via the RoleRegistry. Tokenholders cannot modify the fee structure through binding governance.",
+  "evidence": [
+    {
+      "name": "Fee Configuration",
+      "summary": "Buyback percentages are stated in docs only, not enforced on-chain. Fee parameters are controlled by admin roles.",
+      "urls": [
+        {
+          "name": "LiquidityPool Fee Functions",
+          "url": "https://github.com/etherfi-protocol/smart-contracts/blob/master/src/LiquidityPool.sol#L434-L439",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

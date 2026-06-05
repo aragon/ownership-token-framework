@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "ENA has rate-limited but discretionary minting controlled by the Dev Multisig. Maximum 10% of total supply per mint, with 365-day cooldown between mints. No tokenholder approval required. Total supply is 15 billion ENA.",
+  "evidence": [
+    {
+      "name": "Mint Function",
+      "summary": "The `mint()` function allows the owner to create new tokens subject to two constraints:\n\n**MAX_INFLATION = 10** (10% of total supply per mint)\n\n**MINT_WAIT_PERIOD = 365 days** (minimum time between mints)\n\nOwner (Dev Multisig) can invoke without tokenholder approval.",
+      "urls": [
+        {
+          "name": "ENA.sol `mint()` function (lines 42-49)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/ENA.sol#L42-L49",
+          "type": "github"
+        },
+        {
+          "name": "ENA Token totalSupply",
+          "url": "https://etherscan.io/address/0x57e114B691Db790C35207b2e685D4A43181e6061#readContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

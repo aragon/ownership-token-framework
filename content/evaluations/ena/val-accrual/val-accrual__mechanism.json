@@ -1,0 +1,38 @@
+{
+  "status": "warning",
+  "notes": "All ENA value accrual mechanisms are controlled by multisigs or EOAs, **NOT** by ENA tokenholders. Fee switch requires discretionary multisig execution. Ecosystem airdrops are Foundation-negotiated. sENA/rsENA can be upgraded without tokenholder vote.",
+  "evidence": [
+    {
+      "name": "ENA Value Accrual Controls",
+      "summary": "**Fee Switch Activation:** Dev Multisig + Risk Committee. Snapshot votes are advisory only.\n\n**Ethena Network Airdrops:** Ethena Foundation negotiates allocations.\n\n**sENA Upgrade:** Dev Multisig via ProxyAdmin. Unilateral, no timelock.\n\n**rsENA Upgrade:** Separate multisig. Unilateral, no timelock.\n\n**rsENA Restaking Rewards:** Symbiotic integration.\n\n**Upgrade Risk:** Contract upgrades could modify or eliminate value accrual mechanisms without tokenholder approval.",
+      "urls": [
+        {
+          "name": "Fee Switch Parameters Proposal",
+          "url": "https://gov.ethenafoundation.com/t/ena-fee-switch-parameters/396",
+          "type": "docs"
+        },
+        {
+          "name": "sENA ProxyAdmin",
+          "url": "https://etherscan.io/address/0xf849d7792ff9b30a57656ee10a2776bcb49f4fe4",
+          "type": "explorer"
+        },
+        {
+          "name": "rsENA ProxyAdmin Owner (5-of-8 Multisig)",
+          "url": "https://etherscan.io/address/0x27a907d1f809e8c03d806dc31c8e0c545a3187fc",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Tokenholder Cannot Force Activation",
+      "summary": "Even with majority sENA/ENA support, tokenholders cannot force fee switch activation or change airdrop terms. Snapshot votes signal preference but the Dev Multisig decides execution. No onchain mechanism exists for binding governance over value accrual.",
+      "urls": [
+        {
+          "name": "Governance Documentation",
+          "url": "https://docs.ethena.fi/solution-overview/governance",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

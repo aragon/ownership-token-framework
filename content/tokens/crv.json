@@ -1,0 +1,21 @@
+{
+  "id": "crv",
+  "coingeckoId": "curve-dao-token",
+  "name": "CRV",
+  "symbol": "CRV",
+  "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
+  "icon": "https://assets.coingecko.com/coins/images/12124/standard/Curve.png",
+  "description": "CRV is the native token of the Curve protocol - a leading stablecoin DEX. The veCRV gauge system enables programmatic, onchain value direction by tokenholders.",
+  "network": "ethereum",
+  "lastUpdated": 1775651992,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://curve.finance/",
+    "twitter": "https://twitter.com/curvefinance",
+    "scan": "https://etherscan.io/token/0xD533a949740bb3306d119CC777fa900bA034cd52"
+  },
+  "infoDescription": "Curve is a decentralized exchange (DEX) and automated market maker (AMM) on Ethereum and EVM-compatible sidechains/L2s, designed for the efficient trading of stablecoins and volatile assets."
+}

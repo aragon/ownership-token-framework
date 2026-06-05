@@ -1,0 +1,6 @@
+{
+  "summary": "veYB holders receive **protocol admin fees** (a subset of protocol revenue) via FeeDistributor. Fees originate from LT (Liquidity Token) vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
+  "tags": [
+    "Metric 2"
+  ]
+}

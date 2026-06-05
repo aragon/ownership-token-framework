@@ -1,0 +1,17 @@
+{
+  "status": "warning",
+  "notes": "The ETHFI token contract is verified on Etherscan but is not published to a public GitHub repository. Protocol contracts are public, but the token contract is Etherscan-only.",
+  "evidence": [
+    {
+      "name": "Token Verification",
+      "summary": "Token source verified on Etherscan. Compiler: Solidity 0.8.20, License: MIT.",
+      "urls": [
+        {
+          "name": "Etherscan Verified Source",
+          "url": "https://etherscan.io/address/0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

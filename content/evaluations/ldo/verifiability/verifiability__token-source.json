@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The LDO token contract source code is publicly available on GitHub (MiniMeToken) and verified on Etherscan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "LDO Token (Etherscan)",
+          "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
+          "type": "explorer"
+        },
+        {
+          "name": "MiniMeToken Source (GitHub)",
+          "url": "https://github.com/aragon/minime",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

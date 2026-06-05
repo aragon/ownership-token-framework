@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "All core contracts (Factory, veYB, GaugeController, FeeDistributor) are **verified on Etherscan**. **6 independent security audits** completed between March-August 2025.",
+  "evidence": [
+    {
+      "name": "Verification and Audits",
+      "summary": "Audited by Statemind (Feb-May 2025), Chainsecurity (Jul 2025), Quantstamp (Apr 2025), Mixbytes (Aug 2025), Electisec (Aug 2025), and Pashov (Mar-Apr 2025).",
+      "urls": [
+        {
+          "name": "yb-core GitHub Repository",
+          "url": "https://github.com/yield-basis/yb-core",
+          "type": "github"
+        },
+        {
+          "name": "Audit Reports",
+          "url": "https://docs.yieldbasis.com/user/audits-bug-bounties",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

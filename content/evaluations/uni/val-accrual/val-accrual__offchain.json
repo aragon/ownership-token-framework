@@ -1,0 +1,15 @@
+{
+  "status": "unevaluated",
+  "notes": "DUNI (Decentralized Unincorporated Nonprofit Association) provides legal capacity for the DAO to engage in off-chain activities such as tax compliance, legal defense, and contract execution. At the time of writing, there are no specific offchain value accrual mechanisms explicitly defined.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "DUNI Proposal",
+          "url": "https://gov.uniswap.org/t/governance-proposal-establish-uniswap-governance-as-duni-a-wyoming-duna/25770",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

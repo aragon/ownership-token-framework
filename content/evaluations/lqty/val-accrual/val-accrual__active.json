@@ -1,0 +1,40 @@
+{
+  "status": "positive",
+  "notes": "LQTY holders receive two live, onchain value streams.\n\nLiquity V1 - protocol revenue to stakers. Staked LQTY earns fees routed directly to the V1 LQTYStaking contract: redemption fees (paid in ETH) are forwarded by TroveManager, and borrowing fees (paid in LUSD) are forwarded by BorrowerOperations. Every staker accrues a pro-rata share via the F_ETH and F_LUSD accumulators - no voting required.\n\nLiquity V2 - bribes to voters. V2 governance is built on top of V1 staking, so V2 participants automatically receive the V1 fee streams above. Stakers who additionally allocate their voting power to an initiative can claim a pro-rata share of bribes (BOLD plus an initiative-specific token) deposited by external parties for that epoch.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "TroveManager.sol - V1 redemption fee → increaseF_ETH",
+          "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/TroveManager.sol#L1011-L1012",
+          "type": "github"
+        },
+        {
+          "name": "BorrowerOperations.sol - V1 borrowing fee → increaseF_LUSD",
+          "url": "https://github.com/liquity/dev/blob/3e64ee1b52c50d51587c64c1cf75e0ba82934979/packages/contracts/contracts/BorrowerOperations.sol#L370",
+          "type": "github"
+        },
+        {
+          "name": "Liquity docs - LQTY staking (V1 revenue + V2 bribes)",
+          "url": "https://docs.liquity.org/v2-faq/lqty-staking",
+          "type": "docs"
+        },
+        {
+          "name": "V2-gov Governance.sol - depositLQTY (V2 deposit stakes into V1)",
+          "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L162",
+          "type": "github"
+        },
+        {
+          "name": "V2-gov Governance.sol - allocateLQTY (vote on initiatives)",
+          "url": "https://github.com/liquity/V2-gov/blob/main/src/Governance.sol#L584",
+          "type": "github"
+        },
+        {
+          "name": "V2-gov BribeInitiative.sol - depositBribe / claimBribes",
+          "url": "https://github.com/liquity/V2-gov/blob/main/src/BribeInitiative.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

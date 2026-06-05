@@ -1,0 +1,29 @@
+{
+  "id": "val-accrual",
+  "name": "Metric 2: Value Accrual",
+  "displayName": "Value Accrual",
+  "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations. It focuses on whether a real value engine exists and is active.",
+  "anchor": "#metric-2-value-accrual",
+  "criteria": [
+    {
+      "id": "val-accrual__active",
+      "name": "Accrual Active",
+      "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed."
+    },
+    {
+      "id": "val-accrual__treasury",
+      "name": "Treasury Ownership",
+      "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance."
+    },
+    {
+      "id": "val-accrual__mechanism",
+      "name": "Accrual Mechanism Control",
+      "about": "Evaluates whether only tokenholders can modify parameters governing value capture, such as fees or revenue routing."
+    },
+    {
+      "id": "val-accrual__offchain",
+      "name": "Offchain Value Accrual",
+      "about": "Are there additional offchain value accrual flows that benefit tokenholders?"
+    }
+  ]
+}

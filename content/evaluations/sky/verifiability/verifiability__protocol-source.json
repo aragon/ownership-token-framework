@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "Every protocol contract is open source. A \"chainlog\" provides a registry of all deployed contract addresses.",
+  "evidence": [
+    {
+      "name": "Open Source Repositories",
+      "summary": "All protocol code is open source under AGPL-3.0. Core contracts, governance, and stablecoins all have public repositories.",
+      "urls": [
+        {
+          "name": "Core Protocol",
+          "url": "https://github.com/sky-ecosystem/dss",
+          "type": "github"
+        },
+        {
+          "name": "Contract Registry",
+          "url": "https://github.com/sky-ecosystem/spells-mainnet/blob/master/src/test/addresses_mainnet.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

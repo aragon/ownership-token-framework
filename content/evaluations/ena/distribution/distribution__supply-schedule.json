@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "Monthly unlocks continue for all vesting categories through April 2028. Contributors, Investors, and Ecosystem receive linear monthly unlocks. Foundation allocation has no disclosed vesting.",
+  "evidence": [
+    {
+      "name": "Vesting Schedules",
+      "summary": "**Core Contributors** (30%): 1-year cliff (25%), then 3-year linear monthly. Full unlock ~April 2028.\n\n**Investors** (25%): 1-year cliff (25%), then 3-year linear monthly. Full unlock ~April 2028.\n\n**Ecosystem Development** (28%): Linear over 4 years. Full unlock ~April 2028.\n\n**Foundation** (15%): Discretionary, no vesting disclosed.\n\nNext unlock: March 2, 2026 (~40.6M ENA to Contributors).",
+      "urls": [
+        {
+          "name": "ENA Tokenomics Documentation",
+          "url": "https://docs.ethena.fi/ena/tokenomics",
+          "type": "docs"
+        },
+        {
+          "name": "Tokenomist.ai - ENA Vesting",
+          "url": "https://tokenomist.ai/ethena",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

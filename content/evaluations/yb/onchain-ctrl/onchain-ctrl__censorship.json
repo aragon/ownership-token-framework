@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "**No blacklist, freeze, or seizure functions** in YB token. The veYB transfer clearance checker can restrict veNFT transfers, but this does not censor the underlying YB token—users remain custodians and can withdraw after lock expiry.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "YB.vy full source",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/YB.vy",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

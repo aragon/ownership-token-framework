@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Future CRV unlocks are determined by the programmatic supply schedule and veCRV system. Emissions decrease yearly by 2^(1/4). Aragon is not aware of any significant vesting cliffs.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "CRV Emission Schedule (Docs)",
+          "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

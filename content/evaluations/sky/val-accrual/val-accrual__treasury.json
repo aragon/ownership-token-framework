@@ -1,0 +1,17 @@
+{
+  "status": "positive",
+  "notes": "All treasury assets are held onchain and controlled by governance. There is no offchain treasury or multi-sig.",
+  "evidence": [
+    {
+      "name": "Onchain Treasury",
+      "summary": "Protocol surplus is held in the Vow contract. Only governance can access these funds.",
+      "urls": [
+        {
+          "name": "Treasury Contract",
+          "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

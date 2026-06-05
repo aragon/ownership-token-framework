@@ -1,0 +1,17 @@
+{
+  "status": "positive",
+  "notes": "All code is AGPL-3.0 licensed. Anyone can fork and deploy the protocol. The license requires source disclosure.",
+  "evidence": [
+    {
+      "name": "AGPL-3.0 License",
+      "summary": "Copyleft license. Anyone can fork and deploy, but must share source code of modifications.",
+      "urls": [
+        {
+          "name": "License File",
+          "url": "https://github.com/sky-ecosystem/sky/blob/master/LICENSE",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

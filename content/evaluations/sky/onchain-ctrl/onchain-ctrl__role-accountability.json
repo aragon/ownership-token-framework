@@ -1,0 +1,43 @@
+{
+  "status": "positive",
+  "notes": "All privileged roles trace back to SKY governance. A single \"Pause Proxy\" contract holds admin rights on all core contracts. Only governance-approved spells can act through it.",
+  "evidence": [
+    {
+      "name": "Core Contracts Controlled by Governance",
+      "summary": "The Pause Proxy holds admin rights on all key contracts. Verify by calling wards(0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB) on each contract — returns 1 if authorized.",
+      "urls": [
+        {
+          "name": "Vat wards() — verify Pause Proxy",
+          "url": "https://etherscan.io/address/0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Vow wards() — verify Pause Proxy",
+          "url": "https://etherscan.io/address/0xA950524441892A31ebddF91d3cEEFa04Bf454466#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "SKY wards() — verify Pause Proxy",
+          "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#readContract",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Emergency Controls",
+      "summary": "\"Mom\" contracts can adjust parameters without the 24hr delay for emergencies. These are governance-controlled via the authority pattern.",
+      "urls": [
+        {
+          "name": "Mom authority pattern (source)",
+          "url": "https://github.com/sky-ecosystem/osm-mom/blob/master/src/OsmMom.sol#L55",
+          "type": "github"
+        },
+        {
+          "name": "OSM_MOM — verify authority()",
+          "url": "https://etherscan.io/address/0x76416A4d5190d071bfed309861527431304aA14f#readContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The AAVE token contract source code is publicly available and verified on Etherscan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "AAVE token",
+          "url": "https://etherscan.io/address/0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9#readProxyContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Aave V3 Origin (GitHub)",
+          "url": "https://github.com/aave-dao/aave-v3-origin",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

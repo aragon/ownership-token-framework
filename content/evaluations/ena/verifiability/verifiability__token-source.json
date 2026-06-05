@@ -1,0 +1,20 @@
+{
+  "status": "positive",
+  "notes": "The ENA token contract is verified on Etherscan and matches the source code on GitHub. Solidity version 0.8.20, GPL-3.0 license.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "ENA Token (Etherscan)",
+          "url": "https://etherscan.io/address/0x57e114B691Db790C35207b2e685D4A43181e6061#code",
+          "type": "explorer"
+        },
+        {
+          "name": "ENA.sol Source (GitHub)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/ENA.sol",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

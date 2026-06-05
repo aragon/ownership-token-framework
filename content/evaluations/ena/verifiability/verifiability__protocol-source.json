@@ -1,0 +1,71 @@
+{
+  "status": "positive",
+  "notes": "All core protocol contracts are verified on Etherscan. Most have open source GitHub repos. **sENA is verified on Etherscan but no public GitHub repo has been identified.** Multiple audits completed.",
+  "evidence": [
+    {
+      "name": "Verified Contracts",
+      "urls": [
+        {
+          "name": "ENA Token",
+          "url": "https://etherscan.io/address/0x57e114B691Db790C35207b2e685D4A43181e6061#code",
+          "type": "explorer"
+        },
+        {
+          "name": "sENA Proxy",
+          "url": "https://etherscan.io/address/0x8bE3460A480c80728a8C4D7a5D5303c85ba7B3b9#code",
+          "type": "explorer"
+        },
+        {
+          "name": "rsENA Proxy",
+          "url": "https://etherscan.io/address/0xc65433845ecd16688eda196497fa9130d6c47bd8#code",
+          "type": "explorer"
+        },
+        {
+          "name": "USDe Token",
+          "url": "https://etherscan.io/address/0x4c9edd5852cd905f086c759e8383e09bff1e68b3#code",
+          "type": "explorer"
+        },
+        {
+          "name": "sUSDe Token",
+          "url": "https://etherscan.io/address/0x9d39a5de30e57443bff2a8307a4256c8797a3497#code",
+          "type": "explorer"
+        },
+        {
+          "name": "EthenaMinting V2",
+          "url": "https://etherscan.io/address/0xe3490297a08d6fC8Da46Edb7B6142E4F461b62D3#code",
+          "type": "explorer"
+        },
+        {
+          "name": "StakingRewardsDistributor",
+          "url": "https://etherscan.io/address/0xf2fa332bd83149c66b09b45670bce64746c6b439#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "GitHub Repository",
+      "urls": [
+        {
+          "name": "Ethena Public Assets (GitHub)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Audits",
+      "urls": [
+        {
+          "name": "Code4rena 2023 Audit",
+          "url": "https://github.com/code-423n4/2023-10-ethena",
+          "type": "github"
+        },
+        {
+          "name": "Code4rena 2024 Audit",
+          "url": "https://github.com/code-423n4/2024-11-ethena-labs",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

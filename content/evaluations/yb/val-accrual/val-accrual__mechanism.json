@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "veYB holders control both the **direction of automated value flows** and **emission routing**:\n\n**Fee direction:** DAO controls Factory.fee_receiver via MigrationFactoryOwner, determining where admin fees are routed.\n\n**Gauge voting = fee control by veYB:** veYB holders vote on gauge weights. Higher weight = more YB emissions to that pool's stakers, incentivizing LP staking which generates the admin fees distributed back to veYB holders. 10-day vote lock prevents manipulation.",
+  "evidence": [
+    {
+      "name": "Fee Flow Direction",
+      "summary": "DAO controls Factory.fee_receiver via MigrationFactoryOwner.set_fee_receiver(). This determines where admin fees are routed.",
+      "urls": [
+        {
+          "name": "MigrationFactoryOwner.set_fee_receiver",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/MigrationFactoryOwner.vy#L143-L145",
+          "type": "github"
+        },
+        {
+          "name": "Factory.set_fee_receiver",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/Factory.vy#L358-L364",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Gauge Voting",
+      "summary": "veYB holders vote on gauge weights to direct YB emissions. This incentivizes LP staking, generating admin fees that flow back to veYB holders.",
+      "urls": [
+        {
+          "name": "vote_for_gauge_weights",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/GaugeController.vy#L206-L287",
+          "type": "github"
+        },
+        {
+          "name": "GaugeController Contract",
+          "url": "https://etherscan.io/address/0x1Be14811A3a06F6aF4fA64310a636e1Df04c1c21",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

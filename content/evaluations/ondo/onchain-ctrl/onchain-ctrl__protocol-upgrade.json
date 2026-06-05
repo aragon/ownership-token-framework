@@ -1,0 +1,63 @@
+{
+  "status": "at_risk",
+  "notes": "OUSG, USDY, and Global Markets are upgradeable contracts controlled by team multisigs on all chains. ONDO tokenholders have no upgrade control over any core products.",
+  "evidence": [
+    {
+      "name": "OUSG/USDY (Team-Controlled)",
+      "summary": "Ethereum OUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nEthereum USDY ProxyAdmin owner: Team Multisig (4-of-7).\n\nPolygon OUSG ProxyAdmin owner: 3-of-6 Multisig.\n\nMantle USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nArbitrum USDY ProxyAdmin owner: 4-of-7 Multisig.\n\nThe DAO has no upgrade authority over OUSG or USDY on any chain.",
+      "urls": [
+        {
+          "name": "OUSG Proxy",
+          "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92#readProxyContract",
+          "type": "explorer"
+        },
+        {
+          "name": "OUSG ProxyAdmin Owner (Ethereum)",
+          "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY Proxy",
+          "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C#readProxyContract",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY ProxyAdmin Owner (Ethereum)",
+          "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+          "type": "explorer"
+        },
+        {
+          "name": "Polygon OUSG ProxyAdmin Owner",
+          "url": "https://polygonscan.com/address/0x4413073440A568790c1b2b06B47F7D0a443574d0",
+          "type": "explorer"
+        },
+        {
+          "name": "Mantle USDY ProxyAdmin Owner",
+          "url": "https://mantlescan.xyz/address/0xC8A7870fFe41054612F7f3433E173D8b5bFcA8E3",
+          "type": "explorer"
+        },
+        {
+          "name": "Arbitrum USDY ProxyAdmin Owner",
+          "url": "https://arbiscan.io/address/0xC4ac5c2fA461901b4D91832d03A7018092eDCb4D",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Global Markets (Team-Controlled via TimelockController)",
+      "summary": "USDon is an upgradeable proxy. Upgrade authority resides with TimelockController (2-hour delay) which is controlled by company multisigs. ONDO tokenholders have no upgrade control.",
+      "urls": [
+        {
+          "name": "USDon",
+          "url": "https://etherscan.io/address/0xAcE8E719899F6E91831B18AE746C9A965c2119F1#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Global Markets TimelockController",
+          "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

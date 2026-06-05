@@ -1,0 +1,48 @@
+{
+  "status": "positive",
+  "notes": "A portion of protocol revenue (interest on loans, liquidation penalties) automatically flows to buybacks. The \"Smart Burn Engine\" purchases SKY using accumulated fees.",
+  "evidence": [
+    {
+      "name": "Smart Burn Engine",
+      "summary": "Automated buyback system. When protocol surplus exceeds the buffer threshold, the Splitter routes fees to the Flapper, which purchases SKY on UniswapV2.",
+      "urls": [
+        {
+          "name": "Splitter contract",
+          "url": "https://etherscan.io/address/0xBF7111F13386d23cb2Fba5A538107A73f6872bCF#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Flapper (buyback executor)",
+          "url": "https://etherscan.io/address/0x374D9c3d5134052Bc558F432Afa1df6575f07407#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Flapper source code",
+          "url": "https://github.com/sky-ecosystem/dss-flappers/blob/master/src/FlapperUniV2.sol",
+          "type": "github"
+        },
+        {
+          "name": "Smart Burn Engine Dashboard",
+          "url": "https://info.sky.money/smart-burn-engine",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Revenue Flow",
+      "summary": "Protocol revenue flows: Stability Fees → Vow (surplus) → Splitter → Flapper → SKY buybacks.\n\nRevenue sources:\n- Interest on loans (stability fees)\n- Liquidation penalties\n- Stablecoin swap fees (PSM)",
+      "urls": [
+        {
+          "name": "Stability fee accrual",
+          "url": "https://github.com/sky-ecosystem/dss/blob/master/src/jug.sol#L122-L128",
+          "type": "github"
+        },
+        {
+          "name": "Surplus routing to flapper",
+          "url": "https://github.com/sky-ecosystem/dss/blob/master/src/vow.sol#L148-L152",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

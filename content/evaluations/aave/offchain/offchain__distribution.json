@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "The primary interface terms identify Aave Labs as the contracting party.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Terms of Service",
+          "url": "https://aave.com/terms-of-service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

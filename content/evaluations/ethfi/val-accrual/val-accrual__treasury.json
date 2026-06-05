@@ -1,0 +1,22 @@
+{
+  "status": "warning",
+  "notes": "The primary Treasury is a multisig controlled by the team. The ETHFI Allocations documentation mentions multiple Safes under 'Treasury' — this analysis verified the main Treasury contract. Tokenholders have no direct control over treasury assets.",
+  "evidence": [
+    {
+      "name": "Treasury Control",
+      "summary": "The verified Treasury is a 3-of-8 Gnosis Safe. Additional Treasury addresses may exist per ETHFI Allocations documentation.",
+      "urls": [
+        {
+          "name": "Treasury Contract",
+          "url": "https://etherscan.io/address/0x0c83EAe1FE72c390A02E426572854931EefF93BA",
+          "type": "explorer"
+        },
+        {
+          "name": "Upgrade Timelock",
+          "url": "https://etherscan.io/address/0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

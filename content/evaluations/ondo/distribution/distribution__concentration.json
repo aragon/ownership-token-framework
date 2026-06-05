@@ -1,0 +1,22 @@
+{
+  "status": "at_risk",
+  "notes": "~59% of ONDO supply is held by a single team multisig. This gives the team unilateral control over governance. The team can pass any proposal and block any proposal.",
+  "evidence": [
+    {
+      "name": "Team Holdings",
+      "summary": "Team Multisig balance: ~5.9B ONDO (~59% of supply).\nTotal supply: 10B ONDO.\nMultisig config: 4-of-7.\n\nThis multisig also holds DEFAULT_ADMIN_ROLE and MINTER_ROLE on the ONDO token. \"Decentralized governance\" is effectively team governance.",
+      "urls": [
+        {
+          "name": "Team Multisig holdings",
+          "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+          "type": "explorer"
+        },
+        {
+          "name": "ONDO Token totalSupply",
+          "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

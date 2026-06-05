@@ -1,0 +1,58 @@
+{
+  "status": "warning",
+  "notes": "All privileged roles are controlled by Ethena Labs multisigs or EOAs, **NOT** by ENA tokenholders. The Risk Committee is elected via Snapshot but has no onchain authority. No mechanism exists for ENA holders to remove or replace multisig signers.",
+  "evidence": [
+    {
+      "name": "Multisig Control Matrix",
+      "summary": "**Dev Multisig:** All contract ownership, upgrades, minting, parameter changes. Signers NOT elected by ENA holders.\n\n**Hot Swap:** Protocol revenue flow, USDe conversion. Signers NOT elected.\n\n**sUSDe Payout:** Staker reward distribution. Signers NOT elected.\n\n**Trading Operations:** Onchain operational activities. Signers NOT elected.\n\n**Reserve Fund:** Emergency reserve deployment. Signers NOT elected.",
+      "urls": [
+        {
+          "name": "Multisig Matrix Documentation",
+          "url": "https://docs.ethena.fi/solution-design/key-trust-assumptions/matrix-of-multisig-and-timelocks",
+          "type": "docs"
+        },
+        {
+          "name": "Dev Multisig",
+          "url": "https://etherscan.io/address/0x3b0aaf6e6fcd4a7ceef8c92c32dfea9e64dc1862",
+          "type": "explorer"
+        },
+        {
+          "name": "Hot Swap Multisig",
+          "url": "https://etherscan.io/address/0x4423198f26764a8ce9ac8f1683c476854c885d9d",
+          "type": "explorer"
+        },
+        {
+          "name": "sUSDe Payout Multisig",
+          "url": "https://etherscan.io/address/0x71e4f98e8f20c88112489de3dded4489802a3a87",
+          "type": "explorer"
+        },
+        {
+          "name": "Trading Operations Multisig",
+          "url": "https://etherscan.io/address/0x0a0b96A730ED5CDa84bcB63c1Ee2edCb6B7764d6",
+          "type": "explorer"
+        },
+        {
+          "name": "Reserve Fund Multisig",
+          "url": "https://etherscan.io/address/0x2b5ab59163a6e93b4486f6055d33ca4a115dd4d5",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "EOA Control Points",
+      "summary": "**StakingRewardsDistributor Operator** (EOA): Can trigger `transferInRewards()` to distribute USDe to sUSDe stakers.\n\n**Minters** (20 EOAs): Can mint USDe via EthenaMinting.\n\n**Redeemers** (20 EOAs): Can redeem USDe.\n\n**Gatekeepers** (3+ EOAs): Can disable USDe mint/redeem globally.",
+      "urls": [
+        {
+          "name": "StakingRewardsDistributor Operator (EOA)",
+          "url": "https://etherscan.io/address/0xe3880B792F6F0f8795CbAACd92E7Ca78F5d3646e",
+          "type": "explorer"
+        },
+        {
+          "name": "Multisig Matrix (Minter/Redeemer/Gatekeeper docs)",
+          "url": "https://docs.ethena.fi/solution-design/key-trust-assumptions/matrix-of-multisig-and-timelocks",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "status": "at_risk",
+  "notes": "The **Ecosystem Reserve** is a VestingEscrow controlled by an EOA, not the DAO. This is the largest pool of discretionary YB outside the vesting contracts. The DAO holds a small amount of YB directly.",
+  "evidence": [
+    {
+      "name": "Ecosystem Reserve",
+      "summary": "Ecosystem Reserve is a VestingEscrow controlled by an EOA, not the DAO.",
+      "urls": [
+        {
+          "name": "Ecosystem Reserve",
+          "url": "https://etherscan.io/address/0x7aC5922776034132D9ff5c7889d612d98e052Cf2",
+          "type": "explorer"
+        },
+        {
+          "name": "Ecosystem Reserve Owner (EOA)",
+          "url": "https://etherscan.io/address/0xC1671c9efc9A2ecC347238BeA054Fc6d1c6c28F9",
+          "type": "explorer"
+        },
+        {
+          "name": "DAO Contract",
+          "url": "https://etherscan.io/address/0x42F2A41A0D0e65A440813190880c8a65124895Fa",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

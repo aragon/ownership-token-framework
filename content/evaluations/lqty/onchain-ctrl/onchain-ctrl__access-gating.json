@@ -1,0 +1,16 @@
+{
+  "name": "Access Gating",
+  "status": "positive",
+  "notes": "No privileged roles. The only thing LQTY holders can do is vote for PIL emissions.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity - Governance-Free",
+          "url": "https://www.liquity.org/features/governance-free",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

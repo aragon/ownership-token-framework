@@ -1,0 +1,94 @@
+{
+  "status": "at_risk",
+  "notes": "OUSG, USDY, and Global Markets are entirely controlled by company multisigs. The ONDO token itself has DEFAULT_ADMIN_ROLE and MINTER_ROLE held by team multisigs, not the DAO.",
+  "evidence": [
+    {
+      "name": "Team-Controlled Roles (ONDO Token)",
+      "summary": "DEFAULT_ADMIN_ROLE: Team Multisig (4-of-7).\n\nMINTER_ROLE: Team Multisig (4-of-7).\n\nThe team can grant/revoke roles and mint new ONDO tokens without DAO approval.",
+      "urls": [
+        {
+          "name": "Team Multisig",
+          "url": "https://etherscan.io/address/0x677fd4ed8ae623f2f625deb2d64f2070e46ca1a1",
+          "type": "explorer"
+        },
+        {
+          "name": "ONDO Token",
+          "url": "https://etherscan.io/address/0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3#readContract",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Team-Controlled Roles (OUSG/USDY)",
+      "summary": "OUSG DEFAULT_ADMIN_ROLE: Management Multisig (4-of-7).\n\nOUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nrOUSG ProxyAdmin owner: Management Multisig (4-of-7).\n\nUSDY ProxyAdmin owner: Team Multisig (4-of-7).\n\nrUSDY ProxyAdmin owner: Team Multisig (4-of-7).",
+      "urls": [
+        {
+          "name": "OUSG",
+          "url": "https://etherscan.io/address/0x1B19C19393e2d034D8Ff31ff34c81252FcBbee92",
+          "type": "explorer"
+        },
+        {
+          "name": "Management Multisig (4-of-7)",
+          "url": "https://etherscan.io/address/0xAEd4caF2E535D964165B4392342F71bac77e8367",
+          "type": "explorer"
+        },
+        {
+          "name": "rOUSG",
+          "url": "https://etherscan.io/address/0x54043c656F0FAd0652D9Ae2603cDF347c5578d00",
+          "type": "explorer"
+        },
+        {
+          "name": "USDY",
+          "url": "https://etherscan.io/address/0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
+          "type": "explorer"
+        },
+        {
+          "name": "Team Multisig (4-of-7)",
+          "url": "https://etherscan.io/address/0x1a694A09494E214a3Be3652e4B343B7B81A73ad7",
+          "type": "explorer"
+        },
+        {
+          "name": "rUSDY",
+          "url": "https://etherscan.io/address/0xaf37c1167910ebC994e266949387d2c7C326b879",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Team-Controlled Roles (Global Markets)",
+      "summary": "GMTokenManager/USDon DEFAULT_ADMIN_ROLE: TimelockController (2-hour delay).\n\nTimelockController PROPOSER_ROLE: Multisig (4-of-7).\n\nTimelockController EXECUTOR_ROLE: Multisig (1-of-8) + EOA.\n\nTimelockController DEFAULT_ADMIN_ROLE: Multisig (5-of-9).",
+      "urls": [
+        {
+          "name": "GMTokenManager",
+          "url": "https://etherscan.io/address/0x2c158BC456e027b2AfFCCadF1BDBD9f5fC4c5C8c#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Global Markets TimelockController",
+          "url": "https://etherscan.io/address/0x3715B2154d2FF4C5B027C7a1f734B53F27bc34f1",
+          "type": "explorer"
+        },
+        {
+          "name": "PROPOSER_ROLE holder (Multisig 4-of-7)",
+          "url": "https://etherscan.io/address/0x71A4d411b5f7941Dee020417fca30413712f1646",
+          "type": "explorer"
+        },
+        {
+          "name": "EXECUTOR_ROLE holder (Multisig 1-of-8)",
+          "url": "https://etherscan.io/address/0x2e55b738F5969Eea10fB67e326BEE5e2fA15A2CC",
+          "type": "explorer"
+        },
+        {
+          "name": "EXECUTOR_ROLE holder (EOA)",
+          "url": "https://etherscan.io/address/0xfF1621Ee754512B34a6Bd62A941Cc4d5E4d0b85B",
+          "type": "explorer"
+        },
+        {
+          "name": "DEFAULT_ADMIN_ROLE holder (Multisig 5-of-9)",
+          "url": "https://etherscan.io/address/0xcD35671dCAb88d05EE29dC4D360181529390B17f",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

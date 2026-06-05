@@ -1,0 +1,37 @@
+{
+  "status": "positive",
+  "notes": "Four vesting contracts distributed UNI to the Governance Timelock over four years, ending in September 2024. There are no future unlocks.",
+  "evidence": [
+    {
+      "name": "TreasuryVester Contracts",
+      "summary": "UNI tokens were initially minted to an EOA, which transferred the Treasury's portion to four vesting contracts in varying amounts. Each TreasuryVester contract was configured with: uni, recipient, vestingAmount, vestingBegin, vestingCliff, vestingEnd.",
+      "urls": [
+        {
+          "name": "TreasuryVester Code",
+          "url": "https://github.com/Uniswap/governance/blob/master/contracts/TreasuryVester.sol",
+          "type": "github"
+        },
+        {
+          "name": "TreasuryVester 1",
+          "url": "https://etherscan.io/address/0x4750c43867ef5f89869132eccf19b9b6c4286e1a",
+          "type": "explorer"
+        },
+        {
+          "name": "TreasuryVester 2",
+          "url": "https://etherscan.io/address/0xe3953d9d317b834592ab58ab2c7a6ad22b54075d",
+          "type": "explorer"
+        },
+        {
+          "name": "TreasuryVester 3",
+          "url": "https://etherscan.io/address/0x4b4e140d1f131fdad6fb59c13af796fd194e4135",
+          "type": "explorer"
+        },
+        {
+          "name": "TreasuryVester 4",
+          "url": "https://etherscan.io/address/0x3d30b1ab88d487b0f3061f40de76845bec3f1e94",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

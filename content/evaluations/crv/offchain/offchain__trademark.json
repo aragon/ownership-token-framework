@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "The Swiss CRV trademark registration lists Swiss Stake AG as the owner.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Swiss Trademark Registry",
+          "url": "https://www.swissreg.ch/database-client/register/detail?lang=de&no=16098%2F2020&type=trademark",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

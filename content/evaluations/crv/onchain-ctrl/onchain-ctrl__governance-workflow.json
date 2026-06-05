@@ -1,0 +1,25 @@
+{
+  "status": "positive",
+  "notes": "Governance is enforced through Aragon v1's Voting Contract, which authorizes execution via the Agent contract. The Agent contract is set as the owner for all protocol-gated functions, ensuring veCRV holders control all operations.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Aragon Voting Contract",
+          "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356",
+          "type": "explorer"
+        },
+        {
+          "name": "Agent Contract",
+          "url": "https://etherscan.io/address/0x40907540d8a6C65c637785e8f8B742ae6b0b9968",
+          "type": "explorer"
+        },
+        {
+          "name": "CRV Token: Admin is set to Agent",
+          "url": "https://etherscan.io/token/0xd533a949740bb3306d119cc777fa900ba034cd52#readContract",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

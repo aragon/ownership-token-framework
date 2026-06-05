@@ -1,0 +1,25 @@
+{
+  "status": "positive",
+  "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Lido Labs BORG Foundation",
+          "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6",
+          "type": "docs"
+        },
+        {
+          "name": "Lido Ecosystem BORG Foundation",
+          "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15",
+          "type": "docs"
+        },
+        {
+          "name": "Lido Alliance BORG Foundation",
+          "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

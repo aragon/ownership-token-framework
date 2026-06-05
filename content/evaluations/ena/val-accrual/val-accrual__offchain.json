@@ -1,0 +1,33 @@
+{
+  "status": "warning",
+  "notes": "USDe yield comes from three sources: CEX funding rates (unverifiable), ETH staking (~3-4%), and Treasury/BUIDL (~4-5%). **This yield flows to sUSDe stakers only; ENA/sENA holders receive none of it.** Revenue is controlled by multisigs, not programmatic.",
+  "evidence": [
+    {
+      "name": "USDe Yield Sources",
+      "summary": "**CEX Funding Rates:** Delta-neutral hedging (long spot, short perps). Variable 5-20%+ yield. Not verifiable onchain (CEX positions).\n\n**ETH Staking:** stETH/wBETH collateral earns validator rewards (~3-4%). Partially verifiable (collateral visible).\n\n**Treasury/BUIDL:** USDtb backed by BlackRock BUIDL fund (~4-5%). Partially verifiable (USDtb holdings).",
+      "urls": [
+        {
+          "name": "Coin Metrics Analysis (USDe Yield Sources)",
+          "url": "https://coinmetrics.substack.com/p/state-of-the-network-issue-335",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "name": "Yield Distribution Flow",
+      "summary": "1. Yield generated offchain (CEX funding) and onchain (staking, treasury)\n2. Revenue settles through Copper ClearLoop custody (offchain)\n3. Hot Swap multisig receives and converts to USDe\n4. sUSDe Payout multisig transfers to StakingRewardsDistributor\n5. Operator EOA calls `transferInRewards()` to distribute to **sUSDe stakers only**\n\n**ENA/sENA holders do NOT receive USDe yield.**",
+      "urls": [
+        {
+          "name": "`transferInRewards()` (lines 88-94)",
+          "url": "https://github.com/ethena-labs/bbp-public-assets/blob/main/contracts/contracts/StakingRewardsDistributor.sol#L88-L94",
+          "type": "github"
+        },
+        {
+          "name": "DefiLlama - Ethena Fees",
+          "url": "https://defillama.com/protocol/ethena",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

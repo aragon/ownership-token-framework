@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "User exits are **permissionless**: veYB withdrawal after lock expiry, fee claims. Gauge killing is DAO-controlled and affects emissions, not user funds.",
+  "evidence": [
+    {
+      "name": "Exit Paths",
+      "summary": "VotingEscrow.withdraw() permissionless after lock expiry. FeeDistributor.claim() has no admin check.",
+      "urls": [
+        {
+          "name": "VotingEscrow.withdraw",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/VotingEscrow.vy#L428-L457",
+          "type": "github"
+        },
+        {
+          "name": "FeeDistributor.claim",
+          "url": "https://github.com/yield-basis/yb-core/blob/41137e5837e411c9d60be8705ca74304b082fa92/contracts/dao/FeeDistributor.vy#L269-L277",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

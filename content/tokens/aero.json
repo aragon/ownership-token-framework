@@ -1,0 +1,21 @@
+{
+  "id": "aero",
+  "coingeckoId": "aerodrome-finance",
+  "name": "AERO",
+  "symbol": "AERO",
+  "address": "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+  "icon": "https://assets.coingecko.com/coins/images/31745/standard/token.png",
+  "description": "AERO is the native token of the Aerodrome protocol, a ve(3,3) MetaDex on Base with largely immutable contracts and programmatic value flows to veAERO holders.",
+  "network": "base",
+  "lastUpdated": 1775651992,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://aerodrome.finance/",
+    "twitter": "https://twitter.com/Aerodrome",
+    "scan": "https://basescan.org/token/0x940181a94A35A4569E4529A3CDfB74e38FD98631"
+  },
+  "infoDescription": "Aerodrome is a decentralized exchange where you can execute low-fee swaps, deposit tokens to earn rewards, and actively participate in the onchain economy."
+}

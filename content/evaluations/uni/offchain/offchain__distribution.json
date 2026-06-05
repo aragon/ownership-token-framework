@@ -1,0 +1,15 @@
+{
+  "status": "warning",
+  "notes": "Uniswap Labs operates a user interface and API, both of which are subject to Terms of Service. The permissionless nature of the Uniswap Protocol’s smart contracts means that any person or firm can operate an interface or API.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Uniswap Labs Terms of Service",
+          "url": "https://support.uniswap.org/hc/en-us/articles/30935100859661-Uniswap-Labs-Terms-of-Service",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

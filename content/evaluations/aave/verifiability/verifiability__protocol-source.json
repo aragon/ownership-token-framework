@@ -1,0 +1,15 @@
+{
+  "status": "positive",
+  "notes": "Aave V3 protocol contracts are open source on GitHub and verified on Etherscan.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Aave V3 Origin (GitHub)",
+          "url": "https://github.com/aave-dao/aave-v3-origin",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "summary": "All core contracts are verified on Etherscan with matching GitHub source (Vyper 0.4.3). Protocol has undergone 6 independent security audits (Statemind, Chainsecurity, Quantstamp, Mixbytes, Electisec, Pashov).",
+  "tags": [
+    "Metric 3"
+  ]
+}

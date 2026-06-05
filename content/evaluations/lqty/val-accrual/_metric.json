@@ -1,0 +1,6 @@
+{
+  "summary": "Stakers earn two live onchain streams: V1 protocol fees (ETH redemption fees + LUSD borrowing fees) routed directly to LQTYStaking, and V2 bribes paid pro-rata to voters who allocate their voting power to initiatives. There is no protocol treasury - V2 sends 100% of revenue straight to users. Fee parameters and revenue routing are immutable and cannot be modified by governance or the team.",
+  "tags": [
+    "Metric 2"
+  ]
+}

@@ -1,7 +1,7 @@
-import { readFile, writeFile } from "node:fs/promises"
+import { readdir, readFile, writeFile } from "node:fs/promises"
 import path from "node:path"
 
-const dataPath = path.resolve("src/data/tokens.json")
+const tokensDir = path.resolve("content/tokens")
 
 function normalizeSymbol(value) {
   return value.split("/").pop()?.trim().toUpperCase() ?? ""
@@ -31,41 +31,31 @@ const nextTimestamp = Number.isFinite(timestamp)
   ? timestamp
   : Math.floor(Date.now() / 1000)
 
-const raw = await readFile(dataPath, "utf-8")
-const payload = JSON.parse(raw)
-
-if (!payload?.tokens || !Array.isArray(payload.tokens)) {
-  throw new Error("Expected src/data/tokens.json to contain a tokens array")
-}
-
 const idSet = ids ? new Set(ids.map((id) => id.toLowerCase())) : null
 let updated = 0
 
-payload.tokens = payload.tokens.map((token) => {
-  if (updateAll) {
-    updated += 1
-    return { ...token, lastUpdated: nextTimestamp }
-  }
+const files = (await readdir(tokensDir)).filter((f) => f.endsWith(".json"))
 
-  if (idSet && idSet.has(token.id.toLowerCase())) {
-    updated += 1
-    return { ...token, lastUpdated: nextTimestamp }
-  }
+for (const file of files) {
+  const filePath = path.join(tokensDir, file)
+  const token = JSON.parse(await readFile(filePath, "utf-8"))
 
-  if (symbol && token.symbol.toUpperCase() === symbol) {
-    updated += 1
-    return { ...token, lastUpdated: nextTimestamp }
-  }
+  const matches =
+    updateAll ||
+    (idSet?.has(token.id.toLowerCase()) ?? false) ||
+    (symbol !== "" && token.symbol.toUpperCase() === symbol)
 
-  return token
-})
+  if (!matches) continue
+
+  token.lastUpdated = nextTimestamp
+  await writeFile(filePath, `${JSON.stringify(token, null, 2)}\n`, "utf-8")
+  updated += 1
+}
 
 if (updated === 0) {
   console.log("No tokens matched; nothing updated.")
   process.exit(0)
 }
-
-await writeFile(dataPath, `${JSON.stringify(payload, null, 2)}\n`, "utf-8")
 
 console.log(
   `Updated ${updated} token${updated === 1 ? "" : "s"} to ${nextTimestamp}.`

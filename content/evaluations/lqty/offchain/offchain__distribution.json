@@ -1,0 +1,25 @@
+{
+  "status": "partial",
+  "notes": "Liquity AG controls the primary domain liquity.org and the frontend registry. However, the company explicitly does not run any user-facing frontend. All frontends are operated by independent third parties. No tokenholder-controlled entity controls distribution.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity Runs on Decentralized Frontends - Official Blog",
+          "url": "https://www.liquity.org/blog/liquity-runs-on-decentralized-frontends",
+          "type": "website"
+        },
+        {
+          "name": "Frontend Operators Page",
+          "url": "https://www.liquity.org/frontend-operators",
+          "type": "website"
+        },
+        {
+          "name": "Liquity Launch Details (AG does not run frontend)",
+          "url": "https://www.liquity.org/blog/liquity-launch-details",
+          "type": "website"
+        }
+      ]
+    }
+  ]
+}

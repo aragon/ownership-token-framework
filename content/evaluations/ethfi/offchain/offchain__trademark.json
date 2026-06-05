@@ -1,0 +1,16 @@
+{
+  "status": "warning",
+  "notes": "Trademarks are owned by Ether.Fi SEZC (Cayman Islands company), not a tokenholder-controlled entity. The Terms of Use state that company names, logos, and related designs are trademarks of the Company or its affiliates.",
+  "evidence": [
+    {
+      "name": "Trademark Ownership",
+      "urls": [
+        {
+          "name": "Terms of Use",
+          "url": "https://etherfi.gitbook.io/etherfi/ether.fi-legal/terms-of-use",
+          "type": "docs"
+        }
+      ]
+    }
+  ]
+}

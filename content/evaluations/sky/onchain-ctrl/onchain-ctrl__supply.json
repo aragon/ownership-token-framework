@@ -1,0 +1,33 @@
+{
+  "status": "positive",
+  "notes": "Only governance can mint new SKY. The primary source is conversion from legacy MKR tokens at a fixed 24,000:1 ratio. Anyone can burn their own tokens.",
+  "evidence": [
+    {
+      "name": "Minting Restricted to Governance",
+      "summary": "The mint() function requires authorization. Only governance-controlled contracts can call it.",
+      "urls": [
+        {
+          "name": "mint() function (L146-154)",
+          "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol#L146-L154",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "MKR Conversion",
+      "summary": "Legacy MKR tokens convert to SKY at a fixed 24,000:1 ratio. The rate is immutable in the contract.",
+      "urls": [
+        {
+          "name": "rate() returns 24000",
+          "url": "https://etherscan.io/address/0xA1Ea1bA18E88C381C724a75F23a130420C403f9a#readContract",
+          "type": "explorer"
+        },
+        {
+          "name": "Immutable rate declaration",
+          "url": "https://github.com/sky-ecosystem/sky/blob/master/src/MkrSky.sol#L36",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

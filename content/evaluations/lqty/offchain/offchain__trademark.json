@@ -1,0 +1,25 @@
+{
+  "status": "fail",
+  "notes": "The Liquity brand and related trademarks are owned and controlled by Liquity AG (Swiss company). No tokenholder-controlled legal entity is involved.",
+  "evidence": [
+    {
+      "urls": [
+        {
+          "name": "Liquity AG - Crunchbase Company Profile",
+          "url": "https://www.crunchbase.com/organization/liquity-1d3e",
+          "type": "website"
+        },
+        {
+          "name": "Liquity - Tracxn Company Profile",
+          "url": "https://tracxn.com/d/companies/liquity/__jQEYCp-QRDCuYvGmSSmUBbFIO6piP9rk6HEjxXEsrH0",
+          "type": "website"
+        },
+        {
+          "name": "Team Page - Liquity.org",
+          "url": "https://www.liquity.org/team",
+          "type": "website"
+        }
+      ]
+    }
+  ]
+}

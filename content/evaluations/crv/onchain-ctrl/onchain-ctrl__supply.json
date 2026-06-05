@@ -1,0 +1,38 @@
+{
+  "status": "positive",
+  "notes": "CRV has a programmatic inflation schedule with yearly epochs and decreasing emission rate. All minting flows through the Minter contract based on gauge participation.",
+  "evidence": [
+    {
+      "name": "Supply Schedule",
+      "summary": "CRV inflation is released in yearly epochs: each year allows a fixed maximum amount to be minted linearly over time, and at the end of the year the minting rate is reduced by a factor of 2^(1/4). Any unminted supply from a year is permanently lost.",
+      "urls": [
+        {
+          "name": "CRV Emission Schedule (Docs)",
+          "url": "https://docs.curve.finance/user/curve-tokens/crv#emission-schedule",
+          "type": "docs"
+        },
+        {
+          "name": "ERC20CRV.vy Yearly Epoch Logic",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/ERC20CRV.vy#L115C40-L115C59",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Minting Access",
+      "summary": "Mint can only occur through the Minter contract which validates gauge participation. Amount minted depends on veCRV balance and provided LP tokens in a gauge.",
+      "urls": [
+        {
+          "name": "ERC20CRV.vy Mint Access",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/fa127b1cb7bf83e4f3d605f7244b7b4ed5ebe053/contracts/ERC20CRV.vy#L333",
+          "type": "github"
+        },
+        {
+          "name": "Minter.vy Gauge Validation",
+          "url": "https://github.com/curvefi/curve-dao-contracts/blob/master/contracts/Minter.vy#L46",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

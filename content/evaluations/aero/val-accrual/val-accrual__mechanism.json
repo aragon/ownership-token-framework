@@ -1,0 +1,33 @@
+{
+  "status": "positive",
+  "notes": "veAERO holders control:\n\n1. The AERO rewards they receive by locking AERO tokens in VotingEscrow\n\n2. The AERO emissions going into gauges by voting for them in Voter\n\n**Note:** Fee parameters are controlled by the feeManager (a Safe multisig), not by veAERO holders directly.",
+  "evidence": [
+    {
+      "name": "Locking Control",
+      "summary": "veAERO holders control their rewards by locking AERO in VotingEscrow.",
+      "urls": [
+        {
+          "name": "VotingEscrow create_lock",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/VotingEscrow.sol#L555",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Gauge Voting",
+      "summary": "veAERO holders direct emissions by voting for gauges in the Voter contract.",
+      "urls": [
+        {
+          "name": "Voter vote function",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/Voter.sol#L249",
+          "type": "github"
+        },
+        {
+          "name": "Gauge getReward",
+          "url": "https://github.com/aerodrome-finance/contracts/blob/main/contracts/gauges/Gauge.sol#L179",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "status": "positive",
+  "notes": "SKY token source code is open source and verified on Etherscan. Anyone can audit the code.",
+  "evidence": [
+    {
+      "name": "Verified Source",
+      "summary": "Source code matches deployed bytecode. Licensed under AGPL-3.0.",
+      "urls": [
+        {
+          "name": "Source Code",
+          "url": "https://github.com/sky-ecosystem/sky/blob/master/src/Sky.sol",
+          "type": "github"
+        },
+        {
+          "name": "Verified on Etherscan",
+          "url": "https://etherscan.io/address/0x56072C95FAA701256059aa122697B133aDEd9279#code",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}

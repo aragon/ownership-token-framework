@@ -1,8 +1,15 @@
-import { readFile } from "node:fs/promises"
+/**
+ * Emit a comma-separated list of token ids whose content changed between two
+ * git refs. A token counts as changed when its registry atom
+ * (content/tokens/<id>.json) or any of its evaluation atoms
+ * (content/evaluations/<id>/**) differ.
+ *
+ * Usage: node scripts/get-changed-token-ids.mjs --before <sha> --after <sha>
+ * With no usable --before (e.g. zero sha on first push), all token ids are
+ * reported.
+ */
 import { execSync } from "node:child_process"
-
-const TOKENS_PATH = "src/data/tokens.json"
-const METRICS_PATH = "src/data/metrics.json"
+import { readdir } from "node:fs/promises"
 
 function parseArgs(argv) {
   const beforeIndex = argv.indexOf("--before")
@@ -13,50 +20,19 @@ function parseArgs(argv) {
   }
 }
 
-function stableStringify(value) {
-  if (value === null || value === undefined) {
-    return "null"
-  }
-  if (Array.isArray(value)) {
-    return `[${value.map(stableStringify).join(",")}]`
-  }
-  if (typeof value === "object") {
-    const keys = Object.keys(value).sort()
-    return `{${keys
-      .map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
-      .join(",")}}`
-  }
-  return JSON.stringify(value)
+function tokenIdFromPath(filePath) {
+  const registry = filePath.match(/^content\/tokens\/([^/]+)\.json$/)
+  if (registry) return registry[1]
+  const evaluation = filePath.match(/^content\/evaluations\/([^/]+)\//)
+  if (evaluation) return evaluation[1]
+  return null
 }
 
-function readJsonFile(path) {
-  return readFile(path, "utf-8").then((data) => JSON.parse(data))
-}
-
-function readJsonFromGit(before, path) {
-  try {
-    const data = execSync(`git show ${before}:${path}`, {
-      encoding: "utf-8",
-      stdio: ["ignore", "pipe", "ignore"],
-    })
-    return JSON.parse(data)
-  } catch (error) {
-    return null
-  }
-}
-
-function collectTokenMap(payload) {
-  if (!payload?.tokens || !Array.isArray(payload.tokens)) {
-    return new Map()
-  }
-  return new Map(payload.tokens.map((token) => [token.id, token]))
-}
-
-function collectMetricsMap(payload) {
-  if (!payload || typeof payload !== "object") {
-    return new Map()
-  }
-  return new Map(Object.entries(payload))
+async function allTokenIds() {
+  const files = await readdir("content/tokens")
+  return files
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => f.replace(/\.json$/, ""))
 }
 
 const { before, after } = parseArgs(process.argv.slice(2))
@@ -64,66 +40,31 @@ const zeroSha = /^0+$/
 const hasBefore = before && !zeroSha.test(before)
 const hasAfter = after && !zeroSha.test(after)
 
-const [currentTokens, currentMetrics] = hasAfter
-  ? [
-      readJsonFromGit(after, TOKENS_PATH),
-      readJsonFromGit(after, METRICS_PATH),
+let ids
+
+if (!hasBefore) {
+  ids = await allTokenIds()
+} else {
+  try {
+    const range = hasAfter ? `${before} ${after}` : before
+    const diff = execSync(
+      `git diff --name-only ${range} -- content/tokens content/evaluations`,
+      { encoding: "utf-8", stdio: ["ignore", "pipe", "ignore"] }
+    )
+    ids = [
+      ...new Set(
+        diff
+          .split("\n")
+          .map((line) => tokenIdFromPath(line.trim()))
+          .filter(Boolean)
+      ),
     ]
-  : await Promise.all([readJsonFile(TOKENS_PATH), readJsonFile(METRICS_PATH)])
-
-const previousTokens = hasBefore ? readJsonFromGit(before, TOKENS_PATH) : null
-const previousMetrics = hasBefore ? readJsonFromGit(before, METRICS_PATH) : null
-
-if (hasAfter && (!currentTokens || !currentMetrics)) {
-  console.error(
-    "::warning::Unable to load after JSON from git; skipping updates."
-  )
-  process.exit(0)
-}
-
-if (hasBefore && (!previousTokens || !previousMetrics)) {
-  console.error(
-    "::warning::Unable to load before JSON from git; skipping updates."
-  )
-  process.exit(0)
-}
-
-const currentTokenMap = collectTokenMap(currentTokens)
-const previousTokenMap = collectTokenMap(previousTokens)
-const currentMetricsMap = collectMetricsMap(currentMetrics)
-const previousMetricsMap = collectMetricsMap(previousMetrics)
-
-const changed = new Set()
-
-if (!hasBefore || !previousTokens) {
-  for (const id of currentTokenMap.keys()) {
-    changed.add(id)
-  }
-} else {
-  const ids = new Set([...currentTokenMap.keys(), ...previousTokenMap.keys()])
-  for (const id of ids) {
-    const beforeValue = previousTokenMap.get(id)
-    const afterValue = currentTokenMap.get(id)
-    if (stableStringify(beforeValue) !== stableStringify(afterValue)) {
-      changed.add(id)
-    }
+  } catch (_error) {
+    console.error(
+      "::warning::Unable to diff content paths from git; skipping updates."
+    )
+    process.exit(0)
   }
 }
 
-if (!hasBefore || !previousMetrics) {
-  for (const id of currentMetricsMap.keys()) {
-    changed.add(id)
-  }
-} else {
-  const ids = new Set([...currentMetricsMap.keys(), ...previousMetricsMap.keys()])
-  for (const id of ids) {
-    const beforeValue = previousMetricsMap.get(id)
-    const afterValue = currentMetricsMap.get(id)
-    if (stableStringify(beforeValue) !== stableStringify(afterValue)) {
-      changed.add(id)
-    }
-  }
-}
-
-const output = Array.from(changed).filter(Boolean).join(",")
-process.stdout.write(output)
+process.stdout.write(ids.join(","))

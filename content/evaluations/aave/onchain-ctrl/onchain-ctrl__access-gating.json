@@ -1,0 +1,64 @@
+{
+  "status": "positive",
+  "notes": "Roles can be broadly classified into **Core Protocol Roles** and **Delegated Steward Roles**. AAVE holders elect and revoke all these roles with their standard governance procedure.",
+  "evidence": [
+    {
+      "name": "Core",
+      "summary": "Core Protocol Roles: EMERGENCY_ADMIN, RISK_ADMIN, POOL_ADMIN, ASSET_LISTING_ADMIN. These live in ACLManager, owned by ACLAdmin (verifiable in PoolAddressesProvider). ACLAdmin is owned by PayloadsController, controlled by token holders.",
+      "urls": [
+        {
+          "name": "Core Protocol Role addresses",
+          "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#admins",
+          "type": "github"
+        },
+        {
+          "name": "Core Protocol Roles in ACLManager",
+          "url": "https://etherscan.io/address/0xc2aaCf6553D20d1e9d78E365AAba8032af9c85b0",
+          "type": "explorer"
+        },
+        {
+          "name": "EMERGENCY_ADMIN_ROLE: GnosisSafeProxy",
+          "url": "https://etherscan.io/address/0x2cfe3ec4d5a6811f4b8067f0de7e47dfa938aa30#code",
+          "type": "explorer"
+        },
+        {
+          "name": "POOL_ADMIN_ROLE: Executor",
+          "url": "https://etherscan.io/address/0x5300A1a15135EA4dc7aD5a167152C01EFc9b192A#code",
+          "type": "explorer"
+        }
+      ]
+    },
+    {
+      "name": "Delegated Steward Roles",
+      "summary": "\n\nRisk Stewards → Risk Parameters\nFinance Stewards → Treasury\nAave Guardians → Emergency",
+      "urls": [
+        {
+          "name": "Stewards (docs)",
+          "url": "https://aave.com/help/governance/aave-community",
+          "type": "docs"
+        },
+        {
+          "name": "Stewards (addresses)",
+          "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts-upgradeability",
+          "type": "github"
+        }
+      ]
+    },
+    {
+      "name": "Protocol Emergency Guardian",
+      "summary": "A separate multisig that executes limited emergency operations for the protocol.",
+      "urls": [
+        {
+          "name": "Protocol Emergency Guardian",
+          "url": "https://aave.com/docs/ecosystem/governance#community-guardians-protocol-emergency-guardian",
+          "type": "docs"
+        },
+        {
+          "name": "Detailed protocol permissions",
+          "url": "https://github.com/aave-dao/aave-permissions-book/blob/main/out/ETHEREUM-V3.md#contracts",
+          "type": "github"
+        }
+      ]
+    }
+  ]
+}

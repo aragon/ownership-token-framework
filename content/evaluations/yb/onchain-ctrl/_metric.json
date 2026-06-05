@@ -1,0 +1,6 @@
+{
+  "summary": "veYB holders control the protocol through Aragon governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (_yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
+  "tags": [
+    "Metric 1"
+  ]
+}

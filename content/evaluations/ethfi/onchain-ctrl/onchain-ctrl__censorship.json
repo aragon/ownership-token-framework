@@ -1,0 +1,27 @@
+{
+  "status": "warning",
+  "notes": "The mainnet ETHFI token contains no blacklist, freeze, or transfer restriction mechanisms. L2 ETHFI tokens are upgradeable by multisigs with no timelock, which could allow introducing censorship functions through an upgrade.\n\nL1 token has no censorship risk. L2 tokens have potential censorship risk due to instant upgrade capability.",
+  "evidence": [
+    {
+      "name": "Token Analysis",
+      "summary": "L1 token has no censorship capabilities. L2 tokens are upgradeable, creating a potential censorship vector on Arbitrum and Base.",
+      "urls": [
+        {
+          "name": "ETHFI Token Contract",
+          "url": "https://etherscan.io/address/0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB#code",
+          "type": "explorer"
+        },
+        {
+          "name": "Arbitrum ETHFI (Upgradeable)",
+          "url": "https://arbiscan.io/address/0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+          "type": "explorer"
+        },
+        {
+          "name": "Base ETHFI (Upgradeable)",
+          "url": "https://basescan.org/address/0x6C240DDA6b5c336DF09A4D011139beAAa1eA2Aa2",
+          "type": "explorer"
+        }
+      ]
+    }
+  ]
+}
