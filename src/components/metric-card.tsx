@@ -158,7 +158,9 @@ export default function MetricCard(props: MetricCardProps) {
           />
         </div>
         {metric.summary && (
-          <p
+          // div, not p: ReactMarkdown renders its own <p> and nested
+          // paragraphs are invalid HTML (causes hydration mismatches)
+          <div
             className={cn(
               "text-base leading-6 tracking-normal pt-3",
               colors.summaryColor
@@ -170,7 +172,7 @@ export default function MetricCard(props: MetricCardProps) {
             >
               {metric.summary}
             </ReactMarkdown>
-          </p>
+          </div>
         )}
       </div>
 
