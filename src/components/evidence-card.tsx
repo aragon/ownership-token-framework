@@ -43,7 +43,10 @@ export const EvidenceCard: React.FC<IEvidenceCardProps> = (props) => {
           )}
           {evidence.summary && (
             <div className="text-base leading-6 tracking-normal text-muted-foreground prose max-w-none">
-              <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+              <ReactMarkdown
+                components={markdownComponents}
+                remarkPlugins={[remarkBreaks]}
+              >
                 {evidence.summary}
               </ReactMarkdown>
             </div>
