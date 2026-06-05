@@ -14,6 +14,7 @@
  *
  * Exports composeAll() for tests; run directly to write src/data/generated/.
  */
+import { createHash } from "node:crypto"
 import {
   mkdirSync,
   readdirSync,
@@ -140,18 +141,35 @@ export function composeAll(dir = contentDir) {
   }
 
   const frameworkDoc = { baseUrl: meta.baseUrl, metrics: framework }
+  const faq = readJson(join(dir, "faq.json"))
+  const testimonials = readJson(join(dir, "testimonials.json"))
+
+  // Deterministic snapshot identity: a content hash over the composed output.
+  // Stable across recompositions of identical content (keeps the freshness
+  // gate meaningful); changes exactly when published data changes. The future
+  // publish pipeline reuses this as the R2 snapshot key component.
+  const snapshotId = createHash("sha256")
+    .update(JSON.stringify({ index, tokenDocs, frameworkDoc, faq, testimonials }))
+    .digest("hex")
+    .slice(0, 16)
+  const manifest = {
+    snapshot_id: snapshotId,
+    tokens: tokenDocs.map((d) => d.id),
+  }
 
   return {
     index,
     tokenDocs,
     frameworkDoc,
-    faq: readJson(join(dir, "faq.json")),
-    testimonials: readJson(join(dir, "testimonials.json")),
+    faq,
+    testimonials,
+    manifest,
   }
 }
 
 function main() {
-  const { index, tokenDocs, frameworkDoc, faq, testimonials } = composeAll()
+  const { index, tokenDocs, frameworkDoc, faq, testimonials, manifest } =
+    composeAll()
 
   rmSync(generatedDir, { recursive: true, force: true })
   const writeJson = (p, data) => {
@@ -166,9 +184,10 @@ function main() {
   writeJson(join(generatedDir, "framework.json"), frameworkDoc)
   writeJson(join(generatedDir, "faq.json"), faq)
   writeJson(join(generatedDir, "testimonials.json"), testimonials)
+  writeJson(join(generatedDir, "manifest.json"), manifest)
 
   console.log(
-    `composed: index (${index.tokens.length} rows), ${tokenDocs.length} token docs, framework, faq, testimonials`
+    `composed: index (${index.tokens.length} rows), ${tokenDocs.length} token docs, framework, faq, testimonials (snapshot ${manifest.snapshot_id})`
   )
 }
 

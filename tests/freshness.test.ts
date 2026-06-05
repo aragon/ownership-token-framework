@@ -40,4 +40,10 @@ describe("generated read models are fresh", () => {
       composed.testimonials
     )
   })
+
+  it("manifest.json (snapshot identity)", () => {
+    expect(readJson(join(generated, "manifest.json"))).toEqual(
+      composed.manifest
+    )
+  })
 })

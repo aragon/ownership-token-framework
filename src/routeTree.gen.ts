@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TokensTokenIdRouteImport } from './routes/tokens/$tokenId'
+import { Route as ApiTokensRouteImport } from './routes/api.tokens'
+import { Route as ApiTokensTokenIdRouteImport } from './routes/api.tokens.$tokenId'
 
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
@@ -28,34 +30,62 @@ const TokensTokenIdRoute = TokensTokenIdRouteImport.update({
   path: '/tokens/$tokenId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiTokensRoute = ApiTokensRouteImport.update({
+  id: '/api/tokens',
+  path: '/api/tokens',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiTokensTokenIdRoute = ApiTokensTokenIdRouteImport.update({
+  id: '/$tokenId',
+  path: '/$tokenId',
+  getParentRoute: () => ApiTokensRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
+  '/api/tokens': typeof ApiTokensRouteWithChildren
   '/tokens/$tokenId': typeof TokensTokenIdRoute
+  '/api/tokens/$tokenId': typeof ApiTokensTokenIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
+  '/api/tokens': typeof ApiTokensRouteWithChildren
   '/tokens/$tokenId': typeof TokensTokenIdRoute
+  '/api/tokens/$tokenId': typeof ApiTokensTokenIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
+  '/api/tokens': typeof ApiTokensRouteWithChildren
   '/tokens/$tokenId': typeof TokensTokenIdRoute
+  '/api/tokens/$tokenId': typeof ApiTokensTokenIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/faq' | '/tokens/$tokenId'
+  fullPaths:
+    | '/'
+    | '/faq'
+    | '/api/tokens'
+    | '/tokens/$tokenId'
+    | '/api/tokens/$tokenId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/tokens/$tokenId'
-  id: '__root__' | '/' | '/faq' | '/tokens/$tokenId'
+  to: '/' | '/faq' | '/api/tokens' | '/tokens/$tokenId' | '/api/tokens/$tokenId'
+  id:
+    | '__root__'
+    | '/'
+    | '/faq'
+    | '/api/tokens'
+    | '/tokens/$tokenId'
+    | '/api/tokens/$tokenId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FaqRoute: typeof FaqRoute
+  ApiTokensRoute: typeof ApiTokensRouteWithChildren
   TokensTokenIdRoute: typeof TokensTokenIdRoute
 }
 
@@ -82,12 +112,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TokensTokenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/tokens': {
+      id: '/api/tokens'
+      path: '/api/tokens'
+      fullPath: '/api/tokens'
+      preLoaderRoute: typeof ApiTokensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/tokens/$tokenId': {
+      id: '/api/tokens/$tokenId'
+      path: '/$tokenId'
+      fullPath: '/api/tokens/$tokenId'
+      preLoaderRoute: typeof ApiTokensTokenIdRouteImport
+      parentRoute: typeof ApiTokensRoute
+    }
   }
 }
+
+interface ApiTokensRouteChildren {
+  ApiTokensTokenIdRoute: typeof ApiTokensTokenIdRoute
+}
+
+const ApiTokensRouteChildren: ApiTokensRouteChildren = {
+  ApiTokensTokenIdRoute: ApiTokensTokenIdRoute,
+}
+
+const ApiTokensRouteWithChildren = ApiTokensRoute._addFileChildren(
+  ApiTokensRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FaqRoute: FaqRoute,
+  ApiTokensRoute: ApiTokensRouteWithChildren,
   TokensTokenIdRoute: TokensTokenIdRoute,
 }
 export const routeTree = rootRouteImport

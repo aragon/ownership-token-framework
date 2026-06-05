@@ -106,6 +106,31 @@ export const frameworkDocSchema = z.strictObject({
   ),
 })
 
+/** generated/manifest.json — deterministic snapshot identity for the composed set. */
+export const manifestSchema = z.strictObject({
+  /** Content hash over the composed output; future R2 snapshot key component. */
+  snapshot_id: z.string(),
+  tokens: z.array(z.string()),
+})
+
+/**
+ * Provenance envelope wrapped around every API response.
+ * published_at stays null until the publish pipeline stamps real publishes.
+ */
+export const provenanceSchema = z.strictObject({
+  snapshot_id: z.string(),
+  commit_ref: z.string(),
+  published_at: z.string().nullable(),
+  source: z.enum(["generated", "kv"]),
+})
+
+export const apiErrorSchema = z.strictObject({
+  error: z.strictObject({
+    code: z.string(),
+    message: z.string(),
+  }),
+})
+
 export type ComposedCriterion = z.infer<typeof composedCriterionSchema>
 export type ComposedMetric = z.infer<typeof composedMetricSchema>
 export type MetricScore = z.infer<typeof metricScoreSchema>
@@ -114,3 +139,6 @@ export type TokenCounts = z.infer<typeof tokenCountsSchema>
 export type IndexRow = z.infer<typeof indexRowSchema>
 export type TokenDoc = z.infer<typeof tokenDocSchema>
 export type FrameworkDoc = z.infer<typeof frameworkDocSchema>
+export type Manifest = z.infer<typeof manifestSchema>
+export type Provenance = z.infer<typeof provenanceSchema>
+export type ApiError = z.infer<typeof apiErrorSchema>
