@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000",
-    "build": "vite build",
+    "build": "node scripts/build-data.mjs && vite build",
+    "build:data": "node scripts/build-data.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "format": "biome format",
