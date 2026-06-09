@@ -6,10 +6,12 @@
  * implementation replaces the internals without any response-shape change —
  * consumers depend only on this module's interface.
  */
+import faqData from "@/data/generated/faq.json"
 import frameworkData from "@/data/generated/framework.json"
 import indexData from "@/data/generated/index.json"
 import manifestData from "@/data/generated/manifest.json"
 import type {
+  FaqTopic,
   FrameworkDoc,
   IndexRow,
   Manifest,
@@ -61,6 +63,10 @@ export function getPublishedTokenDoc(tokenId: string): TokenDoc | null {
 
 export function getPublishedFramework(): FrameworkDoc {
   return frameworkData as FrameworkDoc
+}
+
+export function getPublishedFaq(): { topics: FaqTopic[] } {
+  return faqData as { topics: FaqTopic[] }
 }
 
 export function listPublishedTokenIds(): string[] {

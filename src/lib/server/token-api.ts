@@ -13,6 +13,7 @@
  */
 import {
   getProvenance,
+  getPublishedFaq,
   getPublishedFramework,
   getPublishedIndex,
   getPublishedTokenDoc,
@@ -29,7 +30,7 @@ function jsonResponse(body: unknown, status = 200): Response {
   })
 }
 
-/** GET /api/tokens — the published index (discovery + cross-token queries). */
+/** GET /api/v1/tokens — the published index (discovery + cross-token queries). */
 export function handleGetTokens(): Response {
   return jsonResponse({
     data: getPublishedIndex(),
@@ -37,7 +38,7 @@ export function handleGetTokens(): Response {
   })
 }
 
-/** GET /api/framework — canonical metric/criteria definitions + anchors. */
+/** GET /api/v1/framework — canonical metric/criteria definitions + anchors. */
 export function handleGetFramework(): Response {
   return jsonResponse({
     data: getPublishedFramework(),
@@ -45,7 +46,15 @@ export function handleGetFramework(): Response {
   })
 }
 
-/** GET /api/tokens/{id} — one composed token doc (the per-token reusable unit). */
+/** GET /api/v1/faq — published framework/methodology Q&A. */
+export function handleGetFaq(): Response {
+  return jsonResponse({
+    data: getPublishedFaq(),
+    provenance: getProvenance(),
+  })
+}
+
+/** GET /api/v1/tokens/{id} — one composed token doc (the per-token reusable unit). */
 export function handleGetToken(tokenId: string): Response {
   const doc = getPublishedTokenDoc(tokenId)
   if (!doc) {

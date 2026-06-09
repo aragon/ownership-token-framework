@@ -7,7 +7,7 @@
  * dropped from the client build entirely.
  *
  * Client side, queryFns fetch the canonical JSON endpoints — the app is the
- * first consumer of its own published API (/api/tokens*).
+ * first consumer of its own published API (/api/v1/tokens*).
  *
  * Published data is immutable per snapshot (~90-day editorial cadence), so
  * staleTime/gcTime are Infinity: a new snapshot arrives as a new deployment
@@ -32,7 +32,7 @@ export const publishedIndexQuery = queryOptions({
       const { getPublishedIndex } = await import("@/lib/server/published-data")
       return getPublishedIndex()
     }
-    return fetchEnvelopeData("/api/tokens")
+    return fetchEnvelopeData("/api/v1/tokens")
   },
   staleTime: Number.POSITIVE_INFINITY,
   gcTime: Number.POSITIVE_INFINITY,
@@ -47,7 +47,7 @@ export const publishedFrameworkQuery = queryOptions({
       )
       return getPublishedFramework()
     }
-    return fetchEnvelopeData("/api/framework")
+    return fetchEnvelopeData("/api/v1/framework")
   },
   staleTime: Number.POSITIVE_INFINITY,
   gcTime: Number.POSITIVE_INFINITY,
@@ -64,7 +64,7 @@ export const publishedTokenDocQuery = (tokenId: string) => {
         )
         return getPublishedTokenDoc(normalizedId)
       }
-      const res = await fetch(`/api/tokens/${normalizedId}`)
+      const res = await fetch(`/api/v1/tokens/${normalizedId}`)
       if (res.status === 404) return null
       if (!res.ok) {
         throw new Error(`Published data fetch failed: ${res.status}`)

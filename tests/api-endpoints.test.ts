@@ -7,12 +7,14 @@ import { join } from "node:path"
 import { describe, expect, it } from "vitest"
 import {
   apiErrorSchema,
+  faqSchema,
   frameworkDocSchema,
   indexSchema,
   provenanceSchema,
   tokenDocSchema,
 } from "@/lib/schemas"
 import {
+  handleGetFaq,
   handleGetFramework,
   handleGetToken,
   handleGetTokens,
@@ -62,6 +64,17 @@ describe("GET /api/framework", () => {
     expect(() => frameworkDocSchema.parse(payload.data)).not.toThrow()
     expect(() => provenanceSchema.parse(payload.provenance)).not.toThrow()
     expect(payload.data).toEqual(readJson(join(generated, "framework.json")))
+  })
+})
+
+describe("GET /api/v1/faq", () => {
+  it("returns the faq doc with provenance, identical to generated", async () => {
+    const res = handleGetFaq()
+    expect(res.status).toBe(200)
+    const payload = await body(res)
+    expect(() => faqSchema.parse(payload.data)).not.toThrow()
+    expect(() => provenanceSchema.parse(payload.provenance)).not.toThrow()
+    expect(payload.data).toEqual(readJson(join(generated, "faq.json")))
   })
 })
 

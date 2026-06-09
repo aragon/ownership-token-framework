@@ -1,0 +1,26 @@
+# Ownership Token Framework
+
+Structured, evidence-backed analysis of crypto token ownership and governance,
+by Aragon. Machine-readable, schema-validated, versioned.
+
+## API (JSON, no auth)
+
+- /api/v1/tokens — index of all analyzed tokens (scores, status counts, per-criterion status map)
+- /api/v1/tokens/{id} — full analysis for one token (metrics, criteria, notes, evidence); {id} is lowercase, e.g. ldo
+- /api/v1/framework — the evaluation framework: metric and criterion definitions
+- /api/v1/faq — framework and methodology Q&A
+
+## How to read it
+
+- Each response is `{ data, provenance }`. provenance carries snapshot_id
+  (a content hash of the whole data set) and commit_ref — cite these for
+  reproducibility; do not infer freshness from cache headers.
+- Criterion status is exactly one of: positive | warning | at_risk |
+  unevaluated | reference. There is no other vocabulary.
+- A token's analysis is the framework (shared rubric) filled in with that
+  token's evaluations; criterion ids are composite, e.g.
+  onchain-ctrl__governance-workflow.
+
+## Guide
+
+A fuller orientation for agents and analysts: /agent-guide.md
