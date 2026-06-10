@@ -12,7 +12,8 @@
     "lint": "biome lint",
     "check": "biome check --write",
     "type-check": "tsc --noEmit",
-    "og:generate": "node scripts/generate-og-screenshots.mjs"
+    "og:generate": "node scripts/generate-og-screenshots.mjs",
+    "prepare": "lefthook install"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
@@ -62,6 +63,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.4",
     "jsdom": "^27.4.0",
+    "lefthook": "2.1.9",
     "playwright": "^1.58.2",
     "shadcn": "^3.8.5",
     "sharp": "^0.34.5",
