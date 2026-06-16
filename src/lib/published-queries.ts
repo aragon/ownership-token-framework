@@ -2,16 +2,18 @@
  * Query definitions for the published read models.
  *
  * Server side (`import.meta.env.SSR` is statically true), queryFns read the
- * published data source directly — no self-HTTP, and Vite's static
- * replacement guarantees the dynamic import (and the data behind it) is
- * dropped from the client build entirely.
+ * published source directly — the SAME seam the API uses (published-source),
+ * so SSR/UI and /api/v1 never disagree: both serve committed data by default
+ * and both serve the release snapshot when release mode is on. No self-HTTP,
+ * and Vite's static replacement drops the dynamic import (and the data behind
+ * it) from the client build entirely.
  *
  * Client side, queryFns fetch the canonical JSON endpoints — the app is the
  * first consumer of its own published API (/api/v1/tokens*).
  *
- * Published data is immutable per snapshot (~90-day editorial cadence), so
- * staleTime/gcTime are Infinity: a new snapshot arrives as a new deployment
- * (later: a new Edge Config pointer), never as a background refetch.
+ * Published data is immutable per snapshot, so staleTime/gcTime are Infinity:
+ * a new snapshot arrives as a new deployment, or — in release mode — as the
+ * next SSR render reading a newer release, never as a background refetch.
  */
 import { queryOptions } from "@tanstack/react-query"
 import type { FrameworkDoc, IndexRow, TokenDoc } from "@/lib/schemas"
@@ -29,8 +31,8 @@ export const publishedIndexQuery = queryOptions({
   queryKey: ["published", "index"],
   queryFn: async (): Promise<{ tokens: IndexRow[] }> => {
     if (import.meta.env.SSR) {
-      const { getPublishedIndex } = await import("@/lib/server/published-data")
-      return getPublishedIndex()
+      const { getIndex } = await import("@/lib/server/published-source")
+      return getIndex()
     }
     return fetchEnvelopeData("/api/v1/tokens")
   },
@@ -42,10 +44,8 @@ export const publishedFrameworkQuery = queryOptions({
   queryKey: ["published", "framework"],
   queryFn: async (): Promise<FrameworkDoc> => {
     if (import.meta.env.SSR) {
-      const { getPublishedFramework } = await import(
-        "@/lib/server/published-data"
-      )
-      return getPublishedFramework()
+      const { getFramework } = await import("@/lib/server/published-source")
+      return getFramework()
     }
     return fetchEnvelopeData("/api/v1/framework")
   },
@@ -59,10 +59,8 @@ export const publishedTokenDocQuery = (tokenId: string) => {
     queryKey: ["published", "token-doc", normalizedId],
     queryFn: async (): Promise<TokenDoc | null> => {
       if (import.meta.env.SSR) {
-        const { getPublishedTokenDoc } = await import(
-          "@/lib/server/published-data"
-        )
-        return getPublishedTokenDoc(normalizedId)
+        const { getTokenDoc } = await import("@/lib/server/published-source")
+        return getTokenDoc(normalizedId)
       }
       const res = await fetch(`/api/v1/tokens/${normalizedId}`)
       if (res.status === 404) return null
