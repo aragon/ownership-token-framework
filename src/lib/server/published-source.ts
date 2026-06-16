@@ -48,6 +48,34 @@ type Bundle = {
   tokens: Map<string, TokenDoc>
   framework: FrameworkDoc
   faq: { topics: FaqTopic[] }
+  /** The release's publication time (ISO) — distinct from content last_updated. */
+  publishedAt: string | null
+}
+
+/**
+ * Cross-file integrity: the manifest list, the index rows, and the token docs
+ * must all cover the SAME ids. Per-part schema validation can't catch a
+ * shape-valid but incomplete snapshot — e.g. an index row whose token doc is
+ * missing would link the dashboard to a /tokens/{id} that 404s. Throwing here
+ * is caught by the caller and falls back to committed data.
+ */
+function assertTokenSetsAgree(
+  manifest: Manifest,
+  index: { tokens: IndexRow[] },
+  tokens: Map<string, TokenDoc>
+): void {
+  const manifestIds = [...manifest.tokens].sort()
+  const indexIds = index.tokens.map((t) => t.id).sort()
+  const docIds = [...tokens.keys()].sort()
+  const agree =
+    manifestIds.length === indexIds.length &&
+    manifestIds.length === docIds.length &&
+    manifestIds.every((id, i) => id === indexIds[i] && id === docIds[i])
+  if (!agree) {
+    throw new Error(
+      `snapshot token sets disagree (manifest ${manifestIds.length}, index ${indexIds.length}, docs ${docIds.length})`
+    )
+  }
 }
 
 /** Module-level cache of the last successfully validated release bundle. */
@@ -102,6 +130,7 @@ async function fetchReleaseBundle(): Promise<Bundle | null> {
       return null
     }
     const release = (await releaseRes.json()) as {
+      published_at?: string | null
       assets?: Array<{ name?: string; url?: string }>
     }
     const asset = release.assets?.find((a) => a.name === SNAPSHOT_ASSET_NAME)
@@ -146,7 +175,16 @@ async function fetchReleaseBundle(): Promise<Bundle | null> {
       tokens.set(parsed.id, parsed)
     }
 
-    return { manifest, index, tokens, framework, faq }
+    assertTokenSetsAgree(manifest, index, tokens)
+
+    return {
+      manifest,
+      index,
+      tokens,
+      framework,
+      faq,
+      publishedAt: release.published_at ?? null,
+    }
   } catch (err) {
     console.warn(
       `[published-source] falling back to committed data: ${
@@ -197,7 +235,7 @@ export async function getProvenance(): Promise<Provenance> {
     snapshot_id: bundle.manifest.snapshot_id,
     commit_ref: resolveCommitRef(),
     last_updated: bundle.manifest.last_updated,
-    published_at: null,
+    published_at: bundle.publishedAt,
     source: "release",
   }
 }
