@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 /**
- * Vendored-contract integrity gate (CI): every vendored file (schemas +
- * composer) must match the vendor lock written by scripts/vendor-schemas.mjs.
- * Direct edits to a vendored copy fail here — change it in otf-cms and
- * re-vendor.
+ * Drift gate (CI). The shared contract files here (the Zod schemas + composer)
+ * are checked-in COPIES of otf-cms's source — "vendored" by
+ * scripts/vendor-schemas.mjs. This verifies each copy still matches the hash
+ * recorded in the lock, so a hand-edit of a copy fails the build. To change
+ * one: edit it in otf-cms, then re-run vendor-schemas.mjs to refresh the copies.
  */
 import { createHash } from "node:crypto"
 import { readFileSync } from "node:fs"

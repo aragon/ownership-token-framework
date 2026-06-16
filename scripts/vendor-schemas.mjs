@@ -1,19 +1,22 @@
 #!/usr/bin/env node
 /**
- * Re-vendor the data contract + composer from otf-cms (the source of truth).
+ * Sync the shared data contract (Zod schemas + composer) from otf-cms into this
+ * repo by COPYING the files in. This is "vendoring": the app keeps checked-in
+ * copies of otf-cms's source instead of installing it as an npm package, so
+ * there's one source of truth (otf-cms) with no registry or publish step. To
+ * "re-vendor" is just to re-run this script to refresh the copies after the
+ * otf-cms originals change.
  *
  * Usage: node scripts/vendor-schemas.mjs [path-to-otf-cms-checkout]
  *        (default: ../otf-cms sibling checkout)
  *
- * Vendors:
- *   otf-cms/schemas/*.ts        → src/lib/schemas/        (the Zod contract)
- *   otf-cms/scripts/compose-data.ts → scripts/lib/compose-data.ts
- *     (the composer — the app composes otf-cms content at build time, so it
- *      must run the exact same composition logic)
+ * Copies:
+ *   otf-cms/schemas/*.ts            → src/lib/schemas/   (the Zod contract)
+ *   otf-cms/scripts/compose-data.ts → scripts/lib/compose-data.ts (the composer)
  *
- * Records a vendor lock (source commit + per-file hashes). CI verifies it —
- * direct edits to the vendored copies fail; this script is the only
- * sanctioned way to change them.
+ * Writes a lock file (the otf-cms source commit + a hash of each copied file).
+ * CI (check-schema-drift.mjs) re-checks those hashes, so hand-editing a copy
+ * here fails the build — change it in otf-cms and re-run this script instead.
  */
 import { execSync } from "node:child_process"
 import { createHash } from "node:crypto"
@@ -25,12 +28,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 const sourceRepo = resolve(root, process.argv[2] ?? "../otf-cms")
 
 const BANNER = (commit) => `/**
- * OTF data contract — VENDORED COPY. DO NOT EDIT HERE.
+ * OTF data contract — a checked-in COPY of otf-cms's source (i.e. "vendored").
+ * DO NOT EDIT HERE: a change to this copy fails CI's drift check.
  *
- * Source of truth: https://github.com/aragon/otf-cms, vendored at commit
- * ${commit}. Change upstream, then re-vendor:
- *   node scripts/vendor-schemas.mjs
- * CI fails on direct edits (scripts/check-schema-drift.mjs).
+ * Source of truth: https://github.com/aragon/otf-cms (copied at ${commit}).
+ * To change it, edit the file in otf-cms, then refresh the copies here by
+ * re-running:  node scripts/vendor-schemas.mjs
  */`
 
 const sourceCommit = execSync("git rev-parse HEAD", {

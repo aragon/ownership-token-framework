@@ -1,10 +1,10 @@
 /**
- * OTF data contract — VENDORED COPY. DO NOT EDIT HERE.
+ * OTF data contract — a checked-in COPY of otf-cms's source (i.e. "vendored").
+ * DO NOT EDIT HERE: a change to this copy fails CI's drift check.
  *
- * Source of truth: https://github.com/aragon/otf-cms, vendored at commit
- * 8170271c4873c0a3ca3f028e01dcc61dfba1589d. Change upstream, then re-vendor:
- *   node scripts/vendor-schemas.mjs
- * CI fails on direct edits (scripts/check-schema-drift.mjs).
+ * Source of truth: https://github.com/aragon/otf-cms (copied at 8170271c4873c0a3ca3f028e01dcc61dfba1589d).
+ * To change it, edit the file in otf-cms, then refresh the copies here by
+ * re-running:  node scripts/vendor-schemas.mjs
  */
 export * from "./atoms"
 export * from "./common"
