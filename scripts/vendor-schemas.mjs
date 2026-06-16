@@ -7,7 +7,7 @@
  *
  * Vendors:
  *   otf-cms/schemas/*.ts        → src/lib/schemas/        (the Zod contract)
- *   otf-cms/scripts/compose-data.mjs → scripts/lib/compose-data.mjs
+ *   otf-cms/scripts/compose-data.ts → scripts/lib/compose-data.ts
  *     (the composer — the app composes otf-cms content at build time, so it
  *      must run the exact same composition logic)
  *
@@ -58,8 +58,8 @@ for (const f of readdirSync(schemaDir).filter((f) => f.endsWith(".ts")).sort()) 
 
 // Composer
 vendor(
-  join(sourceRepo, "scripts", "compose-data.mjs"),
-  "scripts/lib/compose-data.mjs"
+  join(sourceRepo, "scripts", "compose-data.ts"),
+  "scripts/lib/compose-data.ts"
 )
 
 writeFileSync(

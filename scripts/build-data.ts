@@ -35,8 +35,8 @@ import {
 import { tmpdir } from "node:os"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-// Vendored composer (plain JS, no types) — same composition logic as otf-cms.
-import { composeAll } from "./lib/compose-data.mjs"
+// Vendored composer (TypeScript, same composition logic as otf-cms).
+import { composeAll } from "./lib/compose-data"
 import {
   faqSchema,
   frameworkDocSchema,

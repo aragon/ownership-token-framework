@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env tsx
 /**
  * Composer: content/ atoms → src/data/generated/ read models.
  *
@@ -11,6 +11,11 @@
  * Replaces the runtime framework-merge formerly in src/lib/metrics-data.ts.
  * The scoring logic mirrors the pure functions in src/lib/scoring.ts and is
  * pinned to them by the golden round-trip tests.
+ *
+ * Inputs are read from JSON (untyped by nature) and the composed output is
+ * Zod-validated downstream (otf-cms tests; the app's build-data step) — so the
+ * transform is typed loosely on purpose and the schema contract is the source
+ * of truth for the real shapes.
  *
  * Exports composeAll() for tests; run directly to write src/data/generated/.
  */
@@ -29,18 +34,18 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..")
 const contentDir = join(root, "content")
 const generatedDir = join(root, "generated")
 
-const readJson = (p) => JSON.parse(readFileSync(p, "utf8"))
+const readJson = (p: string): any => JSON.parse(readFileSync(p, "utf8"))
 
 const SCORED_STATUSES = new Set(["positive", "warning", "at_risk"])
 
-function getMetricScore(metric) {
+function getMetricScore(metric: any) {
   const reference = metric.tags?.includes("Reference") ?? false
-  const evaluatedCriteria = metric.criteria.filter((c) =>
+  const evaluatedCriteria = metric.criteria.filter((c: any) =>
     SCORED_STATUSES.has(c.status)
   )
   const total = evaluatedCriteria.length
   const passing = evaluatedCriteria.filter(
-    (c) => c.status === "positive"
+    (c: any) => c.status === "positive"
   ).length
   const evaluated = reference ? false : total > 0
   const percentage = total > 0 ? (passing / total) * 100 : 0
@@ -56,7 +61,7 @@ function getMetricScore(metric) {
   }
 }
 
-function getTokenScore(tokenId, metrics) {
+function getTokenScore(tokenId: string, metrics: any[]) {
   const metricScores = metrics.map(getMetricScore)
   const scoredMetrics = metricScores.filter((m) => m.evaluated && !m.reference)
   const passing = scoredMetrics.reduce((sum, m) => sum + m.passing, 0)
@@ -66,35 +71,32 @@ function getTokenScore(tokenId, metrics) {
   return { tokenId, passing, total, percentage, metrics: metricScores }
 }
 
-export function composeAll(dir = contentDir) {
+export function composeAll(dir: string = contentDir) {
   const meta = readJson(join(dir, "framework-meta.json"))
-  const framework = meta.order.map((id) =>
+  const framework = meta.order.map((id: string) =>
     readJson(join(dir, "framework", `${id}.json`))
   )
-  const criterionDefs = new Map(
-    framework.flatMap((m) => m.criteria.map((c) => [c.id, c]))
-  )
 
-  const tokenIds = readdirSync(join(dir, "tokens"))
+  const tokenIds: string[] = readdirSync(join(dir, "tokens"))
     .filter((f) => f.endsWith(".json"))
     .map((f) => f.replace(/\.json$/, ""))
     .sort()
 
-  const tokenAtoms = new Map(
+  const tokenAtoms = new Map<string, any>(
     tokenIds.map((id) => [id, readJson(join(dir, "tokens", `${id}.json`))])
   )
 
-  const tokenDocs = []
+  const tokenDocs: any[] = []
   for (const tokenId of tokenIds) {
-    const metrics = []
+    const metrics: any[] = []
     for (const fm of framework) {
       const metricDir = join(dir, "evaluations", tokenId, fm.id)
       const editorial = readJson(
         join(dir, "summaries", tokenId, `${fm.id}.json`)
       )
-      const criteria = fm.criteria.map((fc) => {
+      const criteria = fm.criteria.map((fc: any) => {
         const atom = readJson(join(metricDir, `${fc.id}.json`))
-        const composed = {
+        const composed: any = {
           id: fc.id,
           name: atom.name ?? fc.name,
           about: fc.about,
@@ -116,7 +118,7 @@ export function composeAll(dir = contentDir) {
     }
 
     const allCriteria = metrics.flatMap((m) => m.criteria)
-    const countBy = (status) =>
+    const countBy = (status: string) =>
       allCriteria.filter((c) => c.status === status).length
     const score = getTokenScore(tokenId, metrics)
 
@@ -154,10 +156,11 @@ export function composeAll(dir = contentDir) {
     .update(JSON.stringify({ index, tokenDocs, frameworkDoc, faq, testimonials }))
     .digest("hex")
     .slice(0, 16)
+
   // Most-recent editorial timestamp across the set (unix seconds → ISO).
   // Freshness signal surfaced in the API provenance envelope. Derived purely
   // from content already inside snapshot_id's hash, so it never perturbs it.
-  const editedAt = tokenDocs
+  const editedAt: number[] = tokenDocs
     .map((d) => d.lastUpdated)
     .filter((t) => typeof t === "number" && t > 0)
   const manifest = {
@@ -166,7 +169,7 @@ export function composeAll(dir = contentDir) {
       editedAt.length > 0
         ? new Date(Math.max(...editedAt) * 1000).toISOString()
         : null,
-    tokens: tokenDocs.map((d) => d.id),
+    tokens: tokenDocs.map((d) => d.id as string),
   }
 
   return {
@@ -184,7 +187,7 @@ function main() {
     composeAll()
 
   rmSync(generatedDir, { recursive: true, force: true })
-  const writeJson = (p, data) => {
+  const writeJson = (p: string, data: unknown) => {
     mkdirSync(dirname(p), { recursive: true })
     writeFileSync(p, `${JSON.stringify(data, null, 2)}\n`)
   }
