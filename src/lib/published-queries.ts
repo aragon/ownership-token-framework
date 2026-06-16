@@ -15,7 +15,12 @@
  * a new snapshot arrives as a new deployment, or — in release mode — as the
  * next SSR render reading a newer release, never as a background refetch.
  */
-import { queryOptions } from "@tanstack/react-query"
+import {
+  type FetchQueryOptions,
+  type QueryClient,
+  type QueryKey,
+  queryOptions,
+} from "@tanstack/react-query"
 import type { FrameworkDoc, IndexRow, TokenDoc } from "@/lib/schemas"
 
 async function fetchEnvelopeData<T>(url: string): Promise<T> {
@@ -25,6 +30,36 @@ async function fetchEnvelopeData<T>(url: string): Promise<T> {
   }
   const payload = (await res.json()) as { data: T }
   return payload.data
+}
+
+// Server-only. In release mode the published data can change within the process
+// lifetime (a new GitHub Release), so the shared QueryClient + staleTime:Infinity
+// would otherwise pin the first snapshot until restart. Statically false on the
+// client (import.meta.env.SSR), so client caching is unchanged.
+const RELEASE_MODE_SSR =
+  import.meta.env.SSR && process.env.OTF_PUBLISHED_RELEASE === "true"
+
+/**
+ * Ensure a published query is cached for this render. In release-mode SSR we
+ * force a revalidated read so the loader can't serve a process-pinned snapshot;
+ * the actual fetch is still deduped + 60s-cached by published-source, so this
+ * doesn't hammer GitHub. Committed mode and the client reuse the cached value
+ * (data is immutable per deploy there).
+ */
+export async function readPublished<
+  TQueryFnData,
+  TError,
+  TData,
+  TQueryKey extends QueryKey,
+>(
+  client: QueryClient,
+  options: FetchQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+): Promise<void> {
+  if (RELEASE_MODE_SSR) {
+    await client.fetchQuery({ ...options, staleTime: 0 })
+    return
+  }
+  await client.ensureQueryData(options)
 }
 
 export const publishedIndexQuery = queryOptions({

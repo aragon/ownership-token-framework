@@ -16,6 +16,7 @@ import { generateOpenGraphMetadata } from "@/lib/metadata"
 import {
   publishedFrameworkQuery,
   publishedIndexQuery,
+  readPublished,
 } from "@/lib/published-queries"
 import { queryClient } from "@/lib/query-client"
 import appCss from "../styles.css?url"
@@ -26,8 +27,8 @@ export const Route = createRootRoute({
   // cache — ensure them before render, on server and client alike.
   loader: async () => {
     await Promise.all([
-      queryClient.ensureQueryData(publishedIndexQuery),
-      queryClient.ensureQueryData(publishedFrameworkQuery),
+      readPublished(queryClient, publishedIndexQuery),
+      readPublished(queryClient, publishedFrameworkQuery),
     ])
   },
   head: () => ({
