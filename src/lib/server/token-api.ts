@@ -17,16 +17,22 @@ import {
   getIndex,
   getProvenance,
   getTokenDoc,
+  isReleaseEnabled,
 } from "@/lib/server/published-source"
 
-// The published data is immutable for the life of a deploy (composed at build
-// time and content-hashed). Hosts purge their edge cache on each new deploy, so
-// we cache hard: after the first hit per edge node the CDN serves every
-// subsequent request and the function is never invoked. A request flood is
-// absorbed by the CDN, not paid for at the origin — this is the primary DoS
-// posture for a read-only API (see .tempor/docs/operations/api-hardening.md).
-const CACHE_OK =
-  "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800"
+// Cache posture depends on the data source.
+// - Committed / build-from-ref data is immutable for the life of the deploy, so
+//   we cache hard at the edge: after the first hit per edge node the CDN serves
+//   everything and the function is never invoked — a flood is absorbed by the
+//   CDN, the primary DoS posture (see .tempor/docs/operations/api-hardening.md).
+// - In release mode the data can change WITHOUT a deploy (a new GitHub Release),
+//   so a day-long edge cache would serve a stale snapshot. We cap it near the
+//   source's revalidation window so a new snapshot propagates in ~a minute,
+//   still mostly CDN-absorbed. (Eventual upgrade: a publish→app purge webhook —
+//   instant propagation while keeping the long cache.)
+const CACHE_OK = isReleaseEnabled()
+  ? "public, max-age=30, s-maxage=60, stale-while-revalidate=60"
+  : "public, max-age=300, s-maxage=86400, stale-while-revalidate=604800"
 // Misses (unknown ids) are cached briefly so a repeated bogus id can't hammer
 // the function; short because an id can become valid on the next deploy.
 const CACHE_MISS = "public, max-age=30, s-maxage=60"

@@ -93,7 +93,7 @@ let inFlight: Promise<Bundle | null> | null = null
  * on OTF_CONTENT_TOKEN presence instead (no token → committed; correct for
  * dev/test/CI). The graceful fallback below stays regardless.
  */
-function isReleaseEnabled(): boolean {
+export function isReleaseEnabled(): boolean {
   return process.env.OTF_PUBLISHED_RELEASE === "true"
 }
 
