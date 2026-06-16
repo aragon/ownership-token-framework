@@ -40,6 +40,12 @@ const SNAPSHOT_ASSET_NAME = "snapshot.json"
 const USER_AGENT = "otf-dashboard"
 /** How long a validated release bundle is served before we revalidate. */
 const CACHE_TTL_MS = 60_000
+/**
+ * Whole-operation budget for a release read (lookup + asset). A timeout aborts
+ * the in-flight fetch, which surfaces as the same fallback as any other failure
+ * — so a slow or hung GitHub can never block an SSR render.
+ */
+const REQUEST_TIMEOUT_MS = 8_000
 
 /** A fully validated snapshot bundle composed from the release asset. */
 type Bundle = {
@@ -116,7 +122,10 @@ function resolveCommitRef(): string {
 async function fetchReleaseBundle(): Promise<Bundle | null> {
   const token = process.env.OTF_CONTENT_TOKEN
   try {
+    // One time budget shared across both fetches below.
+    const signal = AbortSignal.timeout(REQUEST_TIMEOUT_MS)
     const releaseRes = await fetch(RELEASE_API_URL, {
+      signal,
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         Accept: "application/vnd.github+json",
@@ -142,6 +151,7 @@ async function fetchReleaseBundle(): Promise<Bundle | null> {
     }
 
     const assetRes = await fetch(asset.url, {
+      signal,
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         // The GitHub asset API returns the raw bytes only with this Accept.
