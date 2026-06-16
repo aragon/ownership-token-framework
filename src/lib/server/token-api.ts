@@ -4,7 +4,7 @@
  *
  * Response contract (consumed by the app, future APP-796 agents, and
  * external partners):
- *   { data: <read model>, provenance: { snapshot_id, commit_ref, published_at, source } }
+ *   { data: <read model>, provenance: { snapshot_id, commit_ref, last_updated, published_at, source } }
  *
  * NOTE: the route parameter is the token `id` (lowercase, e.g. "ldo") —
  * matching generated/tokens/<id>.json and the existing /tokens/$tokenId page
@@ -12,12 +12,12 @@
  * to ids for all current tokens).
  */
 import {
+  getFaq,
+  getFramework,
+  getIndex,
   getProvenance,
-  getPublishedFaq,
-  getPublishedFramework,
-  getPublishedIndex,
-  getPublishedTokenDoc,
-} from "@/lib/server/published-data"
+  getTokenDoc,
+} from "@/lib/server/published-source"
 
 // The published data is immutable for the life of a deploy (composed at build
 // time and content-hashed). Hosts purge their edge cache on each new deploy, so
@@ -86,32 +86,29 @@ export function handleMethodNotAllowed(): Response {
 }
 
 /** GET /api/v1/tokens — the published index (discovery + cross-token queries). */
-export function handleGetTokens(): Response {
-  return jsonResponse({
-    data: getPublishedIndex(),
-    provenance: getProvenance(),
-  })
+export async function handleGetTokens(): Promise<Response> {
+  const [data, provenance] = await Promise.all([getIndex(), getProvenance()])
+  return jsonResponse({ data, provenance })
 }
 
 /** GET /api/v1/framework — canonical metric/criteria definitions + anchors. */
-export function handleGetFramework(): Response {
-  return jsonResponse({
-    data: getPublishedFramework(),
-    provenance: getProvenance(),
-  })
+export async function handleGetFramework(): Promise<Response> {
+  const [data, provenance] = await Promise.all([
+    getFramework(),
+    getProvenance(),
+  ])
+  return jsonResponse({ data, provenance })
 }
 
 /** GET /api/v1/faq — published framework/methodology Q&A. */
-export function handleGetFaq(): Response {
-  return jsonResponse({
-    data: getPublishedFaq(),
-    provenance: getProvenance(),
-  })
+export async function handleGetFaq(): Promise<Response> {
+  const [data, provenance] = await Promise.all([getFaq(), getProvenance()])
+  return jsonResponse({ data, provenance })
 }
 
 /** GET /api/v1/tokens/{id} — one composed token doc (the per-token reusable unit). */
-export function handleGetToken(tokenId: string): Response {
-  const doc = getPublishedTokenDoc(tokenId)
+export async function handleGetToken(tokenId: string): Promise<Response> {
+  const doc = await getTokenDoc(tokenId)
   if (!doc) {
     return jsonResponse(
       {
@@ -124,5 +121,5 @@ export function handleGetToken(tokenId: string): Response {
       CACHE_MISS
     )
   }
-  return jsonResponse({ data: doc, provenance: getProvenance() })
+  return jsonResponse({ data: doc, provenance: await getProvenance() })
 }

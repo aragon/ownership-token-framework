@@ -31,7 +31,7 @@ async function body(res: Response) {
 
 describe("GET /api/tokens", () => {
   it("returns the published index wrapped in a provenance envelope", async () => {
-    const res = handleGetTokens()
+    const res = await handleGetTokens()
     expect(res.status).toBe(200)
     expect(res.headers.get("Content-Type")).toBe("application/json")
 
@@ -41,12 +41,12 @@ describe("GET /api/tokens", () => {
   })
 
   it("data payload is identical to generated/index.json", async () => {
-    const payload = await body(handleGetTokens())
+    const payload = await body(await handleGetTokens())
     expect(payload.data).toEqual(readJson(join(generated, "index.json")))
   })
 
   it("envelope: commit_ref non-null, published_at null pre-pipeline, snapshot_id matches manifest", async () => {
-    const { provenance } = await body(handleGetTokens())
+    const { provenance } = await body(await handleGetTokens())
     expect(provenance.commit_ref).toBeTruthy()
     expect(provenance.published_at).toBeNull()
     expect(provenance.source).toBe("generated")
@@ -58,7 +58,7 @@ describe("GET /api/tokens", () => {
 
 describe("GET /api/framework", () => {
   it("returns the framework doc with provenance, identical to generated", async () => {
-    const res = handleGetFramework()
+    const res = await handleGetFramework()
     expect(res.status).toBe(200)
     const payload = await body(res)
     expect(() => frameworkDocSchema.parse(payload.data)).not.toThrow()
@@ -69,7 +69,7 @@ describe("GET /api/framework", () => {
 
 describe("GET /api/v1/faq", () => {
   it("returns the faq doc with provenance, identical to generated", async () => {
-    const res = handleGetFaq()
+    const res = await handleGetFaq()
     expect(res.status).toBe(200)
     const payload = await body(res)
     expect(() => faqSchema.parse(payload.data)).not.toThrow()
@@ -81,7 +81,7 @@ describe("GET /api/v1/faq", () => {
 describe("GET /api/tokens/{id}", () => {
   it("returns every published token doc identical to its generated file", async () => {
     for (const id of TOKEN_IDS) {
-      const res = handleGetToken(id)
+      const res = await handleGetToken(id)
       expect(res.status, id).toBe(200)
       const payload = await body(res)
       expect(() => tokenDocSchema.parse(payload.data), id).not.toThrow()
@@ -93,7 +93,7 @@ describe("GET /api/tokens/{id}", () => {
   })
 
   it("normalizes id casing and whitespace", async () => {
-    const res = handleGetToken("  LDO ")
+    const res = await handleGetToken("  LDO ")
     expect(res.status).toBe(200)
     const payload = await body(res)
     expect(payload.data.id).toBe("ldo")
@@ -102,7 +102,7 @@ describe("GET /api/tokens/{id}", () => {
   it.each(["doge", "not-a-token"])(
     "returns structured 404 for unknown id %s",
     async (id) => {
-      const res = handleGetToken(id)
+      const res = await handleGetToken(id)
       expect(res.status).toBe(404)
       const payload = await body(res)
       expect(() => apiErrorSchema.parse(payload)).not.toThrow()
