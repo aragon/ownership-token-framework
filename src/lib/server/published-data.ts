@@ -47,7 +47,10 @@ export function getProvenance(): Provenance {
   return {
     snapshot_id: manifest.snapshot_id,
     commit_ref: resolveCommitRef(),
-    // Stamped by the publish pipeline once snapshots are actually published.
+    // When the content was last edited (carried in the composed manifest).
+    last_updated: manifest.last_updated,
+    // Stamped by the publish pipeline once snapshots are actually published;
+    // kept distinct from last_updated.
     published_at: null,
     source: "generated",
   }

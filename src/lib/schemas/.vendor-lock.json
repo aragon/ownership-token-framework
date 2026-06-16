@@ -1,11 +1,11 @@
 {
   "source": "aragon/otf-cms",
-  "source_commit": "12f289be4b42f485634f1047ccbc6b4752bf1d55",
+  "source_commit": "c564a48d32dadaecca8ce8e7df8ff1026455886d",
   "files": {
     "src/lib/schemas/atoms.ts": "156caa321c5dc9641d42f84e41d8f771c0ae5c736bbf649accfca91e786bdf27",
     "src/lib/schemas/common.ts": "ea0c3fba07fd48b495f6cd0c177584df1249dfe0367738f51ef5b7bb1da1c2d2",
-    "src/lib/schemas/index.ts": "41d23b4cf7319386a62138a36f899a87fd2632995dcf811138c25258c5aeefee",
-    "src/lib/schemas/read-models.ts": "ce8518850d56e6146593694f8185b90ecc6beaaded9e1b4d5e69bd93d250fbf2",
-    "scripts/lib/compose-data.mjs": "ada9e8803a6dd3ae4b8dd49357d991770643c300787e6016e430b3eb386bec25"
+    "src/lib/schemas/index.ts": "5fab896462bcff4afbb03e7df62127868939acd3a7126936394f16cbb10db8db",
+    "src/lib/schemas/read-models.ts": "3398ae5d209b89f81283db9cd82ba188072c433f91bc907c953a73f313e9718f",
+    "scripts/lib/compose-data.mjs": "38de2a42dd4826c7eb2ae628cd0f78e42c55144c807c3df6856331fade750847"
   }
 }

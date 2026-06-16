@@ -111,16 +111,21 @@ export const frameworkDocSchema = z.strictObject({
 export const manifestSchema = z.strictObject({
   /** Content hash over the composed output; future R2 snapshot key component. */
   snapshot_id: z.string(),
+  /** Most-recent editorial edit across the set (ISO); null if none carry one. */
+  last_updated: z.string().nullable(),
   tokens: z.array(z.string()),
 })
 
 /**
  * Provenance envelope wrapped around every API response.
- * published_at stays null until the publish pipeline stamps real publishes.
+ * - last_updated: when the content was last edited (from the CMS).
+ * - published_at: when this snapshot was published; stays null until the
+ *   publish pipeline stamps real publishes. Kept distinct from last_updated.
  */
 export const provenanceSchema = z.strictObject({
   snapshot_id: z.string(),
   commit_ref: z.string(),
+  last_updated: z.string().nullable(),
   published_at: z.string().nullable(),
   source: z.enum(["generated", "kv"]),
 })

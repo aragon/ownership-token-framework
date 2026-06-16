@@ -154,8 +154,18 @@ export function composeAll(dir = contentDir) {
     .update(JSON.stringify({ index, tokenDocs, frameworkDoc, faq, testimonials }))
     .digest("hex")
     .slice(0, 16)
+  // Most-recent editorial timestamp across the set (unix seconds → ISO).
+  // Freshness signal surfaced in the API provenance envelope. Derived purely
+  // from content already inside snapshot_id's hash, so it never perturbs it.
+  const editedAt = tokenDocs
+    .map((d) => d.lastUpdated)
+    .filter((t) => typeof t === "number" && t > 0)
   const manifest = {
     snapshot_id: snapshotId,
+    last_updated:
+      editedAt.length > 0
+        ? new Date(Math.max(...editedAt) * 1000).toISOString()
+        : null,
     tokens: tokenDocs.map((d) => d.id),
   }
 

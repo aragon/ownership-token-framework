@@ -49,9 +49,10 @@ labels; treat the counts as pre-rolled tallies.
 Every response is `{ data, provenance }`. `provenance.snapshot_id` is a
 deterministic content hash of the entire published data set — cite it to pin
 exactly what you read. `provenance.commit_ref` ties it to a deployment.
-`published_at` may be null in the current serving mode (`provenance.source`
-tells you that mode, e.g. `generated`); use `snapshot_id` / `commit_ref` as the
-version of record.
+`provenance.last_updated` is when the content was last edited (ISO), distinct
+from `published_at` — when this snapshot was published, which may be null in the
+current serving mode (`provenance.source` tells you that mode, e.g.
+`generated`). Use `snapshot_id` / `commit_ref` as the version of record.
 
 ## Shape of a response
 
@@ -79,6 +80,7 @@ Every endpoint returns `{ data, provenance }`. The index nests its rows under
   },
   "provenance": {
     "snapshot_id": "…", "commit_ref": "…",
+    "last_updated": "2026-05-13T12:21:49.000Z",
     "published_at": null, "source": "generated"
   }
 }
