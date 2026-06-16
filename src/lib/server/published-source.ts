@@ -59,6 +59,11 @@ let inFlight: Promise<Bundle | null> | null = null
 /**
  * The publish pipeline is opt-in. With OTF_PUBLISHED_RELEASE unset (or anything
  * other than "true") we serve committed data exactly as before.
+ *
+ * TODO(post-migration): this flag is a dark-launch tool, not a permanent
+ * control — once runtime reads are provisioned and trusted, delete it and gate
+ * on OTF_CONTENT_TOKEN presence instead (no token → committed; correct for
+ * dev/test/CI). The graceful fallback below stays regardless.
  */
 function isReleaseEnabled(): boolean {
   return process.env.OTF_PUBLISHED_RELEASE === "true"
