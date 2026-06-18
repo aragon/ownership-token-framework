@@ -10,7 +10,11 @@ const config = defineConfig(() => {
   return {
     plugins: [
       devtools(),
-      nitro(),
+      // Emit Vercel Build Output API artifacts instead of relying on Vercel
+      // to adapt Nitro's generic Node server at deployment time.
+      nitro({
+        preset: 'vercel',
+      }),
       // this is the plugin that enables path aliases
       viteTsConfigPaths({
         projects: ['./tsconfig.json'],
