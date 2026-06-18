@@ -28,6 +28,14 @@ on:
         description: otf-cms ref for a build-from-ref preview (blank = committed/runtime data)
         type: string
         default: ""
+      comment_repo:
+        description: "owner/repo of a PR to post the preview URL back to (optional, e.g. the otf-cms content PR)"
+        type: string
+        default: ""
+      comment_pr:
+        description: PR number in comment_repo to post the preview URL to (optional)
+        type: string
+        default: ""
   push:
     branches: [main]
 
@@ -101,3 +109,17 @@ jobs:
           URL: ${{ steps.deploy.outputs.url }}
         run: |
           echo "Deployed ($TARGET): $URL" >> "$GITHUB_STEP_SUMMARY"
+
+      # When triggered by a content PR (otf-cms), post the preview link back so
+      # the editor sees it on their PR. Needs CMS_COMMENT_TOKEN with PR-comment
+      # access on comment_repo. Values arrive via env, never inlined into run.
+      - name: Post preview URL to the content PR
+        if: ${{ github.event.inputs.comment_pr != '' && github.event.inputs.environment == 'preview' }}
+        env:
+          GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
+          COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
+          COMMENT_PR: ${{ github.event.inputs.comment_pr }}
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          gh pr comment "$COMMENT_PR" --repo "$COMMENT_REPO" \
+            --body "Rendered preview of this content: $URL"
