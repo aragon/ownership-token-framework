@@ -73,15 +73,18 @@ async function resolveContentDir(): Promise<{
 
   const token = process.env.OTF_CONTENT_TOKEN
   if (!token) throw new Error("OTF_CONTENT_REF set but OTF_CONTENT_TOKEN missing")
+  // Content repo, overridable so a fork builds from its own content. The
+  // tarball extracts to "<owner>-<repo>-<sha>/", so the prefix tracks the repo.
+  const repo = process.env.OTF_CONTENT_REPO ?? "aragon/otf-cms"
   const tmp = mkdtempSync(join(tmpdir(), "otf-content-"))
   const tarball = join(tmp, "otf-cms.tar.gz")
-  console.log(`build-data: fetching otf-cms@${ref}`)
+  console.log(`build-data: fetching ${repo}@${ref}`)
 
   // Native fetch — no shell. The token rides an Authorization header (never a
   // command line), and the ref is URL-encoded into the path. GitHub's tarball
   // API 302-redirects to a pre-signed codeload URL; fetch follows it.
   const res = await fetch(
-    `https://api.github.com/repos/aragon/otf-cms/tarball/${encodeURIComponent(ref as string)}`,
+    `https://api.github.com/repos/${repo}/tarball/${encodeURIComponent(ref as string)}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,13 +94,14 @@ async function resolveContentDir(): Promise<{
     }
   )
   if (!res.ok) {
-    throw new Error(`fetch otf-cms@${ref} failed: ${res.status} ${res.statusText}`)
+    throw new Error(`fetch ${repo}@${ref} failed: ${res.status} ${res.statusText}`)
   }
   writeFileSync(tarball, Buffer.from(await res.arrayBuffer()))
 
   // execFileSync with an args array — no shell, so no metacharacter injection.
   execFileSync("tar", ["xzf", tarball, "-C", tmp], { stdio: "inherit" })
-  const extracted = readdirSync(tmp).find((n) => n.startsWith("aragon-otf-cms-"))
+  const extractedPrefix = `${repo.replace("/", "-")}-`
+  const extracted = readdirSync(tmp).find((n) => n.startsWith(extractedPrefix))
   if (!extracted) throw new Error("tarball did not contain the expected root")
   return {
     contentDir: join(tmp, extracted, "content"),

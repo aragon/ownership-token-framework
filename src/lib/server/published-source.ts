@@ -34,8 +34,10 @@ import {
   getPublishedTokenDoc as getCommittedTokenDoc,
 } from "@/lib/server/published-data"
 
-const RELEASE_API_URL =
-  "https://api.github.com/repos/aragon/otf-cms/releases/latest"
+// The content repo, overridable so a fork can read its own releases. Defaults
+// to the canonical Aragon repo.
+const CONTENT_REPO = process.env.OTF_CONTENT_REPO ?? "aragon/otf-cms"
+const RELEASE_API_URL = `https://api.github.com/repos/${CONTENT_REPO}/releases/latest`
 const SNAPSHOT_ASSET_NAME = "snapshot.json"
 const USER_AGENT = "otf-dashboard"
 /** How long a validated release bundle is served before we revalidate. */
