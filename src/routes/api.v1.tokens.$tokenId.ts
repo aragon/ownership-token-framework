@@ -8,7 +8,7 @@ import {
 export const Route = createFileRoute("/api/v1/tokens/$tokenId")({
   server: {
     handlers: {
-      GET: ({ params }) => handleGetToken(params.tokenId),
+      GET: ({ params, request }) => handleGetToken(params.tokenId, request),
       OPTIONS: () => handleOptions(),
       POST: () => handleMethodNotAllowed(),
       PUT: () => handleMethodNotAllowed(),

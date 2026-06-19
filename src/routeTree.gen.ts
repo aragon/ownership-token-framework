@@ -13,6 +13,8 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TokensTokenIdRouteImport } from './routes/tokens/$tokenId'
 import { Route as ApiV1TokensRouteImport } from './routes/api.v1.tokens'
+import { Route as ApiV1OpenapiDotjsonRouteImport } from './routes/api.v1.openapi[.]json'
+import { Route as ApiV1IndexDotjsonRouteImport } from './routes/api.v1.index[.]json'
 import { Route as ApiV1FrameworkRouteImport } from './routes/api.v1.framework'
 import { Route as ApiV1FaqRouteImport } from './routes/api.v1.faq'
 import { Route as ApiV1TokensTokenIdRouteImport } from './routes/api.v1.tokens.$tokenId'
@@ -37,6 +39,16 @@ const ApiV1TokensRoute = ApiV1TokensRouteImport.update({
   path: '/api/v1/tokens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1OpenapiDotjsonRoute = ApiV1OpenapiDotjsonRouteImport.update({
+  id: '/api/v1/openapi.json',
+  path: '/api/v1/openapi.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1IndexDotjsonRoute = ApiV1IndexDotjsonRouteImport.update({
+  id: '/api/v1/index.json',
+  path: '/api/v1/index.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiV1FrameworkRoute = ApiV1FrameworkRouteImport.update({
   id: '/api/v1/framework',
   path: '/api/v1/framework',
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/tokens/$tokenId': typeof TokensTokenIdRoute
   '/api/v1/faq': typeof ApiV1FaqRoute
   '/api/v1/framework': typeof ApiV1FrameworkRoute
+  '/api/v1/index.json': typeof ApiV1IndexDotjsonRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/tokens': typeof ApiV1TokensRouteWithChildren
   '/api/v1/tokens/$tokenId': typeof ApiV1TokensTokenIdRoute
 }
@@ -68,6 +82,8 @@ export interface FileRoutesByTo {
   '/tokens/$tokenId': typeof TokensTokenIdRoute
   '/api/v1/faq': typeof ApiV1FaqRoute
   '/api/v1/framework': typeof ApiV1FrameworkRoute
+  '/api/v1/index.json': typeof ApiV1IndexDotjsonRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/tokens': typeof ApiV1TokensRouteWithChildren
   '/api/v1/tokens/$tokenId': typeof ApiV1TokensTokenIdRoute
 }
@@ -78,6 +94,8 @@ export interface FileRoutesById {
   '/tokens/$tokenId': typeof TokensTokenIdRoute
   '/api/v1/faq': typeof ApiV1FaqRoute
   '/api/v1/framework': typeof ApiV1FrameworkRoute
+  '/api/v1/index.json': typeof ApiV1IndexDotjsonRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/tokens': typeof ApiV1TokensRouteWithChildren
   '/api/v1/tokens/$tokenId': typeof ApiV1TokensTokenIdRoute
 }
@@ -89,6 +107,8 @@ export interface FileRouteTypes {
     | '/tokens/$tokenId'
     | '/api/v1/faq'
     | '/api/v1/framework'
+    | '/api/v1/index.json'
+    | '/api/v1/openapi.json'
     | '/api/v1/tokens'
     | '/api/v1/tokens/$tokenId'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +118,8 @@ export interface FileRouteTypes {
     | '/tokens/$tokenId'
     | '/api/v1/faq'
     | '/api/v1/framework'
+    | '/api/v1/index.json'
+    | '/api/v1/openapi.json'
     | '/api/v1/tokens'
     | '/api/v1/tokens/$tokenId'
   id:
@@ -107,6 +129,8 @@ export interface FileRouteTypes {
     | '/tokens/$tokenId'
     | '/api/v1/faq'
     | '/api/v1/framework'
+    | '/api/v1/index.json'
+    | '/api/v1/openapi.json'
     | '/api/v1/tokens'
     | '/api/v1/tokens/$tokenId'
   fileRoutesById: FileRoutesById
@@ -117,6 +141,8 @@ export interface RootRouteChildren {
   TokensTokenIdRoute: typeof TokensTokenIdRoute
   ApiV1FaqRoute: typeof ApiV1FaqRoute
   ApiV1FrameworkRoute: typeof ApiV1FrameworkRoute
+  ApiV1IndexDotjsonRoute: typeof ApiV1IndexDotjsonRoute
+  ApiV1OpenapiDotjsonRoute: typeof ApiV1OpenapiDotjsonRoute
   ApiV1TokensRoute: typeof ApiV1TokensRouteWithChildren
 }
 
@@ -148,6 +174,20 @@ declare module '@tanstack/react-router' {
       path: '/api/v1/tokens'
       fullPath: '/api/v1/tokens'
       preLoaderRoute: typeof ApiV1TokensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/openapi.json': {
+      id: '/api/v1/openapi.json'
+      path: '/api/v1/openapi.json'
+      fullPath: '/api/v1/openapi.json'
+      preLoaderRoute: typeof ApiV1OpenapiDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/index.json': {
+      id: '/api/v1/index.json'
+      path: '/api/v1/index.json'
+      fullPath: '/api/v1/index.json'
+      preLoaderRoute: typeof ApiV1IndexDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/framework': {
@@ -192,6 +232,8 @@ const rootRouteChildren: RootRouteChildren = {
   TokensTokenIdRoute: TokensTokenIdRoute,
   ApiV1FaqRoute: ApiV1FaqRoute,
   ApiV1FrameworkRoute: ApiV1FrameworkRoute,
+  ApiV1IndexDotjsonRoute: ApiV1IndexDotjsonRoute,
+  ApiV1OpenapiDotjsonRoute: ApiV1OpenapiDotjsonRoute,
   ApiV1TokensRoute: ApiV1TokensRouteWithChildren,
 }
 export const routeTree = rootRouteImport

@@ -8,7 +8,7 @@ import {
 export const Route = createFileRoute("/api/v1/faq")({
   server: {
     handlers: {
-      GET: () => handleGetFaq(),
+      GET: ({ request }) => handleGetFaq(request),
       OPTIONS: () => handleOptions(),
       POST: () => handleMethodNotAllowed(),
       PUT: () => handleMethodNotAllowed(),

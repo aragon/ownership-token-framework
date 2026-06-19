@@ -11,6 +11,8 @@
  * route. APP-796's "{symbol}" wording resolves to this id (symbols lowercase
  * to ids for all current tokens).
  */
+import type { Provenance } from "@/lib/schemas"
+import { buildOpenApiDocument } from "@/lib/server/openapi"
 import {
   getFaq,
   getFramework,
@@ -37,6 +39,19 @@ const CACHE_OK = isReleaseEnabled()
 // the function; short because an id can become valid on the next deploy.
 const CACHE_MISS = "public, max-age=30, s-maxage=60"
 
+function baseHeaders(cacheControl: string): Record<string, string> {
+  return {
+    "Content-Type": "application/json",
+    "Cache-Control": cacheControl,
+    // Public, read-only data with no credentials — a wildcard origin is safe
+    // and keeps CORS from being a footgun for consumers.
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    // Never let a client sniff the response into another content type.
+    "X-Content-Type-Options": "nosniff",
+  }
+}
+
 function jsonResponse(
   body: unknown,
   status = 200,
@@ -44,16 +59,67 @@ function jsonResponse(
 ): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": cacheControl,
-      // Public, read-only data with no credentials — a wildcard origin is safe
-      // and keeps CORS from being a footgun for consumers.
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
-      // Never let a client sniff the response into another content type.
-      "X-Content-Type-Options": "nosniff",
-    },
+    headers: baseHeaders(cacheControl),
+  })
+}
+
+/**
+ * A strong validator over the snapshot identity. Every 200 body is fully
+ * determined by the snapshot it was composed from, so the snapshot_id is a
+ * sound ETag: identical snapshot ⇒ byte-identical body. Quoted per RFC 9110.
+ */
+function snapshotEtag(provenance: Provenance): string {
+  return `"${provenance.snapshot_id}"`
+}
+
+/**
+ * Does the request's `If-None-Match` already hold this `etag`? Handles the
+ * comma-separated list form and the `*` wildcard. Conservative: any parse
+ * oddity simply yields false (we serve the full body), never a wrong 304.
+ */
+function ifNoneMatchSatisfied(
+  request: Request | undefined,
+  etag: string
+): boolean {
+  const header = request?.headers.get("If-None-Match")
+  if (!header) {
+    return false
+  }
+  if (header.trim() === "*") {
+    return true
+  }
+  return (
+    header
+      .split(",")
+      .map((tag) => tag.trim())
+      // Compare ignoring a weak prefix; our validator is strong.
+      .map((tag) => (tag.startsWith("W/") ? tag.slice(2) : tag))
+      .includes(etag)
+  )
+}
+
+/**
+ * Build a 200 envelope response carrying an `ETag` derived from the snapshot,
+ * or a bodyless `304 Not Modified` when the client's `If-None-Match` already
+ * matches. Cache-Control still rides along on the 304 so the validator's
+ * freshness lifetime is refreshed.
+ */
+function envelopeResponse(
+  data: unknown,
+  provenance: Provenance,
+  request?: Request,
+  cacheControl = CACHE_OK
+): Response {
+  const etag = snapshotEtag(provenance)
+  if (ifNoneMatchSatisfied(request, etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { ...baseHeaders(cacheControl), ETag: etag },
+    })
+  }
+  return new Response(JSON.stringify({ data, provenance }), {
+    status: 200,
+    headers: { ...baseHeaders(cacheControl), ETag: etag },
   })
 }
 
@@ -92,28 +158,31 @@ export function handleMethodNotAllowed(): Response {
 }
 
 /** GET /api/v1/tokens — the published index (discovery + cross-token queries). */
-export async function handleGetTokens(): Promise<Response> {
+export async function handleGetTokens(request?: Request): Promise<Response> {
   const [data, provenance] = await Promise.all([getIndex(), getProvenance()])
-  return jsonResponse({ data, provenance })
+  return envelopeResponse(data, provenance, request)
 }
 
 /** GET /api/v1/framework — canonical metric/criteria definitions + anchors. */
-export async function handleGetFramework(): Promise<Response> {
+export async function handleGetFramework(request?: Request): Promise<Response> {
   const [data, provenance] = await Promise.all([
     getFramework(),
     getProvenance(),
   ])
-  return jsonResponse({ data, provenance })
+  return envelopeResponse(data, provenance, request)
 }
 
 /** GET /api/v1/faq — published framework/methodology Q&A. */
-export async function handleGetFaq(): Promise<Response> {
+export async function handleGetFaq(request?: Request): Promise<Response> {
   const [data, provenance] = await Promise.all([getFaq(), getProvenance()])
-  return jsonResponse({ data, provenance })
+  return envelopeResponse(data, provenance, request)
 }
 
 /** GET /api/v1/tokens/{id} — one composed token doc (the per-token reusable unit). */
-export async function handleGetToken(tokenId: string): Promise<Response> {
+export async function handleGetToken(
+  tokenId: string,
+  request?: Request
+): Promise<Response> {
   const doc = await getTokenDoc(tokenId)
   if (!doc) {
     return jsonResponse(
@@ -127,5 +196,61 @@ export async function handleGetToken(tokenId: string): Promise<Response> {
       CACHE_MISS
     )
   }
-  return jsonResponse({ data: doc, provenance: await getProvenance() })
+  return envelopeResponse(doc, await getProvenance(), request)
+}
+
+/**
+ * GET /api/v1/openapi.json — the machine-readable contract for this API.
+ *
+ * Built from the vendored Zod read-models (see openapi.ts), so it tracks the
+ * served shapes automatically. The document is content-versioned by the active
+ * snapshot too, so it participates in the same ETag/conditional-GET flow.
+ */
+export async function handleGetOpenApi(request?: Request): Promise<Response> {
+  const provenance = await getProvenance()
+  const doc = buildOpenApiDocument()
+  const etag = snapshotEtag(provenance)
+  if (ifNoneMatchSatisfied(request, etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { ...baseHeaders(CACHE_OK), ETag: etag },
+    })
+  }
+  return new Response(JSON.stringify(doc), {
+    status: 200,
+    headers: { ...baseHeaders(CACHE_OK), ETag: etag },
+  })
+}
+
+/**
+ * GET /api/v1 (served as /api/v1/index.json) — discovery root. Points typed and
+ * programmatic consumers at the formal schema and the human/agent guides, and
+ * carries provenance like every other response.
+ */
+export async function handleGetDiscovery(request?: Request): Promise<Response> {
+  const provenance = await getProvenance()
+  const etag = snapshotEtag(provenance)
+  if (ifNoneMatchSatisfied(request, etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { ...baseHeaders(CACHE_OK), ETag: etag },
+    })
+  }
+  const body = {
+    name: "Ownership Token Framework API",
+    version: "v1",
+    endpoints: [
+      "/api/v1/tokens",
+      "/api/v1/tokens/{id}",
+      "/api/v1/framework",
+      "/api/v1/faq",
+    ],
+    schema: "/api/v1/openapi.json",
+    guides: ["/llms.txt", "/agent-guide.md"],
+    provenance,
+  }
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { ...baseHeaders(CACHE_OK), ETag: etag },
+  })
 }

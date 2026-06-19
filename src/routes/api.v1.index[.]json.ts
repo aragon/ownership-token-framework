@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router"
 import {
-  handleGetTokens,
+  handleGetDiscovery,
   handleMethodNotAllowed,
   handleOptions,
 } from "@/lib/server/token-api"
 
-export const Route = createFileRoute("/api/v1/tokens")({
+export const Route = createFileRoute("/api/v1/index.json")({
   server: {
     handlers: {
-      GET: ({ request }) => handleGetTokens(request),
+      GET: ({ request }) => handleGetDiscovery(request),
       OPTIONS: () => handleOptions(),
       POST: () => handleMethodNotAllowed(),
       PUT: () => handleMethodNotAllowed(),
