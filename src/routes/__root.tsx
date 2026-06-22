@@ -3,13 +3,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   createRootRoute,
   HeadContent,
-  Navigate,
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { NewsletterBanner } from "@/components/newsletter-banner"
+import { NotFound } from "@/components/not-found"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
@@ -37,7 +37,7 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   shellComponent: RootDocument,
-  notFoundComponent: () => <Navigate replace to="/" />,
+  notFoundComponent: NotFound,
 })
 
 const queryClient = new QueryClient()
