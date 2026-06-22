@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { fetchMarketDataFn } from "@/routes/api.market-data"
 import type { Token } from "@/lib/token-data"
+import { fetchMarketDataFn } from "@/routes/api.market-data"
 
 export interface EnrichedToken extends Token {
   marketCap?: number

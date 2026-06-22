@@ -23,9 +23,7 @@ import { NewsletterSignup } from "./newsletter-signup.tsx"
 import { OwnershipScoreCard } from "./ownership-score-card"
 
 // Types
-export type {
-  CriteriaStatusValue as CriteriaStatus,
-} from "@/lib/metrics-data"
+export type { CriteriaStatusValue as CriteriaStatus } from "@/lib/metrics-data"
 
 export { normalizeCriteriaStatus as mapStatus } from "@/lib/metrics-data"
 

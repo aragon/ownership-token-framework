@@ -13,9 +13,7 @@ export const CRITERIA_STATUS = {
 export type CriteriaStatusValue =
   (typeof CRITERIA_STATUS)[keyof typeof CRITERIA_STATUS]
 
-export function normalizeCriteriaStatus(
-  status?: string
-): CriteriaStatusValue {
+export function normalizeCriteriaStatus(status?: string): CriteriaStatusValue {
   if (
     status === CRITERIA_STATUS.POSITIVE ||
     status === CRITERIA_STATUS.WARNING ||

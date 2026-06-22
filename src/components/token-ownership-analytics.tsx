@@ -1,5 +1,10 @@
 "use client"
 
+import {
+  IconCircleCheckFilled,
+  IconCircleX,
+  // @ts-expect-error by default it imports from cjs build and triggers server-side error
+} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -11,11 +16,6 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import {
-  IconCircleCheckFilled,
-  IconCircleX,
-  // @ts-expect-error by default it imports from cjs build and triggers server-side error
-} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import {
   ArrowRightIcon,
   ChevronLeftIcon,

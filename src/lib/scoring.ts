@@ -1,4 +1,8 @@
-import { CRITERIA_STATUS, getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
+import {
+  CRITERIA_STATUS,
+  getMetricsByTokenId,
+  type Metric,
+} from "@/lib/metrics-data"
 
 export interface MetricScore {
   metricId: string

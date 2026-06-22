@@ -164,7 +164,10 @@ export default function MetricCard(props: MetricCardProps) {
               colors.summaryColor
             )}
           >
-            <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+            <ReactMarkdown
+              components={markdownComponents}
+              remarkPlugins={[remarkBreaks]}
+            >
               {metric.summary}
             </ReactMarkdown>
           </p>
@@ -210,7 +213,10 @@ export default function MetricCard(props: MetricCardProps) {
                         "prose pr-0 max-w-none md:pr-8"
                       )}
                     >
-                      <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+                      <ReactMarkdown
+                        components={markdownComponents}
+                        remarkPlugins={[remarkBreaks]}
+                      >
                         {notes}
                       </ReactMarkdown>
                     </div>

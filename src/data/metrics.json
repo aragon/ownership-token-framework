@@ -2163,9 +2163,7 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": [
-        "Reference"
-      ],
+      "tags": ["Reference"],
       "about": "Economically material assets and obligations often sit offchain, outside the custody and direct enforcement of a token, while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Trademarks and IP owned by Ethena (BVI) Limited, not controlled by ENA tokenholders. Primary interfaces operate under BVI law. Code is open source but copyright belongs to Ethena Labs.",
       "criteria": [
@@ -5912,9 +5910,7 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": [
-            "Reference"
-          ],
+          "tags": ["Reference"],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "warning",
           "notes": "Ondo product economics may accrue through product-holder yield, issuer/operator fees, spreads, expenses, or service revenue, but no documented offchain value-accrual flow to ONDO holders was identified.",
@@ -6113,9 +6109,7 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": [
-        "Reference"
-      ],
+      "tags": ["Reference"],
       "about": "Economically material assets and obligations often sit offchain, outside the custody and direct enforcement of a token, while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Ondo Finance Inc. operates the primary website, documentation, APIs, dashboards, and technical interfaces under its Terms of Service. The Terms preserve Ondo-related trademark/IP rights and separate interface services from product issuance or economic terms. Certain product source files use BUSL-1.1 SPDX headers, but no tokenholder-controlled licensing right was identified.",
       "criteria": [
