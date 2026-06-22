@@ -7,6 +7,7 @@ import {
   Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import { ErrorPage } from "@/components/error-page"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { NewsletterBanner } from "@/components/newsletter-banner"
 import { NotFound } from "@/components/not-found"
@@ -37,6 +38,9 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   shellComponent: RootDocument,
+  errorComponent: ({ error, reset }) => (
+    <ErrorPage error={error} reset={reset} />
+  ),
   notFoundComponent: NotFound,
 })
 
