@@ -1,14 +1,25 @@
-import { Link as NavLink } from "@tanstack/react-router"
+import { Link as NavLink, useNavigate } from "@tanstack/react-router"
+import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 
 /**
- * Rendered for any unmatched route. It intentionally does NOT redirect:
- * returning a real 404 status (instead of a 307 to "/") tells search engines
- * the URL does not exist so malformed/garbage paths get dropped from the index
- * rather than kept alive as soft-404 redirects.
+ * Rendered for any unmatched route. This does NOT throw a redirect, so the
+ * server still responds with a real 404 status — that's what tells search
+ * engines the URL does not exist and gets malformed/garbage paths dropped from
+ * the index (instead of a 307 soft-redirect that keeps them alive).
+ *
+ * For real users, a client-side effect navigates home after hydration, so the
+ * 404 is effectively invisible in the browser. Crawlers (and no-JS clients)
+ * still see the 404 page and status below.
  */
 export function NotFound() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate({ to: "/", replace: true })
+  }, [navigate])
+
   return (
     <Container className="flex flex-1 flex-col items-center justify-center gap-4 py-24 text-center">
       <p className="text-sm font-semibold text-muted-foreground">404</p>
