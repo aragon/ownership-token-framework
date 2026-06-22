@@ -3,14 +3,9 @@ import { createRouter as createTanStackRouter } from "@tanstack/react-router"
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen"
 
-// IMPORTANT: return a NEW router instance on every call — never a shared
-// singleton. TanStack Start calls getRouter() for each request and then mutates
-// the returned instance with that request's URL
-// (`router.update({ history: createMemoryHistory({ initialEntries: [href] }) })`).
-// A module-level singleton is therefore shared across concurrent requests on the
-// same server instance, so one request's history/redirect state leaks into
-// another — which produced intermittent 307s with a `Location` taken from a
-// different request's path.
+// Return a NEW router per call, never a singleton: TanStack Start mutates the
+// returned router with each request's URL, so a shared instance would leak one
+// request's location into another under concurrency.
 export function getRouter() {
   return createTanStackRouter({
     routeTree,
