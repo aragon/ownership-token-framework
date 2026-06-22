@@ -2231,6 +2231,764 @@
       ]
     }
   ],
+  "hype": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": ["Metric 1"],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "HYPE holders have no direct onchain governance - all protocol decisions, role assignments, and L1 upgrades are exercised by validators via HyperBFT consensus and stake-weighted votes. The Hyper Foundation runs five validators holding ~54% of active stake, giving it unilateral control over simple-majority votes and a block on any 2/3 supermajority. Gating mechanisms (bridge lock, jailing, HIP-3 slashing) are validator-controlled; tokenholders can only delegate stake.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "warning",
+          "notes": "HYPE tokenholders have no direct onchain voting rights and cannot exercise ultimate authority. They can only delegate stake to validators. Governance occurs exclusively through (a) continuous HyperBFT consensus on every block and (b) discrete stake-weighted validator votes. No Governor or Timelock contract exists. The Hyper Foundation directly runs five validators holding ~50.6–54.44% of active stake (live April 2026 data), enough to unilaterally pass simple-majority votes and block any 2/3 supermajority.",
+          "evidence": [
+            {
+              "name": "HyperBFT Continuous Consensus (Channel A)",
+              "summary": "Hyperliquid is secured by HyperBFT, a variant of HotStuff consensus. Blocks are produced and finalized by validators in proportion to the native HYPE token staked/delegated to each validator. This is the primary continuous onchain governance mechanism with one-block finality. No tokenholder direct participation.",
+              "urls": [
+                {
+                  "name": "HyperBFT & HyperCore Overview",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs",
+                  "type": "docs"
+                },
+                {
+                  "name": "Staking Documentation (delegated PoS only)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Validator Stake-Weighted Discrete Votes (Channel B)",
+              "summary": "Major protocol decisions use on-chain stake-weighted votes cast exclusively by active validators (via validatorL1Votes info endpoint). Examples: HIP-3 slashing (passed via stake-weighted median), USDH ticker allocation to Native Markets (Sept 2025, passed ~70.66% stake-for), Assistance Fund burner-address recognition (Dec 17–24 2025, passed ~85% for / 7% against / 8% abstain). Historical votes sourced from Foundation announcements; open votes via validatorL1Votes endpoint.",
+              "urls": [
+                {
+                  "name": "HIP-3 Documentation (validator slashing vote)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hyperliquid-improvement-proposals-hips/hip-3-builder-deployed-perpetuals",
+                  "type": "docs"
+                },
+                {
+                  "name": "validatorL1Votes Info Endpoint",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint",
+                  "type": "docs"
+                },
+                {
+                  "name": "Live Validator Performance Dashboard",
+                  "url": "https://app.hyperliquid.xyz/staking/validatorPerformance",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Tokenholder Participation (Delegation Only)",
+              "summary": "HYPE holders can only transfer tokens to a staking account and delegate to validators (delegated PoS). Minimum 10k HYPE self-delegation per validator to activate. Delegations have 1-day lockup; unstaking to spot has 7-day queue. No direct voting, no Governor contract, no tokenholder smart-contract governance.",
+              "urls": [
+                {
+                  "name": "Staking Documentation (full details)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Foundation Validator Concentration",
+              "summary": "Live validator performance data (April 29, 2026): 30 total validators, 25 active. The five Hyper Foundation validators hold ~232.94M HYPE (~50.6% of ~460M active stake). Individual stakes: Hyper Foundation 2 (~56.29M), Hyper Foundation 3 (~55.47M), Hyper Foundation 1 (~53.26M), Hyper Foundation 4 (~52.95M), Hyper Foundation 5 (~14.97M). This concentration gives the Foundation unilateral control over simple-majority votes and 2/3 supermajority quorums.",
+              "urls": [
+                {
+                  "name": "Live Staking Dashboard (Validator Performance)",
+                  "url": "https://app.hyperliquid.xyz/staking/validatorPerformance",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "warning",
+          "notes": "Hyperliquid has no on-chain smart-contract roles (no Governor, no RBAC contracts, no Timelock) controlled by HYPE tokenholders. All privileged or value-impacting roles - block production, HyperCore parameter updates, market activation, governance votes, builder slashing, and bridge overrides — are exercised exclusively by active validators through HyperBFT stake-weighted consensus and discrete L1 votes. HYPE holders can only delegate stake (indirect influence with 1-day undelegation delay). The Hyper Foundation directly operates five validators controlling ~50.6% of active stake (April 2026 live data), giving them de-facto control. Builder-deployer roles (HIP-3) are revocable only via validator slashing votes, not tokenholder action.",
+          "evidence": [
+            {
+              "name": "Validators (Block Production + Governance Control)",
+              "summary": "Validators are the sole privileged actors: they produce blocks proportionally to delegated stake, finalize every HyperCore action with one-block finality, and cast all stake-weighted governance votes (parameter changes, delistings, HIP execution). No roles are assigned to or revocable by tokenholders. Revocation of a validator’s influence occurs only via loss of delegated stake.",
+              "urls": [
+                {
+                  "name": "Validators Documentation",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/validators",
+                  "type": "docs"
+                },
+                {
+                  "name": "HyperBFT Consensus Overview",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs",
+                  "type": "docs"
+                },
+                {
+                  "name": "Live Validator Performance (Foundation stakes)",
+                  "url": "https://app.hyperliquid.xyz/staking/validatorPerformance",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "HIP-3 Builder-Deployer Roles",
+              "summary": "Builders who deploy perps (HIP-3) receive operational privileges: they set oracle prices, leverage limits, funding rates, and manage their market. These roles are governed and revocable exclusively by validator stake-weighted slashing votes (up to 100% of the builder’s 500k–1M HYPE stake). Tokenholders have no direct accountability path.",
+              "urls": [
+                {
+                  "name": "HIP-3: Builder-deployed perpetuals (official docs)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hyperliquid-improvement-proposals-hips/hip-3-builder-deployed-perpetuals",
+                  "type": "docs"
+                },
+                {
+                  "name": "HIP-3 Deployer Actions & Slashing Rules",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/hip-3-deployer-actions",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "HyperCore Parameter & Global Action Control",
+              "summary": "All protocol-level parameters (risk rules, market activation, leverage limits, whitelists, liquidator permissions, broadcaster modifications, etc.) are modified via native L1 VoteGlobalAction (or equivalent L1 state machine actions) executed only by validator consensus. No smart-contract roles or tokenholder governance exist; changes are not revocable by HYPE holders.",
+              "urls": [
+                {
+                  "name": "HyperCore Governance – L1 State (risk rules, market activation, leverage limits)",
+                  "url": "https://www.zealynx.io/blogs/Understanding-Hyperliquid-Architecture-HyperBFT-HyperCore-HyperEVM-Part1",
+                  "type": "analysis"
+                },
+                {
+                  "name": "Reverse Engineering – VoteGlobalAction Handler (liquidators, broadcasters, etc.)",
+                  "url": "https://blog.can.ac/2025/12/20/reverse-engineering-hyperliquid/",
+                  "type": "analysis"
+                },
+                {
+                  "name": "validatorL1Votes Info Endpoint (live governance votes)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Bridge / Cross-Chain Admin Roles (Cold Validators)",
+              "summary": "Cold validators (controlled by the Hyper Foundation / team) hold override authority: update validator sets, invalidate withdrawals, emergency unlock, and bridge parameter changes (2/3 Cold supermajority). These are multisig-style admin functions outside tokenholder control.",
+              "urls": [
+                {
+                  "name": "Cross-Chain Transfer Mechanism (bridge admin details)",
+                  "url": "https://medium.com/@gwrx2005/cross-chain-transfer-mechanism-in-hyperliquid-architecture-and-proxy-design-b3179e636ec7",
+                  "type": "analysis"
+                }
+              ]
+            },
+            {
+              "name": "Foundation Validator Concentration",
+              "summary": "The Hyper Foundation runs five validators holding ~233M HYPE (~50.6% of active stake). This concentration means the Foundation can unilaterally pass simple-majority votes and block/control 2/3 supermajority actions across all privileged roles.",
+              "urls": [
+                {
+                  "name": "Live Staking Dashboard",
+                  "url": "https://app.hyperliquid.xyz/staking/validatorPerformance",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Staking & Delegation Docs",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "warning",
+          "notes": "Core protocol logic (HyperCore, HyperEVM, HyperBFT consensus) cannot be upgraded via on-chain smart-contract mechanisms controlled by HYPE tokenholders. L1 upgrades occur exclusively through new hl-node binary releases that must be adopted by validators (≥2/3 stake threshold to maintain safety). The L1 binary is distributed as pre-compiled signed binaries only. The Bridge2 contract on Arbitrum (the main cross-chain bridge) is non-upgradeable and uses no proxy pattern. Validator-set transitions are handled on-chain via specific functions but do not involve implementation swaps or tokenholder governance.",
+          "evidence": [
+            {
+              "name": "L1 Protocol Upgrade Path (HyperCore + HyperEVM + HyperBFT)",
+              "summary": "L1 protocol upgrades require a new hl-node binary release adopted by ≥2/3 of validator stake, matching HyperBFT's safety threshold. The L1 binary itself ships as closed-source binaries only (GitHub repo provides hl-visor manager but distributes pre-compiled hl-node binaries with GPG signatures; no practical build-from-source path). Validators run hl-visor which auto-downloads and verifies new binaries on restart. No tokenholder involvement or smart-contract upgrade path exists.",
+              "urls": [
+                {
+                  "name": "hyperliquid-dex/node GitHub (visor + binary distribution)",
+                  "url": "https://github.com/hyperliquid-dex/node",
+                  "type": "source"
+                },
+                {
+                  "name": "Hyperliquid GitBook – Validators & Node Running",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/validators",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Bridge2 Contract on Arbitrum (Non-Upgradeable)",
+              "summary": "Bridge2 (0x2df1c51e09aecf9cacb7bc98cb1742757f163df7) is a non-upgradeable, non-proxy contract with no owner(), no UPGRADER_ROLE, and no proxy pattern. Validator-set transitions use updateValidatorSet() (line ~466) followed by finalizeValidatorSetUpdate() (line ~558), both requiring ≥2/3 stake-weighted hot-wallet signatures from validators. On-chain eth_call confirms epoch() = 7 and paused() = false. No implementation swaps or tokenholder-controlled upgrades.",
+              "urls": [
+                {
+                  "name": "Bridge2 Contract (Arbiscan)",
+                  "url": "https://arbiscan.io/address/0x2df1c51e09aecf9cacb7bc98cb1742757f163df7#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Bridge2 Source Code (GitHub)",
+                  "url": "https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol",
+                  "type": "source"
+                },
+                {
+                  "name": "Official Bridge2 Documentation",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/bridge2",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "HYPE is an L1-native asset - no ERC-20 contract, no proxy, no owner(), no admin key. The canonical wrapped representation on HyperEVM is WHYPE at `0x5555555555555555555555555555555555555555`, an immutable WETH9 clone with no admin or upgrade path.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "WHYPE (Wrapped HYPE) on HyperEVM Scan",
+                  "url": "https://hyperevmscan.io/address/0x5555555555555555555555555555555555555555",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "positive",
+          "notes": "HYPE has a fixed supply of 1B tokens with no mint function. HYPE held in the Assistance Fund is treated as burnt.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "HYPE token on Hyperliquid Explorer (max supply 1B)",
+                  "url": "https://app.hyperliquid.xyz/explorer/token/0x0d01dc56dcaaca66ad901c959b4011ec",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Hyperliquid Docs — Fees (Assistance Fund holdings treated as burnt)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees",
+                  "type": "docs"
+                },
+                {
+                  "name": "Assistance Fund address",
+                  "url": "https://hypurrscan.io/address/0xfefefefefefefefefefefefefefefefefefefefe#spot",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Access Gating",
+          "about": "Evaluates whether privileged roles can selectively restrict user access to the protocol.",
+          "status": "warning",
+          "notes": "Several gating mechanisms exist, but each is held by the validator set rather than a single EOA or multisig: bridge emergency lock, staking exit constraints, validator jailing, and HIP-3 deployer slashing.",
+          "evidence": [
+            {
+              "name": "Bridge emergency lock",
+              "summary": "The Arbitrum USDC bridge can be paused if enough validators vote to lock it. Unlocking it again requires signatures from validators representing more than 2/3 of total stake. There is no single admin key - only the validator set, acting collectively, can pause or resume the bridge.",
+              "urls": [
+                {
+                  "name": "Bridge2.sol — 2/3 stake-weighted signature threshold",
+                  "url": "https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol#L453-L456",
+                  "type": "github"
+                },
+                {
+                  "name": "Bridge2 deployment on Arbitrum",
+                  "url": "https://arbiscan.io/address/0x2df1c51e09aecf9cacb7bc98cb1742757f163df7",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Staking exit constraints",
+              "summary": "A 1-day delegation lockup plus a 7-day unstaking queue mean users cannot exit an adversarial validator faster than ~8 days combined.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Staking (lockups)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Validator jailing",
+              "summary": "Per the docs, *\"there is currently no automatic slashing implemented.\"* Validators may vote to jail peers that respond too slowly or infrequently to consensus messages; jailing requires a quorum (>2/3 stake-weighted vote) and stops a validator from producing rewards but does not slash. Slashing is reserved for provably malicious behaviour such as double-signing.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Staking (jailing, no automatic slashing)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "HIP-3 deployer slashing",
+              "summary": "Validators can slash an HIP-3 perp-deployer's 500k HYPE stake via stake-weighted vote, up to 100% for irregular inputs causing invalid state transitions; slashed stake is burned. Closed-source L1 means exact thresholds and timings live in the binary and cannot be verified at source level.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — HIP-3 (deployer slashing by validator vote)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hyperliquid-improvement-proposals-hips/hip-3-builder-deployed-perpetuals",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "warning",
+          "notes": "WHYPE is structurally censorship-resistant: the WETH9 pattern has no blacklist, no freeze, no pausable modifier, and no admin. For native HYPE, the closed-source L1 means a latent censorship capability cannot be ruled out at source level, but no such capability is documented and no incidents have been observed.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "WHYPE (Wrapped HYPE) on HyperEVM Scan",
+                  "url": "https://hyperevmscan.io/address/0x5555555555555555555555555555555555555555",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": ["Metric 2"],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "Value accrues to HYPE holders onchain via three live, automated mechanisms: Assistance Fund fee buyback-and-burn, staking rewards from the future-emissions reserve, and staking-tier fee discounts. The Assistance Fund is admin-less and rule-based, but the parameters governing all accrual mechanisms live in the closed-source L1 binary and can only be changed by ≥2/3 validator stake - a threshold the Hyper Foundation can unilaterally pass or block. No offchain flows accrue to holders; all offchain revenue accrues to Labs and the Foundation.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "positive",
+          "notes": "Value accrues to HYPE holders through three concurrent, onchain-verifiable mechanisms: fee buyback and burn via the Assistance Fund, staking rewards from the future-emissions reserve, and staking-tier fee discounts.",
+          "evidence": [
+            {
+              "name": "Fee buyback and burn",
+              "summary": "The Hyperliquid docs state directly: *\"fees are entirely directed to the community (HLP, the assistance fund, and deployers). … HYPE in the assistance fund is burned, removing the tokens permanently from the circulating and total supply.\"* The Assistance Fund (`0xfefe…fefe`) automatically converts trading fees to HYPE as part of L1 execution. Onchain (live, queryable via the Hyperliquid info API): the AF holds tens of millions of HYPE recognised as burned, plus a smaller hard-burned tranche reflected in `tokenDetails` as the gap between `maxSupply` (1B) and `totalSupply`.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Fees (AF burn policy)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees",
+                  "type": "docs"
+                },
+                {
+                  "name": "Assistance Fund balance (Hypurrscan)",
+                  "url": "https://hypurrscan.io/address/0xfefefefefefefefefefefefefefefefefefefefe#spot",
+                  "type": "explorer"
+                },
+                {
+                  "name": "HYPE token details (Hyperliquid Explorer — live maxSupply/totalSupply)",
+                  "url": "https://app.hyperliquid.xyz/explorer/token/0x0d01dc56dcaaca66ad901c959b4011ec",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Staking rewards",
+              "summary": "Per the docs: *\"the reward rate is inversely proportional to the square root of total HYPE staked. At 400M total HYPE staked, the yearly reward rate is approximately 2.37% per year.\"* Rewards come from the future-emissions reserve (no new HYPE is minted beyond the 1B cap), are accrued every minute, distributed daily, and auto-compound. Live `validatorSummaries` `predictedApr` values currently sit around 2.0–2.3% across the active set.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Staking (reward formula, future emissions reserve)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/hypercore/staking",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Staking-tier fee discounts",
+              "summary": "Per the fees doc, stakers receive trading fee discounts: Wood (>10 HYPE) 5%, Bronze (>100) 10%, Silver (>1,000) 15%, Gold (>10,000) 20%, Platinum (>100,000) 30%, Diamond (>500,000) 40%. Base rates: perps taker 0.045% / maker 0.015%; spot taker 0.070% / maker 0.040%.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Fees (tiers and staking discounts)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "at-risk",
+          "notes": "Two distinct pools should not be conflated: the automated, admin-less Assistance Fund, and the discretionary Hyper Foundation budget/validator cluster. HYPE holders have no direct control over either.",
+          "evidence": [
+            {
+              "name": "Assistance Fund (automated, no admin)",
+              "summary": "The Assistance Fund at `0xfefefefefefefefefefefefefefefefefefefefe` is an automated protocol-level mechanism with no admin: per the docs, it *\"converts trading fees to HYPE in a fully automated manner as part of the L1 execution\"* and *\"HYPE in the assistance fund is burned, removing the tokens permanently from the circulating and total supply.\"* Inflows, outflows, and asset composition are governed by L1 logic — neither HYPE holders nor the Foundation can redirect it.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Fees (Assistance Fund automation and burn policy)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees",
+                  "type": "docs"
+                },
+                {
+                  "name": "Assistance Fund balance (Hypurrscan)",
+                  "url": "https://hypurrscan.io/address/0xfefefefefefefefefefefefefefefefefefefefe#spot",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Hyper Foundation discretionary budget and validator cluster",
+              "summary": "The Hyper Foundation controls a discretionary budget allocated at genesis (no published spending reports or onchain transparency requirement) and operates the largest cluster of validators on the network: live `validatorSummaries` shows 5 \"Hyper Foundation\" validators holding ~233M HYPE in delegated stake, ~54% of the active set's total stake. HYPE holders have no direct control.",
+              "urls": [
+                {
+                  "name": "Hyper Foundation validators (Hypurrscan staking dashboard)",
+                  "url": "https://hypurrscan.io/staking",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Official Hyperliquid Staking Dashboard",
+                  "url": "https://app.hyperliquid.xyz/staking",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "negative",
+          "notes": "HYPE tokenholders have no direct control over value-accrual parameters. All mechanisms are gated by validators: (a) core fee logic, revenue splits, staking tiers, and emissions live in the closed-source hl-node binary and change only via new releases adopted by ≥2/3 validator stake, or (b) discrete stake-weighted validator governance votes (e.g. Dec 2025 Assistance Fund burner-address recognition). The Hyper Foundation runs five validators holding ~50.6–54.44% of active stake (April 2026 live data), giving it unilateral ability to pass or block any change. Fees flow automatically on L1 to HLP (1%), Assistance Fund (auto-converts fees → HYPE → burned at system address 0xfefefefefefefefefefefefefefefefefefefefe), and up to 50% to HIP-3 deployers.",
+          "evidence": [
+            {
+              "name": "Official Fee Structure & Revenue Routing",
+              "summary": "Fees are directed entirely to the community (HLP + Assistance Fund + deployers). Deployers may keep up to 50% of fees on their HIP-3 perps/spot. Assistance Fund auto-converts fees to HYPE on L1 and burns them permanently. No exact % (e.g. 97%/99%) is stated in primary docs - secondary reports vary slightly.",
+              "urls": [
+                {
+                  "name": "Fees – Hyperliquid GitBook (primary source)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Closed-Source L1 Binary Control",
+              "summary": "Fee parameters, revenue routing logic, staking tiers, and emission curves live in the closed-source hl-node binary (only pre-compiled signed binaries are distributed). Changes require a new binary release adopted by ≥2/3 validator stake. No source-level verification or tokenholder upgrade path exists.",
+              "urls": [
+                {
+                  "name": "hyperliquid-dex/node GitHub (visor + binaries only)",
+                  "url": "https://github.com/hyperliquid-dex/node",
+                  "type": "source"
+                },
+                {
+                  "name": "Validators & Node Running Docs",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/validators",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Validator Stake-Weighted Governance Votes (Channel B)",
+              "summary": "Higher-level accrual policy (e.g. formal AF burner-address recognition) is set by discrete stake-weighted validator votes. Dec 17–24 2025 vote passed ~85% for / 7% against / 8% abstain, permanently treating AF HYPE as burned.",
+              "urls": [
+                {
+                  "name": "validatorL1Votes Info Endpoint",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint",
+                  "type": "docs"
+                },
+                {
+                  "name": "Assistance Fund Burner Vote Announcement",
+                  "url": "https://x.com/HyperFND/status/2001127850754367525",
+                  "type": "announcement"
+                }
+              ]
+            },
+            {
+              "name": "Foundation Validator Concentration",
+              "summary": "Five Hyper Foundation validators hold ~233M HYPE (~50.6% of active stake as of April 29 2026). This concentration gives the Foundation de-facto control over any parameter change or vote.",
+              "urls": [
+                {
+                  "name": "Live Staking Dashboard (validatorPerformance)",
+                  "url": "https://app.hyperliquid.xyz/staking/validatorPerformance",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "tags": ["Reference"],
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "unevaluated",
+          "notes": "Aragon investigated offchain channels and identified no value flows to HYPE holders. The Hyperliquid API is free (no subscription revenue). There is no documented profit-share from Hyperliquid Labs Pte. Ltd. (Singapore UEN 202402326K) or the Hyper Foundation to HYPE holders. Labs is a private Exempt Private Company Limited by Shares - equity is held by the founding team, not by HYPE holders. The HYPERLIQUID trademark (USPTO 99599981) is held by the Foundation; Aragon has not been able to identify any public licensing arrangement that routes funds to HYPE holders. All offchain revenue accrues to Labs and the Foundation.",
+          "evidence": [
+            {
+              "name": "No Offchain Flows Identified",
+              "summary": "Investigated channels: subscription/API revenue (API is free, no revenue); corporate revenue sharing (no documented profit-share from Labs or Foundation to HYPE holders); dividends (Labs is a private Singapore Exempt Private Company, shares held by founders); trademark licensing (Aragon has not been able to identify any public arrangement routing funds to holders); ongoing grants/airdrops (genesis airdrop complete, no documented ongoing offchain distribution). All tokenholder value accrual occurs onchain via the mechanisms in 2.1.",
+              "urls": [
+                {
+                  "name": "Hyperliquid API Documentation",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api",
+                  "type": "docs"
+                },
+                {
+                  "name": "Hyperliquid Labs Pte. Ltd. — Tracxn Profile",
+                  "url": "https://tracxn.com/d/legal-entities/singapore/hyperliquid-labs-pte.ltd./__5z3-XYkuxaOgiXpiqaVjHMZ90Wj3k0OKsnxTrPhMyo8",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": ["Metric 3"],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "Hyperliquid has mixed verifiability. WHYPE (Wrapped HYPE) on HyperEVM and the Bridge2 contract on Arbitrum are fully source-verified and match deployed bytecode. However, the core HyperCore L1 (HyperBFT consensus, native HYPE token logic, fee routing, execution engine, staking emissions, and Assistance Fund automation) is closed-source - only pre-compiled, signed binaries are distributed via the official node repository.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "warning",
+          "notes": "WHYPE (Wrapped HYPE) is source-verified on HyperEVMScan under the canonical name WHYPE9 (exact WETH9 clone with updated name/symbol). Native HYPE token logic (mint/burn/transfer/stake) is embedded in the closed-source L1 hl-node binary and cannot be independently verified from source - only observable on-chain behaviour is inspectable.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "WHYPE Contract (HyperEVMScan) – Verified as WHYPE9",
+                  "url": "https://hyperevmscan.io/address/0x5555555555555555555555555555555555555555#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Wrapped HYPE Documentation (official source code provided)",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/hyperevm/wrapped-hype",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts and components are publicly accessible and verifiable against their onchain deployments.",
+          "status": "warning",
+          "notes": "Bridge2 (cross-chain bridge on Arbitrum) is fully open-source, MIT-licensed, and source-verified on Arbiscan with comprehensive role gating and validator logic. Official SDKs are also open-source. The economically critical HyperCore L1 binary (HyperBFT consensus, execution engine, native token logic, fee parameters, staking curve, AF automation) is closed-source — the hyperliquid-dex/node repo contains only Dockerfiles, docker-compose, README, pruner, and signed binary download scripts (no Rust source code).",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Bridge2.sol Source Code (GitHub)",
+                  "url": "https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol",
+                  "type": "github"
+                },
+                {
+                  "name": "Bridge2 Contract on Arbiscan (verified)",
+                  "url": "https://arbiscan.io/address/0x2df1c51e09aecf9cacb7bc98cb1742757f163df7#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "hyperliquid-dex/node Repository (binaries only – confirmed no source)",
+                  "url": "https://github.com/hyperliquid-dex/node",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": ["Metric 4"],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "HYPE ownership is heavily concentrated: the Hyper Foundation directly controls ~54% of active validator stake through five validators, exceeding the 50% consensus threshold. Genesis allocations leave 23.8% in core-contributor cliff vesting (24 months from Nov 2025, monthly ~9.92M HYPE unlocks) and 38.89% in protocol-reserved future emissions distributed via staking. Per-address vesting is tracked L1-internally with no public onchain vesting contract.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "at_risk",
+          "notes": "The Hyper Foundation directly controls ~53.95% of active validator stake (~232.97M HYPE) through five validators named Hyper Foundation 1-5. This exceeds 50%, giving the Foundation effective control over consensus. Top 5 validators by stake = 4 Foundation + Anchorage-by-Figment = ~58.5% of active stake. No single validator exceeds the 33% finality-blocking threshold (largest is Hyper Foundation 2 at ~13.07%). The minimum validator count for >67% HyperBFT-safety coalition is 8.",
+          "evidence": [
+            {
+              "name": "Foundation Validator Stakes (~53.95%)",
+              "summary": "Live validatorSummaries API data (April 30, 2026): Hyper Foundation 2: 56.31M HYPE (13.07%), Hyper Foundation 3: 55.48M (12.87%), Hyper Foundation 1: 53.26M (12.36%), Hyper Foundation 4: 52.96M (12.29%), Hyper Foundation 5: 14.97M (3.47%). Total: 232,969,999 HYPE = 53.95% of active stake (432.8M HYPE across ~25 active validators), or ~53.7% of all-validator stake.",
+              "urls": [
+                {
+                  "name": "Official Hyperliquid Staking Dashboard (live validator stakes)",
+                  "url": "https://app.hyperliquid.xyz/staking",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Hypurrscan Staking Dashboard (validator summaries)",
+                  "url": "https://hypurrscan.io/staking",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Genesis Distribution (full tokenomics)",
+              "summary": "1B HYPE genesis allocation: 31.00% Genesis Distribution (airdrop, released at TGE to ~94K addresses); 23.80% Core Contributors (cliff vesting Nov 2025, 24 months); 38.89% Future Emissions (protocol-reserved, released via staking drip); 6.00% Hyper Foundation Budget (discretionary); 0.30% Community Grants (released); 0.01% HIP-2 Hyperliquidity (released). Totals 100%. Per-address genesis allocations are tracked L1-internally and are not in a public table.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Tokenomics & Genesis Allocation",
+                  "url": "https://tokenomist.ai/hyperliquid",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "at_risk",
+          "notes": "Core-contributor vesting follows a cliff-based schedule. The next unlock on 2026-05-06 releases ~9.92M HYPE (~$407M at $41/HYPE) to core contributors. Monthly unlocks continue through the 24-month vesting period starting Nov 2025. The cliff-vesting schedule is published in docs but is tracked L1-internally — there is no public onchain vesting contract to independently audit per-address schedules; users must trust the L1 binary to honour the documented schedule. Future emissions (38.89%) drip continuously via staking rewards, further diluting non-stakers.",
+          "evidence": [
+            {
+              "name": "Core-Contributor Vesting Schedule",
+              "summary": "23.80% of supply = 238M HYPE vesting over 24 months from Nov 2025 on the 6th of each month. Monthly amount: 238M ÷ 24 ≈ 9,916,667 HYPE. Next unlock 2026-05-06.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Tokenomics & Vesting Schedule (Tokenomist)",
+                  "url": "https://tokenomist.ai/hyperliquid",
+                  "type": "docs"
+                },
+                {
+                  "name": "DeFiLlama HYPE Token Unlocks (core contributor schedule)",
+                  "url": "https://defillama.com/unlocks/hyperliquid",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Future-Emissions Drip and Foundation Budget",
+              "summary": "Future emissions (38.89% = 388.9M HYPE) are distributed continuously via the staking-reward drip. Foundation Budget (6% = 60M HYPE) has no published vesting schedule — a significant portion is currently observable as delegated stake on the 5 Foundation validators (~233M HYPE).",
+              "urls": [
+                {
+                  "name": "Official Hyperliquid Staking Dashboard",
+                  "url": "https://app.hyperliquid.xyz/staking",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": ["Reference"],
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "The HYPERLIQUID trademark is held by the Hyper Foundation with no documented governance link to tokenholders. Hyperliquid Labs (Singapore) controls the primary interface at app.hyperliquid.xyz. Core L1 code is closed source with IP presumably held by Labs. No alternative decentralized interfaces are documented.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "at_risk",
+          "notes": "The HYPERLIQUID trademark (USPTO 99599981) is held by Hyper Foundation, not a tokenholder-controlled entity. No governance mechanism links tokenholders to Foundation trademark decisions. The Foundation's legal structure and jurisdiction are not publicly documented.",
+          "evidence": [
+            {
+              "name": "Trademark Filing",
+              "summary": "USPTO filing 99599981 for HYPERLIQUID lists Hyper Foundation as applicant. Status: Filed. No documented tokenholder control over trademark usage or licensing.",
+              "urls": [
+                {
+                  "name": "USPTO TSDR — HYPERLIQUID (99599981)",
+                  "url": "https://tsdr.uspto.gov/",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "at_risk",
+          "notes": "The primary interface at app.hyperliquid.xyz is operated by Hyperliquid Labs Pte. Ltd. (Singapore). Labs is a private company, not tokenholder-controlled. No alternative decentralized frontends are documented. Terms of service identify Labs as the contracting party.",
+          "evidence": [
+            {
+              "name": "Hyperliquid Labs",
+              "summary": "Hyperliquid Labs Pte. Ltd. incorporated January 16, 2024 in Singapore (UEN 202402326K). Exempt private company. Address: 3 Pemimpin Drive #06-01, Singapore 576147. Activity: Software development.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Docs — Core Contributors",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs/about-hyperliquid/core-contributors",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "at_risk",
+          "notes": "SDKs are MIT licensed (open source). Node software is Apache 2.0 licensed. However, the core L1 code (HyperBFT, HyperCore) is closed source with IP presumably held by Hyperliquid Labs. No public IP assignment to a tokenholder-controlled entity exists.",
+          "evidence": [
+            {
+              "name": "Open Source Components",
+              "summary": "SDKs: MIT licensed at github.com/hyperliquid-dex. Node software: Apache 2.0 licensed. Bridge2: Source available on GitHub.",
+              "urls": [
+                {
+                  "name": "hyperliquid-dex GitHub organization",
+                  "url": "https://github.com/hyperliquid-dex",
+                  "type": "github"
+                },
+                {
+                  "name": "hyperliquid-dex/node Repository",
+                  "url": "https://github.com/hyperliquid-dex/node",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Closed Source Core",
+              "summary": "HyperBFT consensus and HyperCore execution are closed source. No license published. IP ownership presumably with Hyperliquid Labs.",
+              "urls": [
+                {
+                  "name": "Hyperliquid Documentation",
+                  "url": "https://hyperliquid.gitbook.io/hyperliquid-docs",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "ldo": [
     {
       "id": "onchain-ctrl",
