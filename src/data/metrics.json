@@ -6403,8 +6403,8 @@
           "id": "onchain-ctrl__access-gating",
           "name": "Privileged Access Gating",
           "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
-          "status": "positive",
-          "notes": "Financially sensitive functions live in the Safes listed under Role Accountability: treasury movement is handled by the CoW DAO Safe and the CoW Treasury Safe (managed with Karpatkey for yield).\n\nThese are controlled by multisigs operating under DAO-defined rules, with the main DAO Safe bound to Snapshot outcomes. They are not gated behind a Governor timelock with an enforced delay.\n\nThe core settlement contract itself is non-custodial and immutable, so there is no protocol-level \"pause all / emergency withdraw of user funds\" lever over trader assets.",
+          "status": "at_risk",
+          "notes": "Treasury movement is handled by the CoW DAO Safe and the CoW Treasury Safe (managed with Karpatkey for yield).\n\nThese are controlled by multisigs operating under DAO-defined rules, with the main DAO Safe bound to Snapshot outcomes. They are not gated behind a Governor timelock with an enforced delay.\n\nThe core settlement contract itself is non-custodial and immutable, so there is no protocol-level \"pause all / emergency withdraw of user funds\" lever over trader assets.",
           "evidence": [
             {
               "name": "CoW Treasury Safe",
@@ -6503,6 +6503,16 @@
                   "name": "CoW DAO Managed Treasury (Etherscan)",
                   "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
                   "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Value Accrual Proposal",
+              "urls": [
+                {
+                  "name": "Value Accrual Proposal (Google Drive)",
+                  "url": "https://drive.google.com/drive/folders/1Tb92Nx3CP1Wfp2NdYl6LhNkGGeHpSXFP",
+                  "type": "docs"
                 }
               ]
             }
