@@ -3,7 +3,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "AAVE, stkAAVE and aAAVE holders control the protocol through onchain governance with Timelock execution. The token has fixed 16M supply with no mint function. Delegated steward roles exist but are elected and revocable by governance.",
       "criteria": [
@@ -233,7 +235,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Protocol fees flow to a governance-controlled treasury. Holders can stake as stkAAVE in Safety Module for yield. Treasury composed of reserve factor from borrower interest + liquidation fees + flashloan premiums.",
       "criteria": [
@@ -334,7 +338,9 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": ["Reference"],
+          "tags": [
+            "Reference"
+          ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
           "notes": "Aragon has not verified additional offchain value accrual flows to the AAVE token",
@@ -345,7 +351,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "AAVE token proxy and implementation are verified on Etherscan. Aave V3 protocol contracts are open source and verified.",
       "criteria": [
@@ -395,7 +403,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not verified if any 3rd party controls a majority share of the voting power of AAVE or derivatives.",
       "criteria": [
@@ -420,7 +430,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AAVE trademark is held by Quantum Swan OU (Estonia). Primary interface terms identify Aave Labs (a separate entity from the Aave DAO) as the contracting party.",
       "criteria": [
@@ -475,7 +487,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "Aerodrome's core contracts are largely immutable with control of emissions given to veAERO holders via the gauge voting system. There are some minor areas in which privileged parties can control specific areas of the protocol, which are detailed below.",
       "criteria": [
@@ -742,7 +756,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "veAERO holders receive growth emissions and trading fees from staked LP positions. There is no protocol treasury - all trading fees are distributed. Offchain brand controlled by Aerodrome Foundation.",
       "criteria": [
@@ -890,7 +906,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "AERO token source is publicly available on GitHub and verified on Basescan. Aerodrome protocol contracts are open source and verified.",
       "criteria": [
@@ -945,7 +963,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Distribution of AERO and veAERO voting power outside of the core team has not been independently verified.",
       "criteria": [
@@ -970,7 +990,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "US AERODROME trademark is held by Perpetual Cyclist Services LLC (Delaware). Primary interface terms identify the Aerodrome Foundation as the contracting party.",
       "criteria": [
@@ -1021,11 +1043,547 @@
       ]
     }
   ],
+  "cow": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": [
+        "Metric 1"
+      ],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "CoW governance is offchain: there is no onchain Governor binding votes to execution, with CoW Improvement Proposals (CIPs) decided via Snapshot on the cow.eth space and executed by Foundation-owned Safes. The COW token is immutable with capped 3% annual inflation (mintable only by CoW DAO) and no censorship capabilities. The settlement contract is immutable, while the solver allow-list is upgradeable with its owner set to CoW DAO.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "at_risk",
+          "notes": "No onchain Governor contract deployed. CoW DAO does not use an on-chain Governor (no OZ Governor / Aragon DAO / Tally binding votes to execution), since the deprecation of the oSnap module. Governance runs through CoW Improvement Proposals (CIPs): forum discussion → Snapshot vote on the cow.eth space. Votes are weighted by COW + vCOW balances/delegations across the implemented strategies spanning Mainnet and Gnosis Chain. A proposal passes on a simple majority of YES with a quorum of 35,000,000 votes. Anyone holding ≥10K COW can create a proposal.",
+          "evidence": [
+            {
+              "name": "Snapshot Governance",
+              "summary": "CoW DAO governance votes (CIPs) are held on the cow.eth Snapshot space, weighted by COW + vCOW balances/delegations across Mainnet and Gnosis Chain.",
+              "urls": [
+                {
+                  "name": "Snapshot Space",
+                  "url": "https://snapshot.org/#/s:cow.eth",
+                  "type": "docs"
+                },
+                {
+                  "name": "Governance Documentation (Snapshot)",
+                  "url": "https://docs.cow.fi/governance/snapshot",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "warning",
+          "notes": "Operational roles are distributed across purpose-specific multisigs rather than a single role registry. All wallets are owned by CoW Foundation or related entities.\n\n- **Solver Payouts Safe:** Sends rewards and network fees to solvers, and forwards protocol fees to the Protocol Fee Safe.\n- **CoW Buyback Recipient Safe:** Receives buybacks and sends COW to the Solver Payouts Safe when needed.\n- **Managed Treasury Safe:** CoW DAO is added as a module, giving it full control over Safe execution, including the ability to drain funds.\n- **Solver allow-list (GPv2AllowListAuthentication):** Managers can add/remove solvers. Per CoW's published security notes, a compromised manager could allow-list a malicious solver capable of draining the settlement contract's fee buffers - but not user funds, which are never custodied by the protocol. The manager is currently set to CoW DAO.\n- **COW token mint:** Can be performed by CoW DAO.\n\n**Caveat:** While COW tokenholders can have a say, this is via offchain Snapshot voting that is not enforced onchain - ultimately, it is still the Safe signers who decide execution.",
+          "evidence": [
+            {
+              "name": "Solver Payouts Safe",
+              "urls": [
+                {
+                  "name": "Solver Payouts Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA03be496e67Ec29bC62F01a428683D7F9c204930",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Protocol Fee Safe",
+              "urls": [
+                {
+                  "name": "Protocol Fee Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0x22af3D38E50ddedeb7C47f36faB321eC3Bb72A76",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Buyback Recipient",
+              "urls": [
+                {
+                  "name": "CoW Buyback Recipient (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA2BFc70e63a48BDfc3F8013a44B04b6c33fb8200",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "GPv2AllowListAuthentication",
+              "urls": [
+                {
+                  "name": "GPv2AllowListAuthentication Proxy (Etherscan)",
+                  "url": "https://etherscan.io/address/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "COW Token Contract",
+              "urls": [
+                {
+                  "name": "COW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO",
+              "urls": [
+                {
+                  "name": "CoW DAO (Etherscan)",
+                  "url": "https://etherscan.io/address/0xcA771eda0c70aA7d053aB1B25004559B918FE662",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "positive",
+          "notes": "The core settlement contract (GPv2Settlement) is non-upgradeable/immutable.\n\nCore protocol contracts are split between immutable and upgradeable components. The settlement contract (GPv2Settlement) - which executes trades and is the only contract that transiently holds funds during settlement - is immutable (not behind a proxy). Its logic cannot be changed post-deployment.\n\nThe solver allow-list (GPv2AllowListAuthentication) is upgradeable, via an EIP-173 ownership proxy (EIP173Proxy), described in CoW docs as upgradeable \"to facilitate future decentralization.\" The proxy owner is set to CoW DAO, but upgrades are executed via multisig rather than a binding on-chain governor.",
+          "evidence": [
+            {
+              "name": "GPv2Settlement (Immutable)",
+              "summary": "The settlement contract executes trades and transiently holds funds during settlement. It is immutable (not behind a proxy).",
+              "urls": [
+                {
+                  "name": "GPv2Settlement (Etherscan)",
+                  "url": "https://etherscan.io/address/0x9008D19f58AAbD9eD0D60971565AA8510560ab41#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "GPv2AllowListAuthentication (Upgradeable)",
+              "summary": "The solver allow-list is upgradeable via an EIP-173 ownership proxy.",
+              "urls": [
+                {
+                  "name": "GPv2AllowListAuthentication Proxy (Etherscan)",
+                  "url": "https://etherscan.io/address/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Protocol Contracts Documentation",
+              "summary": "CoW docs describe the allow-list proxy as upgradeable \"to facilitate future decentralization\"",
+              "urls": [
+                {
+                  "name": "Core Contracts Reference",
+                  "url": "https://docs.cow.fi/cow-protocol/reference/contracts/core",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "The COW token contract is immutable with no proxy patterns or upgrade mechanisms.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "The verified COW token source on Etherscan shows a standard non-upgradeable ERC-20 implementation with no proxy pattern.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "positive",
+          "notes": "COW was deployed with a 1 billion supply at TGE. The token is inflationary by design: it permits a maximum 3% per annum inflation, executable at most once every 365 days, and only via the cowDao (governance) address.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "Verified COW token source on Etherscan; supply minted at deployment.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Inflation Cap Enforcement",
+              "summary": "InflationaryToken.sol enforces MAX_YEARLY_INFLATION = 3%, TIME_BETWEEN_MINTINGS = 365 days, and an onlyCowDao modifier restricting minting to the governance address.",
+              "urls": [
+                {
+                  "name": "InflationaryToken.sol",
+                  "url": "https://github.com/cowprotocol/token/blob/main/src/contracts/mixins/InflationaryToken.sol#L50",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "",
+          "notes": "",
+          "evidence": []
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "positive",
+          "notes": "The COW token has no blacklist, freeze, seize, or force-transfer functions and no transfer hooks. Transfers are permissionless and cannot be censored.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "Verified COW token source on Etherscan shows a standard ERC-20 with no blacklist, freeze, seizure, force-transfer, or transfer-hook logic.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": [
+        "Metric 2"
+      ],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "COW runs a live, net-deflationary buyback that repurchases at least as many tokens as are paid out as solver incentives, though the mandate is set by governance and executed operationally rather than by an immutable onchain mechanism. Treasury assets belong to the DAO but sit in Safes without binding onchain tokenholder control. No offchain value currently accrues to tokenholders.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "positive",
+          "notes": "A live buyback mechanism, which aims to buy back at least the same amount of tokens paid as solver incentives. The buybacks are performed with a 20% buffer on top of solver incentives to ensure that price fluctuations do not lead to under-buying of tokens.\n\nFee collection flows through the settlement contract → Solver Payouts Safe → Protocol Fee Safe → revenue bridge to mainnet and weekly buyback execution → bought-back tokens are sent to the CoW Buyback Recipient and the remainder of funds are sent to the CoW DAO Managed Treasury.",
+          "evidence": [
+            {
+              "name": "Solver Payouts Safe",
+              "urls": [
+                {
+                  "name": "Solver Payouts Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA03be496e67Ec29bC62F01a428683D7F9c204930",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Protocol Fee Safe",
+              "urls": [
+                {
+                  "name": "Protocol Fee Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0x22af3D38E50ddedeb7C47f36faB321eC3Bb72A76",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Buyback Recipient",
+              "urls": [
+                {
+                  "name": "CoW Buyback Recipient (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA2BFc70e63a48BDfc3F8013a44B04b6c33fb8200",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "warning",
+          "notes": "The CoW DAO Safe holds 44.4% of total supply. Other assets are mainly held in the CoW DAO Managed Treasury. All assets belong to the DAO and to tokenholders by extension.\n\nHowever, tokenholders do not have binding on-chain control over the treasury: assets are held in Safes and disbursed via multisig execution, with the mandate originating from offchain Snapshot votes rather than a binding on-chain governor. Tokenholders cannot directly force or block treasury movements onchain.",
+          "evidence": [
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "warning",
+          "notes": "The buyback mandate and its parameters are set by governance. It is not an immutable on-chain mechanism - the Treasury/Core Team executes buybacks operationally, with the mandate originating from a token vote (Snapshot).",
+          "evidence": []
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "at_risk",
+          "notes": "CoW Foundation is the legal entity that holds and administers CoW DAO-related intellectual property under the legal structure approved by CoW DAO governance. CoW Foundation was established pursuant to CIP-64, \"Incorporation of a legal structure for CoW DAO,\" as CoW DAO's legal interface and IP-stewardship entity. CIP-64 provides that CoW Foundation owns intellectual property rights originating from or related to CoW DAO, including historical and future DAO-related rights, consistently with the DAO's Participation Agreement adopted under CIP-1.\n\nFor IP specifically, CoW Foundation does not operate the IP as a licensing business, and no revenue is currently generated from licensing or other standalone monetisation of CoW DAO-related IP. Accordingly, there is no current IP revenue-sharing arrangement with tokenholders.\n\nIf IP-related revenue were generated in the future, the proceeds would accrue for the benefit of CoW DAO, including through the DAO treasury, subject to the applicable governance process and legal implementation mechanics. This should be understood as a DAO treasury/governance alignment mechanism, not as a direct contractual revenue entitlement of individual tokenholders.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Establishes CoW Foundation as CoW DAO's legal interface and IP-stewardship entity, owning IP rights originating from or related to CoW DAO.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": [
+        "Metric 3"
+      ],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "Both the COW and vCOW token contracts are verified onchain, and all core CoW Protocol contracts are verified and match their published GitHub sources.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "positive",
+          "notes": "Both the COW and vCOW token contracts are verified.",
+          "evidence": [
+            {
+              "name": "COW Token",
+              "urls": [
+                {
+                  "name": "COW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "cowprotocol/token (GitHub)",
+                  "url": "https://github.com/cowprotocol/token",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "vCOW Token",
+              "urls": [
+                {
+                  "name": "vCOW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xD057B63f5E69CF1B929b356b579Cba08D7688048#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "cowprotocol/token (GitHub)",
+                  "url": "https://github.com/cowprotocol/token",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "positive",
+          "notes": "All core CoW Protocol contracts are verified onchain and match their GitHub sources.",
+          "evidence": [
+            {
+              "name": "CoW Protocol Contracts",
+              "urls": [
+                {
+                  "name": "cowprotocol/contracts (GitHub)",
+                  "url": "https://github.com/cowprotocol/contracts",
+                  "type": "github"
+                },
+                {
+                  "name": "cowprotocol/ethflowcontract (GitHub)",
+                  "url": "https://github.com/cowprotocol/ethflowcontract",
+                  "type": "github"
+                },
+                {
+                  "name": "Periphery Contracts Reference",
+                  "url": "https://docs.cow.fi/cow-protocol/reference/contracts/periphery",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": [
+        "Metric 4"
+      ],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "CoW DAO and Foundation entities hold the largest share of supply, with no single third party controlling a majority and the remainder dispersed across holders, CEXes and bridges. A 50M COW team stream and a revenue-gated 75M remainder represent future dilution.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "positive",
+          "notes": "Based on Etherscan information, CoW DAO (directly, through its safe or CoW Foundation entities) holds 39%, Team holds 9.66%, investors 0.85%, Gnosis DAO 9.45% and Solver 1.33%. The remaining supply is dispersed through several holders, CEXes, Bridges.",
+          "evidence": []
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "warning",
+          "notes": "The team has a running allocation of 50,000,000 COW via a four-year linear streaming allocation, which started February 11, 2026. A remainder allocation of 75M COW, gated by revenue milestones, can still be allocated to the team if revenue targets are reached.",
+          "evidence": [
+            {
+              "name": "Team Allocation Proposal",
+              "summary": "Snapshot proposal authorizing the 50M COW four-year linear stream and the 75M revenue-gated remainder allocation.",
+              "urls": [
+                {
+                  "name": "Snapshot Proposal",
+                  "url": "https://snapshot.org/#/s:cow.eth/proposal/0x52407329d3861f0e263eacc3ad98f0b1c29b3cd5513c26846f9aad11005f8e8b",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": [
+        "Reference"
+      ],
+      "about": "Economically material assets and obligations often sit offchain-outside the custody and direct enforcement of a token-while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "CoW DAO-related IP, trademarks, UI and the cow.fi domain are held and administered by CoW Foundation and CoW Hosting under the DAO-approved CIP-64 legal structure, with CoW DAO retaining governance control over the Foundation's mandate. The majority of CoW DAO-related software is open-source.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "CoW DAO-related trademarks, trade names, logos and brand rights should be described as part of the DAO-related IP administered by CoW Foundation under the CIP-64 legal structure. CoW Foundation acts as the DAO-mandated legal steward and administrator of CoW DAO-related IP, and is expected to administer such rights consistently with DAO governance decisions, subject to applicable law, its governing documents and directors' legal duties.\n\nThis is not a structure where a separate labs entity owns the brand free of DAO governance obligations. The relevant governance documentation positions CoW Foundation as the legal interface and IP holder/steward for CoW DAO-related rights, with CoW DAO retaining governance control over the Foundation's mandate.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Establishes CoW Foundation as CoW DAO's legal interface and IP-stewardship entity for DAO-related rights, with the DAO retaining governance control over the Foundation's mandate.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "CoW Hosting Limited is the legal entity that holds and administers the UI and the domain https://cow.fi pursuant to the mandate given by CIP-64, \"Incorporation of a legal structure for CoW DAO.\" CoW Hosting is a BVI company limited by guarantee of which CoW Foundation is the sole guarantor and corporate director.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Mandates the CoW DAO legal structure under which CoW Foundation (and affiliated entities such as CoW Hosting) hold and administer DAO-related IP, UI and domain rights, with the DAO retaining governance control.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "The protocol software and non-contract IP should not be characterised as owned by an independent labs entity and merely licensed to the DAO on a revocable basis. The documented governance position is that CoW Foundation holds and administers CoW DAO-related IP under the DAO-approved legal structure, with CoW DAO governance retaining strategic control over the Foundation's mandate.\n\nManagement estimates that approximately 90-95% of CoW DAO-related software is publicly available under open-source licences. These include permissive licences such as MIT and Apache-2.0 and copyleft or weak-copyleft licences such as GPL and LGPL, depending on the relevant component. For those public components, third-party use is governed by the applicable open-source licence terms.\n\nSome public repositories may contain legacy copyright notices or contributor-retention language, including references to Gnosis or individual contributors. These notices may reflect historical development, repository-level attribution or open-source contribution practices. They do not necessarily prevent CoW Foundation from administering DAO-related IP, but they do mean the structure should be described carefully: CoW Foundation holds, stewards or administers DAO-related IP and related rights, rather than every historical item of code being stated to have been formally assigned to CoW Foundation without qualification.\n\nFor the limited portion of CoW DAO-related software that is not publicly released, contributor, contractor and service-provider arrangements are intended to ensure that CoW Foundation has the necessary ownership or licence rights to administer, protect and enforce the relevant IP for DAO-related purposes. Where formal ownership has not been confirmed, the relevant materials should be reviewed as part of ordinary IP chain-of-title diligence.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Mandates the CoW DAO legal structure under which CoW Foundation (and affiliated entities such as CoW Hosting) hold and administer DAO-related IP, UI and domain rights, with the DAO retaining governance control.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "crv": [
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "veCRV holders control all protocol operations through Aragon v1's Voting Contract and Agent. The CRV token is immutable with programmatic inflation and no censorship capabilities. Core protocol and pool contracts are immutable.",
       "criteria": [
@@ -1242,7 +1800,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "veCRV holders receive 50% of all trading fees distributed as crvUSD rewards. Value flows are programmatic through the gauge system. Offchain structure shows Swiss Stake AG controls the interface and trademark.",
       "criteria": [
@@ -1361,7 +1921,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "CRV token source (Vyper) is publicly available on GitHub and verified on Etherscan. Curve DAO contracts are open source and verified.",
       "criteria": [
@@ -1411,7 +1973,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not verified if the majority of veCRV voting power lies with a single party.",
       "criteria": [
@@ -1446,7 +2010,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Swiss CRV trademark is held by Swiss Stake AG. Curve interface terms identify Swiss Stake AG (Zug, Switzerland) as the contracting party.",
       "criteria": [
@@ -1501,7 +2067,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "ENA governance is advisory only. Tokenholders vote via Snapshot, but the Dev Multisig executes all decisions. There is no onchain governance workflow, no timelock, and ENA holders cannot elect or remove multisig signers. The ENA token itself is non-upgradeable, but sENA and rsENA are upgradeable proxies controlled by separate multisigs. Staking contracts include blacklist capabilities with seizure powers.",
       "criteria": [
@@ -1804,7 +2372,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "No active programmatic value accrual to ENA holders. **sUSDe holders receive USDe yield** from protocol operations; **sENA holders do NOT receive this yield**, only ecosystem airdrops. rsENA holders receive Symbiotic restaking rewards. Treasury flows through multisig-controlled wallets. All accrual mechanisms are controlled by multisigs or EOAs, not tokenholders.",
       "criteria": [
@@ -1875,11 +2445,11 @@
           "name": "Treasury Ownership",
           "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
           "status": "warning",
-          "notes": "Protocol revenue flows through multisig-controlled wallets. **Treasury is NOT tokenholder-controlled.** Revenue flows: Hot Swap \u2192 sUSDe Payout \u2192 StakingRewardsDistributor \u2192 sUSDe stakers. ENA tokenholders do NOT control treasury flows.",
+          "notes": "Protocol revenue flows through multisig-controlled wallets. **Treasury is NOT tokenholder-controlled.** Revenue flows: Hot Swap → sUSDe Payout → StakingRewardsDistributor → sUSDe stakers. ENA tokenholders do NOT control treasury flows.",
           "evidence": [
             {
               "name": "Revenue Flow",
-              "summary": "Protocol Operations (delta-neutral strategies)\n\u2192 **Hot Swap Multisig** (receives revenue, converts to USDe)\n\u2192 **sUSDe Payout Multisig**\n\u2192 **StakingRewardsDistributor**\n\u2192 sUSDe Stakers\n\nENA/sENA holders are NOT in this flow unless fee switch activates.",
+              "summary": "Protocol Operations (delta-neutral strategies)\n→ **Hot Swap Multisig** (receives revenue, converts to USDe)\n→ **sUSDe Payout Multisig**\n→ **StakingRewardsDistributor**\n→ sUSDe Stakers\n\nENA/sENA holders are NOT in this flow unless fee switch activates.",
               "urls": [
                 {
                   "name": "Key Addresses Documentation",
@@ -1998,7 +2568,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "All core contracts are verified on Etherscan and open source on GitHub. Multiple security audits completed.",
       "criteria": [
@@ -2104,7 +2676,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "70% insider allocation. Vesting unlocks continue through April 2028 for all categories. Circulating supply is approximately 55% of total.",
       "criteria": [
@@ -2235,7 +2809,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "LDO holders exercise ultimate control through a multi-step governance flow with stETH holder veto protection via Dual Governance. All critical roles flow through governance-controlled contracts. The token has unbounded supply controlled by governance, with token behavior modifiable through controller upgrades.",
       "criteria": [
@@ -2553,7 +3129,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Protocol revenue flows to the LDO-controlled DAO treasury, and a newly approved manual buyback program (up to 10,000 stETH, held by the treasury) creates net buy pressure on LDO, though not a direct distribution. Treasury is controlled by LDO holders; offchain IP is held by DAO-controlled BORG foundations.",
       "criteria": [
@@ -2668,7 +3246,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "LDO token source is publicly available and verified on Etherscan. Lido core protocol contracts are open source and verified.",
       "criteria": [
@@ -2718,7 +3298,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not yet verified the distribution of LDO holders outside of the core team.",
       "criteria": [
@@ -2743,7 +3325,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "European trademark registrations for LIDO list Lido Labs Foundation as the owner. Lido Labs, Ecosystem, and Alliance BORG Foundations are DAO-controlled entities managing offchain IP and distribution.",
       "criteria": [
@@ -2833,7 +3417,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "LQTY holders' onchain power is voting on V2 Protocol Incentivized Liquidity (PIL) emissions. The rest of the protocol is described as \"Governance Free\" with immutable contracts and no admin keys, upgrade paths, or privileged roles.",
       "criteria": [
@@ -2973,7 +3559,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Stakers earn two live onchain streams: V1 protocol fees (ETH redemption fees + LUSD borrowing fees) routed directly to LQTYStaking, and V2 bribes paid pro-rata to voters who allocate their voting power to initiatives. There is no protocol treasury - V2 sends 100% of revenue straight to users. Fee parameters and revenue routing are immutable and cannot be modified by governance or the team.",
       "criteria": [
@@ -3064,7 +3652,9 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": ["Reference"],
+          "tags": [
+            "Reference"
+          ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
           "notes": "The protocol is entirely onchain - Aragon is not aware of any offchain entities towards which value accrues to the LQTY token or otherwise.",
@@ -3075,7 +3665,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "Both the LQTY token and core Liquity protocol contracts (V1 and V2) are open source on GitHub and source-verified against their onchain deployments - no closed-source components or unverified bytecode.",
       "criteria": [
@@ -3130,7 +3722,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "LQTY supply is fully circulating - team and investor lockups ended in 2022, leaving only the immutable Stability Pool emission schedule for V1 depositors. Concentration among third parties has not yet been independently verified.",
       "criteria": [
@@ -3170,7 +3764,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Offchain dependencies for LQTY (trademark/brand, primary domain, and core software licensing) are controlled by Liquity AG, a Swiss company. LQTY tokenholders have no governance rights or control over Liquity AG. The core V1 protocol is immutable and governance-free, but brand, distribution, and V2 IP rights remain with the company.",
       "criteria": [
@@ -3265,7 +3861,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "UNI holders maintain ultimate control through onchain voting. The token is immutable with a hardcoded 2% annual inflation cap. All core contracts (V2, V3, V4) are non-upgradeable with no pause/freeze functions.",
       "criteria": [
@@ -3481,7 +4079,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Protocol fees flow to governance-controlled destinations through TokenJar and FirePit burn mechanism. Treasury is entirely controlled by token holders.",
       "criteria": [
@@ -3646,7 +4246,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "UNI token source is publicly available on GitHub and verified on Etherscan. Uniswap V2, V3, V4, and UniswapX protocol contracts are open source and verified.",
       "criteria": [
@@ -3711,7 +4313,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "",
       "criteria": [
@@ -3768,7 +4372,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Core trademark rights (UNISWAP, UNI, UNISWAP LABS) are held by Universal Navigation Inc. (Uniswap Labs). DUNI has a limited, non-exclusive trademark license but no ownership transfer has occurred. Uniswap Labs operates a user interface and API, but the permissionless smart contracts allow anybody to operate one.",
       "criteria": [
@@ -3823,7 +4429,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "veYB holders control the protocol through Aragon governance. The YB token is non-upgradeable with renounced ownership. Protocol upgrades are controlled by the DAO through MigrationFactoryOwner. The veYB contract owner (_yb.eth) can change transfer clearance rules, but this does not constitute censorship—users remain custodians of their locked YB.",
       "criteria": [
@@ -4041,7 +4649,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "veYB holders receive **protocol admin fees** (a subset of protocol revenue) via FeeDistributor. Fees originate from LT (Liquidity Token) vault admin fees, distributed weekly in yb-LP tokens. DAO controls fee direction via MigrationFactoryOwner, and gauge voting directs YB emissions. The Ecosystem Reserve is controlled by an EOA, not the DAO.",
       "criteria": [
@@ -4164,7 +4774,9 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": ["Reference"],
+          "tags": [
+            "Reference"
+          ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
           "notes": "Aragon has not been able to verify whether YieldBasis AG (operating entity) provides any offchain value to YB token holders. No evidence of equity linkage, offchain revenue sharing, or legal commitments to tokenholders.",
@@ -4175,7 +4787,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "All core contracts are verified on Etherscan with matching GitHub source (Vyper 0.4.3). Protocol has undergone 6 independent security audits (Statemind, Chainsecurity, Quantstamp, Mixbytes, Electisec, Pashov).",
       "criteria": [
@@ -4232,7 +4846,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "~77M YB locked as veYB (~10% of minted supply). Team (25%) + Investors (12.1%) have 24-month vesting with a 6-month cliff ending March 2026, after which 25% unlocks and the remaining 75% vests linearly over 18 months.",
       "criteria": [
@@ -4286,7 +4902,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Aragon has not been able to verify trademark ownership. Aragon has not been able to identify published terms of service or a contracting entity for the primary distribution channels. DAO contracts use AGPL v3.0 (open source), but Factory uses proprietary license.",
       "criteria": [
@@ -4348,7 +4966,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "SKY holders exercise binding governance through an approval-based voting workflow with a 24-hour timelock before any changes take effect. The token is non-upgradeable with no censorship capabilities. All privileged roles trace back to governance.",
       "criteria": [
@@ -4591,7 +5211,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "Protocol revenue flows to SKY holders through automated buybacks. When the protocol earns fees, it uses them to buy SKY on the open market. All fee parameters are governance-controlled.",
       "criteria": [
@@ -4710,7 +5332,9 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": ["Reference"],
+          "tags": [
+            "Reference"
+          ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
           "notes": "No verified offchain revenue streams flow to SKY holders. The DAI Foundation is an independent non-profit that does not distribute profits.",
@@ -4733,7 +5357,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "All code is open source (AGPL-3.0) and verified on Etherscan. Anyone can audit the contracts.",
       "criteria": [
@@ -4792,7 +5418,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Aragon has not been able to verify the concentration of holdings.",
       "criteria": [
@@ -4829,7 +5457,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Current Sky branding is not controlled by SKY tokenholders. Skybase International's terms reserve trademarks, service marks, logos, and trade names associated with the Services, including the Sky name, to the service operator or its licensors, and the DAI Foundation independently holds the legacy Maker and DAI trademarks. All code is open source (AGPL-3.0).",
       "criteria": [
@@ -4911,7 +5541,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "ETHFI tokenholders do not have binding onchain control. Governance uses offchain voting with multisig execution.\n\nThe protocol uses a two-timelock system for upgrades and operations. A multisig controls the Upgrade Timelock, which owns the RoleRegistry and authorizes protocol upgrades.\n\nThe mainnet token is not upgradeable. L2 tokens on Arbitrum and Base are upgradeable by multisigs with no timelock.",
       "criteria": [
@@ -5158,7 +5790,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "An active buyback program distributes purchased ETHFI to sETHFI holders. eETH withdrawal fees fund buybacks, while any additional funding from broader protocol revenue is currently Foundation-discretionary. The Treasury is a multisig controlled by the team.",
       "criteria": [
@@ -5245,7 +5879,9 @@
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
-          "tags": ["Reference"],
+          "tags": [
+            "Reference"
+          ],
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
           "status": "unevaluated",
           "notes": "Aragon developers have not verified additional offchain value accrual mechanisms. No legally binding revenue sharing arrangements or licensing revenue documented.",
@@ -5256,7 +5892,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "The ETHFI token contract is verified on Etherscan but not published to a public GitHub repository. All core protocol contracts are verified and open source under MIT license with multiple security audits and formal verification through Certora.",
       "criteria": [
@@ -5309,7 +5947,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "Over 55% of tokens are allocated to Investors (33.74%) and Core Contributors (21.47%), subject to transparent vesting schedules published in official documentation. Vesting completion is expected by end of 2030.",
       "criteria": [
@@ -5361,7 +6001,9 @@
     {
       "id": "offchain",
       "name": "Offchain Dependencies",
-      "tags": ["Reference"],
+      "tags": [
+        "Reference"
+      ],
       "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
       "summary": "Trademarks are owned by Ether.Fi SEZC (Cayman Islands company), not a tokenholder-controlled entity. The ether.fi domain and platform are operated by this company. Protocol smart contracts are MIT licensed, but non-contract IP has restricted licensing.",
       "criteria": [
@@ -5434,7 +6076,9 @@
     {
       "id": "onchain-ctrl",
       "name": "Onchain Control",
-      "tags": ["Metric 1"],
+      "tags": [
+        "Metric 1"
+      ],
       "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
       "summary": "Core Ondo products are controlled by team multisigs. ONDO governance controls Flux Finance, but Flux appears small relative to Ondo's other product TVL. The ONDO token contract has team-held admin and minting roles. Supply is 10B with active mint capability.",
       "criteria": [
@@ -5799,7 +6443,9 @@
     {
       "id": "val-accrual",
       "name": "Value Accrual",
-      "tags": ["Metric 2"],
+      "tags": [
+        "Metric 2"
+      ],
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
       "summary": "No active value accrual mechanism was identified for ONDO holders. Ondo has multiple products with documented product-level economics, including yield, fees, expenses, and spreads, but no identified flow from those economics to ONDO holders or an ONDO-controlled treasury. Flux is ONDO-governed but small relative to Ondo's other product TVL, so it does not materially change the assessment.",
       "criteria": [
@@ -5968,7 +6614,9 @@
     {
       "id": "verifiability",
       "name": "Verifiability",
-      "tags": ["Metric 3"],
+      "tags": [
+        "Metric 3"
+      ],
       "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
       "summary": "ONDO token is verified on Etherscan. OUSG/USDY/Global Markets contracts are verified with public GitHub and audit code available. The deployed ONDO token uses AccessControl, which differs from the public ondo-v1 repository.",
       "criteria": [
@@ -6054,7 +6702,9 @@
     {
       "id": "distribution",
       "name": "Token Distribution",
-      "tags": ["Metric 4"],
+      "tags": [
+        "Metric 4"
+      ],
       "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
       "summary": "~59% of ONDO supply is held by a single team multisig, giving effective governance control. Vesting schedules exist per documentation but specific addresses are not publicly verifiable onchain.",
       "criteria": [
