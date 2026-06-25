@@ -9,6 +9,17 @@ export function copyToClipboard(value: string) {
   navigator.clipboard.writeText(value)
 }
 
+/**
+ * A field is a placeholder — not real, renderable content — when it is absent,
+ * empty, or the "TK" deferral sentinel. Previews build from partial (WIP)
+ * tokens, so composed docs reaching the UI may carry "TK" in url/text fields;
+ * the UI must treat it exactly like empty (never an <img src>, <a href>, or
+ * literal text). See src/lib/schemas/common.ts (TK) and readiness.ts.
+ */
+export function isPlaceholder(value: unknown): boolean {
+  return value == null || value === "" || value === "TK"
+}
+
 export function truncateAddress(address: string, start = 6, end = 4) {
   if (address.includes("...")) {
     return address

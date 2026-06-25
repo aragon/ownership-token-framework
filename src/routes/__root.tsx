@@ -1,5 +1,4 @@
 import { TanStackDevtools } from "@tanstack/react-devtools"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   createRootRoute,
   HeadContent,
@@ -14,9 +13,24 @@ import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
+import {
+  publishedFrameworkQuery,
+  publishedIndexQuery,
+  readPublished,
+} from "@/lib/published-queries"
+import { queryClient } from "@/lib/query-client"
 import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
+  // Every page reads the published index (header search, dashboard) and the
+  // framework doc (header link, metric cards) synchronously from the query
+  // cache — ensure them before render, on server and client alike.
+  loader: async () => {
+    await Promise.all([
+      readPublished(queryClient, publishedIndexQuery),
+      readPublished(queryClient, publishedFrameworkQuery),
+    ])
+  },
   head: () => ({
     meta: [
       {
@@ -40,19 +54,15 @@ export const Route = createRootRoute({
   notFoundComponent: () => <Navigate replace to="/" />,
 })
 
-const queryClient = new QueryClient()
-
 function RootComponent() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col">
-        <SiteHeader />
-        <NewsletterBanner />
-        <Outlet />
-        <SiteFooter />
-        <GoogleAnalytics />
-      </div>
-    </QueryClientProvider>
+    <div className="min-h-screen flex flex-col">
+      <SiteHeader />
+      <NewsletterBanner />
+      <Outlet />
+      <SiteFooter />
+      <GoogleAnalytics />
+    </div>
   )
 }
 

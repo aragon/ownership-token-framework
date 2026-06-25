@@ -1,17 +1,6 @@
-import testimonialsData from "@/data/testimonials.json"
+import testimonialsData from "@/data/generated/testimonials.json"
+import type { Testimonial, TestimonialsContent } from "@/lib/schemas"
 
-export interface Testimonial {
-  id: string
-  name: string
-  organization: string
-  avatar: string
-  url: string
-  quote: string
-}
-
-interface TestimonialsContent {
-  title: string
-  testimonials: Testimonial[]
-}
+export type { Testimonial }
 
 export const testimonialsContent = testimonialsData as TestimonialsContent
