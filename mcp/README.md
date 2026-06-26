@@ -28,11 +28,12 @@ A request for a token id that does not exist returns a clean tool error
 
 ## Configuration
 
-| Env var | Default | Notes |
+| Env var | Required | Notes |
 |---|---|---|
-| `OTF_API_BASE` | `https://ownership-token-framework.vercel.app` | Base URL of the OTF API. **The default is a placeholder** — see `TODO(prod-domain)` in `src/client.ts`. Set this to the real production (or your local dev) origin. |
+| `OTF_API_BASE` | **yes** | Base URL of the OTF API. There is no default — the server errors at startup if it is unset, so it can never silently query the wrong origin. Set it to the OTF API origin. |
 
-For a local app dev server this is typically `http://localhost:3000`.
+For a local app dev server this is typically `http://localhost:3000`. Once a
+canonical OTF production domain exists, use that.
 
 ## Run locally
 
@@ -77,13 +78,13 @@ Otherwise, after `npm run build`, use the **absolute path** to `dist/index.js`.
 Global install:
 
 ```bash
-claude mcp add otf --env OTF_API_BASE=https://ownership-token-framework.vercel.app -- otf-mcp-server
+claude mcp add otf --env OTF_API_BASE=http://localhost:3000 -- otf-mcp-server
 ```
 
 Local path:
 
 ```bash
-claude mcp add otf --env OTF_API_BASE=https://ownership-token-framework.vercel.app -- node /ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js
+claude mcp add otf --env OTF_API_BASE=http://localhost:3000 -- node /ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js
 ```
 
 ### Cursor
@@ -97,7 +98,7 @@ install, set `"command": "otf-mcp-server"` and drop `args`:
     "otf": {
       "command": "otf-mcp-server",
       "env": {
-        "OTF_API_BASE": "https://ownership-token-framework.vercel.app"
+        "OTF_API_BASE": "http://localhost:3000"
       }
     }
   }
@@ -113,7 +114,7 @@ Without a global install, point at the built file:
       "command": "node",
       "args": ["/ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js"],
       "env": {
-        "OTF_API_BASE": "https://ownership-token-framework.vercel.app"
+        "OTF_API_BASE": "http://localhost:3000"
       }
     }
   }
@@ -127,7 +128,7 @@ Add to `~/.codex/config.toml`. With a global install, use the bare command:
 ```toml
 [mcp_servers.otf]
 command = "otf-mcp-server"
-env = { OTF_API_BASE = "https://ownership-token-framework.vercel.app" }
+env = { OTF_API_BASE = "http://localhost:3000" }
 ```
 
 Without a global install, point at the built file:
@@ -136,7 +137,7 @@ Without a global install, point at the built file:
 [mcp_servers.otf]
 command = "node"
 args = ["/ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js"]
-env = { OTF_API_BASE = "https://ownership-token-framework.vercel.app" }
+env = { OTF_API_BASE = "http://localhost:3000" }
 ```
 
 ### Via npx (after publishing)
@@ -181,6 +182,7 @@ here is deliberate.
   `package-lock.json` and is installed with `npm` independently of the parent
   app's pnpm workspace. The root `pnpm-workspace.yaml` declares no `packages`,
   so `mcp/` is not part of the pnpm workspace and the app build is unaffected.
-- **Production domain TODO.** The default `OTF_API_BASE` is a placeholder; the
-  current Vercel deployment did not serve `/api/v1/*` at verification time, so
-  set `OTF_API_BASE` to a live origin.
+- **No production domain yet.** There is no canonical public OTF API origin, so
+  `OTF_API_BASE` is required (no default) and the server refuses to start without
+  it. Point it at a local dev server (`http://localhost:3000`) or the production
+  domain once one is published.

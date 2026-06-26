@@ -7,12 +7,19 @@
  * about. Everything else is passed through untouched to the agent.
  */
 
-// TODO(prod-domain): replace with the canonical production domain once it is
-// finalized. Overridable at runtime via the OTF_API_BASE environment variable.
-export const DEFAULT_API_BASE = "https://ownership-token-framework.vercel.app";
-
+// OTF_API_BASE is REQUIRED — there is no canonical public OTF API origin yet,
+// and silently defaulting to a guess risks pointing at a stale deployment. The
+// operator sets it to the OTF API origin: http://localhost:3000 for a local dev
+// server, or the production domain once one is published.
 export function getApiBase(): string {
-  const raw = (process.env.OTF_API_BASE ?? DEFAULT_API_BASE).trim();
+  const raw = process.env.OTF_API_BASE?.trim();
+  if (!raw) {
+    throw new Error(
+      "OTF_API_BASE is required — set it to your OTF API origin " +
+        "(e.g. http://localhost:3000 for a local dev server, or the OTF " +
+        "production domain).",
+    );
+  }
   // SSRF guard: OTF_API_BASE is the one trust anchor — it must be a real
   // http(s) origin (set by the operator, never derived from agent/tool input).
   // Validate it so a typo or hostile value can't redirect requests elsewhere.
