@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import TokenDetail from "@/components/token-detail"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
@@ -37,5 +38,9 @@ export const Route = createFileRoute("/tokens/$tokenId")({
 
 function TokenDetailPage() {
   const { tokenId } = Route.useParams()
+  // Keep the token doc observed (no GC, SWR) so the synchronous getTokenDoc
+  // read in <TokenDetail> always finds it. Suspends on an empty cache instead
+  // of throwing, caught by the root Suspense boundary.
+  useSuspenseQuery(publishedTokenDocQuery(tokenId))
   return <TokenDetail tokenId={tokenId} />
 }
