@@ -41,9 +41,7 @@ const TitlePopover: React.FC<ITitlePopoverProps> = (props) => {
         )}
         {...otherProps}
       >
-        <PreviewCardPrimitive.Trigger
-          className="group text-foreground no-underline outline-none inline"
-        >
+        <PreviewCardPrimitive.Trigger className="group text-foreground no-underline outline-none inline">
           <TitleTag
             className={cn(
               "font-sans not-italic underline decoration-dotted underline-offset-4 inline",

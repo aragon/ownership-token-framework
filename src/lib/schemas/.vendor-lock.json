@@ -1,0 +1,12 @@
+{
+  "source": "aragon/otf-cms",
+  "source_commit": "467c059f22c9f18746bdb23993df8adbac769410",
+  "files": {
+    "src/lib/schemas/atoms.ts": "fa37e43dc9a43f4fa4597160b789d5f1abfbef362d4310f465a89dbd32ae8caf",
+    "src/lib/schemas/common.ts": "f24a880ed2a539baaa51f7ad142e77be3f4c600ab8db063dcb9879689157d1f4",
+    "src/lib/schemas/index.ts": "3a7200ea0eacf042c31b1548d9ed82b2bad1387114fe7a11a705afedd952ee6b",
+    "src/lib/schemas/read-models.ts": "9af495412eb22c6ac7a9ced07e976b9e960582f46e4dcf2c4f2dcc6f51868041",
+    "src/lib/schemas/readiness.ts": "31597d72f8c66cc4734838a4556e78bb6871054cb244af5a43d4612bbdc29f4c",
+    "scripts/lib/compose-data.ts": "7644578dfa2afa5944c4160da7d35b4f42a9704c7f4834976736d49e1c869642"
+  }
+}

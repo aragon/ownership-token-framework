@@ -1,0 +1,196 @@
+name: Deploy
+
+# Self-contained Vercel deploy — no Vercel git-integration, so no contributor
+# needs Vercel membership. The Action deploys on behalf of one VERCEL_TOKEN,
+# building the app and uploading the prebuilt output via the Vercel CLI.
+#
+# Ways in:
+#  - workflow_dispatch: manual or cross-repo (otf-cms triggers a content
+#    preview, or a teardown when the content PR closes).
+#  - push to main: production deploy of the app's own code. Production content
+#    arrives at runtime from the published Release.
+#
+# When a content preview is requested with comment_repo/comment_pr, it posts a
+# single status comment on that PR and updates it through the lifecycle
+# (generating → ready/failed), mimicking a native Vercel PR comment. On
+# action=teardown it removes that PR's preview deployment.
+#
+# Required repo secrets (your fork for testing, aragon/* for real):
+#   VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID   Vercel CLI auth + target
+#   OTF_CONTENT_TOKEN                                read otf-cms for build-from-ref
+#   CMS_COMMENT_TOKEN                                comment on the content PR
+# Optional repo variable:
+#   OTF_CONTENT_REPO   defaults to aragon/otf-cms; set to <you>/otf-cms on a fork
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: deploy or teardown
+        type: choice
+        options: [deploy, teardown]
+        default: deploy
+      environment:
+        description: Vercel target
+        type: choice
+        options: [preview, production]
+        default: preview
+      content_ref:
+        description: otf-cms ref for a build-from-ref preview (blank = committed/runtime data)
+        type: string
+        default: ""
+      comment_repo:
+        description: "owner/repo of a PR to post status to (optional, e.g. the otf-cms content PR)"
+        type: string
+        default: ""
+      comment_pr:
+        description: PR number in comment_repo to post status to (optional)
+        type: string
+        default: ""
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.event.inputs.comment_pr || github.event.inputs.environment || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event.inputs.action != 'teardown' }}
+    runs-on: ubuntu-latest
+    # The Vercel CLI reads these from the environment (equivalent to --token /
+    # project linking), so nothing sensitive is ever inlined into a run script.
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      TARGET: ${{ github.event.inputs.environment || 'production' }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      # Third-party actions pinned to full commit SHAs (supply-chain policy)
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "22"
+
+      - run: pnpm install --frozen-lockfile
+
+      # Status comment: post "generating" up front so the editor sees the build
+      # is underway (native-Vercel-bot feel). Captures the comment id to update.
+      - name: Open status comment
+        id: comment
+        if: ${{ github.event.inputs.comment_pr != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
+          COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
+          COMMENT_PR: ${{ github.event.inputs.comment_pr }}
+          CONTENT_REF: ${{ github.event.inputs.content_ref }}
+        run: |
+          printf -v body '### 🔄 Preview — building…\nFrom content branch `%s`. ([build logs](%s))' \
+            "${CONTENT_REF:-this content}" "$RUN_URL"
+          id=$(gh api "repos/$COMMENT_REPO/issues/$COMMENT_PR/comments" -f body="$body" --jq '.id')
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+
+      # Gate: never ship code that doesn't type-check or pass tests.
+      - run: pnpm type-check
+      - run: pnpm test
+
+      # Pin a specific version once confirmed on the fork; latest is fine while
+      # experimenting.
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel project config
+        run: vercel pull --yes --environment="$TARGET"
+
+      # build-data reads OTF_CONTENT_REF: set → build-from-ref preview; blank →
+      # committed data (production, where content comes from the Release).
+      - name: Build
+        env:
+          OTF_CONTENT_REF: ${{ github.event.inputs.content_ref }}
+          OTF_CONTENT_TOKEN: ${{ secrets.OTF_CONTENT_TOKEN }}
+          OTF_CONTENT_REPO: ${{ vars.OTF_CONTENT_REPO }}
+        run: |
+          if [ "$TARGET" = production ]; then
+            vercel build --prod
+          else
+            vercel build
+          fi
+
+      - name: Deploy prebuilt output
+        id: deploy
+        # --yes confirms default settings for a never-deployed project (sets
+        # skipAutoDetectionConfirmation) so a fresh project deploys non-interactively.
+        run: |
+          if [ "$TARGET" = production ]; then
+            url=$(vercel deploy --prebuilt --prod --yes)
+          else
+            url=$(vercel deploy --prebuilt --yes)
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployed ($TARGET): $url" >> "$GITHUB_STEP_SUMMARY"
+
+      # Finalize the status comment — runs even if the build/deploy failed, so a
+      # broken preview is surfaced on the PR instead of failing silently.
+      - name: Finalize status comment
+        if: ${{ always() && github.event.inputs.comment_pr != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
+          COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
+          COMMENT_PR: ${{ github.event.inputs.comment_pr }}
+          COMMENT_ID: ${{ steps.comment.outputs.id }}
+          URL: ${{ steps.deploy.outputs.url }}
+          CONTENT_REF: ${{ github.event.inputs.content_ref }}
+          DEPLOY_OK: ${{ steps.deploy.outcome == 'success' }}
+        run: |
+          if [ "$DEPLOY_OK" = "true" ] && [ -n "$URL" ]; then
+            printf -v body '### ✅ Preview ready\nContent branch `%s`.\n\n**👉 [Open the preview](%s)**' \
+              "${CONTENT_REF:-this content}" "$URL"
+          else
+            printf -v body '### ❌ Preview build failed\nContent branch `%s`. [See logs](%s)' \
+              "${CONTENT_REF:-this content}" "$RUN_URL"
+          fi
+          if [ -n "$COMMENT_ID" ]; then
+            gh api -X PATCH "repos/$COMMENT_REPO/issues/comments/$COMMENT_ID" -f body="$body"
+          else
+            gh api "repos/$COMMENT_REPO/issues/$COMMENT_PR/comments" -f body="$body"
+          fi
+
+  teardown:
+    if: ${{ github.event.inputs.action == 'teardown' }}
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "22"
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel@latest
+
+      # Find the preview URL we posted on the (now-closed) content PR and remove
+      # that deployment, then note it on the PR.
+      - name: Remove preview deployment
+        env:
+          GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
+          COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
+          COMMENT_PR: ${{ github.event.inputs.comment_pr }}
+        run: |
+          host=$(gh api "repos/$COMMENT_REPO/issues/$COMMENT_PR/comments" \
+            --jq '[.[].body | capture("https://(?<h>[a-z0-9.-]+\\.vercel\\.app)")? | .h] | map(select(. != null)) | last // empty')
+          if [ -n "$host" ]; then
+            vercel rm "$host" --yes || true
+            gh api "repos/$COMMENT_REPO/issues/$COMMENT_PR/comments" \
+              -f body="🗑️ Preview torn down (content PR closed)."
+          else
+            echo "No preview URL found on PR #$COMMENT_PR — nothing to remove."
+          fi

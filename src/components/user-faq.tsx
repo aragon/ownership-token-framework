@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import ReactMarkdown from "react-markdown"
+import remarkBreaks from "remark-breaks"
 import { PageWrapper } from "@/components/page-wrapper"
 import { SubmitTokenDialog } from "@/components/submit-token-dialog"
 import {
@@ -13,7 +14,6 @@ import {
 import { Container } from "@/components/ui/container"
 import { useFaqTopics } from "@/hooks/use-faq"
 import { NewsletterSignup } from "./newsletter-signup.tsx"
-import remarkBreaks from "remark-breaks";
 
 const SUBMIT_TOKEN_HREF = "submit-token"
 const LINK_CLASS_NAME =
@@ -110,7 +110,10 @@ export default function UserFaq() {
                       </AccordionTrigger>
                       <AccordionContent className="pb-4">
                         <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                          <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+                          <ReactMarkdown
+                            components={markdownComponents}
+                            remarkPlugins={[remarkBreaks]}
+                          >
                             {item.answer}
                           </ReactMarkdown>
                         </div>
