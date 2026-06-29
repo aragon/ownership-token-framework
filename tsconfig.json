@@ -1,6 +1,7 @@
 {
   "include": ["**/*.ts", "**/*.tsx"],
-  
+  "exclude": ["node_modules", "mcp"],
+
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
