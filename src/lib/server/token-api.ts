@@ -148,11 +148,9 @@ export function handleMethodNotAllowed(): Response {
     }),
     {
       status: 405,
-      headers: {
-        "Content-Type": "application/json",
-        Allow: "GET, OPTIONS",
-        "Cache-Control": CACHE_MISS,
-      },
+      // Route through baseHeaders so a 405 carries the same CORS +
+      // X-Content-Type-Options as every other response (it didn't before).
+      headers: { ...baseHeaders(CACHE_MISS), Allow: "GET, OPTIONS" },
     }
   )
 }

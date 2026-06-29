@@ -32,6 +32,7 @@ import {
   getPublishedIndex as getCommittedIndex,
   getProvenance as getCommittedProvenance,
   getPublishedTokenDoc as getCommittedTokenDoc,
+  resolveCommitRef,
 } from "@/lib/server/published-data"
 
 // The content repo, overridable so a fork can read its own releases. Defaults
@@ -103,16 +104,6 @@ let inFlight: Promise<Bundle | null> | null = null
  */
 export function isReleaseEnabled(): boolean {
   return process.env.OTF_PUBLISHED_RELEASE === "true"
-}
-
-/** Mirrors published-data.ts so committed and release provenance agree. */
-function resolveCommitRef(): string {
-  return (
-    process.env.VERCEL_GIT_COMMIT_SHA ??
-    process.env.CF_PAGES_COMMIT_SHA ??
-    process.env.GITHUB_SHA ??
-    "dev"
-  )
 }
 
 /**

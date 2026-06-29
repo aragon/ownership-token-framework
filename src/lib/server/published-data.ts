@@ -1,10 +1,10 @@
 /**
- * Published-data source for the canonical API endpoints.
+ * Committed-data source for the canonical API endpoints.
  *
- * This is the transport seam: today it reads the committed composed read
- * models (src/data/generated/); when the publish pipeline lands, a KV-backed
- * implementation replaces the internals without any response-shape change —
- * consumers depend only on this module's interface.
+ * Reads the committed composed read models (src/data/generated/). At runtime
+ * published-source.ts sits in front of this: it serves the immutable GitHub
+ * Release snapshot when release mode is on, and falls back here otherwise. The
+ * response shape is identical either way — consumers depend only on the schema.
  */
 import faqData from "@/data/generated/faq.json"
 import frameworkData from "@/data/generated/framework.json"
@@ -33,8 +33,9 @@ const tokenDocs = new Map(
 /**
  * Commit ref resolved from the deployment environment at request time.
  * Falls back to "dev" outside CI/deploy contexts so the field is never null.
+ * Exported so the release seam (published-source.ts) stamps the same value.
  */
-function resolveCommitRef(): string {
+export function resolveCommitRef(): string {
   return (
     process.env.VERCEL_GIT_COMMIT_SHA ??
     process.env.CF_PAGES_COMMIT_SHA ??
@@ -70,8 +71,4 @@ export function getPublishedFramework(): FrameworkDoc {
 
 export function getPublishedFaq(): { topics: FaqTopic[] } {
   return faqData as { topics: FaqTopic[] }
-}
-
-export function listPublishedTokenIds(): string[] {
-  return manifest.tokens
 }

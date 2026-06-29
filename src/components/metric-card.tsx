@@ -14,10 +14,10 @@ import {
 } from "@/components/ui/accordion"
 import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
-import type { Evidence, Metric } from "@/lib/metrics-data"
+import type { Metric } from "@/lib/metrics-data"
 import { getMetricScore, getScoreStatus } from "@/lib/scoring"
 import { cn, isPlaceholder } from "../lib/utils.ts"
-import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
+import { EvidenceCard } from "./evidence-card.tsx"
 import type { CriteriaStatus } from "./token-detail"
 import { BadgeEvaluation } from "./ui/badge-evaluation.tsx"
 import { TitlePopover } from "./ui/title-popover.tsx"
@@ -229,19 +229,12 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(P.union(P.nullish, []), () => null)
                   .otherwise((evidenceList) => (
                     <div className="flex flex-col gap-4">
-                      {evidenceList.map((evidence, index) => {
-                        // Convert legacy format to full evidence format
-                        const fullEvidence: Evidence = isFullEvidence(evidence)
-                          ? evidence
-                          : { urls: [evidence] }
-
-                        return (
-                          <EvidenceCard
-                            evidence={fullEvidence}
-                            key={`${criteria.id}-ev-${index}`}
-                          />
-                        )
-                      })}
+                      {evidenceList.map((evidence, index) => (
+                        <EvidenceCard
+                          evidence={evidence}
+                          key={`${criteria.id}-ev-${index}`}
+                        />
+                      ))}
                     </div>
                   ))}
               </div>
