@@ -14,6 +14,21 @@ const config = defineConfig(() => {
       // to adapt Nitro's generic Node server at deployment time.
       nitro({
         preset: 'vercel',
+        // Baseline security response headers on every route. A strict CSP is
+        // intentionally omitted for now (the inline GA bootstrap + third-party
+        // scripts need a nonce strategy first); these are the safe wins.
+        routeRules: {
+          '/**': {
+            headers: {
+              'X-Content-Type-Options': 'nosniff',
+              'Referrer-Policy': 'strict-origin-when-cross-origin',
+              'X-Frame-Options': 'SAMEORIGIN',
+              'Strict-Transport-Security':
+                'max-age=63072000; includeSubDomains; preload',
+              'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+            },
+          },
+        },
       }),
       // this is the plugin that enables path aliases
       viteTsConfigPaths({

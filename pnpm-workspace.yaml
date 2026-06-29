@@ -2,3 +2,8 @@ onlyBuiltDependencies:
   - esbuild
   - lefthook
   - msw
+
+# Supply-chain defense: refuse to install package versions published less than
+# this many minutes ago (1440 = 24h). A version that is published maliciously
+# and yanked within a day is therefore never resolved into the lockfile.
+minimumReleaseAge: 1440

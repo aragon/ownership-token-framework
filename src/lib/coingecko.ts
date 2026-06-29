@@ -24,14 +24,25 @@ export async function fetchMarketData(
     throw new Error(`CoinGecko API error: ${response.status}`)
   }
 
-  const items: CoinGeckoMarketItem[] = await response.json()
+  const payload: unknown = await response.json()
+
+  // CoinGecko's public API can return a non-array body (e.g. an error object
+  // like `{ status: { error_code, error_message } }`) even with a 2xx status
+  // under rate-limiting/edge conditions. Iterating that throws; treat it as
+  // "no data" instead so callers degrade gracefully.
+  if (!Array.isArray(payload)) {
+    return {}
+  }
+
   const result: Record<string, MarketData> = {}
 
-  for (const item of items) {
-    result[item.id] = {
-      market_cap: item.market_cap,
-      current_price: item.current_price,
-      total_supply: item.total_supply,
+  for (const item of payload as CoinGeckoMarketItem[]) {
+    if (item && typeof item.id === "string") {
+      result[item.id] = {
+        market_cap: item.market_cap,
+        current_price: item.current_price,
+        total_supply: item.total_supply,
+      }
     }
   }
 
