@@ -1,0 +1,706 @@
+{
+  "id": "ldo",
+  "coingeckoId": "lido-dao",
+  "name": "LDO",
+  "symbol": "LDO",
+  "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+  "icon": "https://assets.coingecko.com/coins/images/13573/standard/Lido_DAO.png",
+  "description": "LDO is the native token of Lido, a liquid staking protocol with onchain voting, safeguarded by stETH holders via Dual Governance.",
+  "network": "ethereum",
+  "lastUpdated": 1777631939,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://lido.fi/",
+    "twitter": "https://twitter.com/lidofinance",
+    "scan": "https://etherscan.io/token/0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
+  },
+  "infoDescription": "Lido is the leading liquid staking solution for Ethereum.",
+  "positive": 15,
+  "neutral": 0,
+  "atRisk": 0,
+  "evidenceEntries": 26,
+  "score": {
+    "tokenId": "ldo",
+    "passing": 12,
+    "total": 12,
+    "percentage": 100,
+    "metrics": [
+      {
+        "metricId": "onchain-ctrl",
+        "metricName": "Onchain Control",
+        "passing": 7,
+        "total": 7,
+        "percentage": 100,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "val-accrual",
+        "metricName": "Value Accrual",
+        "passing": 3,
+        "total": 3,
+        "percentage": 100,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "verifiability",
+        "metricName": "Verifiability",
+        "passing": 2,
+        "total": 2,
+        "percentage": 100,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "distribution",
+        "metricName": "Token Distribution",
+        "passing": 0,
+        "total": 0,
+        "percentage": 0,
+        "evaluated": false,
+        "reference": false
+      },
+      {
+        "metricId": "offchain",
+        "metricName": "Offchain Dependencies",
+        "passing": 3,
+        "total": 3,
+        "percentage": 100,
+        "evaluated": false,
+        "reference": true
+      }
+    ]
+  },
+  "criteriaStatuses": {
+    "onchain-ctrl__governance-workflow": "positive",
+    "onchain-ctrl__role-accountability": "positive",
+    "onchain-ctrl__protocol-upgrade": "positive",
+    "onchain-ctrl__token-upgrade": "positive",
+    "onchain-ctrl__supply": "positive",
+    "onchain-ctrl__access-gating": "positive",
+    "onchain-ctrl__censorship": "positive",
+    "val-accrual__active": "positive",
+    "val-accrual__treasury": "positive",
+    "val-accrual__mechanism": "positive",
+    "val-accrual__offchain": "unevaluated",
+    "verifiability__token-source": "positive",
+    "verifiability__protocol-source": "positive",
+    "distribution__concentration": "unevaluated",
+    "distribution__supply-schedule": "unevaluated",
+    "offchain__trademark": "positive",
+    "offchain__distribution": "positive",
+    "offchain__licensing": "positive"
+  },
+  "metrics": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit. Concretely, it maps who can upgrade core logic, change parameters, invoke emergency actions, modify token behavior or supply, freeze/blacklist/seize/force-transfer assets, or limit protocol actions and exit paths.",
+      "summary": "LDO holders exercise ultimate control through a multi-step governance flow with stETH holder veto protection via Dual Governance. All critical roles flow through governance-controlled contracts. The token has unbounded supply controlled by governance, with token behavior modifiable through controller upgrades.",
+      "tags": [
+        "Metric 1"
+      ],
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "positive",
+          "notes": "LDO holders exercise control through multiple governance paths with stETH holder veto protection via Dual Governance.",
+          "evidence": [
+            {
+              "name": "Governance 1A",
+              "summary": "Voting (LDO holders) → DualGovernance (stETH challenge window) → EmergencyProtectedTimeLock (time delay) → Executor → Agent → Protocol Contracts. LDO holders have ultimate control, constrained by stETH right to exit when disagreeing. This flow is used for protocol-related contracts.",
+              "urls": [
+                {
+                  "name": "Voting",
+                  "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "DualGovernance",
+                  "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EmergencyProtectedTimeLock",
+                  "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Executor",
+                  "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Agent",
+                  "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Governance 1B",
+              "summary": "Voting (LDO holders) → Protocol Contracts. This flow is used for DAO-related contracts.",
+              "urls": [
+                {
+                  "name": "Voting",
+                  "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Easy Track",
+              "summary": "An optimistic governance system where certain operations can be vetoed by LDO holders but are assumed to pass. Used for granting, treasury operations, and staking module management. Motions pass automatically unless ≥0.5% LDO objects within 72 hours. Permissionless execution post-timelock if unopposed; rejected motions escalate to full Aragon vote.",
+              "urls": [
+                {
+                  "name": "Easy Track Interface",
+                  "url": "https://easytrack.lido.fi/",
+                  "type": "docs"
+                },
+                {
+                  "name": "Easy Track Guide",
+                  "url": "https://docs.lido.fi/guides/easy-track-guide",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "positive",
+          "notes": "All critical roles flow through governance-controlled contracts, ensuring LDO holders maintain ultimate control over the protocol.",
+          "evidence": [
+            {
+              "name": "Voting",
+              "summary": "CREATE_VOTES_ROLE allows proposing votes. All LDO holders can vote on proposals. The Voting contract controls the Agent via Governance 1A flow.",
+              "urls": [
+                {
+                  "name": "Voting",
+                  "url": "https://etherscan.io/address/0xe478de485ad2fe566d49342cbd03e49ed7db3356#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Agent",
+              "summary": "EXECUTE_ROLE is given to Executor. Executor is owned by EmergencyProtectedTimeLock, which is controlled by Governance 1A, which is controlled by Voting contract.",
+              "urls": [
+                {
+                  "name": "Agent",
+                  "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "TokenManager",
+              "summary": "MINT_ROLE is given to Voting contract. BURN_ROLE is given to no one, but its permission manager is Voting contract.",
+              "urls": [
+                {
+                  "name": "TokenManager (Aragon App V1 proxy)",
+                  "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "StakingRouter",
+              "summary": "STAKING_MODULE_MANAGE_ROLE is given to Agent contract. Since Agent is only callable by Governance 1, all operations are controlled by LDO holders.",
+              "urls": [
+                {
+                  "name": "StakingRouter",
+                  "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "positive",
+          "notes": "Protocol contracts are upgradeable by LDO holders. Core governance contracts (DualGovernance, Executor, EmergencyProtectedTimeLock) are non-upgradeable.",
+          "evidence": [
+            {
+              "name": "Upgradeable Contracts",
+              "summary": "StakingRouter: proxy_getAdmin is set to Agent.\n\nAgent: Uses Aragon v1 Proxy. Upgrading requires calling setApp(Agent, ...) on the Kernel, which requires APP_MANAGER_ROLE (currently given to Agent itself).",
+              "urls": [
+                {
+                  "name": "StakingRouter",
+                  "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Agent",
+                  "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Kernel",
+                  "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Non-upgradeable Contracts",
+              "summary": "DualGovernance, Executor, and EmergencyProtectedTimeLock are immutable contracts that cannot be upgraded.",
+              "urls": [
+                {
+                  "name": "DualGovernance",
+                  "url": "https://etherscan.io/address/0xC1db28B3301331277e307FDCfF8DE28242A4486E#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Executor",
+                  "url": "https://etherscan.io/address/0x23E0B465633FF5178808F4A75186E2F2F9537021#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "EmergencyProtectedTimeLock",
+                  "url": "https://etherscan.io/address/0xCE0425301C85c5Ea2A0873A2dEe44d78E02D2316#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "LDO token is immutable but **partially upgradeable** in practice due to its controller (TokenManager) being upgradeable via Aragon proxy.",
+          "evidence": [
+            {
+              "name": "Token Contract",
+              "summary": "The LDO token contract is immutable with no proxy pattern. However, it has a controller address (TokenManager) that can call privileged functions (generateTokens, destroyTokens, enableTransfers, claimTokens). The token's doTransfer function includes a hook that calls the controller.",
+              "urls": [
+                {
+                  "name": "LDO Token",
+                  "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Controller Upgrade Path",
+              "summary": "TokenManager is upgradeable via Aragon proxy. Upgrading requires calling setApp(tokenManager, ...) on the Kernel, protected by APP_MANAGER_ROLE, which is assigned to the Agent contract (hence LDO holders).",
+              "urls": [
+                {
+                  "name": "TokenManager (Aragon App V1 proxy)",
+                  "url": "https://etherscan.io/address/0xf73a1260d222f447210581DDf212D915c09a3249",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Kernel",
+                  "url": "https://etherscan.io/address/0xb8FFC3Cd6e7Cf5a098A1c92F48009765B24088Dc",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "positive",
+          "notes": "No supply cap exists, but all mints require LDO tokenholder approval through the Voting contract.",
+          "evidence": [
+            {
+              "name": "Minting Path",
+              "summary": "The LDO token's controller (TokenManager) can mint unlimited tokens. However, minting requires MINT_ROLE on TokenManager, which is held by the Voting contract.\n\nMinting path: Voting (LDO holders) → TokenManager → Token.generateTokens()",
+              "urls": [
+                {
+                  "name": "MiniMeToken.generateTokens",
+                  "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L385",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "positive",
+          "notes": "Deposits are operationally executed by Guardians (node operators + LDO dev team), but Guardians are fully accountable to LDO holders and cannot control protocol parameters.",
+          "evidence": [
+            {
+              "name": "Guardian Role",
+              "summary": "User funds deposited into Lido are accumulated in the buffer and can only be deposited into a staking module by DepositSecurityModule, controlled by Guardians. Guardians use automated software for deposit operations.",
+              "urls": [
+                {
+                  "name": "DepositSecurityModule",
+                  "url": "https://etherscan.io/address/0xfFA96D84dEF2EA035c7AB153D8B991128e3d72fD#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "Lido.sol deposit logic",
+                  "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L641",
+                  "type": "github"
+                },
+                {
+                  "name": "Guardians use automated software",
+                  "url": "https://docs.lido.fi/guides/deposit-security-manual/#tldr",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Guardian Accountability",
+              "summary": "Guardians are fully accountable to LDO holders—they can be rotated, replaced, or their mandate changed through onchain voting. Guardians do not control protocol parameters or economic risk (staking ratios, fee splits, module shares, or risk parameters).",
+              "urls": [
+                {
+                  "name": "Guardian Committee Membership",
+                  "url": "https://docs.lido.fi/guides/deposit-security-manual#committee-membership",
+                  "type": "docs"
+                },
+                {
+                  "name": "Guardians cannot control stake allocation",
+                  "url": "https://github.com/lidofinance/core/blob/d5d92266b5bb305044c5dcf3e407463f776a4def/contracts/0.4.24/Lido.sol#L647",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "positive",
+          "notes": "Controller has burn and transfer-disable capabilities, but BURN_ROLE is currently unassigned. Enabling burning requires LDO governance approval.",
+          "evidence": [
+            {
+              "name": "Burn Capability",
+              "summary": "Controller can burn tokens from any address via destroyTokens. Currently, BURN_ROLE on TokenManager is given to no one, but permission manager is Voting contract. To enable burning, proposal must go through Governance 1B to call setPermission on ACL.",
+              "urls": [
+                {
+                  "name": "MiniMeToken.destroyTokens",
+                  "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L401",
+                  "type": "github"
+                },
+                {
+                  "name": "Aragon ACL",
+                  "url": "https://etherscan.io/address/0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Transfer Control",
+              "summary": "Controller can enable/disable transfers globally via enableTransfers function.",
+              "urls": [
+                {
+                  "name": "MiniMeToken.enableTransfers",
+                  "url": "https://github.com/aragon/minime/blob/1d5251fc88eee5024ff318d95bc9f4c5de130430/contracts/MiniMeToken.sol#L419",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations. It focuses on whether a real value engine exists and is active.",
+      "summary": "Protocol revenue flows to the LDO-controlled DAO treasury, and a newly approved manual buyback program (up to 10,000 stETH, held by the treasury) creates net buy pressure on LDO, though not a direct distribution. Treasury is controlled by LDO holders; offchain IP is held by DAO-controlled BORG foundations.",
+      "tags": [
+        "Metric 2"
+      ],
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "positive",
+          "notes": "**Protocol fee flow to treasury:**\n- Lido charges a 10% protocol fee on all ETH staking rewards, split onchain by the StakingRouter into a module fee (to node operators) and a treasury fee (to the LDO-controlled DAO Agent).\n- Calling `getStakingFeeAggregateDistribution()` on the StakingRouter currently returns an aggregated treasury fee of ~6.15% and module fees of ~3.85% (basePrecision = 100), meaning ~6.15% of all ETH staking rewards accrue to the DAO treasury on every oracle report.\n\n**Buyback program:**\n- Governance has authorized the Lido Growth Committee to buy back LDO using up to 10,000 stETH (from the accumulated fee described above), in 1,000 stETH batches via Easy Track motions (3-day objection window for LDO holders, 3% max slippage) while a favorable LDO/stETH ratio persists. Execution spans onchain (CoW, 1inch, Uniswap) and offchain venues (Binance, Bybit, OKX, Gate, Bitget).\n- This is independent of the anticipated automated NEST buybacks in Q2 2026. Value accrues to the LDO-controlled DAO treasury (buyback-and-hold), but is not directly distributed to LDO holders.",
+          "evidence": [
+            {
+              "name": "Treasury Fee Flow",
+              "urls": [
+                {
+                  "name": "StakingRouter (read contract)",
+                  "url": "https://etherscan.io/address/0xFdDf38947aFB03C621C71b06C9C70bce73f12999#readProxyContract",
+                  "type": "explorer"
+                },
+                {
+                  "name": "StakingRouter.sol#L1051 (getStakingFeeAggregateDistribution)",
+                  "url": "https://github.com/lidofinance/core/blob/master/contracts/0.8.9/StakingRouter.sol#L1051",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "Buyback Program",
+              "urls": [
+                {
+                  "name": "stETH/LDO Buyback Proposal",
+                  "url": "https://research.lido.fi/t/utilizing-market-opportunities-steth-ldo-trade/11358",
+                  "type": "docs"
+                },
+                {
+                  "name": "stETH/LDO Buyback Snapshot Vote",
+                  "url": "https://snapshot.box/#/s:lido-snapshot.eth/proposal/0x43be9ee8ce820d444f706e9dd763a223ebabf37be27931cc056888e6c2e48814",
+                  "type": "vote"
+                },
+                {
+                  "name": "NEST",
+                  "url": "https://research.lido.fi/t/nest-network-economic-support-tokenomics/10648",
+                  "type": "docs"
+                },
+                {
+                  "name": "Liquid buybacks research",
+                  "url": "https://research.lido.fi/t/liquid-buybacks-nest-execution-with-ldo-wsteth-liquidity/10894",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "Treasury is the Agent contract, fully controlled by LDO holders. Treasury decisions are excluded from Governance 1 scope (stETH holders cannot challenge).",
+          "evidence": [
+            {
+              "name": "Treasury Control",
+              "summary": "The Lido DAO Treasury is the Agent contract itself. The Treasury Management Committee proposes and enacts strategies via Governance 2 (Easy Track). All treasury decisions are controlled by LDO holders.",
+              "urls": [
+                {
+                  "name": "Agent (Treasury)",
+                  "url": "https://etherscan.io/address/0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Revenue Flow",
+              "summary": "LDO holders, via Governance 1A, control treasury revenue by approving staking modules and setting each module's treasury fee in the StakingRouter. This fee determines the portion of staking rewards routed to the Lido treasury.",
+              "urls": [
+                {
+                  "name": "StakingRouter",
+                  "url": "https://etherscan.io/address/0xfddf38947afb03c621c71b06c9c70bce73f12999#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether only tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "positive",
+          "notes": "To add a new staking module or update it with new fees, full governance flow required, hence controlled by LDO holders.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "StakingRouter add/update",
+                  "url": "https://github.com/lidofinance/core/blob/cca04b42123735714d8c60a73c2f7af949e989db/contracts/0.8.9/StakingRouter.sol#L227",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "unevaluated",
+          "notes": "Aragon has not verified additional offchain value accrual flows to the LDO token",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances. In practice, it answers: what code is running, where it is deployed, and whether the deployed bytecode can be credibly matched to publicly available source (including proxy implementations and build inputs where relevant).",
+      "summary": "LDO token source is publicly available and verified on Etherscan. Lido core protocol contracts are open source and verified.",
+      "tags": [
+        "Metric 3"
+      ],
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "positive",
+          "notes": "The LDO token contract source code is publicly available on GitHub (MiniMeToken) and verified on Etherscan.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "LDO Token (Etherscan)",
+                  "url": "https://etherscan.io/token/0x5a98fcbea516cf06857215779fd812ca3bef1b32#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "MiniMeToken Source (GitHub)",
+                  "url": "https://github.com/aragon/minime",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "positive",
+          "notes": "Lido core protocol contracts are open source on GitHub.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Lido Core Contracts (GitHub)",
+                  "url": "https://github.com/lidofinance/core",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed. It measures whether any single actor or coordinated group under common control can form a controlling block large enough to determine or constrain tokenholder-governed outcomes.",
+      "summary": "Aragon has not yet verified the distribution of LDO holders outside of the core team.",
+      "tags": [
+        "Metric 4"
+      ],
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "unevaluated",
+          "notes": "Aragon has not yet verified the distribution of LDO holders outside of the core team is greater than 50%",
+          "evidence": []
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "unevaluated",
+          "notes": "Aragon has not yet verified the supply schedule criteria for the LDO token",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "about": "Economically material assets and obligations often sit offchain—outside the custody and direct enforcement of a token—while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "European trademark registrations for LIDO list Lido Labs Foundation as the owner. Lido Labs, Ecosystem, and Alliance BORG Foundations are DAO-controlled entities managing offchain IP and distribution.",
+      "tags": [
+        "Reference"
+      ],
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "European trademark registrations for LIDO list Lido Labs Foundation as the owner.",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "UK IPO Trademark Journal",
+                  "url": "https://www.ipo.gov.uk/types/tm/t-os/t-tmj/tm-journals/2025-045/UK00004285645.html",
+                  "type": "docs"
+                },
+                {
+                  "name": "Lido Logo",
+                  "url": "https://euipo.europa.eu/eSearch/#details/trademarks/019182074",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Lido Labs BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6",
+                  "type": "docs"
+                },
+                {
+                  "name": "Lido Ecosystem BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15",
+                  "type": "docs"
+                },
+                {
+                  "name": "Lido Alliance BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "Lido Labs BORG Foundation, Lido Ecosystem BORG Foundation, Lido Alliance BORG Foundation is a memberless DAO-adjacent foundation companies under which the Lido DAO has defined governance controls (including appointing/removing directors and overseeing BORG structures).",
+          "evidence": [
+            {
+              "urls": [
+                {
+                  "name": "Lido Labs BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xdf648307e68415e7b5cf96c6afbabd696c1731839f4b4a7cf5cb7efbc44ee9d6",
+                  "type": "docs"
+                },
+                {
+                  "name": "Lido Ecosystem BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0x7f72f12d72643c20cd0455c603d344050248e75ed1074c8391fae4c30f09ca15",
+                  "type": "docs"
+                },
+                {
+                  "name": "Lido Alliance BORG Foundation",
+                  "url": "https://snapshot.org/#/s:lido-snapshot.eth/proposal/0xa478fa5518769096eda2b7403a1d4104ca47de3102e8a9abab8640ef1b50650c",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

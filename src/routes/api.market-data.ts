@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start"
-import { type MarketData, fetchMarketData } from "@/lib/coingecko"
+import { fetchMarketData, type MarketData } from "@/lib/coingecko"
 
 type MarketDataInput = {
   coingeckoIds: string[]

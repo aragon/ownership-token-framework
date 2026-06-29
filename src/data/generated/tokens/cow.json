@@ -1,0 +1,663 @@
+{
+  "id": "cow",
+  "coingeckoId": "cow-protocol",
+  "name": "COW",
+  "symbol": "COW",
+  "address": "0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB",
+  "icon": "https://assets.coingecko.com/coins/images/24384/standard/CoW-token_logo.png",
+  "description": "COW is the governance token of CoW Protocol, a meta-DEX aggregator that settles trades via batch auctions and protects users from MEV.",
+  "network": "ethereum",
+  "evidenceEntries": 31,
+  "positive": 11,
+  "neutral": 4,
+  "atRisk": 3,
+  "lastUpdated": 1777631939,
+  "updatedBy": {
+    "avatar": "/logo192.png",
+    "name": "Aragon Developers"
+  },
+  "links": {
+    "website": "https://cow.fi/",
+    "twitter": "https://twitter.com/CoWSwap",
+    "scan": "https://etherscan.io/token/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
+  },
+  "infoDescription": "CoW Protocol is a fully permissionless trading protocol that leverages batch auctions as its price-finding mechanism, offering MEV protection and the best prices across DEXs and DEX aggregators.",
+  "score": {
+    "tokenId": "cow",
+    "passing": 8,
+    "total": 15,
+    "percentage": 53.333333333333336,
+    "metrics": [
+      {
+        "metricId": "onchain-ctrl",
+        "metricName": "Onchain Control",
+        "passing": 4,
+        "total": 7,
+        "percentage": 57.14285714285714,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "val-accrual",
+        "metricName": "Value Accrual",
+        "passing": 1,
+        "total": 4,
+        "percentage": 25,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "verifiability",
+        "metricName": "Verifiability",
+        "passing": 2,
+        "total": 2,
+        "percentage": 100,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "distribution",
+        "metricName": "Token Distribution",
+        "passing": 1,
+        "total": 2,
+        "percentage": 50,
+        "evaluated": true,
+        "reference": false
+      },
+      {
+        "metricId": "offchain",
+        "metricName": "Offchain Dependencies",
+        "passing": 3,
+        "total": 3,
+        "percentage": 100,
+        "evaluated": false,
+        "reference": true
+      }
+    ]
+  },
+  "criteriaStatuses": {
+    "onchain-ctrl__governance-workflow": "at_risk",
+    "onchain-ctrl__role-accountability": "warning",
+    "onchain-ctrl__protocol-upgrade": "positive",
+    "onchain-ctrl__token-upgrade": "positive",
+    "onchain-ctrl__supply": "positive",
+    "onchain-ctrl__access-gating": "at_risk",
+    "onchain-ctrl__censorship": "positive",
+    "val-accrual__active": "positive",
+    "val-accrual__treasury": "warning",
+    "val-accrual__mechanism": "warning",
+    "val-accrual__offchain": "at_risk",
+    "verifiability__token-source": "positive",
+    "verifiability__protocol-source": "positive",
+    "distribution__concentration": "positive",
+    "distribution__supply-schedule": "warning",
+    "offchain__trademark": "positive",
+    "offchain__distribution": "positive",
+    "offchain__licensing": "positive"
+  },
+  "metrics": [
+    {
+      "id": "onchain-ctrl",
+      "name": "Onchain Control",
+      "tags": [
+        "Metric 1"
+      ],
+      "about": "This metric evaluates whether economically material outcomes are mediated through tokenholder governance, or whether admins, multisigs, security councils, or other privileged roles retain onchain powers that can change the rules or selectively restrict use and exit.",
+      "summary": "CoW governance is offchain: there is no onchain Governor binding votes to execution, with CoW Improvement Proposals (CIPs) decided via Snapshot on the cow.eth space and executed by Foundation-owned Safes. The COW token is immutable with capped 3% annual inflation (mintable only by CoW DAO) and no censorship capabilities. The settlement contract is immutable, while the solver allow-list is upgradeable with its owner set to CoW DAO.",
+      "criteria": [
+        {
+          "id": "onchain-ctrl__governance-workflow",
+          "name": "Onchain Governance Workflow",
+          "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
+          "status": "at_risk",
+          "notes": "No onchain Governor contract deployed. CoW DAO does not use an on-chain Governor (no OZ Governor / Aragon DAO / Tally binding votes to execution), since the deprecation of the oSnap module. Governance runs through CoW Improvement Proposals (CIPs): forum discussion → Snapshot vote on the cow.eth space. Votes are weighted by COW + vCOW balances/delegations across the implemented strategies spanning Mainnet and Gnosis Chain. A proposal passes on a simple majority of YES with a quorum of 35,000,000 votes. Anyone holding ≥10K COW can create a proposal.",
+          "evidence": [
+            {
+              "name": "Snapshot Governance",
+              "summary": "CoW DAO governance votes (CIPs) are held on the cow.eth Snapshot space, weighted by COW + vCOW balances/delegations across Mainnet and Gnosis Chain.",
+              "urls": [
+                {
+                  "name": "Snapshot Space",
+                  "url": "https://snapshot.org/#/s:cow.eth",
+                  "type": "docs"
+                },
+                {
+                  "name": "Governance Documentation (Snapshot)",
+                  "url": "https://docs.cow.fi/governance/snapshot",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__role-accountability",
+          "name": "Role Accountability",
+          "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
+          "status": "warning",
+          "notes": "Operational roles are distributed across purpose-specific multisigs rather than a single role registry. All wallets are owned by CoW Foundation or related entities.\n\n- **Solver Payouts Safe:** Sends rewards and network fees to solvers, and forwards protocol fees to the Protocol Fee Safe.\n- **CoW Buyback Recipient Safe:** Receives buybacks and sends COW to the Solver Payouts Safe when needed.\n- **Managed Treasury Safe:** CoW DAO is added as a module, giving it full control over Safe execution, including the ability to drain funds.\n- **Solver allow-list (GPv2AllowListAuthentication):** Managers can add/remove solvers. Per CoW's published security notes, a compromised manager could allow-list a malicious solver capable of draining the settlement contract's fee buffers - but not user funds, which are never custodied by the protocol. The manager is currently set to CoW DAO.\n- **COW token mint:** Can be performed by CoW DAO.\n\n**Caveat:** While COW tokenholders can have a say, this is via offchain Snapshot voting that is not enforced onchain - ultimately, it is still the Safe signers who decide execution.",
+          "evidence": [
+            {
+              "name": "Solver Payouts Safe",
+              "urls": [
+                {
+                  "name": "Solver Payouts Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA03be496e67Ec29bC62F01a428683D7F9c204930",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Protocol Fee Safe",
+              "urls": [
+                {
+                  "name": "Protocol Fee Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0x22af3D38E50ddedeb7C47f36faB321eC3Bb72A76",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Buyback Recipient",
+              "urls": [
+                {
+                  "name": "CoW Buyback Recipient (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA2BFc70e63a48BDfc3F8013a44B04b6c33fb8200",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "GPv2AllowListAuthentication",
+              "urls": [
+                {
+                  "name": "GPv2AllowListAuthentication Proxy (Etherscan)",
+                  "url": "https://etherscan.io/address/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "COW Token Contract",
+              "urls": [
+                {
+                  "name": "COW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO",
+              "urls": [
+                {
+                  "name": "CoW DAO (Etherscan)",
+                  "url": "https://etherscan.io/address/0xcA771eda0c70aA7d053aB1B25004559B918FE662",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__protocol-upgrade",
+          "name": "Protocol Upgrade Authority",
+          "about": "Determines whether core protocol logic can be upgraded and whether such upgrades are controlled by tokenholders.",
+          "status": "positive",
+          "notes": "The core settlement contract (GPv2Settlement) is non-upgradeable/immutable.\n\nCore protocol contracts are split between immutable and upgradeable components. The settlement contract (GPv2Settlement) - which executes trades and is the only contract that transiently holds funds during settlement - is immutable (not behind a proxy). Its logic cannot be changed post-deployment.\n\nThe solver allow-list (GPv2AllowListAuthentication) is upgradeable, via an EIP-173 ownership proxy (EIP173Proxy), described in CoW docs as upgradeable \"to facilitate future decentralization.\" The proxy owner is set to CoW DAO, but upgrades are executed via multisig rather than a binding on-chain governor.",
+          "evidence": [
+            {
+              "name": "GPv2Settlement (Immutable)",
+              "summary": "The settlement contract executes trades and transiently holds funds during settlement. It is immutable (not behind a proxy).",
+              "urls": [
+                {
+                  "name": "GPv2Settlement (Etherscan)",
+                  "url": "https://etherscan.io/address/0x9008D19f58AAbD9eD0D60971565AA8510560ab41#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "GPv2AllowListAuthentication (Upgradeable)",
+              "summary": "The solver allow-list is upgradeable via an EIP-173 ownership proxy.",
+              "urls": [
+                {
+                  "name": "GPv2AllowListAuthentication Proxy (Etherscan)",
+                  "url": "https://etherscan.io/address/0x2c4c28DDBdAc9C5E7055b4C863b72eA0149D8aFE#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Protocol Contracts Documentation",
+              "summary": "CoW docs describe the allow-list proxy as upgradeable \"to facilitate future decentralization\"",
+              "urls": [
+                {
+                  "name": "Core Contracts Reference",
+                  "url": "https://docs.cow.fi/cow-protocol/reference/contracts/core",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__token-upgrade",
+          "name": "Token Upgrade Authority",
+          "about": "Assesses whether token behavior can be modified and, if so, whether such changes are controlled by tokenholder governance.",
+          "status": "positive",
+          "notes": "The COW token contract is immutable with no proxy patterns or upgrade mechanisms.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "The verified COW token source on Etherscan shows a standard non-upgradeable ERC-20 implementation with no proxy pattern.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__supply",
+          "name": "Supply Control",
+          "about": "Evaluates whether token supply changes are programmatic or subject exclusively to tokenholder-approved governance processes.",
+          "status": "positive",
+          "notes": "COW was deployed with a 1 billion supply at TGE. The token is inflationary by design: it permits a maximum 3% per annum inflation, executable at most once every 365 days, and only via the cowDao (governance) address.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "Verified COW token source on Etherscan; supply minted at deployment.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Inflation Cap Enforcement",
+              "summary": "InflationaryToken.sol enforces MAX_YEARLY_INFLATION = 3%, TIME_BETWEEN_MINTINGS = 365 days, and an onlyCowDao modifier restricting minting to the governance address.",
+              "urls": [
+                {
+                  "name": "InflationaryToken.sol",
+                  "url": "https://github.com/cowprotocol/token/blob/main/src/contracts/mixins/InflationaryToken.sol#L50",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__access-gating",
+          "name": "Privileged Access Gating",
+          "about": "Assesses whether any bounded actor set can block or selectively restrict economically meaningful protocol actions or exit paths, versus access that is permissionless and symmetric for similarly situated users.",
+          "status": "at_risk",
+          "notes": "Treasury movement is handled by the CoW DAO Safe and the CoW Treasury Safe (managed with Karpatkey for yield).\n\nThese are controlled by multisigs operating under DAO-defined rules, with the main DAO Safe bound to Snapshot outcomes. They are not gated behind a Governor timelock with an enforced delay.\n\nThe core settlement contract itself is non-custodial and immutable, so there is no protocol-level \"pause all / emergency withdraw of user funds\" lever over trader assets.",
+          "evidence": [
+            {
+              "name": "CoW Treasury Safe",
+              "urls": [
+                {
+                  "name": "CoW Treasury Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "GPv2Settlement (Immutable)",
+              "urls": [
+                {
+                  "name": "GPv2Settlement (Etherscan)",
+                  "url": "https://etherscan.io/address/0x9008D19f58AAbD9eD0D60971565AA8510560ab41#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "onchain-ctrl__censorship",
+          "name": "Token Censorship",
+          "about": "Examines whether any roles exist that can freeze, blacklist, seize, or otherwise censor token balances or transfers.",
+          "status": "positive",
+          "notes": "The COW token has no blacklist, freeze, seize, or force-transfer functions and no transfer hooks. Transfers are permissionless and cannot be censored.",
+          "evidence": [
+            {
+              "name": "COW Token Contract",
+              "summary": "Verified COW token source on Etherscan shows a standard ERC-20 with no blacklist, freeze, seizure, force-transfer, or transfer-hook logic.",
+              "urls": [
+                {
+                  "name": "Token Contract Source",
+                  "url": "https://etherscan.io/address/0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab#code",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "val-accrual",
+      "name": "Value Accrual",
+      "tags": [
+        "Metric 2"
+      ],
+      "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations.",
+      "summary": "COW runs a live, net-deflationary buyback that repurchases at least as many tokens as are paid out as solver incentives, though the mandate is set by governance and executed operationally rather than by an immutable onchain mechanism. Treasury assets belong to the DAO but sit in Safes without binding onchain tokenholder control. No offchain value currently accrues to tokenholders.",
+      "criteria": [
+        {
+          "id": "val-accrual__active",
+          "name": "Accrual Active",
+          "about": "Assesses whether value flows to tokenholders are currently active rather than merely theoretical or proposed.",
+          "status": "positive",
+          "notes": "A live buyback mechanism, which aims to buy back at least the same amount of tokens paid as solver incentives. The buybacks are performed with a 20% buffer on top of solver incentives to ensure that price fluctuations do not lead to under-buying of tokens.\n\nFee collection flows through the settlement contract → Solver Payouts Safe → Protocol Fee Safe → revenue bridge to mainnet and weekly buyback execution → bought-back tokens are sent to the CoW Buyback Recipient and the remainder of funds are sent to the CoW DAO Managed Treasury.",
+          "evidence": [
+            {
+              "name": "Solver Payouts Safe",
+              "urls": [
+                {
+                  "name": "Solver Payouts Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA03be496e67Ec29bC62F01a428683D7F9c204930",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Protocol Fee Safe",
+              "urls": [
+                {
+                  "name": "Protocol Fee Safe (Etherscan)",
+                  "url": "https://etherscan.io/address/0x22af3D38E50ddedeb7C47f36faB321eC3Bb72A76",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW Buyback Recipient",
+              "urls": [
+                {
+                  "name": "CoW Buyback Recipient (Etherscan)",
+                  "url": "https://etherscan.io/address/0xA2BFc70e63a48BDfc3F8013a44B04b6c33fb8200",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            },
+            {
+              "name": "Value Accrual Proposal",
+              "urls": [
+                {
+                  "name": "Value Accrual Proposal (Google Drive)",
+                  "url": "https://drive.google.com/drive/folders/1Tb92Nx3CP1Wfp2NdYl6LhNkGGeHpSXFP",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__treasury",
+          "name": "Treasury Ownership",
+          "about": "Determines whether protocol treasury assets are programmatically controlled by tokenholder governance.",
+          "status": "warning",
+          "notes": "The CoW DAO Safe holds 44.4% of total supply. Other assets are mainly held in the CoW DAO Managed Treasury. All assets belong to the DAO and to tokenholders by extension.\n\nHowever, tokenholders do not have binding on-chain control over the treasury: assets are held in Safes and disbursed via multisig execution, with the mandate originating from offchain Snapshot votes rather than a binding on-chain governor. Tokenholders cannot directly force or block treasury movements onchain.",
+          "evidence": [
+            {
+              "name": "CoW DAO Managed Treasury",
+              "urls": [
+                {
+                  "name": "CoW DAO Managed Treasury (Etherscan)",
+                  "url": "https://etherscan.io/address/0x616dE58c011F8736fa20c7Ae5352F7f6FB9F0669",
+                  "type": "explorer"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "val-accrual__mechanism",
+          "name": "Accrual Mechanism Control",
+          "about": "Evaluates whether tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
+          "status": "warning",
+          "notes": "The buyback mandate and its parameters are set by governance. It is not an immutable on-chain mechanism - the Treasury/Core Team executes buybacks operationally, with the mandate originating from a token vote (Snapshot).",
+          "evidence": []
+        },
+        {
+          "id": "val-accrual__offchain",
+          "name": "Offchain Value Accrual",
+          "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
+          "status": "at_risk",
+          "notes": "CoW Foundation is the legal entity that holds and administers CoW DAO-related intellectual property under the legal structure approved by CoW DAO governance. CoW Foundation was established pursuant to CIP-64, \"Incorporation of a legal structure for CoW DAO,\" as CoW DAO's legal interface and IP-stewardship entity. CIP-64 provides that CoW Foundation owns intellectual property rights originating from or related to CoW DAO, including historical and future DAO-related rights, consistently with the DAO's Participation Agreement adopted under CIP-1.\n\nFor IP specifically, CoW Foundation does not operate the IP as a licensing business, and no revenue is currently generated from licensing or other standalone monetisation of CoW DAO-related IP. Accordingly, there is no current IP revenue-sharing arrangement with tokenholders.\n\nIf IP-related revenue were generated in the future, the proceeds would accrue for the benefit of CoW DAO, including through the DAO treasury, subject to the applicable governance process and legal implementation mechanics. This should be understood as a DAO treasury/governance alignment mechanism, not as a direct contractual revenue entitlement of individual tokenholders.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Establishes CoW Foundation as CoW DAO's legal interface and IP-stewardship entity, owning IP rights originating from or related to CoW DAO.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifiability",
+      "name": "Verifiability",
+      "tags": [
+        "Metric 3"
+      ],
+      "about": "This metric measures whether a token's economically material code and deployments are independently verifiable from primary evidence without relying on insider assurances.",
+      "summary": "Both the COW and vCOW token contracts are verified onchain, and all core CoW Protocol contracts are verified and match their published GitHub sources.",
+      "criteria": [
+        {
+          "id": "verifiability__token-source",
+          "name": "Token Contract Source Verification",
+          "about": "Determines whether the token contract's source code is publicly available and verifiably matches the deployed bytecode.",
+          "status": "positive",
+          "notes": "Both the COW and vCOW token contracts are verified.",
+          "evidence": [
+            {
+              "name": "COW Token",
+              "urls": [
+                {
+                  "name": "COW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "cowprotocol/token (GitHub)",
+                  "url": "https://github.com/cowprotocol/token",
+                  "type": "github"
+                }
+              ]
+            },
+            {
+              "name": "vCOW Token",
+              "urls": [
+                {
+                  "name": "vCOW Token (Etherscan)",
+                  "url": "https://etherscan.io/address/0xD057B63f5E69CF1B929b356b579Cba08D7688048#code",
+                  "type": "explorer"
+                },
+                {
+                  "name": "cowprotocol/token (GitHub)",
+                  "url": "https://github.com/cowprotocol/token",
+                  "type": "github"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "verifiability__protocol-source",
+          "name": "Protocol Component Source Verification",
+          "about": "Determines whether core protocol contracts are publicly accessible and verifiable against their onchain deployments.",
+          "status": "positive",
+          "notes": "All core CoW Protocol contracts are verified onchain and match their GitHub sources.",
+          "evidence": [
+            {
+              "name": "CoW Protocol Contracts",
+              "urls": [
+                {
+                  "name": "cowprotocol/contracts (GitHub)",
+                  "url": "https://github.com/cowprotocol/contracts",
+                  "type": "github"
+                },
+                {
+                  "name": "cowprotocol/ethflowcontract (GitHub)",
+                  "url": "https://github.com/cowprotocol/ethflowcontract",
+                  "type": "github"
+                },
+                {
+                  "name": "Periphery Contracts Reference",
+                  "url": "https://docs.cow.fi/cow-protocol/reference/contracts/periphery",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "name": "Token Distribution",
+      "tags": [
+        "Metric 4"
+      ],
+      "about": "This metric evaluates whether ownership and therefore effective voting power in governance is meaningfully distributed.",
+      "summary": "CoW DAO and Foundation entities hold the largest share of supply, with no single third party controlling a majority and the remainder dispersed across holders, CEXes and bridges. A 50M COW team stream and a revenue-gated 75M remainder represent future dilution.",
+      "criteria": [
+        {
+          "id": "distribution__concentration",
+          "name": "Ownership Concentration",
+          "about": "Measures whether a single actor or coordinated group controls a majority of the voting supply.",
+          "status": "positive",
+          "notes": "Based on Etherscan information, CoW DAO (directly, through its safe or CoW Foundation entities) holds 39%, Team holds 9.66%, investors 0.85%, Gnosis DAO 9.45% and Solver 1.33%. The remaining supply is dispersed through several holders, CEXes, Bridges.",
+          "evidence": []
+        },
+        {
+          "id": "distribution__supply-schedule",
+          "name": "Future Token Unlocks",
+          "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
+          "status": "warning",
+          "notes": "The team has a running allocation of 50,000,000 COW via a four-year linear streaming allocation, which started February 11, 2026. A remainder allocation of 75M COW, gated by revenue milestones, can still be allocated to the team if revenue targets are reached.",
+          "evidence": [
+            {
+              "name": "Team Allocation Proposal",
+              "summary": "Snapshot proposal authorizing the 50M COW four-year linear stream and the 75M revenue-gated remainder allocation.",
+              "urls": [
+                {
+                  "name": "Snapshot Proposal",
+                  "url": "https://snapshot.org/#/s:cow.eth/proposal/0x52407329d3861f0e263eacc3ad98f0b1c29b3cd5513c26846f9aad11005f8e8b",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "offchain",
+      "name": "Offchain Dependencies",
+      "tags": [
+        "Reference"
+      ],
+      "about": "Economically material assets and obligations often sit offchain-outside the custody and direct enforcement of a token-while still determining which interfaces and domains most users reach, where fees are charged or captured, who can commercialize or restrict the software, and who can sign contracts or move offchain funds.",
+      "summary": "CoW DAO-related IP, trademarks, UI and the cow.fi domain are held and administered by CoW Foundation and CoW Hosting under the DAO-approved CIP-64 legal structure, with CoW DAO retaining governance control over the Foundation's mandate. The majority of CoW DAO-related software is open-source.",
+      "criteria": [
+        {
+          "id": "offchain__trademark",
+          "name": "Trademark",
+          "about": "Are core trademarks and brand assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "CoW DAO-related trademarks, trade names, logos and brand rights should be described as part of the DAO-related IP administered by CoW Foundation under the CIP-64 legal structure. CoW Foundation acts as the DAO-mandated legal steward and administrator of CoW DAO-related IP, and is expected to administer such rights consistently with DAO governance decisions, subject to applicable law, its governing documents and directors' legal duties.\n\nThis is not a structure where a separate labs entity owns the brand free of DAO governance obligations. The relevant governance documentation positions CoW Foundation as the legal interface and IP holder/steward for CoW DAO-related rights, with CoW DAO retaining governance control over the Foundation's mandate.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Establishes CoW Foundation as CoW DAO's legal interface and IP-stewardship entity for DAO-related rights, with the DAO retaining governance control over the Foundation's mandate.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__distribution",
+          "name": "Distribution",
+          "about": "Are primary domains and distribution assets owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "CoW Hosting Limited is the legal entity that holds and administers the UI and the domain https://cow.fi pursuant to the mandate given by CIP-64, \"Incorporation of a legal structure for CoW DAO.\" CoW Hosting is a BVI company limited by guarantee of which CoW Foundation is the sole guarantor and corporate director.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Mandates the CoW DAO legal structure under which CoW Foundation (and affiliated entities such as CoW Hosting) hold and administer DAO-related IP, UI and domain rights, with the DAO retaining governance control.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "offchain__licensing",
+          "name": "Licensing",
+          "about": "Is core protocol software/IP (and any associated licensing rights, where applicable) owned or controlled by a tokenholder-controlled legal entity?",
+          "status": "positive",
+          "notes": "The protocol software and non-contract IP should not be characterised as owned by an independent labs entity and merely licensed to the DAO on a revocable basis. The documented governance position is that CoW Foundation holds and administers CoW DAO-related IP under the DAO-approved legal structure, with CoW DAO governance retaining strategic control over the Foundation's mandate.\n\nManagement estimates that approximately 90-95% of CoW DAO-related software is publicly available under open-source licences. These include permissive licences such as MIT and Apache-2.0 and copyleft or weak-copyleft licences such as GPL and LGPL, depending on the relevant component. For those public components, third-party use is governed by the applicable open-source licence terms.\n\nSome public repositories may contain legacy copyright notices or contributor-retention language, including references to Gnosis or individual contributors. These notices may reflect historical development, repository-level attribution or open-source contribution practices. They do not necessarily prevent CoW Foundation from administering DAO-related IP, but they do mean the structure should be described carefully: CoW Foundation holds, stewards or administers DAO-related IP and related rights, rather than every historical item of code being stated to have been formally assigned to CoW Foundation without qualification.\n\nFor the limited portion of CoW DAO-related software that is not publicly released, contributor, contractor and service-provider arrangements are intended to ensure that CoW Foundation has the necessary ownership or licence rights to administer, protect and enforce the relevant IP for DAO-related purposes. Where formal ownership has not been confirmed, the relevant materials should be reviewed as part of ordinary IP chain-of-title diligence.",
+          "evidence": [
+            {
+              "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
+              "summary": "Mandates the CoW DAO legal structure under which CoW Foundation (and affiliated entities such as CoW Hosting) hold and administer DAO-related IP, UI and domain rights, with the DAO retaining governance control.",
+              "urls": [
+                {
+                  "name": "CIP-64 (CoW Forum)",
+                  "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

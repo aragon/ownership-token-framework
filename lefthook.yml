@@ -1,0 +1,28 @@
+# Local rails — same gates as CI (.github/workflows/ci.yml), run on your
+# machine so a red build is caught before it leaves it.
+#
+#   pre-commit  fast: format/lint only the staged files, auto-fix and re-stage
+#   pre-push    full: the exact checks CI runs (build stays CI-only — too heavy
+#               for every push)
+#
+# Skip in a pinch with `git commit --no-verify` / `git push --no-verify`.
+
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: "*.{ts,tsx,js,jsx,json,jsonc,css}"
+      run: pnpm exec biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+
+pre-push:
+  parallel: true
+  commands:
+    schema-drift:
+      run: node scripts/check-schema-drift.mjs
+    biome:
+      run: pnpm exec biome check src tests
+    type-check:
+      run: pnpm type-check
+    test:
+      run: pnpm test

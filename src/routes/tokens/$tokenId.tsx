@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router"
 import TokenDetail from "@/components/token-detail"
 import { generateOpenGraphMetadata } from "@/lib/metadata"
+import { publishedTokenDocQuery, readPublished } from "@/lib/published-queries"
+import { queryClient } from "@/lib/query-client"
 import { getTokenById } from "@/lib/token-data"
 
 export const Route = createFileRoute("/tokens/$tokenId")({
+  // The detail page reads the full composed token doc (metrics, criteria,
+  // evidence) synchronously from the query cache — ensure it before render.
+  loader: async ({ params }) => {
+    await readPublished(queryClient, publishedTokenDocQuery(params.tokenId))
+  },
   component: TokenDetailPage,
   head: ({ params }) => {
     const token = getTokenById(params.tokenId)
