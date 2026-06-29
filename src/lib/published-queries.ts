@@ -11,9 +11,13 @@
  * Client side, queryFns fetch the canonical JSON endpoints — the app is the
  * first consumer of its own published API (/api/v1/tokens*).
  *
- * Published data is immutable per snapshot, so staleTime/gcTime are Infinity:
- * a new snapshot arrives as a new deployment, or — in release mode — as the
- * next SSR render reading a newer release, never as a background refetch.
+ * A given snapshot is immutable, but `latest` advances on each publish — so the
+ * queries are served from cache for a short TTL and then revalidated in the
+ * background (stale-while-revalidate). A long-open tab picks up new publishes
+ * without a reload, and a stale entry refreshes silently. Components keep these
+ * observed (useSuspenseQuery at the route root), which drives the revalidation
+ * AND prevents the entry from being garbage-collected out from under the
+ * synchronous readers — the cause of the "not in the query cache" crash.
  */
 import {
   type FetchQueryOptions,
@@ -33,9 +37,9 @@ async function fetchEnvelopeData<T>(url: string): Promise<T> {
 }
 
 // Server-only. In release mode the published data can change within the process
-// lifetime (a new GitHub Release), so the shared QueryClient + staleTime:Infinity
-// would otherwise pin the first snapshot until restart. Statically false on the
-// client (import.meta.env.SSR), so client caching is unchanged.
+// lifetime (a new GitHub Release), so on the shared QueryClient we force a fresh
+// read per SSR (below) rather than serving the TTL-cached snapshot. Statically
+// false on the client (import.meta.env.SSR), so client caching is unchanged.
 const RELEASE_MODE_SSR =
   import.meta.env.SSR && process.env.OTF_PUBLISHED_RELEASE === "true"
 
@@ -62,6 +66,18 @@ export async function readPublished<
   await client.ensureQueryData(options)
 }
 
+// Serve published content fresh for a TTL, then revalidate in the background.
+// gcTime > staleTime so a briefly-unobserved query (e.g. a token doc after
+// navigating away) survives long enough for a quick return.
+//
+// The TTL only bounds how quickly an *already-open* tab notices a NEW publish.
+// Publishes are currently rare (a new content snapshot every several weeks), so
+// 30 min comfortably suits the cadence — it could safely be raised to an hour+
+// with no practical downside. Revisit (lower it) if the publish cadence ever
+// becomes frequent and editors need near-real-time pickup without a reload.
+const PUBLISHED_STALE_TIME = 30 * 60 * 1000 // 30 min
+const PUBLISHED_GC_TIME = 60 * 60 * 1000 // 1 h
+
 export const publishedIndexQuery = queryOptions({
   queryKey: ["published", "index"],
   queryFn: async (): Promise<{ tokens: IndexRow[] }> => {
@@ -71,8 +87,8 @@ export const publishedIndexQuery = queryOptions({
     }
     return fetchEnvelopeData("/api/v1/tokens")
   },
-  staleTime: Number.POSITIVE_INFINITY,
-  gcTime: Number.POSITIVE_INFINITY,
+  staleTime: PUBLISHED_STALE_TIME,
+  gcTime: PUBLISHED_GC_TIME,
 })
 
 export const publishedFrameworkQuery = queryOptions({
@@ -84,8 +100,8 @@ export const publishedFrameworkQuery = queryOptions({
     }
     return fetchEnvelopeData("/api/v1/framework")
   },
-  staleTime: Number.POSITIVE_INFINITY,
-  gcTime: Number.POSITIVE_INFINITY,
+  staleTime: PUBLISHED_STALE_TIME,
+  gcTime: PUBLISHED_GC_TIME,
 })
 
 export const publishedTokenDocQuery = (tokenId: string) => {
@@ -105,7 +121,7 @@ export const publishedTokenDocQuery = (tokenId: string) => {
       const payload = (await res.json()) as { data: TokenDoc }
       return payload.data
     },
-    staleTime: Number.POSITIVE_INFINITY,
-    gcTime: Number.POSITIVE_INFINITY,
+    staleTime: PUBLISHED_STALE_TIME,
+    gcTime: PUBLISHED_GC_TIME,
   })
 }
