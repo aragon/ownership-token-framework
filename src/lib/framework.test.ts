@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import {
-  FRAMEWORK_BASE_URL,
   getAllFrameworkMetrics,
+  getFrameworkBaseUrl,
   getFrameworkCriteria,
   getFrameworkMetric,
   getFrameworkUrl,
@@ -27,11 +27,11 @@ describe("framework lookups", () => {
 describe("getFrameworkUrl", () => {
   it("appends a section anchor for known metrics", () => {
     expect(getFrameworkUrl("onchain-ctrl")).toBe(
-      `${FRAMEWORK_BASE_URL}#metric-1-onchain-control`
+      `${getFrameworkBaseUrl()}#metric-1-onchain-control`
     )
   })
 
   it("falls back to the base url for unknown metrics", () => {
-    expect(getFrameworkUrl("nope")).toBe(FRAMEWORK_BASE_URL)
+    expect(getFrameworkUrl("nope")).toBe(getFrameworkBaseUrl())
   })
 })

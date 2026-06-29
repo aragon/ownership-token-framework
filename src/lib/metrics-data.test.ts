@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest"
+import { publishedTokenDocQuery } from "@/lib/published-queries"
+import { queryClient } from "@/lib/query-client"
 import {
   CRITERIA_STATUS,
   getCriteriaStatus,
   getMetricsByTokenId,
-  normalizeCriteriaStatus,
 } from "./metrics-data"
 import { getTokens } from "./token-data"
 
@@ -15,22 +16,12 @@ if (!tokenWithMetrics) {
   throw new Error("test fixture: expected at least one token with metrics")
 }
 
-describe("normalizeCriteriaStatus", () => {
-  it("passes through known statuses", () => {
-    for (const status of Object.values(CRITERIA_STATUS)) {
-      expect(normalizeCriteriaStatus(status)).toBe(status)
-    }
-  })
-
-  it("falls back to reference for unknown or missing values", () => {
-    expect(normalizeCriteriaStatus("bogus")).toBe(CRITERIA_STATUS.REFERENCE)
-    expect(normalizeCriteriaStatus(undefined)).toBe(CRITERIA_STATUS.REFERENCE)
-  })
-})
-
 describe("getMetricsByTokenId", () => {
-  it("returns an empty array for an unknown token", () => {
-    expect(getMetricsByTokenId("not-a-token")).toEqual([])
+  it("returns an empty array for a token whose doc resolved to null", () => {
+    // In the decoupled model a non-existent token is a cached `null` doc (a
+    // 404 from /api/v1); getMetricsByTokenId degrades to [] rather than throw.
+    queryClient.setQueryData(publishedTokenDocQuery("ghost").queryKey, null)
+    expect(getMetricsByTokenId("ghost")).toEqual([])
   })
 
   it("returns framework-enriched metrics for a known token", () => {

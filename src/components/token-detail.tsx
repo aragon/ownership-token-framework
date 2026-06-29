@@ -16,7 +16,7 @@ import { useMarketData } from "@/hooks/use-market-data"
 import { trackExpandAllCriteria } from "@/lib/analytics"
 import { getMetricsByTokenId, type Metric } from "@/lib/metrics-data"
 import { getTokenById } from "@/lib/token-data"
-import { formatUnixTimestamp } from "@/lib/utils"
+import { formatUnixTimestamp, isPlaceholder } from "@/lib/utils"
 import AnalyticsContent from "./analytics-content"
 import InfoSidebar from "./info-sidebar"
 import { NewsletterSignup } from "./newsletter-signup.tsx"
@@ -24,8 +24,6 @@ import { OwnershipScoreCard } from "./ownership-score-card"
 
 // Types
 export type { CriteriaStatusValue as CriteriaStatus } from "@/lib/metrics-data"
-
-export { normalizeCriteriaStatus as mapStatus } from "@/lib/metrics-data"
 
 export interface TokenInfo {
   id: string
@@ -75,7 +73,10 @@ function TokenHero({ token }: { token: TokenInfo }) {
 
       <div className="flex items-start gap-3">
         <Avatar className="size-8 md:size-10">
-          <AvatarImage alt={token.name} src={token.icon} />
+          <AvatarImage
+            alt={token.name}
+            src={isPlaceholder(token.icon) ? undefined : token.icon}
+          />
           <AvatarFallback className="bg-blue-500 text-white">
             {token.name.slice(0, 2)}
           </AvatarFallback>

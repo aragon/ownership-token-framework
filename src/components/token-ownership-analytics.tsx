@@ -60,7 +60,11 @@ import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
 import { CRITERIA_STATUS, getCriteriaStatus } from "@/lib/metrics-data"
 import { getTokenOwnershipScore } from "@/lib/scoring"
-import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
+import {
+  formatUnixTimestamp,
+  isPlaceholder,
+  truncateAddress,
+} from "@/lib/utils"
 
 function formatMarketCap(value?: number): string {
   if (value == null) return "—"
@@ -159,7 +163,12 @@ const columns: ColumnDef<EnrichedToken>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-4">
         <Avatar>
-          <AvatarImage alt={row.original.name} src={row.original.icon} />
+          <AvatarImage
+            alt={row.original.name}
+            src={
+              isPlaceholder(row.original.icon) ? undefined : row.original.icon
+            }
+          />
           <AvatarFallback className="bg-blue-500 text-white text-xs">
             {row.original.name.slice(0, 2)}
           </AvatarFallback>

@@ -14,6 +14,7 @@ function metric(
     name: "Metric",
     about: "",
     summary: "",
+    tags: [],
     ...overrides,
   }
 }

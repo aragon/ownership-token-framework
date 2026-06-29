@@ -1,0 +1,30 @@
+{
+  "name": "otf-mcp-server",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server exposing the Ownership Token Framework (OTF) public read API as agent tools.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "otf-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,5 +1,6 @@
 onlyBuiltDependencies:
   - esbuild
+  - lefthook
   - msw
 
 # Supply-chain defense: refuse to install package versions published less than

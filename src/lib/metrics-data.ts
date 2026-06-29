@@ -1,94 +1,51 @@
-import metricsData from "@/data/metrics.json"
-import { getFrameworkCriteria, getFrameworkMetric } from "@/lib/framework"
-import type { EvidenceLinkType } from "../components/ui/evidence-link.tsx"
+import { publishedTokenDocQuery } from "@/lib/published-queries"
+import { queryClient } from "@/lib/query-client"
+import {
+  type ComposedCriterion,
+  type ComposedMetric,
+  CRITERIA_STATUS,
+  type CriteriaStatusValue,
+  type Evidence,
+  type EvidenceUrl,
+  type TokenDoc,
+} from "@/lib/schemas"
+import { getTokenById } from "@/lib/token-data"
 
-export const CRITERIA_STATUS = {
-  POSITIVE: "positive",
-  WARNING: "warning",
-  AT_RISK: "at_risk",
-  UNEVALUATED: "unevaluated",
-  REFERENCE: "reference",
-} as const
+export { CRITERIA_STATUS }
+export type { CriteriaStatusValue, Evidence, EvidenceUrl }
+export type Criteria = ComposedCriterion
+export type Metric = ComposedMetric
 
-export type CriteriaStatusValue =
-  (typeof CRITERIA_STATUS)[keyof typeof CRITERIA_STATUS]
-
-export function normalizeCriteriaStatus(status?: string): CriteriaStatusValue {
-  if (
-    status === CRITERIA_STATUS.POSITIVE ||
-    status === CRITERIA_STATUS.WARNING ||
-    status === CRITERIA_STATUS.AT_RISK ||
-    status === CRITERIA_STATUS.UNEVALUATED ||
-    status === CRITERIA_STATUS.REFERENCE
-  ) {
-    return status
+/**
+ * Synchronous read over the hydrated query cache. The token detail route
+ * loader ensures the doc; an unensured read fails loudly by design.
+ * A cached `null` means the token does not exist (valid, returns null).
+ */
+export function getTokenDoc(tokenId: string): TokenDoc | null {
+  const { queryKey } = publishedTokenDocQuery(tokenId)
+  const doc = queryClient.getQueryData(queryKey)
+  if (doc === undefined) {
+    throw new Error(
+      `Token doc "${tokenId}" is not in the query cache — the route loader must ensure publishedTokenDocQuery`
+    )
   }
-  return CRITERIA_STATUS.REFERENCE
+  return doc
 }
 
-export interface EvidenceUrl {
-  name: string
-  url: string
-  type?: EvidenceLinkType
-}
-
-export interface Evidence {
-  name?: string
-  summary?: string
-  urls: EvidenceUrl[]
-}
-
-export interface Criteria {
-  id: string
-  name: string
-  about: string
-  status: string
-  notes: string
-  tags?: string[]
-  evidence: EvidenceUrl[] | Evidence[]
-}
-
-export interface Metric {
-  id: string
-  name: string
-  about: string
-  summary: string
-  tags?: string[]
-  criteria: Criteria[]
-}
-
+/**
+ * Cross-token criterion status, served from the index read model (the
+ * dashboard renders single-criterion columns across all tokens without
+ * loading per-token docs). Statuses are schema-validated canonical values
+ * (ADR 0002) — no runtime normalization layer exists by design.
+ */
 export function getCriteriaStatus(
   tokenId: string,
   criteriaId: string
 ): CriteriaStatusValue {
-  const metrics = metricsData[tokenId as keyof typeof metricsData]
-  if (!metrics) return CRITERIA_STATUS.REFERENCE
-  for (const m of metrics as Metric[]) {
-    for (const c of m.criteria) {
-      if (c.id === criteriaId) return normalizeCriteriaStatus(c.status)
-    }
-  }
-  return CRITERIA_STATUS.REFERENCE
+  const row = getTokenById(tokenId)
+  return row?.criteriaStatuses[criteriaId] ?? CRITERIA_STATUS.REFERENCE
 }
 
 export function getMetricsByTokenId(tokenId: string): Metric[] {
-  const metrics = metricsData[tokenId as keyof typeof metricsData]
-  if (!metrics) return []
-
-  return (metrics as Metric[]).map((metric) => {
-    const frameworkMetric = getFrameworkMetric(metric.id)
-
-    return {
-      ...metric,
-      about: frameworkMetric?.about || metric.about,
-      criteria: metric.criteria.map((criteria) => {
-        const frameworkCriteria = getFrameworkCriteria(criteria.id)
-
-        return {
-          ...criteria,
-          about: frameworkCriteria?.about || criteria.about,
-        }
-      }),
-    }
-  })
+  return getTokenDoc(tokenId)?.metrics ?? []
 }

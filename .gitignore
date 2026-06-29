@@ -19,3 +19,5 @@ output
 .agents
 .tempor
 .playwright-mcp
+.env.otf-app-secrets
+.pnpm-store

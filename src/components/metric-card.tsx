@@ -16,9 +16,9 @@ import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
 import type { Evidence, Metric } from "@/lib/metrics-data"
 import { getMetricScore, getScoreStatus } from "@/lib/scoring"
-import { cn } from "../lib/utils.ts"
+import { cn, isPlaceholder } from "../lib/utils.ts"
 import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
-import { type CriteriaStatus, mapStatus } from "./token-detail"
+import type { CriteriaStatus } from "./token-detail"
 import { BadgeEvaluation } from "./ui/badge-evaluation.tsx"
 import { TitlePopover } from "./ui/title-popover.tsx"
 
@@ -157,8 +157,10 @@ export default function MetricCard(props: MetricCardProps) {
             total={score.total}
           />
         </div>
-        {metric.summary && (
-          <p
+        {!isPlaceholder(metric.summary) && (
+          // div, not p: ReactMarkdown renders its own <p> and nested
+          // paragraphs are invalid HTML (causes hydration mismatches)
+          <div
             className={cn(
               "text-base leading-6 tracking-normal pt-3",
               colors.summaryColor
@@ -170,7 +172,7 @@ export default function MetricCard(props: MetricCardProps) {
             >
               {metric.summary}
             </ReactMarkdown>
-          </p>
+          </div>
         )}
       </div>
 
@@ -198,29 +200,30 @@ export default function MetricCard(props: MetricCardProps) {
                   variant="h4"
                 />
               </div>
-              {!score.reference && (
-                <StatusIcon status={mapStatus(criteria.status)} />
-              )}
+              {!score.reference && <StatusIcon status={criteria.status} />}
             </AccordionTrigger>
             <AccordionContent className="p-0 pb-4">
               <div className="flex flex-col gap-4">
                 {match(criteria.notes)
-                  .with(P.string, (notes) => (
-                    // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                    <div
-                      className={cn(
-                        summaryTextStyles,
-                        "prose pr-0 max-w-none md:pr-8"
-                      )}
-                    >
-                      <ReactMarkdown
-                        components={markdownComponents}
-                        remarkPlugins={[remarkBreaks]}
+                  .with(
+                    P.string.and(P.when((notes) => !isPlaceholder(notes))),
+                    (notes) => (
+                      // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
+                      <div
+                        className={cn(
+                          summaryTextStyles,
+                          "prose pr-0 max-w-none md:pr-8"
+                        )}
                       >
-                        {notes}
-                      </ReactMarkdown>
-                    </div>
-                  ))
+                        <ReactMarkdown
+                          components={markdownComponents}
+                          remarkPlugins={[remarkBreaks]}
+                        >
+                          {notes}
+                        </ReactMarkdown>
+                      </div>
+                    )
+                  )
                   .otherwise(() => null)}
                 {match(criteria.evidence)
                   .with(P.union(P.nullish, []), () => null)

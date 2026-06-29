@@ -8,13 +8,17 @@ export default defineConfig({
   plugins: [tsConfigPaths({ projects: ["./tsconfig.json"] })],
   test: {
     environment: "node",
-    include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    // Seed the published query cache from generated fixtures (no SSR loader in
+    // tests) before each test file.
+    setupFiles: ["./src/test-setup.ts"],
+    // Union of both layouts: colocated src tests (e.g. url-guard) and the
+    // tests/ suite (generated-valid, api-endpoints).
+    include: ["src/**/*.{test,spec}.{ts,tsx}", "tests/**/*.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
-      // Scope coverage to the pure-logic modules that are under test. Expand
-      // this list as new modules get test coverage (e.g. analytics, data
-      // loaders) rather than weakening the thresholds below.
+      // Scope coverage to the pure-logic modules under test. Expand this list
+      // as new modules get coverage rather than weakening the thresholds.
       include: [
         "src/lib/coingecko.ts",
         "src/lib/framework.ts",
