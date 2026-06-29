@@ -2,16 +2,16 @@ import { TanStackDevtools } from "@tanstack/react-devtools"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import {
   createRootRoute,
-  type ErrorComponentProps,
   HeadContent,
-  Navigate,
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 import { Suspense } from "react"
+import { ErrorPage } from "@/components/error-page"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { NewsletterBanner } from "@/components/newsletter-banner"
+import { NotFound } from "@/components/not-found"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { GA_MEASUREMENT_ID } from "@/lib/analytics"
@@ -54,8 +54,10 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   shellComponent: RootDocument,
-  errorComponent: PublishedDataError,
-  notFoundComponent: () => <Navigate replace to="/" />,
+  errorComponent: ({ error, reset }) => (
+    <ErrorPage error={error} reset={reset} />
+  ),
+  notFoundComponent: NotFound,
 })
 
 function RootComponent() {
@@ -82,26 +84,6 @@ function PublishedDataFallback() {
   return (
     <div className="min-h-screen flex items-center justify-center text-sm text-muted-foreground">
       Loading…
-    </div>
-  )
-}
-
-// Backstop for a genuine fetch failure (e.g. the API is down). Previously an
-// unensured read threw a fatal, unrecoverable invariant; now the user gets a
-// contained message with a retry instead of a white screen.
-function PublishedDataError({ reset }: ErrorComponentProps) {
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-3 p-6 text-center">
-      <p className="text-sm text-muted-foreground">
-        Couldn’t load the latest data. This is usually temporary.
-      </p>
-      <button
-        className="rounded-md border px-3 py-1.5 text-sm"
-        onClick={reset}
-        type="button"
-      >
-        Retry
-      </button>
     </div>
   )
 }
