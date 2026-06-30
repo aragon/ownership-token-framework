@@ -56,12 +56,24 @@ export function getProvenance(): Provenance {
   }
 }
 
+// DEMO_ONLY (throwaway, do not merge): isolate the dataset to a single token
+// for a client preview. Strips every other token from the UI, direct URLs, and
+// /api/v1 — the only token reachable on this deploy is the one below.
+const DEMO_ONLY_TOKEN = "cow"
+
 export function getPublishedIndex(): { tokens: IndexRow[] } {
-  return indexData as { tokens: IndexRow[] }
+  return {
+    tokens: (indexData as { tokens: IndexRow[] }).tokens.filter(
+      (t) => t.id === DEMO_ONLY_TOKEN
+    ),
+  }
 }
 
 export function getPublishedTokenDoc(tokenId: string): TokenDoc | null {
-  return tokenDocs.get(tokenId.trim().toLowerCase()) ?? null
+  if (tokenId.trim().toLowerCase() !== DEMO_ONLY_TOKEN) {
+    return null
+  }
+  return tokenDocs.get(DEMO_ONLY_TOKEN) ?? null
 }
 
 export function getPublishedFramework(): FrameworkDoc {
