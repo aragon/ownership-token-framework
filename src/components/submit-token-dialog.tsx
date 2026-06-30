@@ -70,7 +70,6 @@ export function SubmitTokenDialog({
 
   useEffect(() => {
     if (open) {
-      // Reset state when dialog opens
       setSubmitState({ status: "idle" })
       form.reset()
     }

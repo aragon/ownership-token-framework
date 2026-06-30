@@ -25,11 +25,9 @@ class MetadataUtils {
 
   private normalizeImageUrl = (image?: string): string => {
     if (!image) return this.defaultImage
-    // If image is already a full URL (starts with http/https), return as-is
     if (image.startsWith("http://") || image.startsWith("https://")) {
       return image
     }
-    // Otherwise, prepend baseUrl (ensuring no double slashes)
     const cleanPath = image.startsWith("/") ? image : `/${image}`
     return `${this.baseUrl}${cleanPath}`
   }

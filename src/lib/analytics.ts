@@ -1,8 +1,5 @@
 export const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID ?? ""
 
-/**
- * Track a custom event in Google Analytics
- */
 export function trackEvent(
   eventName: string,
   eventParams?: Record<string, string | number | boolean>
@@ -15,9 +12,6 @@ export function trackEvent(
   gtag("event", eventName, eventParams)
 }
 
-/**
- * Track when a criterion accordion is opened
- */
 export function trackCriterionOpen(criterionId: string, criterionName: string) {
   trackEvent("select_content", {
     content_type: "criterion",

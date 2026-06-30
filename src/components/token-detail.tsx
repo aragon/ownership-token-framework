@@ -22,7 +22,6 @@ import InfoSidebar from "./info-sidebar"
 import { NewsletterSignup } from "./newsletter-signup.tsx"
 import { OwnershipScoreCard } from "./ownership-score-card"
 
-// Types
 export type { CriteriaStatusValue as CriteriaStatus } from "@/lib/metrics-data"
 
 export interface TokenInfo {
@@ -55,7 +54,6 @@ export interface TokenInfo {
 
 export type { Metric }
 
-// Token Hero Section
 function TokenHero({ token }: { token: TokenInfo }) {
   return (
     <section className="py-6 flex flex-col gap-4 md:gap-6">
@@ -86,7 +84,6 @@ function TokenHero({ token }: { token: TokenInfo }) {
 
       <p className="max-w-4xl text-muted-foreground">{token.description}</p>
 
-      {/* Stats row */}
       <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 sm:gap-2 text-sm">
         <span className="text-muted-foreground">
           Last updated: {formatUnixTimestamp(token.lastUpdated)} by
@@ -110,7 +107,6 @@ function TokenHero({ token }: { token: TokenInfo }) {
   )
 }
 
-// Main Component
 interface TokenDetailProps {
   tokenId: string
 }
@@ -130,9 +126,6 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
   const allOpen = openCriteria.length === allCriteriaIds.length
 
   const handleToggleAll = () => {
-    // If all closed → Expand all criterias
-    // If all open → Close all criterias
-    // If some open → Expand all criterias
     const action = allOpen ? "collapse" : "expand"
     trackExpandAllCriteria(action)
     setOpenCriteria(allOpen ? [] : allCriteriaIds)
@@ -159,18 +152,15 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
 
   return (
     <PageWrapper>
-      {/* White background section - Hero */}
       <div className="bg-background">
         <Container>
           <TokenHero token={token} />
         </Container>
       </div>
 
-      {/* Gray background section - Content */}
       <div className="bg-muted/50 flex-1">
         <Container>
           <div className="grid grid-cols-1 gap-4 pt-4 pb-10 lg:gap-6 lg:pt-12 md:pb-20 lg:grid-cols-[1fr_300px]">
-            {/* Ownership score + Criteria metrics */}
             <div className="flex flex-col gap-4 lg:gap-6">
               <OwnershipScoreCard tokenId={tokenId} />
               <Button
@@ -187,7 +177,6 @@ export default function TokenDetail({ tokenId }: TokenDetailProps) {
               />
             </div>
 
-            {/* Right column - Info sidebar */}
             <div>
               <div className="sticky top-6 flex flex-col gap-6">
                 <InfoSidebar

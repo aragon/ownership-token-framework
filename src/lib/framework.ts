@@ -27,17 +27,11 @@ export function getFrameworkBaseUrl(): string {
   return readFramework().baseUrl
 }
 
-/**
- * Get framework metric definition by ID
- */
 export function getFrameworkMetric(metricId: string): FrameworkMetric | null {
   const metric = readFramework().metrics.find((m) => m.id === metricId)
   return metric || null
 }
 
-/**
- * Get framework criteria definition by ID
- */
 export function getFrameworkCriteria(
   criteriaId: string
 ): FrameworkCriteria | null {
@@ -48,16 +42,11 @@ export function getFrameworkCriteria(
   return null
 }
 
-/**
- * Get all framework metrics
- */
 export function getAllFrameworkMetrics(): FrameworkMetric[] {
   return readFramework().metrics
 }
 
-/**
- * Get the framework URL for a specific metric, with anchor to its section
- */
+/** Framework URL for a metric, with an anchor to its section when available. */
 export function getFrameworkUrl(metricId: string): string {
   const anchor = getFrameworkMetric(metricId)?.anchor
   const baseUrl = getFrameworkBaseUrl()

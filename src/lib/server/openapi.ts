@@ -1,12 +1,8 @@
 /**
- * Machine-readable contract for the public read API.
- *
- * The OpenAPI 3.1 document is built FROM the vendored Zod read-models so the
- * schema can never drift from the shapes the handlers actually serve: the
- * component schemas are emitted by zod's native `z.toJSONSchema` (zod v4),
- * not hand-duplicated. The handcrafted part is only the API surface that has
- * no Zod source — paths, the `{data, provenance}` envelope wiring, and the
- * response/status metadata.
+ * OpenAPI 3.1 contract for the public read API, built FROM the vendored Zod
+ * read-models (via `z.toJSONSchema`, zod v4) so component schemas can't drift
+ * from the served shapes. Only the no-Zod-source surface is handcrafted: paths,
+ * the `{data, provenance}` envelope wiring, and response/status metadata.
  */
 import { z } from "zod"
 import {
@@ -34,11 +30,10 @@ function ref(id: string): { $ref: string } {
 }
 
 /**
- * Emit `components.schemas` from the Zod read-models via zod-native JSON Schema
- * conversion. Registering each top-level schema with an id makes zod cross-link
- * reused subschemas with `#/components/schemas/<id>` $refs; subschemas that are
- * not registered are inlined. We strip the per-schema `$schema`/`$id` dialect
- * keys zod stamps on, which OpenAPI 3.1 does not want on component objects.
+ * Emit `components.schemas` from the Zod read-models. Registering each schema
+ * with an id makes zod cross-link reused subschemas via `#/components/schemas/<id>`
+ * $refs (unregistered subschemas are inlined). The per-schema `$schema`/`$id`
+ * keys zod stamps must be stripped — OpenAPI 3.1 rejects them on components.
  */
 function buildComponentSchemas(): Record<string, unknown> {
   const registry = z.registry<{ id: string }>()

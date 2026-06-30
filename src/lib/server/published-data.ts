@@ -1,10 +1,7 @@
 /**
- * Committed-data source for the canonical API endpoints.
- *
- * Reads the committed composed read models (src/data/generated/). At runtime
- * published-source.ts sits in front of this: it serves the immutable GitHub
- * Release snapshot when release mode is on, and falls back here otherwise. The
- * response shape is identical either way — consumers depend only on the schema.
+ * Committed-data source: the composed read models in src/data/generated/.
+ * published-source.ts fronts this, serving the Release snapshot in release mode
+ * and falling back here otherwise (identical response shape either way).
  */
 import faqData from "@/data/generated/faq.json"
 import frameworkData from "@/data/generated/framework.json"
@@ -31,9 +28,8 @@ const tokenDocs = new Map(
 )
 
 /**
- * Commit ref resolved from the deployment environment at request time.
- * Falls back to "dev" outside CI/deploy contexts so the field is never null.
- * Exported so the release seam (published-source.ts) stamps the same value.
+ * Commit ref from the deployment env, "dev" outside CI/deploy so the field is
+ * never null. Exported so the release seam stamps the same value.
  */
 export function resolveCommitRef(): string {
   return (
@@ -48,10 +44,9 @@ export function getProvenance(): Provenance {
   return {
     snapshot_id: manifest.snapshot_id,
     commit_ref: resolveCommitRef(),
-    // When the content was last edited (carried in the composed manifest).
     last_updated: manifest.last_updated,
-    // Stamped by the publish pipeline once snapshots are actually published;
-    // kept distinct from last_updated.
+    // Stamped by the publish pipeline once snapshots are published; distinct
+    // from last_updated.
     published_at: null,
     source: "generated",
   }

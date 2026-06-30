@@ -1,16 +1,12 @@
 /**
- * Runtime published-content source with a committed-data fallback.
+ * Runtime published-content source, fronting published-data.ts. When the
+ * publish pipeline is enabled via env it fetches the latest aragon/otf-cms
+ * GitHub Release snapshot, validates it against the vendored schemas, and
+ * serves it with a short in-process TTL; with no env configured (default,
+ * shipped dark) it serves the committed data byte-identically.
  *
- * This sits in front of published-data.ts (the committed read models). When the
- * publish pipeline is enabled via env, it fetches the latest snapshot from the
- * private aragon/otf-cms GitHub Release, validates it against the vendored
- * schemas, caches it in-process with a short TTL, and serves it. With NO env
- * configured (the default, shipped dark) it transparently serves the committed
- * data — byte-identical to the pre-pipeline behavior, provenance.source
- * "generated".
- *
- * Hard rule: this module NEVER throws to the caller. Any fetch/parse/validate
- * failure falls back to committed data and logs a warning.
+ * Hard rule: NEVER throws to the caller. Any fetch/parse/validate failure falls
+ * back to committed data and logs a warning.
  */
 import {
   type FaqTopic,
@@ -35,19 +31,15 @@ import {
   resolveCommitRef,
 } from "@/lib/server/published-data"
 
-// The content repo, overridable so a fork can read its own releases. Defaults
-// to the canonical Aragon repo.
+// Overridable so a fork can read its own releases.
 const CONTENT_REPO = process.env.OTF_CONTENT_REPO ?? "aragon/otf-cms"
 const RELEASE_API_URL = `https://api.github.com/repos/${CONTENT_REPO}/releases/latest`
 const SNAPSHOT_ASSET_NAME = "snapshot.json"
 const USER_AGENT = "otf-dashboard"
 /** How long a validated release bundle is served before we revalidate. */
 const CACHE_TTL_MS = 60_000
-/**
- * Whole-operation budget for a release read (lookup + asset). A timeout aborts
- * the in-flight fetch, which surfaces as the same fallback as any other failure
- * — so a slow or hung GitHub can never block an SSR render.
- */
+// Whole-operation budget (lookup + asset). A timeout aborts the fetch and falls
+// back like any other failure, so a hung GitHub can't block an SSR render.
 const REQUEST_TIMEOUT_MS = 8_000
 
 /** A fully validated snapshot bundle composed from the release asset. */
@@ -62,11 +54,10 @@ type Bundle = {
 }
 
 /**
- * Cross-file integrity: the manifest list, the index rows, and the token docs
- * must all cover the SAME ids. Per-part schema validation can't catch a
- * shape-valid but incomplete snapshot — e.g. an index row whose token doc is
- * missing would link the dashboard to a /tokens/{id} that 404s. Throwing here
- * is caught by the caller and falls back to committed data.
+ * Cross-file integrity: manifest, index rows, and token docs must cover the
+ * SAME ids. Per-part schema validation can't catch a shape-valid but incomplete
+ * snapshot — e.g. an index row whose token doc is missing links to a /tokens/{id}
+ * that 404s. A throw here falls back to committed data.
  */
 function assertTokenSetsAgree(
   manifest: Manifest,
@@ -87,20 +78,17 @@ function assertTokenSetsAgree(
   }
 }
 
-/** Module-level cache of the last successfully validated release bundle. */
 let cachedBundle: Bundle | null = null
 let cachedAtMs = 0
 /** De-dupes concurrent revalidations so a request burst issues one fetch. */
 let inFlight: Promise<Bundle | null> | null = null
 
 /**
- * The publish pipeline is opt-in. With OTF_PUBLISHED_RELEASE unset (or anything
- * other than "true") we serve committed data exactly as before.
+ * The publish pipeline is opt-in; anything but "true" serves committed data.
  *
- * TODO(post-migration): this flag is a dark-launch tool, not a permanent
- * control — once runtime reads are provisioned and trusted, delete it and gate
- * on OTF_CONTENT_TOKEN presence instead (no token → committed; correct for
- * dev/test/CI). The graceful fallback below stays regardless.
+ * TODO(post-migration): this flag is a dark-launch tool. Once runtime reads are
+ * trusted, delete it and gate on OTF_CONTENT_TOKEN presence instead (no token →
+ * committed; correct for dev/test/CI). The fallback below stays regardless.
  */
 export function isReleaseEnabled(): boolean {
   return process.env.OTF_PUBLISHED_RELEASE === "true"
@@ -108,9 +96,7 @@ export function isReleaseEnabled(): boolean {
 
 /**
  * Fetch + validate the latest release snapshot into a Bundle. Returns null on
- * ANY failure (network, non-2xx, missing asset, malformed JSON, schema
- * violation) after logging a warning — the caller then falls back to committed
- * data.
+ * ANY failure after logging a warning; the caller falls back to committed data.
  */
 async function fetchReleaseBundle(): Promise<Bundle | null> {
   const token = process.env.OTF_CONTENT_TOKEN
@@ -161,9 +147,6 @@ async function fetchReleaseBundle(): Promise<Bundle | null> {
 
     const raw = (await assetRes.json()) as Record<string, unknown>
 
-    // Validate each part against the vendored schemas. A throw here is caught
-    // below and surfaces as a fallback, so a bad publish can never serve
-    // malformed shapes.
     const manifest = manifestSchema.parse(raw.manifest)
     const index = indexSchema.parse(raw.index)
     const framework = frameworkDocSchema.parse(raw.framework)
@@ -199,10 +182,9 @@ async function fetchReleaseBundle(): Promise<Bundle | null> {
 }
 
 /**
- * Returns the active release bundle, fetching/revalidating as needed. Serves a
- * fresh cached bundle immediately; on expiry revalidates and, if that fails,
- * keeps serving the stale bundle rather than dropping to committed data. Returns
- * null only when the release is disabled or no bundle has ever validated.
+ * Active release bundle, revalidating on TTL expiry. On a failed revalidation
+ * keeps serving the stale bundle rather than dropping to committed data. Null
+ * only when release is disabled or no bundle has ever validated.
  */
 async function getActiveBundle(): Promise<Bundle | null> {
   if (!isReleaseEnabled()) {

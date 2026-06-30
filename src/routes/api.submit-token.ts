@@ -12,10 +12,10 @@ interface SubmissionData {
 }
 
 async function notifyFailure(error: string, submission: SubmissionData) {
-  // Always log to console (captured by hosting provider)
+  // Console log is the primary alert (captured by the hosting provider); Slack
+  // is a best-effort secondary.
   console.error("[OTI Submission Failed]", { error, submission })
 
-  // Try Slack notification as secondary alert
   const webhookUrl = process.env.SLACK_WEBHOOK_URL
   if (!webhookUrl) return
 
@@ -63,7 +63,7 @@ async function notifyFailure(error: string, submission: SubmissionData) {
       }),
     })
   } catch {
-    // Slack failed too - but we already logged to console
+    // Slack failed too — already logged to console above.
   }
 }
 
