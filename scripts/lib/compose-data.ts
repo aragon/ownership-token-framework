@@ -21,7 +21,6 @@
  */
 import { createHash } from "node:crypto"
 import {
-  existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
@@ -37,16 +36,54 @@ const generatedDir = join(root, "generated")
 
 const readJson = (p: string): any => JSON.parse(readFileSync(p, "utf8"))
 
+/** A token doc minus its metrics — the identity object, key order preserved.
+ *  Inlined (not imported) so the vendored composer stays self-contained. */
+const identityOf = (doc: any): any => {
+  const { metrics: _metrics, ...identity } = doc
+  return identity
+}
+
 /**
- * Tolerant read for partial tokens: a token enters the set as soon as its
- * identity file exists, but its criterion atoms / metric summaries may not
- * exist yet (editors stand a token up progressively). A missing file is NOT a
- * build error — it yields `fallback` so the doc composes fully with everything
- * `unevaluated`/empty. The publish gate (bundle-snapshot) excludes such WIP
- * tokens from Release; previews build on the partial data.
+ * Complete, defaulted identity in the canonical key order. The editor saves a
+ * WIP token with empty fields omitted, so fill every missing field (→ "" / 0)
+ * here — the read-model stays complete and valid, and the readiness gate
+ * reports the gaps. A no-op for tokens that already have every field, so output
+ * is byte-identical for them.
  */
-const readJsonOr = <T>(p: string, fallback: T): T =>
-  existsSync(p) ? (readJson(p) as T) : fallback
+const fullIdentity = (doc: any): any => {
+  const out: any = { ...identityOf(doc) }
+  for (const k of [
+    "coingeckoId",
+    "address",
+    "icon",
+    "description",
+    "network",
+    "infoDescription",
+  ]) {
+    if (out[k] === undefined) out[k] = ""
+  }
+  if (out.lastUpdated === undefined) out.lastUpdated = 0
+  // Only rebuild a nested object when it's missing or incomplete, so complete
+  // tokens keep their exact sub-key order (output stays byte-identical).
+  const u = out.updatedBy
+  if (!u || u.name === undefined || u.avatar === undefined) {
+    out.updatedBy = { name: u?.name ?? "", avatar: u?.avatar ?? "" }
+  }
+  const l = out.links
+  if (
+    !l ||
+    l.website === undefined ||
+    l.twitter === undefined ||
+    l.scan === undefined
+  ) {
+    out.links = {
+      website: l?.website ?? "",
+      twitter: l?.twitter ?? "",
+      scan: l?.scan ?? "",
+    }
+  }
+  return out
+}
 
 const SCORED_STATUSES = new Set(["positive", "warning", "at_risk"])
 
@@ -94,34 +131,37 @@ export function composeAll(dir: string = contentDir) {
     .map((f) => f.replace(/\.json$/, ""))
     .sort()
 
-  const tokenAtoms = new Map<string, any>(
+  // Each token is one unified doc: identity at top level + nested
+  // metrics:{<m>:{summary,tags,criteria:{<c>:{status,notes,name?,tags?,evidence?}}}}.
+  // Missing metrics/criteria are tolerated (partial tokens compose fully with
+  // everything unevaluated/empty); the publish gate excludes WIP tokens.
+  const tokenUnified = new Map<string, any>(
     tokenIds.map((id) => [id, readJson(join(dir, "tokens", `${id}.json`))])
   )
 
   const tokenDocs: any[] = []
   for (const tokenId of tokenIds) {
+    const doc = tokenUnified.get(tokenId)
+    const docMetrics = doc.metrics ?? {}
     const metrics: any[] = []
     for (const fm of framework) {
-      const metricDir = join(dir, "evaluations", tokenId, fm.id)
-      // Missing summary → empty editorial (token still composing).
-      const editorial = readJsonOr<{ summary: string; tags: string[] }>(
-        join(dir, "summaries", tokenId, `${fm.id}.json`),
-        { summary: "", tags: [] }
-      )
+      const m = docMetrics[fm.id] ?? { summary: "", tags: [], criteria: {} }
+      const editorial = { summary: m.summary ?? "", tags: m.tags ?? [] }
+      const mCriteria = m.criteria ?? {}
       const criteria = fm.criteria.map((fc: any) => {
-        // Missing criterion atom → unevaluated (no notes/evidence yet).
-        const atom = readJsonOr<any>(join(metricDir, `${fc.id}.json`), {
-          status: "unevaluated",
-          notes: "",
-        })
+        const atom = mCriteria[fc.id] ?? { status: "unevaluated", notes: "" }
         const composed: any = {
           id: fc.id,
-          name: atom.name ?? fc.name,
+          // `||` (not `??`) so a Keystatic-written empty override falls back to
+          // the framework name; identical to before for real data.
+          name: atom.name || fc.name,
           about: fc.about,
           status: atom.status,
           notes: atom.notes ?? "",
         }
-        if ("tags" in atom) composed.tags = atom.tags
+        // Emit only non-empty tags (Keystatic writes [] for unset); evidence is
+        // emitted whenever present, including [] (the readiness gate reports it).
+        if (atom.tags?.length) composed.tags = atom.tags
         if ("evidence" in atom) composed.evidence = atom.evidence
         return composed
       })
@@ -141,7 +181,7 @@ export function composeAll(dir: string = contentDir) {
     const score = getTokenScore(tokenId, metrics)
 
     tokenDocs.push({
-      ...tokenAtoms.get(tokenId),
+      ...fullIdentity(doc),
       positive: countBy("positive"),
       neutral: countBy("warning"),
       atRisk: countBy("at_risk"),
