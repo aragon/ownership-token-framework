@@ -1,12 +1,11 @@
 /**
  * Seed the published query cache from the committed generated read-models.
  *
- * The data libs (token-data / framework / metrics-data) read published data
- * synchronously via `queryClient.getQueryData(...)`, relying on a route loader
- * (or SSR hydration) to have populated it. Under the test runner there is no
- * loader, so we seed the same cache here from `src/data/generated/*` — the
- * exact shapes the queries hold — before any test file runs (vitest executes
- * setupFiles ahead of each test module, with an isolated client per file).
+ * The data libs read published data synchronously via getQueryData, relying on
+ * a route loader (or SSR hydration) to have populated it. The test runner has
+ * no loader, so seed the same cache here from src/data/generated/* before any
+ * test runs (vitest runs setupFiles ahead of each module, isolated client per
+ * file).
  */
 
 import {

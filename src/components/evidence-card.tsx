@@ -1,33 +1,12 @@
 import ReactMarkdown from "react-markdown"
 import remarkBreaks from "remark-breaks"
-import type { Evidence, EvidenceUrl } from "@/lib/metrics-data"
+import { markdownComponents } from "@/lib/markdown-components"
+import type { Evidence } from "@/lib/metrics-data"
 import { isPlaceholder } from "@/lib/utils"
 import { EvidenceLink } from "./ui/evidence-link.tsx"
 
-interface MarkdownComponentProps {
-  children?: React.ReactNode
-  href?: string
-}
-
-const markdownComponents = {
-  p: ({ children }: MarkdownComponentProps) => <p>{children}</p>,
-  a: ({ href, children }: MarkdownComponentProps) => (
-    <a href={href} rel="noopener noreferrer" target="_blank">
-      {children}
-    </a>
-  ),
-}
-
-export type FullEvidence = Evidence
-
-export type EvidenceItem = EvidenceUrl | FullEvidence
-
-export const isFullEvidence = (item: EvidenceItem): item is FullEvidence => {
-  return "urls" in item && Array.isArray(item.urls)
-}
-
 interface IEvidenceCardProps {
-  evidence: FullEvidence
+  evidence: Evidence
 }
 
 export const EvidenceCard: React.FC<IEvidenceCardProps> = (props) => {

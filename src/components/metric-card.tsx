@@ -14,27 +14,14 @@ import {
 } from "@/components/ui/accordion"
 import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
-import type { Evidence, Metric } from "@/lib/metrics-data"
+import { markdownComponents } from "@/lib/markdown-components"
+import type { Metric } from "@/lib/metrics-data"
 import { getMetricScore, getScoreStatus } from "@/lib/scoring"
 import { cn, isPlaceholder } from "../lib/utils.ts"
-import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
+import { EvidenceCard } from "./evidence-card.tsx"
 import type { CriteriaStatus } from "./token-detail"
 import { BadgeEvaluation } from "./ui/badge-evaluation.tsx"
 import { TitlePopover } from "./ui/title-popover.tsx"
-
-interface MarkdownComponentProps {
-  children?: React.ReactNode
-  href?: string
-}
-
-const markdownComponents = {
-  p: ({ children }: MarkdownComponentProps) => <p>{children}</p>,
-  a: ({ href, children }: MarkdownComponentProps) => (
-    <a href={href} rel="noopener noreferrer" target="_blank">
-      {children}
-    </a>
-  ),
-}
 
 function IconCircleEmpty({ className }: { className?: string }) {
   return (
@@ -114,7 +101,6 @@ export default function MetricCard(props: MetricCardProps) {
   const metricCriteriaIds = new Set(metric.criteria.map((c) => c.id))
 
   const handleCriteriaChange = (newOpenCriteria: string[]) => {
-    // Track newly opened criteria
     const previouslyOpen = new Set(openCriteria || [])
     const newlyOpened = newOpenCriteria.filter((id) => !previouslyOpen.has(id))
 
@@ -125,7 +111,7 @@ export default function MetricCard(props: MetricCardProps) {
       }
     })
 
-    // Merge: keep other metrics' criteria, replace only this metric's criteria
+    // Keep other metrics' open criteria; replace only this metric's.
     const otherCriteria = (openCriteria || []).filter(
       (id) => !metricCriteriaIds.has(id)
     )
@@ -140,7 +126,6 @@ export default function MetricCard(props: MetricCardProps) {
       )}
       id={metric.id}
     >
-      {/* Header */}
       <div className={cn("p-4 md:px-6 md:py-6", colors.headerBg)}>
         <div className="flex items-center justify-between gap-3">
           <TitlePopover
@@ -176,7 +161,6 @@ export default function MetricCard(props: MetricCardProps) {
         )}
       </div>
 
-      {/* Criteria list */}
       <Accordion
         className="w-auto"
         multiple
@@ -208,7 +192,6 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(
                     P.string.and(P.when((notes) => !isPlaceholder(notes))),
                     (notes) => (
-                      // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
                       <div
                         className={cn(
                           summaryTextStyles,
@@ -229,19 +212,12 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(P.union(P.nullish, []), () => null)
                   .otherwise((evidenceList) => (
                     <div className="flex flex-col gap-4">
-                      {evidenceList.map((evidence, index) => {
-                        // Convert legacy format to full evidence format
-                        const fullEvidence: Evidence = isFullEvidence(evidence)
-                          ? evidence
-                          : { urls: [evidence] }
-
-                        return (
-                          <EvidenceCard
-                            evidence={fullEvidence}
-                            key={`${criteria.id}-ev-${index}`}
-                          />
-                        )
-                      })}
+                      {evidenceList.map((evidence, index) => (
+                        <EvidenceCard
+                          evidence={evidence}
+                          key={`${criteria.id}-ev-${index}`}
+                        />
+                      ))}
                     </div>
                   ))}
               </div>

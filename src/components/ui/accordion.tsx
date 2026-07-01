@@ -60,6 +60,11 @@ function AccordionContent({
     <AccordionPrimitive.Panel
       className="data-open:animate-accordion-down data-closed:animate-accordion-up text-sm overflow-hidden"
       data-slot="accordion-content"
+      // Keep panel content in the DOM (hidden) while collapsed so the full
+      // criterion status/notes/evidence is present in the initial SSR HTML and
+      // readable with JS disabled or by agents (APP-796). Callers can still
+      // override via props.
+      keepMounted
       {...props}
     >
       <div

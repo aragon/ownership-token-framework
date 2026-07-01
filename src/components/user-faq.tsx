@@ -25,7 +25,6 @@ interface MarkdownComponentProps {
   href?: string
 }
 
-// Hero Section
 function HeroSection() {
   return (
     <section className="flex flex-col gap-y-4 py-6 lg:py-12">

@@ -23,7 +23,8 @@ export function GoogleAnalytics() {
       })
     }
 
-    // Track initial page view once gtag is available
+    // Poll for the async-loaded gtag, then fire the initial page view; give up
+    // after 8s if it never loads.
     if (!hasTrackedInitialPageView.current) {
       const checkGtag = setInterval(() => {
         if (getGtag()) {
@@ -33,11 +34,9 @@ export function GoogleAnalytics() {
         }
       }, 200)
 
-      // Cleanup interval after 5 seconds if gtag never loads
       setTimeout(() => clearInterval(checkGtag), 8000)
     }
 
-    // Track subsequent navigation
     const unsubscribe = router.subscribe("onResolved", (evt) => {
       if (!evt.pathChanged) return
       trackPageView()

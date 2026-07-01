@@ -1,10 +1,7 @@
 /**
- * Published-data source for the canonical API endpoints.
- *
- * This is the transport seam: today it reads the committed composed read
- * models (src/data/generated/); when the publish pipeline lands, a KV-backed
- * implementation replaces the internals without any response-shape change —
- * consumers depend only on this module's interface.
+ * Committed-data source: the composed read models in src/data/generated/.
+ * published-source.ts fronts this, serving the Release snapshot in release mode
+ * and falling back here otherwise (identical response shape either way).
  */
 import faqData from "@/data/generated/faq.json"
 import frameworkData from "@/data/generated/framework.json"
@@ -31,10 +28,10 @@ const tokenDocs = new Map(
 )
 
 /**
- * Commit ref resolved from the deployment environment at request time.
- * Falls back to "dev" outside CI/deploy contexts so the field is never null.
+ * Commit ref from the deployment env, "dev" outside CI/deploy so the field is
+ * never null. Exported so the release seam stamps the same value.
  */
-function resolveCommitRef(): string {
+export function resolveCommitRef(): string {
   return (
     process.env.VERCEL_GIT_COMMIT_SHA ??
     process.env.CF_PAGES_COMMIT_SHA ??
@@ -47,10 +44,9 @@ export function getProvenance(): Provenance {
   return {
     snapshot_id: manifest.snapshot_id,
     commit_ref: resolveCommitRef(),
-    // When the content was last edited (carried in the composed manifest).
     last_updated: manifest.last_updated,
-    // Stamped by the publish pipeline once snapshots are actually published;
-    // kept distinct from last_updated.
+    // Stamped by the publish pipeline once snapshots are published; distinct
+    // from last_updated.
     published_at: null,
     source: "generated",
   }
@@ -70,8 +66,4 @@ export function getPublishedFramework(): FrameworkDoc {
 
 export function getPublishedFaq(): { topics: FaqTopic[] } {
   return faqData as { topics: FaqTopic[] }
-}
-
-export function listPublishedTokenIds(): string[] {
-  return manifest.tokens
 }

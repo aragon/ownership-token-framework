@@ -11,9 +11,9 @@ import { routeTree } from "./routeTree.gen"
  * the router instance, and a shared router carries request A's consumed
  * stream into request B ("ReadableStream is locked").
  *
- * The QueryClient stays a shared singleton (src/lib/query-client.ts): the
- * published data it caches is immutable per deployment snapshot, so
- * cross-request sharing is correct — and the data libs read it synchronously.
+ * The QueryClient stays a shared singleton (src/lib/query-client.ts); freshness
+ * across requests is handled there (committed = immutable per deploy; release =
+ * RELEASE_MODE_SSR forces a fresh read), so sharing is safe.
  */
 export function getRouter() {
   const router = createRouter({
