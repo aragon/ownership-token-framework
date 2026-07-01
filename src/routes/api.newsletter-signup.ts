@@ -64,17 +64,15 @@ export const newsletterSignupFn = createServerFn({ method: "POST" })
         return { ok: true }
       }
 
-      // Handle error responses
       const errorPayload: EmailOctopusV16ErrorResponse = await response
         .json()
         .catch(() => ({}))
 
-      // Handle duplicate subscription (409 Conflict)
+      // Already-subscribed is a success for our purposes.
       if (response.status === 409 || isAlreadySubscribed(errorPayload)) {
         return { ok: true, alreadySubscribed: true }
       }
 
-      // Handle validation errors (400 Bad Request with INVALID_PARAMETERS)
       if (
         response.status === 400 &&
         errorPayload.error?.code === "INVALID_PARAMETERS"
@@ -82,7 +80,6 @@ export const newsletterSignupFn = createServerFn({ method: "POST" })
         throw new Error(errorPayload.error.message || "Invalid email address.")
       }
 
-      // Handle authentication errors (401 Unauthorized)
       if (
         response.status === 401 ||
         errorPayload.error?.code === "INVALID_API_KEY"
@@ -90,24 +87,20 @@ export const newsletterSignupFn = createServerFn({ method: "POST" })
         throw new Error("Service configuration error")
       }
 
-      // Handle rate limiting (429 Too Many Requests)
       if (response.status === 429) {
         throw new Error(
           "Service temporarily unavailable. Please try again in a moment."
         )
       }
 
-      // Generic error fallback with API message if available
       throw new Error(
         errorPayload.error?.message ||
           "Unable to complete signup. Please try again later."
       )
     } catch (error) {
-      // Re-throw known errors
       if (error instanceof Error) {
         throw error
       }
-      // Handle network errors or unexpected failures
       throw new Error("Network error. Please check your connection.")
     }
   })

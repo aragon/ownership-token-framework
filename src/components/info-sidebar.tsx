@@ -6,7 +6,7 @@ import {
   // @ts-expect-error by default it imports from cjs build and triggers server-side error
 } from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import { useEffect, useState } from "react"
-import { copyToClipboard, truncateAddress } from "@/lib/utils"
+import { copyToClipboard, isPlaceholder, truncateAddress } from "@/lib/utils"
 import type { TokenInfo } from "./token-detail"
 import { Button } from "./ui/button"
 import { ExplorerIcon } from "./ui/explore-icon.tsx"
@@ -100,7 +100,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
           )}
           {truncateAddress(token.address)}
         </Button>
-        {token.links.scan && (
+        {!isPlaceholder(token.links.scan) && (
           <Button
             className="gap-1.5"
             nativeButton={false}
@@ -118,7 +118,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
             variant="outline"
           />
         )}
-        {token.links.website && (
+        {!isPlaceholder(token.links.website) && (
           <Button
             className="gap-1.5"
             nativeButton={false}
@@ -137,7 +137,7 @@ export default function InfoSidebar({ token }: { token: TokenInfo }) {
             variant="outline"
           />
         )}
-        {token.links.twitter && (
+        {!isPlaceholder(token.links.twitter) && (
           <Button
             className="gap-1.5"
             render={

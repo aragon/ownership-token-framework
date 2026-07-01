@@ -14,27 +14,14 @@ import {
 } from "@/components/ui/accordion"
 import { trackCriterionOpen } from "@/lib/analytics"
 import { getFrameworkUrl } from "@/lib/framework"
-import type { Evidence, Metric } from "@/lib/metrics-data"
+import { markdownComponents } from "@/lib/markdown-components"
+import type { Metric } from "@/lib/metrics-data"
 import { getMetricScore, getScoreStatus } from "@/lib/scoring"
-import { cn } from "../lib/utils.ts"
-import { EvidenceCard, isFullEvidence } from "./evidence-card.tsx"
-import { type CriteriaStatus, mapStatus } from "./token-detail"
+import { cn, isPlaceholder } from "../lib/utils.ts"
+import { EvidenceCard } from "./evidence-card.tsx"
+import type { CriteriaStatus } from "./token-detail"
 import { BadgeEvaluation } from "./ui/badge-evaluation.tsx"
 import { TitlePopover } from "./ui/title-popover.tsx"
-
-interface MarkdownComponentProps {
-  children?: React.ReactNode
-  href?: string
-}
-
-const markdownComponents = {
-  p: ({ children }: MarkdownComponentProps) => <p>{children}</p>,
-  a: ({ href, children }: MarkdownComponentProps) => (
-    <a href={href} rel="noopener noreferrer" target="_blank">
-      {children}
-    </a>
-  ),
-}
 
 function IconCircleEmpty({ className }: { className?: string }) {
   return (
@@ -114,7 +101,6 @@ export default function MetricCard(props: MetricCardProps) {
   const metricCriteriaIds = new Set(metric.criteria.map((c) => c.id))
 
   const handleCriteriaChange = (newOpenCriteria: string[]) => {
-    // Track newly opened criteria
     const previouslyOpen = new Set(openCriteria || [])
     const newlyOpened = newOpenCriteria.filter((id) => !previouslyOpen.has(id))
 
@@ -125,7 +111,7 @@ export default function MetricCard(props: MetricCardProps) {
       }
     })
 
-    // Merge: keep other metrics' criteria, replace only this metric's criteria
+    // Keep other metrics' open criteria; replace only this metric's.
     const otherCriteria = (openCriteria || []).filter(
       (id) => !metricCriteriaIds.has(id)
     )
@@ -140,7 +126,6 @@ export default function MetricCard(props: MetricCardProps) {
       )}
       id={metric.id}
     >
-      {/* Header */}
       <div className={cn("p-4 md:px-6 md:py-6", colors.headerBg)}>
         <div className="flex items-center justify-between gap-3">
           <TitlePopover
@@ -157,21 +142,25 @@ export default function MetricCard(props: MetricCardProps) {
             total={score.total}
           />
         </div>
-        {metric.summary && (
-          <p
+        {!isPlaceholder(metric.summary) && (
+          // div, not p: ReactMarkdown renders its own <p> and nested
+          // paragraphs are invalid HTML (causes hydration mismatches)
+          <div
             className={cn(
               "text-base leading-6 tracking-normal pt-3",
               colors.summaryColor
             )}
           >
-            <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
+            <ReactMarkdown
+              components={markdownComponents}
+              remarkPlugins={[remarkBreaks]}
+            >
               {metric.summary}
             </ReactMarkdown>
-          </p>
+          </div>
         )}
       </div>
 
-      {/* Criteria list */}
       <Accordion
         className="w-auto"
         multiple
@@ -195,44 +184,40 @@ export default function MetricCard(props: MetricCardProps) {
                   variant="h4"
                 />
               </div>
-              {!score.reference && (
-                <StatusIcon status={mapStatus(criteria.status)} />
-              )}
+              {!score.reference && <StatusIcon status={criteria.status} />}
             </AccordionTrigger>
             <AccordionContent className="p-0 pb-4">
               <div className="flex flex-col gap-4">
                 {match(criteria.notes)
-                  .with(P.string, (notes) => (
-                    // <div className="prose prose-sm prose-gray dark:prose-invert max-w-none">
-                    <div
-                      className={cn(
-                        summaryTextStyles,
-                        "prose pr-0 max-w-none md:pr-8"
-                      )}
-                    >
-                      <ReactMarkdown components={markdownComponents} remarkPlugins={[remarkBreaks]}>
-                        {notes}
-                      </ReactMarkdown>
-                    </div>
-                  ))
+                  .with(
+                    P.string.and(P.when((notes) => !isPlaceholder(notes))),
+                    (notes) => (
+                      <div
+                        className={cn(
+                          summaryTextStyles,
+                          "prose pr-0 max-w-none md:pr-8"
+                        )}
+                      >
+                        <ReactMarkdown
+                          components={markdownComponents}
+                          remarkPlugins={[remarkBreaks]}
+                        >
+                          {notes}
+                        </ReactMarkdown>
+                      </div>
+                    )
+                  )
                   .otherwise(() => null)}
                 {match(criteria.evidence)
                   .with(P.union(P.nullish, []), () => null)
                   .otherwise((evidenceList) => (
                     <div className="flex flex-col gap-4">
-                      {evidenceList.map((evidence, index) => {
-                        // Convert legacy format to full evidence format
-                        const fullEvidence: Evidence = isFullEvidence(evidence)
-                          ? evidence
-                          : { urls: [evidence] }
-
-                        return (
-                          <EvidenceCard
-                            evidence={fullEvidence}
-                            key={`${criteria.id}-ev-${index}`}
-                          />
-                        )
-                      })}
+                      {evidenceList.map((evidence, index) => (
+                        <EvidenceCard
+                          evidence={evidence}
+                          key={`${criteria.id}-ev-${index}`}
+                        />
+                      ))}
                     </div>
                   ))}
               </div>

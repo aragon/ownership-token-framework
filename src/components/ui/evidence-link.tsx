@@ -1,16 +1,27 @@
 import { FileTextIcon, GithubIcon } from "lucide-react"
 import type { ComponentProps } from "react"
-import { cn } from "@/lib/utils"
+import { cn, isPlaceholder } from "@/lib/utils"
 import { ExplorerIcon } from "./explore-icon.tsx"
 
-export type EvidenceLinkType = "github" | "docs" | "explorer"
+export type EvidenceLinkType =
+  | "github"
+  | "docs"
+  | "explorer"
+  | "vote"
+  | "website"
 
 interface IEvidenceLinkProps extends ComponentProps<"a"> {
   type?: EvidenceLinkType
 }
 
 export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
-  const { type = "generic", className, children, ...otherProps } = props
+  const { type = "generic", className, children, href, ...otherProps } = props
+
+  // A "TK"/empty href is a placeholder from a WIP token — never emit a dead
+  // link (callers already filter these out; this is a defensive guard).
+  if (isPlaceholder(href)) {
+    return null
+  }
 
   const renderIcon = () => {
     switch (type) {
@@ -35,6 +46,7 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
         "transition-colors duration-200",
         className
       )}
+      href={href}
       rel="noopener noreferrer"
       target="_blank"
       {...otherProps}

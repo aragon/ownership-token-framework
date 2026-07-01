@@ -1,4 +1,6 @@
 node_modules
+coverage
+.pnpm-store
 .DS_Store
 dist
 dist-ssr
@@ -17,3 +19,5 @@ output
 .agents
 .tempor
 .playwright-mcp
+.env.otf-app-secrets
+.pnpm-store

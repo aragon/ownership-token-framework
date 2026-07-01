@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start"
-import { type MarketData, fetchMarketData } from "@/lib/coingecko"
+import { fetchMarketData, type MarketData } from "@/lib/coingecko"
 
 type MarketDataInput = {
   coingeckoIds: string[]
@@ -23,14 +23,13 @@ export const fetchMarketDataFn = createServerFn({ method: "GET" })
     }
 
     if (cache && cache.expiresAt > Date.now()) {
-      // Return cached data for requested IDs
       const result: Record<string, MarketData> = {}
       for (const id of coingeckoIds) {
         if (cache.data[id]) {
           result[id] = cache.data[id]
         }
       }
-      // Only use cache if we have all requested IDs
+      // Only serve from cache when every requested id is present.
       if (Object.keys(result).length === coingeckoIds.length) {
         return result
       }

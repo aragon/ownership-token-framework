@@ -3,16 +3,8 @@ import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 
-/**
- * Rendered for any unmatched route. This does NOT throw a redirect, so the
- * server still responds with a real 404 status — that's what tells search
- * engines the URL does not exist and gets malformed/garbage paths dropped from
- * the index (instead of a 307 soft-redirect that keeps them alive).
- *
- * For real users, a client-side effect navigates home after hydration, so the
- * 404 is effectively invisible in the browser. Crawlers (and no-JS clients)
- * still see the 404 page and status below.
- */
+// Unmatched routes render a real 404 (no thrown redirect) so crawlers get a 404
+// status; a client effect sends real users home after hydration.
 export function NotFound() {
   const navigate = useNavigate()
 

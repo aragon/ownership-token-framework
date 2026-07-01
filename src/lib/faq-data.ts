@@ -1,19 +1,8 @@
-import faqData from "@/data/faq.json"
+import faqData from "@/data/generated/faq.json"
+import type { FaqQuestion, FaqTopic } from "@/lib/schemas"
 
-export interface FaqQuestion {
-  id: string
-  question: string
-  answer: string
-}
-
-export interface FaqTopic {
-  id: string
-  name: string
-  about?: string
-  questions: FaqQuestion[]
-}
+export type { FaqQuestion, FaqTopic }
 
 export function getFaqTopics(): FaqTopic[] {
-  const baseTopics = faqData.topics as FaqTopic[]
-  return baseTopics
+  return faqData.topics as FaqTopic[]
 }

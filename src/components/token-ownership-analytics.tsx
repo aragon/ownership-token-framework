@@ -1,5 +1,10 @@
 "use client"
 
+import {
+  IconCircleCheckFilled,
+  IconCircleX,
+  // @ts-expect-error by default it imports from cjs build and triggers server-side error
+} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
@@ -11,11 +16,6 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
-import {
-  IconCircleCheckFilled,
-  IconCircleX,
-  // @ts-expect-error by default it imports from cjs build and triggers server-side error
-} from "@tabler/icons-react/dist/esm/tabler-icons-react.mjs"
 import {
   ArrowRightIcon,
   ChevronLeftIcon,
@@ -60,7 +60,11 @@ import { type EnrichedToken, useMarketData } from "@/hooks/use-market-data"
 import { useTokens } from "@/hooks/use-tokens"
 import { CRITERIA_STATUS, getCriteriaStatus } from "@/lib/metrics-data"
 import { getTokenOwnershipScore } from "@/lib/scoring"
-import { formatUnixTimestamp, truncateAddress } from "@/lib/utils"
+import {
+  formatUnixTimestamp,
+  isPlaceholder,
+  truncateAddress,
+} from "@/lib/utils"
 
 function formatMarketCap(value?: number): string {
   if (value == null) return "—"
@@ -100,50 +104,6 @@ declare module "@tanstack/react-table" {
   }
 }
 
-// Custom filled icons to match Figma design
-// function IconBubble({ className }: { className?: string }) {
-//   return (
-//     <svg
-//       aria-label="Message bubble"
-//       className={className}
-//       fill="none"
-//       height="16"
-//       role="img"
-//       stroke="currentColor"
-//       strokeLinecap="round"
-//       strokeLinejoin="round"
-//       strokeWidth="2"
-//       viewBox="0 0 24 24"
-//       width="16"
-//       xmlns="http://www.w3.org/2000/svg"
-//     >
-//       <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
-//     </svg>
-//   )
-// }
-
-// Metric pill component for consistent styling
-// interface MetricPillProps {
-//   value: number
-//   icon: React.ReactNode
-//   className?: string
-// }
-
-// function MetricPill({ value, icon, className }: MetricPillProps) {
-//   return (
-//     <div
-//       className={cn(
-//         "inline-flex h-8 items-center gap-1 rounded-lg border border-border bg-background px-2",
-//         className
-//       )}
-//     >
-//       <span className="text-base">{value}</span>
-//       {icon}
-//     </div>
-//   )
-// }
-
-// Column definitions
 const columns: ColumnDef<EnrichedToken>[] = [
   {
     accessorKey: "name",
@@ -159,7 +119,12 @@ const columns: ColumnDef<EnrichedToken>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-4">
         <Avatar>
-          <AvatarImage alt={row.original.name} src={row.original.icon} />
+          <AvatarImage
+            alt={row.original.name}
+            src={
+              isPlaceholder(row.original.icon) ? undefined : row.original.icon
+            }
+          />
           <AvatarFallback className="bg-blue-500 text-white text-xs">
             {row.original.name.slice(0, 2)}
           </AvatarFallback>
@@ -519,16 +484,13 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
   )
 }
 
-// Main Component
 export default function TokenOwnershipAnalytics() {
   const rawTokens = useTokens()
   const { tokens } = useMarketData(rawTokens)
   return (
     <PageWrapper className="flex flex-col">
-      {/* White background section with Hero Header */}
       <HeroHeader />
 
-      {/* Gray background section */}
       <div className="bg-muted/50 flex-1">
         <Container>
           <TokenDataTable data={tokens} />

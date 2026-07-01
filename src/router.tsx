@@ -1,21 +1,35 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router"
+import { createRouter } from "@tanstack/react-router"
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
+import { queryClient } from "./lib/query-client"
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen"
 
-// IMPORTANT: return a NEW router instance on every call — never a shared
-// singleton. TanStack Start calls getRouter() for each request and then mutates
-// the returned instance with that request's URL
-// (`router.update({ history: createMemoryHistory({ initialEntries: [href] }) })`).
-// A module-level singleton is therefore shared across concurrent requests on the
-// same server instance, so one request's history/redirect state leaks into
-// another — which produced intermittent 307s with a `Location` taken from a
-// different request's path.
+/**
+ * Router factory — TanStack Start calls this per SSR request (and once on the
+ * client). The router MUST be fresh per request: SSR streaming state lives on
+ * the router instance, and a shared router carries request A's consumed
+ * stream into request B ("ReadableStream is locked").
+ *
+ * The QueryClient stays a shared singleton (src/lib/query-client.ts); freshness
+ * across requests is handled there (committed = immutable per deploy; release =
+ * RELEASE_MODE_SSR forces a fresh read), so sharing is safe.
+ */
 export function getRouter() {
-  return createTanStackRouter({
+  const router = createRouter({
     routeTree,
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
     trailingSlash: "preserve",
   })
+
+  // Dehydrates the query cache into the SSR stream and hydrates it on the
+  // client, so loader-ensured published data is synchronously readable on
+  // first client render. Also wraps the app in a QueryClientProvider.
+  setupRouterSsrQueryIntegration({
+    router,
+    queryClient,
+  })
+
+  return router
 }
