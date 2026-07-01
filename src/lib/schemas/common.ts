@@ -9,8 +9,12 @@ import { z } from "zod"
  */
 export const TK = "TK" as const
 
-/** A url field that may be deferred with the TK sentinel. */
-export const tkUrlSchema = z.union([z.url(), z.literal(TK)])
+/**
+ * A url field that may be a real url, the TK deferral sentinel, or empty ("")
+ * — a WIP token saved from the editor leaves urls blank; the readiness gate
+ * reports a blank url as an advisory gap.
+ */
+export const tkUrlSchema = z.union([z.url(), z.literal(TK), z.literal("")])
 
 /** A free-text field that may be deferred with the TK sentinel. */
 export const tkTextSchema = z.string()

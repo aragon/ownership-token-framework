@@ -33,9 +33,11 @@ export const tokenAtomSchema = z.strictObject({
   }),
 })
 
-/** content/evaluations/<tokenId>/<metricId>/_metric.json — per-token metric editorial. */
+/** content/summaries/<tokenId>/<metricId>.json — per-token metric editorial. */
 export const metricEditorialAtomSchema = z.strictObject({
-  summary: z.string(),
+  // Optional: the editor omits an empty summary on a WIP token; compose
+  // defaults it and the readiness gate reports the gap.
+  summary: z.string().optional(),
   tags: z.array(z.string()),
 })
 
@@ -44,9 +46,64 @@ export const criterionEvaluationAtomSchema = z.strictObject({
   /** Display-name override; present only where it diverges from framework. */
   name: z.string().optional(),
   status: criteriaStatusSchema,
-  notes: z.string(),
+  // Optional: omitted on a WIP token; compose defaults it to "".
+  notes: z.string().optional(),
   tags: z.array(z.string()).optional(),
   evidence: z.array(evidenceSchema).optional(),
+})
+
+/**
+ * A metric block inside the unified token doc: the editorial (summary/tags)
+ * plus its criteria keyed by criterion id (each value an evaluation atom).
+ */
+export const unifiedMetricSchema = z.strictObject({
+  summary: z.string().optional(),
+  tags: z.array(z.string()),
+  criteria: z.record(z.string(), criterionEvaluationAtomSchema),
+})
+
+/**
+ * Lenient identity for the editable write-model. id/name/symbol are required;
+ * the rest are filled in incrementally — a WIP token saved from the editor
+ * omits its empty fields. The composer defaults every missing field so the
+ * read-model stays complete, and the readiness gate reports the gaps. (The
+ * strict tokenAtomSchema above remains the read-model identity contract.)
+ */
+export const tokenIdentityWriteSchema = z.strictObject({
+  id: z.string(),
+  coingeckoId: z.string().optional(),
+  name: z.string(),
+  symbol: z.string(),
+  address: z.string().optional(),
+  icon: tkUrlSchema.optional(),
+  description: z.string().optional(),
+  infoDescription: z.string().optional(),
+  network: z.string().optional(),
+  links: z
+    .strictObject({
+      website: tkUrlSchema.optional(),
+      twitter: tkUrlSchema.optional(),
+      scan: tkUrlSchema.optional(),
+    })
+    .optional(),
+  lastUpdated: z.number().optional(),
+  updatedBy: z
+    .strictObject({
+      name: z.string().optional(),
+      avatar: z.string().optional(),
+    })
+    .optional(),
+})
+
+/**
+ * content/tokens/<id>.json — the unified token doc: lenient identity plus the
+ * full rubric nested by metric/criterion. This is what compose-data reads; the
+ * atom mirrors (metadata/evaluations/summaries) are a decomposition of it, kept
+ * in sync by the rebuild Action.
+ */
+export const unifiedTokenAtomSchema = z.strictObject({
+  ...tokenIdentityWriteSchema.shape,
+  metrics: z.record(z.string(), unifiedMetricSchema),
 })
 
 /** content/framework/<metricId>.json — canonical metric definition. */
@@ -109,6 +166,8 @@ export const testimonialsSchema = z.strictObject({
 })
 
 export type TokenAtom = z.infer<typeof tokenAtomSchema>
+export type UnifiedMetric = z.infer<typeof unifiedMetricSchema>
+export type UnifiedTokenAtom = z.infer<typeof unifiedTokenAtomSchema>
 export type MetricEditorialAtom = z.infer<typeof metricEditorialAtomSchema>
 export type CriterionEvaluationAtom = z.infer<
   typeof criterionEvaluationAtomSchema
