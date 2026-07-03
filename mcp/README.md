@@ -1,153 +1,101 @@
 # OTF MCP Server
 
-A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes
-the **Ownership Token Framework (OTF)** public read API as agent tools. Point
-Claude Desktop, Claude Code, Cursor, or Codex at it and query the framework data —
-which crypto protocols are genuinely tokenholder-owned, on evidence, against a
-fixed rubric — directly from your assistant.
+[![npm](https://img.shields.io/npm/v/otf-mcp-server.svg)](https://www.npmjs.com/package/otf-mcp-server)
 
-It is a thin, read-only wrapper over the OTF JSON API (`/api/v1/*`, no auth).
-Every tool result includes a provenance citation line carrying
-`provenance.snapshot_id` and `commit_ref` so answers are reproducible.
+A [Model Context Protocol](https://modelcontextprotocol.io) server that puts the
+**Ownership Token Framework (OTF)** in your AI assistant. Point Claude, Cursor,
+or Codex at it and ask which crypto protocols are genuinely tokenholder-owned —
+answered on evidence, against a fixed rubric, straight from the OTF data.
+
+It is a thin, read-only wrapper over the public OTF API (`/api/v1/*`, no auth,
+nothing to sign up for). Every answer carries a provenance line
+(`provenance.snapshot_id` + `commit_ref`) so it is reproducible and citable.
+
+## Quick start
+
+No clone, no build. Add it to your assistant with one command — `npx` fetches
+and runs the published package for you.
+
+**Claude (Claude Code / Desktop):**
+
+```bash
+claude mcp add otf --env OTF_API_BASE=https://otf.aragon.org -- npx -y otf-mcp-server
+```
+
+**Cursor** — add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project):
+
+```json
+{
+  "mcpServers": {
+    "otf": {
+      "command": "npx",
+      "args": ["-y", "otf-mcp-server"],
+      "env": { "OTF_API_BASE": "https://otf.aragon.org" }
+    }
+  }
+}
+```
+
+**Codex CLI** — add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.otf]
+command = "npx"
+args = ["-y", "otf-mcp-server"]
+env = { OTF_API_BASE = "https://otf.aragon.org" }
+```
+
+That's it. Restart the client and ask it something like *"Using OTF, which tokens
+score highest on tokenholder ownership, and why?"* Requires Node.js ≥ 20 (for
+`npx`).
 
 ## Tools
 
 | Tool | Input | Returns |
 |---|---|---|
-| `list_tokens` | `network?`, `minScorePercentage?`, `criterion?`, `status?` | Slim index rows. Filters are applied client-side over `/api/v1/tokens`. `criterion`+`status` keeps tokens whose `criteriaStatuses[criterion] === status`. |
+| `list_tokens` | `network?`, `minScorePercentage?`, `criterion?`, `status?` | Slim index rows. Filters are applied over `/api/v1/tokens`. `criterion`+`status` keeps tokens whose `criteriaStatuses[criterion] === status`. |
 | `get_token` | `id` (lowercase, e.g. `ldo`) | The full token report: `metrics[].criteria[]` with `status`, `notes`, `evidence[]`, plus `score` and counts. |
 | `get_framework` | — | The rubric: metric/criterion `name` + `about` definitions. |
-| `search_tokens` | `query` | Case-insensitive match over token `name`/`symbol`/`id` from the index. |
+| `search_tokens` | `query` | Case-insensitive match over token `name`/`symbol`/`id`. |
 | `get_faq` | — | Methodology / framework Q&A. |
 
 `status` is one of the OTF status vocabulary: `positive`, `warning`, `at_risk`,
-`unevaluated`, `reference`.
-
-A request for a token id that does not exist returns a clean tool error
-(`isError: true`), not a thrown exception.
+`unevaluated`, `reference`. Asking for a token id that does not exist returns a
+clean tool error, not a crash.
 
 ## Configuration
 
 | Env var | Required | Notes |
 |---|---|---|
-| `OTF_API_BASE` | **yes** | Base URL of the OTF API. There is no default — the server errors at startup if it is unset, so it can never silently query the wrong origin. Set it to the OTF API origin. |
+| `OTF_API_BASE` | **yes** | Origin of the OTF API. Use `https://otf.aragon.org` for the live public data. There is no default on purpose — the server refuses to start without it, so it can never silently query the wrong origin. Point it at `http://localhost:3000` only if you are running the OTF app locally. |
 
-For a local app dev server this is typically `http://localhost:3000`. Once a
-canonical OTF production domain exists, use that.
+The server speaks MCP over **stdio** — it is launched by your MCP client, not run
+by hand. stdout is reserved for the protocol; all logs go to stderr.
 
-## Run locally
+## Run from source (contributors)
 
-Requires Node.js >= 20.
+You only need this if you are hacking on the server itself — end users should use
+the `npx` quick start above.
 
 ```bash
 cd mcp
 npm install        # standalone; creates its own package-lock.json
 npm run build      # compiles src/ -> dist/
-npm start          # runs dist/index.js over stdio (or: node dist/index.js)
+npm start          # runs dist/index.js over stdio
 ```
 
-Type-check only: `npm run typecheck`.
+Type-check only: `npm run typecheck`. Tests: `npm test`.
 
-The server speaks MCP over **stdio**; it is meant to be launched by an MCP
-client, not used interactively. stdout is reserved for the protocol — all logs
-go to stderr.
-
-## Global install (optional)
-
-To drop the absolute path from every client config, install the built package
-globally so the `otf-mcp-server` executable lands on your `PATH`:
-
-```bash
-cd mcp
-npm run build      # produces dist/
-npm install -g .   # puts `otf-mcp-server` on PATH (from the `bin` field)
-```
-
-Now any client can launch it by name — `otf-mcp-server` with no `node` and no
-path. The per-client snippets below show both forms. To upgrade after pulling
-new code, rebuild and re-run `npm install -g .`; remove it with
-`npm uninstall -g otf-mcp-server`.
-
-## Client configuration
-
-After a **global install** (above), use the bare command `otf-mcp-server`.
-Otherwise, after `npm run build`, use the **absolute path** to `dist/index.js`.
-
-### Claude
-
-Global install:
-
-```bash
-claude mcp add otf --env OTF_API_BASE=http://localhost:3000 -- otf-mcp-server
-```
-
-Local path:
+Point a client at your local build with the absolute path to `dist/index.js`:
 
 ```bash
 claude mcp add otf --env OTF_API_BASE=http://localhost:3000 -- node /ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js
 ```
 
-### Cursor
+Or install it on your `PATH` (`cd mcp && npm run build && npm install -g .`) and
+launch it by bare name `otf-mcp-server`.
 
-Edit `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project). With a global
-install, set `"command": "otf-mcp-server"` and drop `args`:
-
-```json
-{
-  "mcpServers": {
-    "otf": {
-      "command": "otf-mcp-server",
-      "env": {
-        "OTF_API_BASE": "http://localhost:3000"
-      }
-    }
-  }
-}
-```
-
-Without a global install, point at the built file:
-
-```json
-{
-  "mcpServers": {
-    "otf": {
-      "command": "node",
-      "args": ["/ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js"],
-      "env": {
-        "OTF_API_BASE": "http://localhost:3000"
-      }
-    }
-  }
-}
-```
-
-### Codex CLI
-
-Add to `~/.codex/config.toml`. With a global install, use the bare command:
-
-```toml
-[mcp_servers.otf]
-command = "otf-mcp-server"
-env = { OTF_API_BASE = "http://localhost:3000" }
-```
-
-Without a global install, point at the built file:
-
-```toml
-[mcp_servers.otf]
-command = "node"
-args = ["/ABSOLUTE/PATH/TO/ownership-token-framework/mcp/dist/index.js"]
-env = { OTF_API_BASE = "http://localhost:3000" }
-```
-
-### Via npx (after publishing)
-
-Once this package is published to npm, clients can run it without a local
-checkout by replacing the `command`/`args` with:
-
-```json
-{ "command": "npx", "args": ["-y", "otf-mcp-server"] }
-```
+Cutting a release / the one-time npm setup: see [PUBLISHING.md](./PUBLISHING.md).
 
 ## Security & threat model
 
@@ -173,16 +121,13 @@ here is deliberate.
 - **Supply chain.** Dependencies (`@modelcontextprotocol/sdk`, `zod`) are
   exact-pinned (no `^`/`latest`) to versions published 7+ days earlier, installed
   from the committed `package-lock.json` (`npm ci`), with lifecycle scripts
-  disabled (`.npmrc` `ignore-scripts=true`). Minimal dependency surface; run
-  `npm audit` before publishing.
+  disabled (`.npmrc` `ignore-scripts=true`). Releases are published from CI with
+  npm **provenance**, so each tarball is cryptographically linked to this repo
+  and the release workflow.
 
 ## Notes
 
 - **Standalone package.** This directory has its own `package.json` and
   `package-lock.json` and is installed with `npm` independently of the parent
-  app's pnpm workspace. The root `pnpm-workspace.yaml` declares no `packages`,
-  so `mcp/` is not part of the pnpm workspace and the app build is unaffected.
-- **No production domain yet.** There is no canonical public OTF API origin, so
-  `OTF_API_BASE` is required (no default) and the server refuses to start without
-  it. Point it at a local dev server (`http://localhost:3000`) or the production
-  domain once one is published.
+  app's pnpm workspace. The root `pnpm-workspace.yaml` declares no `packages`, so
+  `mcp/` is not part of the pnpm workspace and the app build is unaffected.
