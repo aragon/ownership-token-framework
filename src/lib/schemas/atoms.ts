@@ -63,14 +63,16 @@ export const unifiedMetricSchema = z.strictObject({
 })
 
 /**
- * Lenient identity for the editable write-model. id/name/symbol are required;
- * the rest are filled in incrementally — a WIP token saved from the editor
- * omits its empty fields. The composer defaults every missing field so the
+ * Lenient identity for the editable write-model. name/symbol are required; the
+ * rest are filled in incrementally — a WIP token saved from the editor omits its
+ * empty fields. `id` is the file name (single source of truth), so it is not a
+ * stored field; `.optional()` tolerates legacy docs that still carry one. The
+ * composer derives id from the file name and defaults every missing field so the
  * read-model stays complete, and the readiness gate reports the gaps. (The
  * strict tokenAtomSchema above remains the read-model identity contract.)
  */
 export const tokenIdentityWriteSchema = z.strictObject({
-  id: z.string(),
+  id: z.string().optional(),
   coingeckoId: z.string().optional(),
   name: z.string(),
   symbol: z.string(),

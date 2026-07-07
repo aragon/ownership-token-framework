@@ -1,12 +1,12 @@
 {
   "source": "aragon/otf-cms",
-  "source_commit": "f71a0d2df6c6c86ad56832837e706e240e006cd8",
+  "source_commit": "e4919d1206cb2ebddbc600a4e304c5fc7a41b959",
   "files": {
-    "src/lib/schemas/atoms.ts": "85b27f1e1c6a12d86da4dcbfec417e2695728c41c5716b6a28096ee0ceb22cf1",
+    "src/lib/schemas/atoms.ts": "903f7c3f21230c2a1aa094c7f526edfbaee79534b21eda8b96a99a3b31c4d110",
     "src/lib/schemas/common.ts": "bfe3e64c09b23e0231601277969f6a87ecf17e0752e2b01ca9bf343eb74dd90e",
-    "src/lib/schemas/index.ts": "cb3f46ee827060cbccd5745aab45e4241179ddbd573a884302d559a023e57e54",
+    "src/lib/schemas/index.ts": "413b6c05db9374dd92a0f44aa49bba257a8a9cd61c36981f6f74494408c244d3",
     "src/lib/schemas/read-models.ts": "9af495412eb22c6ac7a9ced07e976b9e960582f46e4dcf2c4f2dcc6f51868041",
     "src/lib/schemas/readiness.ts": "31597d72f8c66cc4734838a4556e78bb6871054cb244af5a43d4612bbdc29f4c",
-    "scripts/lib/compose-data.ts": "8fd91e88c9dc604d161c0809227f87fc478582aba102674a1f376dd783dd229b"
+    "scripts/lib/compose-data.ts": "ea9ccb8bd53041ee4c69203817a6c8aa1c62628107596a2024f743f456617c24"
   }
 }

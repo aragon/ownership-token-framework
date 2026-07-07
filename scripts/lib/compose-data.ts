@@ -181,6 +181,10 @@ export function composeAll(dir: string = contentDir) {
     const score = getTokenScore(tokenId, metrics)
 
     tokenDocs.push({
+      // id is the token's identity — derived from the file name (the single
+      // source of truth), not a stored field. `fullIdentity` still carries it
+      // for any legacy doc that has it, but the filename wins for position/value.
+      id: tokenId,
       ...fullIdentity(doc),
       positive: countBy("positive"),
       neutral: countBy("warning"),
