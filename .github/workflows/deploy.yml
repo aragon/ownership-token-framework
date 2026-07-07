@@ -136,10 +136,14 @@ jobs:
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Deployed ($TARGET): $url" >> "$GITHUB_STEP_SUMMARY"
 
-      # Finalize the status comment — runs even if the build/deploy failed, so a
-      # broken preview is surfaced on the PR instead of failing silently.
+      # Finalize the status comment — runs on success OR genuine failure (so a
+      # broken preview is surfaced instead of failing silently), but NOT on
+      # cancellation. A cancel here means a newer commit (typically the rebuild
+      # bot's `[skip rebuild]` sync) superseded this run via the concurrency
+      # group; that is expected, not a failure — the winning run posts the real
+      # status, and the cleanup step below removes this run's stale comment.
       - name: Finalize status comment
-        if: ${{ always() && github.event.inputs.comment_pr != '' }}
+        if: ${{ !cancelled() && github.event.inputs.comment_pr != '' }}
         env:
           GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
           COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
@@ -161,6 +165,17 @@ jobs:
           else
             gh api "repos/$COMMENT_REPO/issues/$COMMENT_PR/comments" -f body="$body"
           fi
+
+      # Superseded run: a newer commit cancelled this one. Delete the "building…"
+      # comment we posted so the PR shows only the winning run's status — no
+      # jarring red "failed" flash for a build that was merely obsoleted.
+      - name: Remove superseded status comment
+        if: ${{ cancelled() && github.event.inputs.comment_pr != '' && steps.comment.outputs.id != '' }}
+        env:
+          GH_TOKEN: ${{ secrets.CMS_COMMENT_TOKEN }}
+          COMMENT_REPO: ${{ github.event.inputs.comment_repo }}
+          COMMENT_ID: ${{ steps.comment.outputs.id }}
+        run: gh api -X DELETE "repos/$COMMENT_REPO/issues/comments/$COMMENT_ID"
 
   teardown:
     if: ${{ github.event.inputs.action == 'teardown' }}
