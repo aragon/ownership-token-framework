@@ -24,7 +24,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource-variable/inter": "^5.2.8",
     "@hookform/resolvers": "^5.2.2",
-    "@tabler/icons-react": "^3.37.1",
+    "@tabler/icons-react": "^3.44.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.0",
     "@tanstack/react-devtools": "^0.10.5",
