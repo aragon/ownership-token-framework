@@ -1,0 +1,127 @@
+name: Release — prepare
+
+# Opens a signed "Release vX.Y.Z" PR. Consumes the pending changesets to bump the
+# app version and regenerate CHANGELOG.md, commits it (GPG-signed by the bot), and
+# opens release/vX.Y.Z -> main. Merging that PR IS the production release:
+# deploy.yml ships it and release-finalize.yml tags + cuts the GitHub Release.
+#
+# Lightweight subset of the Aragon standard release flow — no Linear/Slack, no
+# shared composite actions. Per DevOps posture, credentials come from 1Password;
+# the only stored GitHub secret is OP_SERVICE_ACCOUNT_TOKEN. Add changes to a
+# release by committing a changeset on your PR: `pnpm changeset`.
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: "Ref to release from (default: main)"
+        required: false
+        default: main
+        type: string
+
+# The bot PAT (not GITHUB_TOKEN) performs the writes, so the built-in token is
+# read-only. Using a PAT is deliberate: it lets the Release PR trigger CI.
+permissions:
+  contents: read
+
+concurrency:
+  group: release-prepare
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load secrets from 1Password
+        id: op
+        uses: 1password/load-secrets-action@3a12b0ab99d9cd590a3e9b5a90ea017210ed9556 # v4.0.0
+        with:
+          export-env: false
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          # DevOps: confirm the vault + item names exist (see docs/app-releases.md).
+          ARABOT_PAT: op://kv_otf_infra/ARABOT_PAT/credential
+          GPG_PRIVATE_KEY: op://kv_otf_infra/arabot-1_SIGN_CERTS/private_key
+          GPG_PASSPHRASE: op://kv_otf_infra/arabot-1_SIGN_CERTS/credential
+
+      # Checkout with the bot PAT so the pushed release branch + PR re-fire CI
+      # (a branch pushed with the default GITHUB_TOKEN does not trigger workflows).
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        with:
+          ref: ${{ inputs.base_ref }}
+          fetch-depth: 0
+          token: ${{ steps.op.outputs.ARABOT_PAT }}
+
+      - name: Import GPG key
+        id: gpg
+        uses: crazy-max/ghaction-import-gpg@2dc316deee8e90f13e1a351ab510b4d5bc0c82cd # v7.0.0
+        with:
+          gpg_private_key: ${{ steps.op.outputs.GPG_PRIVATE_KEY }}
+          passphrase: ${{ steps.op.outputs.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Configure git identity
+        run: |
+          git config user.name "${{ steps.gpg.outputs.name }}"
+          git config user.email "${{ steps.gpg.outputs.email }}"
+
+      - uses: pnpm/action-setup@0e279bb959325dab635dd2c09392533439d90093 # v6.0.8
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Nothing to release if no changeset files are pending (README.md aside).
+      - name: Check for pending changesets
+        id: pending
+        run: |
+          COUNT=$(find .changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' ')
+          if [ "$COUNT" = "0" ]; then
+            echo "::warning title=No changesets::Nothing to release — add one with 'pnpm changeset'."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # changelog-github reads PR/author metadata via the token.
+      - name: Version (consume changesets)
+        if: steps.pending.outputs.found == 'true'
+        run: pnpm changeset version
+        env:
+          GITHUB_TOKEN: ${{ steps.op.outputs.ARABOT_PAT }}
+
+      - name: Read version
+        if: steps.pending.outputs.found == 'true'
+        id: v
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Commit + push release branch
+        if: steps.pending.outputs.found == 'true'
+        env:
+          V: ${{ steps.v.outputs.version }}
+        run: |
+          BRANCH="release/v$V"
+          git switch -C "$BRANCH"
+          git add -A
+          git commit -S -m "Release v$V"
+          git push -u origin "$BRANCH" --force-with-lease
+
+      - name: Open Release PR
+        if: steps.pending.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ steps.op.outputs.ARABOT_PAT }}
+          V: ${{ steps.v.outputs.version }}
+        run: |
+          BRANCH="release/v$V"
+          if gh pr view "$BRANCH" >/dev/null 2>&1; then
+            echo "PR already open for $BRANCH."
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Release v$V" \
+              --body "Automated release. Version bumped to \`v$V\`; the CHANGELOG.md diff in this PR is the release notes. Merging to main ships to production (deploy.yml) and cuts the GitHub Release (release-finalize.yml)."
+          fi
