@@ -1,0 +1,87 @@
+name: Publish MCP
+
+# Publishes the `otf-mcp-server` npm package (the read-only OTF MCP in mcp/).
+#
+# Triggers:
+#   - push a tag `mcp-v<version>` (e.g. mcp-v0.1.0) → real publish. The tag
+#     version MUST equal mcp/package.json "version" or the run fails.
+#   - manual dispatch → dry-run by default (validation only); flip `dry_run` to
+#     false to publish off a branch without cutting a tag.
+#
+# Requires ONE secret (DevOps handoff): NPM_TOKEN — an npm automation token for
+# an account/org that owns (or can create) the `otf-mcp-server` name. See
+# mcp/PUBLISHING.md. Publishes with npm provenance, so no other trust anchor is
+# needed; the tarball is signed to this repo + workflow.
+
+on:
+  push:
+    tags:
+      - "mcp-v*"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Pack and validate without publishing"
+        type: boolean
+        default: true
+
+concurrency:
+  group: publish-mcp-${{ github.ref }}
+  cancel-in-progress: false
+
+# contents: read for checkout; id-token: write lets npm attach build provenance.
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      # Third-party actions pinned to full commit SHAs (supply-chain policy).
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+
+      # Reproducible install from the committed lockfile; .npmrc disables
+      # dependency lifecycle scripts.
+      - name: Install
+        run: npm ci
+
+      # Fail loudly if a tag push disagrees with the manifest version, so a
+      # mistagged release never ships under the wrong number.
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#mcp-v}"
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
+            echo "::error title=Version mismatch::tag mcp-v$TAG_VERSION != package.json $PKG_VERSION"
+            exit 1
+          fi
+          echo "Publishing otf-mcp-server@$PKG_VERSION"
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: node --test test/*.test.mjs
+
+      # Real publish on tag push, or on manual dispatch with dry_run=false.
+      # provenance:true (publishConfig) requires the id-token permission above.
+      - name: Publish
+        if: startsWith(github.ref, 'refs/tags/') || github.event.inputs.dry_run == 'false'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Dry-run pack
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run != 'false'
+        run: npm publish --dry-run

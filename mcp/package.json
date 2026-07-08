@@ -4,6 +4,24 @@
   "description": "Model Context Protocol server exposing the Ownership Token Framework (OTF) public read API as agent tools.",
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "otf",
+    "ownership-token-framework",
+    "crypto",
+    "governance",
+    "agent-tools"
+  ],
+  "homepage": "https://github.com/aragon/ownership-token-framework/tree/main/mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aragon/ownership-token-framework.git",
+    "directory": "mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/aragon/ownership-token-framework/issues"
+  },
   "bin": {
     "otf-mcp-server": "dist/index.js"
   },
@@ -11,6 +29,10 @@
     "dist"
   ],
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
