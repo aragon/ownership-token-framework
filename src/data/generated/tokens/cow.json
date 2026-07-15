@@ -21,7 +21,7 @@
   "positive": 12,
   "neutral": 4,
   "atRisk": 2,
-  "evidenceEntries": 31,
+  "evidenceEntries": 32,
   "score": {
     "tokenId": "cow",
     "passing": 9,
@@ -462,6 +462,17 @@
                 {
                   "name": "CIP-64 (CoW Forum)",
                   "url": "https://forum.cow.fi/t/cip-64-incorporation-of-a-legal-structure-for-cow-dao/2861",
+                  "type": "docs"
+                }
+              ]
+            },
+            {
+              "name": "Service Provider Accountability Proposal",
+              "summary": "Snapshot proposal documenting COW holder control over service-provider accountability.",
+              "urls": [
+                {
+                  "name": "Snapshot Proposal",
+                  "url": "https://snapshot.org/#/s:cow.eth/proposal/0x27ff996a98b6407cea2f28890bbab5813205d5bffa03f393e0894d3fc4e04178",
                   "type": "docs"
                 }
               ]

@@ -219,7 +219,7 @@
       "positive": 12,
       "neutral": 4,
       "atRisk": 2,
-      "evidenceEntries": 31,
+      "evidenceEntries": 32,
       "score": {
         "tokenId": "cow",
         "passing": 9,
