@@ -216,15 +216,15 @@
         "scan": "https://etherscan.io/token/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
       },
       "infoDescription": "CoW Protocol is a fully permissionless trading protocol that leverages batch auctions as its price-finding mechanism, offering MEV protection and the best prices across DEXs and DEX aggregators.",
-      "positive": 11,
+      "positive": 12,
       "neutral": 4,
-      "atRisk": 3,
+      "atRisk": 2,
       "evidenceEntries": 31,
       "score": {
         "tokenId": "cow",
-        "passing": 8,
+        "passing": 9,
         "total": 15,
-        "percentage": 53.333333333333336,
+        "percentage": 60,
         "metrics": [
           {
             "metricId": "onchain-ctrl",
@@ -238,9 +238,9 @@
           {
             "metricId": "val-accrual",
             "metricName": "Value Accrual",
-            "passing": 1,
+            "passing": 2,
             "total": 4,
-            "percentage": 25,
+            "percentage": 50,
             "evaluated": true,
             "reference": false
           },
@@ -284,7 +284,7 @@
         "val-accrual__active": "positive",
         "val-accrual__treasury": "warning",
         "val-accrual__mechanism": "warning",
-        "val-accrual__offchain": "at_risk",
+        "val-accrual__offchain": "positive",
         "verifiability__token-source": "positive",
         "verifiability__protocol-source": "positive",
         "distribution__concentration": "positive",

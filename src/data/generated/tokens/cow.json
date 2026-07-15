@@ -18,15 +18,15 @@
     "scan": "https://etherscan.io/token/0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB"
   },
   "infoDescription": "CoW Protocol is a fully permissionless trading protocol that leverages batch auctions as its price-finding mechanism, offering MEV protection and the best prices across DEXs and DEX aggregators.",
-  "positive": 11,
+  "positive": 12,
   "neutral": 4,
-  "atRisk": 3,
+  "atRisk": 2,
   "evidenceEntries": 31,
   "score": {
     "tokenId": "cow",
-    "passing": 8,
+    "passing": 9,
     "total": 15,
-    "percentage": 53.333333333333336,
+    "percentage": 60,
     "metrics": [
       {
         "metricId": "onchain-ctrl",
@@ -40,9 +40,9 @@
       {
         "metricId": "val-accrual",
         "metricName": "Value Accrual",
-        "passing": 1,
+        "passing": 2,
         "total": 4,
-        "percentage": 25,
+        "percentage": 50,
         "evaluated": true,
         "reference": false
       },
@@ -86,7 +86,7 @@
     "val-accrual__active": "positive",
     "val-accrual__treasury": "warning",
     "val-accrual__mechanism": "warning",
-    "val-accrual__offchain": "at_risk",
+    "val-accrual__offchain": "positive",
     "verifiability__token-source": "positive",
     "verifiability__protocol-source": "positive",
     "distribution__concentration": "positive",
@@ -110,7 +110,7 @@
           "name": "Onchain Governance Workflow",
           "about": "Evaluates whether an onchain process exists that grants tokenholders ultimate authority over protocol decisions.",
           "status": "at_risk",
-          "notes": "No onchain Governor contract deployed. CoW DAO does not use an on-chain Governor (no OZ Governor / Aragon DAO / Tally binding votes to execution), since the deprecation of the oSnap module. Governance runs through CoW Improvement Proposals (CIPs): forum discussion → Snapshot vote on the cow.eth space. Votes are weighted by COW + vCOW balances/delegations across the implemented strategies spanning Mainnet and Gnosis Chain. A proposal passes on a simple majority of YES with a quorum of 35,000,000 votes. Anyone holding ≥10K COW can create a proposal.",
+          "notes": "No onchain Governor contract deployed. CoW DAO governance runs through a documented CIP process: forum discussion → Snapshot vote on the cow.eth space. Votes are weighted by COW + vCOW balances/delegations across Mainnet and Gnosis Chain. A proposal passes on a simple majority of YES with a quorum of 35,000,000 votes, and anyone holding ≥10K COW can create a proposal.\n\nThis is a rigorous governance process, but Snapshot outcomes are not directly binding onchain.",
           "evidence": [
             {
               "name": "Snapshot Governance",
@@ -135,7 +135,7 @@
           "name": "Role Accountability",
           "about": "Determines whether all privileged or value-impacting roles are governed, revocable, and accountable to tokenholders.",
           "status": "warning",
-          "notes": "Operational roles are distributed across purpose-specific multisigs rather than a single role registry. All wallets are owned by CoW Foundation or related entities.\n\n- **Solver Payouts Safe:** Sends rewards and network fees to solvers, and forwards protocol fees to the Protocol Fee Safe.\n- **CoW Buyback Recipient Safe:** Receives buybacks and sends COW to the Solver Payouts Safe when needed.\n- **Managed Treasury Safe:** CoW DAO is added as a module, giving it full control over Safe execution, including the ability to drain funds.\n- **Solver allow-list (GPv2AllowListAuthentication):** Managers can add/remove solvers. Per CoW's published security notes, a compromised manager could allow-list a malicious solver capable of draining the settlement contract's fee buffers - but not user funds, which are never custodied by the protocol. The manager is currently set to CoW DAO.\n- **COW token mint:** Can be performed by CoW DAO.\n\n**Caveat:** While COW tokenholders can have a say, this is via offchain Snapshot voting that is not enforced onchain - ultimately, it is still the Safe signers who decide execution.",
+          "notes": "Operational roles are distributed across purpose-specific public multisigs rather than a single role registry.\n\n- **Solver Payouts Safe:** Sends rewards and network fees to solvers, and forwards protocol fees to the Protocol Fee Safe.\n- **CoW Buyback Recipient Safe:** Receives buybacks and sends COW to the Solver Payouts Safe when needed.\n- **Managed Treasury Safe:** CoW DAO is added as a module, giving it control over Safe execution.\n- **Solver allow-list (GPv2AllowListAuthentication):** Managers can add/remove solvers. Per CoW's published security notes, a compromised manager could allow-list a malicious solver capable of draining settlement-contract fee buffers - but not user funds, which are never custodied by the protocol. The manager is currently set to CoW DAO.\n- **COW token mint:** Can be performed by CoW DAO.\n\nThese structures improve transparency and accountability, but signer selection and execution are not directly enforced by tokenholder governance onchain.",
           "evidence": [
             {
               "name": "Solver Payouts Safe",
@@ -357,7 +357,7 @@
       "id": "val-accrual",
       "name": "Value Accrual",
       "about": "This metric evaluates whether the system's operation produces observable, onchain value flows (or token-scarcity effects) that accrue value to tokenholders under rule-based constraints that do not rely on manual transfers, trusted executors, or other unenforced expectations. It focuses on whether a real value engine exists and is active.",
-      "summary": "COW runs a live, net-deflationary buyback that repurchases at least as many tokens as are paid out as solver incentives, though the mandate is set by governance and executed operationally rather than by an immutable onchain mechanism. Treasury assets belong to the DAO but sit in Safes without binding onchain tokenholder control. No offchain value currently accrues to tokenholders.",
+      "summary": "COW runs a live, net-deflationary buyback that repurchases at least as many tokens as are paid out as solver incentives, though the mandate is set by governance and executed operationally rather than by an immutable onchain mechanism. Treasury assets belong to the DAO but sit in Safes without binding onchain tokenholder control. Offchain service-provider accountability gives tokenholders additional protection.",
       "tags": [
         "Metric 2"
       ],
@@ -445,15 +445,15 @@
           "name": "Accrual Mechanism Control",
           "about": "Evaluates whether only tokenholders can modify parameters governing value capture, such as fees or revenue routing.",
           "status": "warning",
-          "notes": "The buyback mandate and its parameters are set by governance. It is not an immutable on-chain mechanism - the Treasury/Core Team executes buybacks operationally, with the mandate originating from a token vote (Snapshot).",
+          "notes": "The buyback mandate and its parameters are set by governance, and the process is active and appropriate for the protocol's current stage. It is not an immutable onchain mechanism: the Treasury/Core Team executes buybacks operationally, with the mandate originating from a token vote (Snapshot).",
           "evidence": []
         },
         {
           "id": "val-accrual__offchain",
           "name": "Offchain Value Accrual",
           "about": "Are there additional offchain value accrual flows that benefit tokenholders?",
-          "status": "at_risk",
-          "notes": "CoW Foundation is the legal entity that holds and administers CoW DAO-related intellectual property under the legal structure approved by CoW DAO governance. CoW Foundation was established pursuant to CIP-64, \"Incorporation of a legal structure for CoW DAO,\" as CoW DAO's legal interface and IP-stewardship entity. CIP-64 provides that CoW Foundation owns intellectual property rights originating from or related to CoW DAO, including historical and future DAO-related rights, consistently with the DAO's Participation Agreement adopted under CIP-1.\n\nFor IP specifically, CoW Foundation does not operate the IP as a licensing business, and no revenue is currently generated from licensing or other standalone monetisation of CoW DAO-related IP. Accordingly, there is no current IP revenue-sharing arrangement with tokenholders.\n\nIf IP-related revenue were generated in the future, the proceeds would accrue for the benefit of CoW DAO, including through the DAO treasury, subject to the applicable governance process and legal implementation mechanics. This should be understood as a DAO treasury/governance alignment mechanism, not as a direct contractual revenue entitlement of individual tokenholders.",
+          "status": "positive",
+          "notes": "CoW Foundation holds and administers CoW DAO-related intellectual property under the legal structure approved by CoW DAO governance. Service-provider agreements add offchain accountability: COW holders can vote to cancel service-provider arrangements and funding, triggering an exit period.\n\nService providers do not capture an independent offchain revenue stream. If IP-related revenue were generated in the future, proceeds would accrue for the benefit of CoW DAO, including through the DAO treasury, subject to the applicable governance and legal process.",
           "evidence": [
             {
               "name": "CIP-64: Incorporation of a legal structure for CoW DAO",
@@ -571,7 +571,7 @@
           "name": "Future Token Unlocks",
           "about": "Are there known, future events (such as vesting cliffs) that will materially affect the concentration of tokens?",
           "status": "warning",
-          "notes": "The team has a running allocation of 50,000,000 COW via a four-year linear streaming allocation, which started February 11, 2026. A remainder allocation of 75M COW, gated by revenue milestones, can still be allocated to the team if revenue targets are reached.",
+          "notes": "The team has a running allocation of 50,000,000 COW via a four-year linear streaming allocation, which started February 11, 2026. A remainder allocation of 75M COW, gated by revenue milestones, can still be allocated to the team if revenue targets are reached. These future allocations are transparently disclosed, but still represent future dilution.",
           "evidence": [
             {
               "name": "Team Allocation Proposal",
