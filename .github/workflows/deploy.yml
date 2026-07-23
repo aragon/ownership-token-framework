@@ -6,9 +6,11 @@ name: Deploy
 #
 # Ways in:
 #  - workflow_dispatch: manual or cross-repo (otf-cms triggers a content
-#    preview, or a teardown when the content PR closes).
-#  - push to main: production deploy of the app's own code. Production content
-#    arrives at runtime from the published Release.
+#    preview, production content deploy, or a teardown when the content PR
+#    closes).
+#  - push to main: production deploy of the app's own code.
+# Production content is compiled at build time from otf-cms main unless a
+# dispatch provides an exact content_ref.
 #
 # When a content preview is requested with comment_repo/comment_pr, it posts a
 # single status comment on that PR and updates it through the lifecycle
@@ -36,7 +38,7 @@ on:
         options: [preview, production]
         default: preview
       content_ref:
-        description: otf-cms ref for a build-from-ref preview (blank = committed/runtime data)
+        description: otf-cms ref to compile (blank production deploys default to otf-cms main)
         type: string
         default: ""
       comment_repo:
@@ -109,11 +111,24 @@ jobs:
       - name: Pull Vercel project config
         run: vercel pull --yes --environment="$TARGET"
 
-      # build-data reads OTF_CONTENT_REF: set → build-from-ref preview; blank →
-      # committed data (production, where content comes from the Release).
+      # build-data reads OTF_CONTENT_REF. Production deploys default to otf-cms
+      # main so app-code deploys do not fall back to stale committed fixtures.
+      # Cross-repo CMS publishes pass the exact CMS commit SHA; previews pass
+      # the content branch; local/test builds can still leave it blank.
+      - name: Resolve content ref
+        id: content
+        env:
+          INPUT_CONTENT_REF: ${{ github.event.inputs.content_ref }}
+        run: |
+          content_ref="$INPUT_CONTENT_REF"
+          if [ "$TARGET" = production ] && [ -z "$content_ref" ]; then
+            content_ref=main
+          fi
+          echo "ref=$content_ref" >> "$GITHUB_OUTPUT"
+
       - name: Build
         env:
-          OTF_CONTENT_REF: ${{ github.event.inputs.content_ref }}
+          OTF_CONTENT_REF: ${{ steps.content.outputs.ref }}
           OTF_CONTENT_TOKEN: ${{ secrets.OTF_CONTENT_TOKEN }}
           OTF_CONTENT_REPO: ${{ vars.OTF_CONTENT_REPO }}
         run: |
