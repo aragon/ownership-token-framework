@@ -38,10 +38,10 @@ export const EvidenceCard: React.FC<IEvidenceCardProps> = (props) => {
         </div>
       )}
       <div className="flex flex-wrap gap-x-4 gap-y-2">
-        {urls.map((url, index) => (
+        {urls.map((url) => (
           <EvidenceLink
             href={url.url}
-            key={`${index}-${url.url}`}
+            key={`${url.url}-${url.name}-${url.type ?? ""}`}
             type={url.type}
           >
             {isPlaceholder(url.name) ? url.url : url.name}
