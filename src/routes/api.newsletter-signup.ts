@@ -1,9 +1,16 @@
 // TODO: Move this file to src/lib/server/ - these are server functions, not routes
 import { createServerFn } from "@tanstack/react-start"
+import * as z from "zod"
+import { assertHuman } from "@/lib/bot-check"
 
-type NewsletterSignupData = {
-  email: string
-}
+// Shared by the form and the server fn: the server must not trust the client.
+export const newsletterSignupSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, "Email is required.")
+    .email("Enter a valid email address."),
+})
 
 type NewsletterSignupResult = {
   ok: true
@@ -28,13 +35,9 @@ function isAlreadySubscribed(payload: EmailOctopusV16ErrorResponse): boolean {
 }
 
 export const newsletterSignupFn = createServerFn({ method: "POST" })
-  .inputValidator((data: NewsletterSignupData) => data)
-  .handler(async ({ data }): Promise<NewsletterSignupResult> => {
-    const email = data.email?.trim()
-
-    if (!email) {
-      throw new Error("Email is required")
-    }
+  .inputValidator(newsletterSignupSchema)
+  .handler(async ({ data: { email } }): Promise<NewsletterSignupResult> => {
+    await assertHuman()
 
     const apiKey = process.env.EMAIL_OCTOPUS_API_KEY
     const listId = process.env.EMAIL_OCTOPUS_LIST_ID
