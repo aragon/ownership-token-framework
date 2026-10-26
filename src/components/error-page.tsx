@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Container } from "@/components/ui/container"
 
 interface ErrorPageProps {
-  error: Error
+  error: unknown
   // TanStack Router passes a `reset` to retry the failed render/load.
   reset?: () => void
 }
