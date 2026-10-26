@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { CircleCheckIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import * as z from "zod"
+import type * as z from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -21,27 +21,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { InputGroup, InputGroupTextarea } from "@/components/ui/input-group"
-import { submitTokenFn } from "@/routes/api.submit-token"
-
-const submitTokenSchema = z.object({
-  name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(80, "Name must be at most 80 characters"),
-  project: z.string().max(80, "Project name must be at most 80 characters"),
-  request: z
-    .string()
-    .min(10, "Request must be at least 10 characters")
-    .max(200, "Request must be at most 200 characters"),
-  additionalInfo: z
-    .string()
-    .min(20, "Additional information must be at least 20 characters")
-    .max(500, "Additional information must be at most 500 characters"),
-  submitterEmail: z
-    .string()
-    .email("Invalid email address")
-    .min(1, "Email is required"),
-})
+import { submitTokenFn, submitTokenSchema } from "@/routes/api.submit-token"
 
 type SubmitTokenFormData = z.infer<typeof submitTokenSchema>
 

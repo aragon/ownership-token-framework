@@ -1,7 +1,29 @@
 // TODO: Move this file to src/lib/server/ - these are server functions, not routes
 import { createServerFn } from "@tanstack/react-start"
+import * as z from "zod"
 
 const NOTION_VERSION = "2022-06-28"
+
+// Shared by the form and the server fn: the server must not trust the client.
+export const submitTokenSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(80, "Name must be at most 80 characters"),
+  project: z.string().max(80, "Project name must be at most 80 characters"),
+  request: z
+    .string()
+    .min(10, "Request must be at least 10 characters")
+    .max(200, "Request must be at most 200 characters"),
+  additionalInfo: z
+    .string()
+    .min(20, "Additional information must be at least 20 characters")
+    .max(500, "Additional information must be at most 500 characters"),
+  submitterEmail: z
+    .string()
+    .email("Invalid email address")
+    .min(1, "Email is required"),
+})
 
 interface SubmissionData {
   name: string
@@ -68,15 +90,7 @@ async function notifyFailure(error: string, submission: SubmissionData) {
 }
 
 export const submitTokenFn = createServerFn({ method: "POST" })
-  .inputValidator(
-    (data: {
-      name: string
-      project: string
-      request: string
-      additionalInfo: string
-      submitterEmail: string
-    }) => data
-  )
+  .inputValidator(submitTokenSchema)
   .handler(async ({ data }) => {
     const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN
     const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
