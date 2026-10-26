@@ -9,24 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FaqRouteImport } from './routes/faq'
 import { Route as TokensTokenIdRouteImport } from './routes/tokens/$tokenId'
-import { Route as ApiV1TokensRouteImport } from './routes/api.v1.tokens'
-import { Route as ApiV1OpenapiDotjsonRouteImport } from './routes/api.v1.openapi[.]json'
-import { Route as ApiV1IndexDotjsonRouteImport } from './routes/api.v1.index[.]json'
-import { Route as ApiV1FrameworkRouteImport } from './routes/api.v1.framework'
 import { Route as ApiV1FaqRouteImport } from './routes/api.v1.faq'
+import { Route as ApiV1FrameworkRouteImport } from './routes/api.v1.framework'
+import { Route as ApiV1IndexDotjsonRouteImport } from './routes/api.v1.index[.]json'
+import { Route as ApiV1OpenapiDotjsonRouteImport } from './routes/api.v1.openapi[.]json'
+import { Route as ApiV1TokensRouteImport } from './routes/api.v1.tokens'
 import { Route as ApiV1TokensTokenIdRouteImport } from './routes/api.v1.tokens.$tokenId'
 
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TokensTokenIdRoute = TokensTokenIdRouteImport.update({
@@ -34,19 +34,9 @@ const TokensTokenIdRoute = TokensTokenIdRouteImport.update({
   path: '/tokens/$tokenId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiV1TokensRoute = ApiV1TokensRouteImport.update({
-  id: '/api/v1/tokens',
-  path: '/api/v1/tokens',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiV1OpenapiDotjsonRoute = ApiV1OpenapiDotjsonRouteImport.update({
-  id: '/api/v1/openapi.json',
-  path: '/api/v1/openapi.json',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiV1IndexDotjsonRoute = ApiV1IndexDotjsonRouteImport.update({
-  id: '/api/v1/index.json',
-  path: '/api/v1/index.json',
+const ApiV1FaqRoute = ApiV1FaqRouteImport.update({
+  id: '/api/v1/faq',
+  path: '/api/v1/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1FrameworkRoute = ApiV1FrameworkRouteImport.update({
@@ -54,9 +44,19 @@ const ApiV1FrameworkRoute = ApiV1FrameworkRouteImport.update({
   path: '/api/v1/framework',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiV1FaqRoute = ApiV1FaqRouteImport.update({
-  id: '/api/v1/faq',
-  path: '/api/v1/faq',
+const ApiV1IndexDotjsonRoute = ApiV1IndexDotjsonRouteImport.update({
+  id: '/api/v1/index.json',
+  path: '/api/v1/index.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1OpenapiDotjsonRoute = ApiV1OpenapiDotjsonRouteImport.update({
+  id: '/api/v1/openapi.json',
+  path: '/api/v1/openapi.json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1TokensRoute = ApiV1TokensRouteImport.update({
+  id: '/api/v1/tokens',
+  path: '/api/v1/tokens',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1TokensTokenIdRoute = ApiV1TokensTokenIdRouteImport.update({
@@ -148,18 +148,18 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tokens/$tokenId': {
@@ -169,25 +169,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TokensTokenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/v1/tokens': {
-      id: '/api/v1/tokens'
-      path: '/api/v1/tokens'
-      fullPath: '/api/v1/tokens'
-      preLoaderRoute: typeof ApiV1TokensRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/v1/openapi.json': {
-      id: '/api/v1/openapi.json'
-      path: '/api/v1/openapi.json'
-      fullPath: '/api/v1/openapi.json'
-      preLoaderRoute: typeof ApiV1OpenapiDotjsonRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/v1/index.json': {
-      id: '/api/v1/index.json'
-      path: '/api/v1/index.json'
-      fullPath: '/api/v1/index.json'
-      preLoaderRoute: typeof ApiV1IndexDotjsonRouteImport
+    '/api/v1/faq': {
+      id: '/api/v1/faq'
+      path: '/api/v1/faq'
+      fullPath: '/api/v1/faq'
+      preLoaderRoute: typeof ApiV1FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/framework': {
@@ -197,11 +183,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1FrameworkRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/v1/faq': {
-      id: '/api/v1/faq'
-      path: '/api/v1/faq'
-      fullPath: '/api/v1/faq'
-      preLoaderRoute: typeof ApiV1FaqRouteImport
+    '/api/v1/index.json': {
+      id: '/api/v1/index.json'
+      path: '/api/v1/index.json'
+      fullPath: '/api/v1/index.json'
+      preLoaderRoute: typeof ApiV1IndexDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/openapi.json': {
+      id: '/api/v1/openapi.json'
+      path: '/api/v1/openapi.json'
+      fullPath: '/api/v1/openapi.json'
+      preLoaderRoute: typeof ApiV1OpenapiDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/tokens': {
+      id: '/api/v1/tokens'
+      path: '/api/v1/tokens'
+      fullPath: '/api/v1/tokens'
+      preLoaderRoute: typeof ApiV1TokensRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/tokens/$tokenId': {

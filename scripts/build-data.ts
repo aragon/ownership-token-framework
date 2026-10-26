@@ -11,10 +11,11 @@
  *                          Local development against sibling content.
  *
  *   OTF_CONTENT_REF=<ref>  fetch otf-cms content at <ref> (a branch/sha) and
- *   (+ OTF_CONTENT_TOKEN)  compose it. This is the production + preview path:
- *                          prod builds from `main`, PR previews from the
- *                          content branch — one mechanism, no committed data
- *                          churn, no write access to this repo.
+ *   (+ OTF_CONTENT_TOKEN)  compose it. Deploy workflow sets this for both
+ *                          production and previews: CMS publishes pass the
+ *                          exact CMS commit, app-code production pushes default
+ *                          to otf-cms main, and PR previews pass the content
+ *                          branch. Blank remains local/test/fixture fallback.
  *
  * Composition uses the VENDORED composer (scripts/lib/compose-data.mjs), so
  * the app produces byte-identical output to otf-cms. The composed output is
