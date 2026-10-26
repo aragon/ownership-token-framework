@@ -1,4 +1,4 @@
-import { FileTextIcon, GithubIcon } from "lucide-react"
+import { FileTextIcon, GitBranchIcon } from "lucide-react"
 import type { ComponentProps } from "react"
 import { cn, isPlaceholder } from "@/lib/utils"
 import { ExplorerIcon } from "./explore-icon.tsx"
@@ -26,7 +26,7 @@ export const EvidenceLink: React.FC<IEvidenceLinkProps> = (props) => {
   const renderIcon = () => {
     switch (type) {
       case "github":
-        return <GithubIcon className="size-4 shrink-0 mt-1" />
+        return <GitBranchIcon className="size-4 shrink-0 mt-1" />
       case "docs":
         return <FileTextIcon className="size-4 shrink-0 mt-1" />
       case "explorer":

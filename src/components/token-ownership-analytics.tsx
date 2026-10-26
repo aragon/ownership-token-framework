@@ -8,13 +8,19 @@ import {
 import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type ColumnDef,
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
+  globalFilteringFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
   type SortingState,
-  useReactTable,
+  tableFeatures,
+  useTable,
 } from "@tanstack/react-table"
 import {
   ArrowRightIcon,
@@ -97,14 +103,25 @@ function SortableHeader({
   )
 }
 
-declare module "@tanstack/react-table" {
-  interface ColumnMeta<TData, TValue> {
-    headerClassName?: string
-    cellClassName?: string
-  }
+type ColumnMeta = {
+  headerClassName?: string
+  cellClassName?: string
 }
 
-const columns: ColumnDef<EnrichedToken>[] = [
+const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  globalFilteringFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  columnMeta: {} as ColumnMeta,
+})
+
+const columns: ColumnDef<typeof features, EnrichedToken>[] = [
   {
     accessorKey: "name",
     meta: {
@@ -292,7 +309,8 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
     )
   }, [data, networkFilter])
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data: filteredData,
     columns,
     state: {
@@ -311,10 +329,6 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
         symbol.toLowerCase().includes(search)
       )
     },
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
   })
 
   return (
@@ -419,7 +433,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
             onValueChange={(value) => {
               table.setPageSize(Number(value))
             }}
-            value={`${table.getState().pagination.pageSize}`}
+            value={`${table.state.pagination.pageSize}`}
           >
             <SelectTrigger className="w-16">
               <SelectValue />
@@ -436,7 +450,7 @@ function TokenDataTable({ data }: { data: EnrichedToken[] }) {
 
         <div className="flex items-center gap-6">
           <span className="text-sm text-muted-foreground">
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            Page {table.state.pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </span>
 
