@@ -212,10 +212,10 @@ export default function MetricCard(props: MetricCardProps) {
                   .with(P.union(P.nullish, []), () => null)
                   .otherwise((evidenceList) => (
                     <div className="flex flex-col gap-4">
-                      {evidenceList.map((evidence, index) => (
+                      {evidenceList.map((evidence) => (
                         <EvidenceCard
                           evidence={evidence}
-                          key={`${criteria.id}-ev-${index}`}
+                          key={`${criteria.id}-ev-${evidence.name ?? ""}-${evidence.summary ?? ""}-${evidence.urls.map(({ url }) => url).join("|")}`}
                         />
                       ))}
                     </div>

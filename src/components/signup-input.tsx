@@ -5,21 +5,17 @@ import { CheckIcon, LoaderCircleIcon } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { match } from "ts-pattern"
-import * as z from "zod"
+import type * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Field, FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { newsletterSignupFn } from "@/routes/api.newsletter-signup"
+import {
+  newsletterSignupSchema as emailSchema,
+  newsletterSignupFn,
+} from "@/routes/api.newsletter-signup"
 
 const RESET_DELAY_MS = 10_000
-const emailSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .min(1, "Email is required.")
-    .email("Enter a valid email address."),
-})
 
 type SignupStatus = "idle" | "submitting" | "success" | "error"
 type SignupFormData = z.infer<typeof emailSchema>

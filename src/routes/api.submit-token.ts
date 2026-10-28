@@ -1,6 +1,7 @@
 // TODO: Move this file to src/lib/server/ - these are server functions, not routes
 import { createServerFn } from "@tanstack/react-start"
 import * as z from "zod"
+import { assertHuman } from "@/lib/bot-check"
 
 const NOTION_VERSION = "2022-06-28"
 
@@ -92,6 +93,7 @@ async function notifyFailure(error: string, submission: SubmissionData) {
 export const submitTokenFn = createServerFn({ method: "POST" })
   .inputValidator(submitTokenSchema)
   .handler(async ({ data }) => {
+    await assertHuman()
     const NOTION_API_TOKEN = process.env.NOTION_API_TOKEN
     const NOTION_DATABASE_ID = process.env.NOTION_DATABASE_ID
 

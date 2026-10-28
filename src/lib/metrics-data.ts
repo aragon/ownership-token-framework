@@ -11,8 +11,8 @@ import {
 } from "@/lib/schemas"
 import { getTokenById } from "@/lib/token-data"
 
-export { CRITERIA_STATUS }
 export type { CriteriaStatusValue, Evidence, EvidenceUrl }
+export { CRITERIA_STATUS }
 export type Criteria = ComposedCriterion
 export type Metric = ComposedMetric
 
