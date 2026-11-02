@@ -63,18 +63,18 @@
     "@types/node": "^26.5.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
-    "@vitest/coverage-v8": "5.0.0",
-    "jsdom": "^27.4.0",
-    "lefthook": "2.1.12",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/coverage-v8": "5.0.5",
+    "jsdom": "^30.1.3",
+    "lefthook": "2.2.2",
     "playwright": "^1.63.0",
     "shadcn": "^4.21.0",
     "sharp": "^0.35.4",
     "solid-js": "^1.9.15",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
-    "vite": "^7.3.5",
-    "vitest": "5.0.0"
+    "vite": "^8.3.5",
+    "vitest": "5.0.5"
   },
   "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264"
 }
